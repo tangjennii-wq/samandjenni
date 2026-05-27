@@ -122,12 +122,12 @@
   }
   @media (max-width: 720px) {
     /* Mobile: vertical 1080x1235 aspect, fills phone width.
-       Top padding 26px gives room for SHLANG 400TX / ▸ 46 / 3 above the video, like desktop. */
+       Tighter top padding so SHLANG 400TX sits close to the video edge. */
     .film-frame {
       width: 100vw;
       max-width: none;
       aspect-ratio: 1080 / 1235;
-      padding: 26px 32px 10px;
+      padding: 22px 32px 8px;
     }
     .hero { padding: 12px 0; }
   }
@@ -140,7 +140,7 @@
   }
   @media (max-width: 720px) {
     /* Inset matches new padding — top/bottom asymmetric so markings show above */
-    .stage { top: 26px; left: 32px; right: 32px; bottom: 10px; }
+    .stage { top: 22px; left: 32px; right: 32px; bottom: 8px; }
   }
 
   .stage video {
@@ -192,10 +192,9 @@
     transform-origin: right center;
   }
   @media (max-width: 720px) {
-    /* Mobile: keep desktop-style positions in the new 26px top padding band */
-    .mark-top-left  { top: 8px; left: 38px; font-size: 8.5px; letter-spacing: 0.18em; }
-    .mark-top-mid   { top: 8px; font-size: 8.5px; letter-spacing: 0.18em; }
-    .mark-top-right { top: 8px; right: 38px; font-size: 8.5px; letter-spacing: 0.18em; }
+    /* Mobile: tighter SHLANG 400TX — closer to video edge, hide "3" (collides with sound toggle) */
+    .mark-top-left  { top: 12px; left: 34px; font-size: 8.5px; letter-spacing: 0.18em; }
+    .mark-top-right { display: none; }
     /* Hide bottom markings on mobile — no floating frame numbers between video & FITF */
     .mark-bot-left  { display: none; }
     .mark-bot-right { display: none; }
@@ -295,8 +294,8 @@
   /* Small SOUND OFF toggle (appears after sound is enabled — in BLACK SPACE under Watch Full Reel) */
   .sound-toggle {
     position: absolute;
-    top: 62px;    /* directly below .hero-watch-reel (top: 26px) */
-    right: 36px;  /* same x as .hero-watch-reel */
+    top: 50px;    /* directly below .hero-watch-reel (top: 16px) */
+    right: 22px;  /* same x as .hero-watch-reel */
     z-index: 5;
     display: inline-flex;
     align-items: center;
@@ -328,8 +327,8 @@
   /* ===== Watch full reel — in the black canvas, upper-right of hero (outside film frame) ===== */
   .hero-watch-reel {
     position: absolute;
-    top: 26px;
-    right: 36px;
+    top: 16px;
+    right: 22px;
     z-index: 6;
     display: inline-flex;
     align-items: center;
@@ -369,6 +368,28 @@
 
   /* Hide the inline mobile link entirely — we restored the upper-right watch reel */
   .reel-link-mobile { display: none; }
+
+  /* Video load-failure fallback notice — appears below FITF if hero video won't load */
+  .video-fallback-notice {
+    display: none;
+    margin-top: 14px;
+    text-align: center;
+    font-family: 'Figtree', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: lowercase;
+    color: var(--gold);
+    opacity: 0.65;
+    line-height: 1.6;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 24px;
+  }
+  .video-fallback-notice.show { display: block; }
+  @media (max-width: 720px) {
+    .video-fallback-notice { font-size: 9.5px; letter-spacing: 0.18em; margin-top: 10px; padding: 0 18px; }
+  }
 
   /* ===== Centered FITF caption below video ===== */
   .fitf-caption {
@@ -450,14 +471,13 @@
 
       <!-- Analog film edge markings -->
       <span class="film-mark mark-top-left">SHLANG 400TX</span>
-      <span class="film-mark mark-top-mid">▸ 46</span>
       <span class="film-mark mark-top-right">3</span>
 
       <span class="film-mark mark-left-side">PIERRE OR BE SQUARE 400</span>
       <span class="film-mark mark-right-side">S + J · 400TX</span>
 
       <span class="film-mark mark-bot-left">▸ 2</span>
-      <span class="film-mark mark-bot-right">SHLANG · 46</span>
+      <span class="film-mark mark-bot-right">SHLANG</span>
 
       <!-- Video stage -->
       <div class="stage">
@@ -494,6 +514,9 @@
     <button class="reel-link-mobile" type="button" id="openReelMobile">
       watch full reel<span class="arrow">→</span>
     </button>
+    <p class="video-fallback-notice" id="videoFallback">
+      having trouble loading the video? try switching off wifi or to cellular — some networks block media
+    </p>
   </section>
 
   <!-- Modal for full reel -->
@@ -555,7 +578,22 @@
       closeReel.addEventListener('click', closeModal);
       document.addEventListener('keydown', e => { if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
       modal.addEventListener('click', e => { if(e.target===modal) closeModal(); });
-      hero.addEventListener('error', () => console.error('Hero video error:', hero.error));
+      hero.addEventListener('error', () => {
+        console.error('Hero video error:', hero.error);
+        showFallback();
+      });
+
+      // Detect slow/blocked video — if readyState hasn't passed loadeddata in 6s, show fallback
+      let videoLoaded = false;
+      hero.addEventListener('loadeddata', () => { videoLoaded = true; });
+      setTimeout(() => {
+        if (!videoLoaded && hero.readyState < 2) showFallback();
+      }, 6000);
+
+      function showFallback() {
+        const f = document.getElementById('videoFallback');
+        if (f) f.classList.add('show');
+      }
     })();
   </script>
 
