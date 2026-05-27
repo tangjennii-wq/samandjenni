@@ -3,21 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sam + Jenni · Save the Weekend · March 19–20, 2027</title>
-<meta name="description" content="Sam + Jenni — Wedding weekend March 19–20, 2027 — The Pierre Hotel, New York City">
+<title>Sam & Jenni · Save the Weekend · March 19–20, 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #E53C2D;
-    --red-deep: #C2301F;
-    --gold: #E5C822;
-    --gold-dim: rgba(229, 200, 34, 0.78);
+    --gold: #E2CA23;
+    --gold-soft: #C9A537;
     --ivory: #FAF3E0;
-    --film-rust: #D08534;        /* analog edge-code amber/orange (Kodak-like) */
+    --ivory-dim: rgba(250, 243, 224, 0.7);
+    --peach: #F4B5A5;
     --dark: #0D0905;
-    --white: #FFFFFF;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,304 +29,59 @@
     flex-direction: column;
   }
 
-  /* ===== Top red ticker bar ===== */
-  .ribbon {
-    background: var(--red);
-    color: var(--white);
-    text-align: center;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    padding: 13px 16px;
-    flex: 0 0 auto;
-  }
-  .ribbon .sep {
-    display: inline-block;
-    margin: 0 18px;
-    opacity: 0.7;
-  }
-  @media (max-width: 720px) {
-    .ribbon { font-size: 9.5px; letter-spacing: 0.14em; padding: 10px 8px; white-space: nowrap; overflow: hidden; }
-    .ribbon .sep { margin: 0 8px; }
-  }
-
-  /* ===== White crest band ===== */
-  .crest {
-    background: var(--white);
-    text-align: center;
-    padding: 20px 16px 22px;
-    border-bottom: 1px solid var(--red);
-    flex: 0 0 auto;
-  }
-  .crest-row {
-    display: inline-flex;
-    align-items: center;
-    gap: 22px;
-    line-height: 1;
-  }
-  .crest-rule {
-    height: 2px;
-    width: 64px;
-    background: var(--red);
-  }
-  .crest-name {
-    color: var(--red);
-    font-weight: 900;
-    font-size: 38px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .crest-tag {
-    color: var(--red);
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.34em;
-    text-transform: uppercase;
-    margin-top: 10px;
-  }
-  @media (max-width: 720px) {
-    .crest { padding: 14px 12px 16px; }
-    .crest-name { font-size: 24px; letter-spacing: 0.04em; }
-    .crest-rule { width: 36px; }
-    .crest-tag { font-size: 9px; letter-spacing: 0.26em; margin-top: 7px; }
-    .crest-row { gap: 14px; }
-  }
-
-  /* ===== Hero — black canvas with film-frame composition ===== */
-  .hero {
-    flex: 1 1 auto;
-    background: var(--dark);
-    position: relative;
-    overflow: hidden;
-    min-height: 0;
+  .cinema {
+    flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 24px 16px;
-  }
-
-  /* The film-frame wraps the video and gets the analog markings.
-     Video aspect 1280/800 = 16:10 — fills width (with padding for markings) */
-  .film-frame {
-    position: relative;
-    /* Fit by whichever dimension binds first: viewport width, or height-based 16:10 */
-    width: min(95vw, calc((100vh - 240px) * 1.6 + 100px));
-    max-width: 1500px;
-    aspect-ratio: calc(1280/800 + 0.08);  /* tiny extra width for side markings */
-    padding: 32px 50px;
+    padding: 32px;
+    min-height: 0;
   }
   @media (max-width: 720px) {
-    /* Mobile: vertical 1080x1235 aspect, fills phone width.
-       Tighter top padding so SHLANG 400TX sits close to the video edge. */
-    .film-frame {
-      width: 100vw;
-      max-width: none;
-      aspect-ratio: 1080 / 1235;
-      padding: 22px 32px 8px;
-    }
-    .hero { padding: 12px 0; }
+    .cinema { padding: 14px; }
   }
 
+  /* Stage sizes to whichever viewport dimension binds first */
   .stage {
-    position: absolute;
-    inset: 32px 50px;
+    aspect-ratio: 16 / 10;
+    width: min(1200px, 92vw, calc((100vh - 64px) * 1.6));
+    position: relative;
     background: #000;
     overflow: hidden;
+    box-shadow: 0 18px 60px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.4);
   }
-  @media (max-width: 720px) {
-    /* Inset matches new padding — top/bottom asymmetric so markings show above */
-    .stage { top: 22px; left: 32px; right: 32px; bottom: 8px; }
-  }
-
   .stage video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
+  /* Subtle film vignette */
   .stage::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,0.32) 100%);
+    background: radial-gradient(ellipse at center, transparent 62%, rgba(0,0,0,0.3) 100%);
   }
 
-  /* ===== Analog film markings around the frame ===== */
-  .film-mark {
+  /* Upper-right CTA stack — text-style, no capsules */
+  .video-controls {
     position: absolute;
-    color: var(--film-rust);
-    font-family: 'Figtree', sans-serif;
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    opacity: 0.92;
-  }
-  @media (max-width: 720px) {
-    .film-mark { font-size: 8px; letter-spacing: 0.16em; }
-  }
-
-  /* Top edge markings */
-  .mark-top-left  { top: 14px; left: 60px; }
-  .mark-top-mid   { top: 14px; left: 50%; transform: translateX(-50%); }
-  .mark-top-right { top: 14px; right: 60px; }
-  /* Bottom edge markings */
-  .mark-bot-left  { bottom: 14px; left: 60px; }
-  .mark-bot-right { bottom: 14px; right: 60px; }
-  /* Vertical side markings */
-  .mark-left-side {
-    top: 50%; left: 8px;
-    transform: rotate(-90deg) translateX(50%);
-    transform-origin: left center;
-  }
-  .mark-right-side {
-    top: 50%; right: 8px;
-    transform: rotate(90deg) translateX(-50%);
-    transform-origin: right center;
-  }
-  @media (max-width: 720px) {
-    /* Mobile: SHLANG 400TX back at left: 38px so it doesn't get cut off by the video edge */
-    .mark-top-left  { top: 14px; left: 38px; font-size: 8.5px; letter-spacing: 0.18em; }
-    .mark-top-right { display: none; }
-    /* Hide bottom markings on mobile — no floating frame numbers between video & FITF */
-    .mark-bot-left  { display: none; }
-    .mark-bot-right { display: none; }
-    /* Side vertical markings — pulled in closer to the video edge for a tighter, embedded feel */
-    .mark-left-side  { left: 14px; font-size: 8.5px; letter-spacing: 0.18em; }
-    .mark-right-side { right: 14px; font-size: 8.5px; letter-spacing: 0.18em; }
-  }
-
-  /* ===== Centered SOUND ON overlay (initial state) ===== */
-  .sound-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(13, 9, 5, 0.22);
-    /* No blur — video stays sharp so date typography reads through */
+    top: 28px;
+    right: 28px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    cursor: pointer;
-    z-index: 5;
-    transition: opacity 0.5s ease;
+    align-items: flex-end;
+    gap: 10px;
+    z-index: 3;
+    text-align: right;
   }
-  .sound-overlay.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
-  /* Speaker wrapper holds icon + breathing ring */
-  .speaker-wrap {
-    position: relative;
-    width: 78px;
-    height: 78px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .speaker-wrap::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 1px solid rgba(250, 243, 224, 0.7);
-    animation: ringBreathe 3.6s ease-in-out 6 both;
-  }
-  .sound-overlay svg {
-    width: 38px;
-    height: 38px;
-    color: var(--ivory);
-    transform-origin: center;
-    /* Visible breathing: opacity + scale + soft glow. 6 cycles × 3.6s ≈ 22s, then static */
-    animation: iconBreathe 3.6s ease-in-out 6 both;
-    z-index: 1;
-  }
-  .sound-overlay .label {
-    color: var(--ivory);
-    font-family: 'Figtree', sans-serif;
-    font-weight: 500;
-    font-size: 13px;
-    letter-spacing: 0.36em;
-    text-transform: lowercase;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.55);
-    opacity: 0.9;
-    transition: opacity 0.25s ease;
-  }
-  /* Hover brightens label (icon hover handled via animation/static rest state) */
-  .sound-overlay:hover .label { opacity: 1; }
-
-  @keyframes iconBreathe {
-    0%, 100% {
-      opacity: 0.7;
-      transform: scale(1);
-      filter: drop-shadow(0 0 0 rgba(255, 240, 220, 0));
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.1);
-      filter: drop-shadow(0 0 16px rgba(255, 240, 220, 0.45));
-    }
-  }
-  @keyframes ringBreathe {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 0.5;
-      border-color: rgba(250, 243, 224, 0.55);
-    }
-    50% {
-      transform: scale(1.16);
-      opacity: 0.95;
-      border-color: rgba(250, 243, 224, 0.95);
-    }
-  }
-  @media (max-width: 720px) {
-    .sound-overlay svg { width: 30px; height: 30px; }
-    .sound-overlay .label { font-size: 11px; letter-spacing: 0.28em; }
+  @media (max-width: 640px) {
+    .video-controls { top: 16px; right: 16px; gap: 8px; }
   }
 
-  /* Small SOUND OFF toggle (appears after sound is enabled — in BLACK SPACE under Watch Full Reel) */
-  .sound-toggle {
-    position: absolute;
-    top: 50px;    /* directly below .hero-watch-reel (top: 16px) */
-    right: 22px;  /* same x as .hero-watch-reel */
-    z-index: 5;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Figtree', sans-serif;
-    color: var(--ivory);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px 0;
-    font-size: 10px;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    font-weight: 400;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-  }
-  .sound-toggle.show {
-    opacity: 0.55;
-    pointer-events: auto;
-  }
-  .sound-toggle:hover { opacity: 0.9; }
-  .sound-toggle svg { width: 11px; height: 11px; }
-  @media (max-width: 720px) {
-    .sound-toggle { top: 42px; right: 18px; font-size: 9px; letter-spacing: 0.2em; }
-  }
-
-  /* ===== Watch full reel — in the black canvas, upper-right of hero (outside film frame) ===== */
-  .hero-watch-reel {
-    position: absolute;
-    top: 16px;
-    right: 22px;
-    z-index: 6;
+  .cta-text {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -339,263 +91,134 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 6px 0;
-    font-weight: 500;
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    opacity: 0.82;
+    padding: 4px 0;
+    position: relative;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
     transition: opacity 0.2s;
   }
-  .hero-watch-reel::after {
+  /* Underline reveal on hover */
+  .cta-text::after {
     content: "";
     position: absolute;
-    left: 0; right: 0; bottom: 0;
+    left: 0; right: 0; bottom: -1px;
     height: 1px;
     background: currentColor;
-    transform: scaleX(0.4);
+    transform: scaleX(0.35);
     transform-origin: right;
-    opacity: 0.6;
-    transition: transform 0.3s ease-out, opacity 0.25s;
+    opacity: 0.55;
+    transition: transform 0.32s ease-out, opacity 0.25s;
   }
-  .hero-watch-reel:hover { opacity: 1; }
-  .hero-watch-reel:hover::after { transform: scaleX(1); opacity: 1; }
-  .hero-watch-reel .arrow { transition: transform 0.22s; font-size: 13px; }
-  .hero-watch-reel:hover .arrow { transform: translateX(4px); }
-  @media (max-width: 720px) {
-    /* Mobile: keep upper-right watch reel visible, just smaller */
-    .hero-watch-reel { top: 14px; right: 18px; font-size: 10px; letter-spacing: 0.22em; gap: 6px; }
-    /* Remove the resting underline on mobile — no hover to reveal it, half-line looks awkward */
-    .hero-watch-reel::after { display: none; }
+  .cta-text:hover::after { transform: scaleX(1); opacity: 1; }
+
+  .cta-primary {
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: var(--ivory);
   }
+  .cta-primary:hover { color: #fff; }
+  .cta-primary svg { width: 14px; height: 14px; }
 
-  /* Hide the inline mobile link entirely — we restored the upper-right watch reel */
-  .reel-link-mobile { display: none; }
-
-  /* Video load-failure fallback notice — appears below FITF if hero video won't load */
-  .video-fallback-notice {
-    display: none;
-    margin-top: 14px;
-    text-align: center;
-    font-family: 'Figtree', sans-serif;
+  /* When sound is on, primary becomes the quieter state */
+  .cta-primary.is-on {
     font-size: 11px;
+    font-weight: 400;
+    opacity: 0.72;
     letter-spacing: 0.24em;
-    text-transform: lowercase;
-    color: var(--gold);
-    opacity: 0.65;
-    line-height: 1.6;
-    max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 24px;
   }
-  .video-fallback-notice.show { display: block; }
-  @media (max-width: 720px) {
-    .video-fallback-notice { font-size: 9.5px; letter-spacing: 0.18em; margin-top: 10px; padding: 0 18px; }
-  }
+  .cta-primary.is-on:hover { opacity: 1; }
+  .cta-primary.is-on svg { width: 12px; height: 12px; }
 
-  /* ===== Centered FITF caption below video ===== */
-  .fitf-caption {
-    margin-top: 18px;
-    color: var(--gold);
+  .cta-secondary {
     font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--ivory);
+    opacity: 0.7;
+  }
+  .cta-secondary:hover { opacity: 1; }
+  .cta-secondary .arrow {
+    transition: transform 0.22s;
     font-size: 12px;
-    letter-spacing: 0.42em;
-    text-transform: lowercase;
-    opacity: 0.82;
-    text-align: center;
-    font-family: 'Figtree', sans-serif;
-    flex: 0 0 auto;
+    line-height: 1;
   }
-  @media (max-width: 720px) {
-    .fitf-caption { font-size: 9px; letter-spacing: 0.32em; margin-top: 14px; }
-  }
+  .cta-secondary:hover .arrow { transform: translateX(4px); }
 
-  /* ===== Modal for full reel ===== */
-  .modal { position: fixed; inset: 0; background: rgba(13, 9, 5, 0.95); display: none; align-items: center; justify-content: center; z-index: 100; padding: 32px; }
-  .modal.open { display: flex; }
-  .modal-inner { background: #000; max-width: 1100px; width: 100%; border: 2px solid var(--gold); border-radius: 2px; position: relative; }
-  .modal video { width: 100%; height: auto; display: block; }
-  .modal-close { position: absolute; top: -18px; right: -18px; background: var(--red); color: var(--white); border: none; width: 40px; height: 40px; border-radius: 999px; cursor: pointer; font-size: 18px; font-weight: 700; line-height: 1; box-shadow: 0 4px 18px rgba(0,0,0,0.5); }
-
-  /* Reel credit — tiny film-credit strip below the video in the modal */
-  .reel-credit {
-    background: #000;
-    padding: 14px 20px 16px;
-    text-align: center;
-    font-family: 'Figtree', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: lowercase;
-    color: rgba(250, 243, 224, 0.55);
-    font-weight: 400;
-  }
-  .reel-credit a {
-    color: rgba(250, 243, 224, 0.85);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(250, 243, 224, 0.3);
-    transition: color 0.2s, border-color 0.2s;
-    padding-bottom: 1px;
-  }
-  .reel-credit a:hover {
+  /* "formal invitation to follow" — inside video, deeper into lower-right, full gold */
+  .fit-caption {
+    position: absolute;
+    bottom: 18px;
+    right: 22px;
+    z-index: 3;
     color: var(--gold);
-    border-color: var(--gold);
-  }
-  .reel-credit .dot {
-    margin: 0 12px;
-    opacity: 0.45;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.38em;
+    text-transform: lowercase;
+    opacity: 0.92;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+    pointer-events: none;
   }
   @media (max-width: 640px) {
-    .reel-credit { font-size: 9px; letter-spacing: 0.22em; padding: 10px 12px 12px; }
-    .reel-credit .dot { margin: 0 6px; }
+    .fit-caption { bottom: 10px; right: 12px; font-size: 10px; letter-spacing: 0.28em; }
   }
+
+  /* Modal for full reel */
+  .modal { position: fixed; inset: 0; background: rgba(13, 9, 5, 0.95); display: none; align-items: center; justify-content: center; z-index: 100; padding: 32px; }
+  .modal.open { display: flex; }
+  .modal-inner { background: #000; max-width: 1100px; width: 100%; border: 2px solid var(--peach); border-radius: 2px; position: relative; }
+  .modal video { width: 100%; height: auto; display: block; }
+  .modal-close { position: absolute; top: -18px; right: -18px; background: var(--ivory); color: var(--dark); border: none; width: 40px; height: 40px; border-radius: 999px; cursor: pointer; font-size: 18px; font-weight: 700; line-height: 1; box-shadow: 0 4px 18px rgba(0,0,0,0.5); }
 </style>
 </head>
 <body>
 
-  <!-- Red ticker bar: itinerary -->
-  <div class="ribbon">
-    friday welcome party <span class="sep">✦</span> saturday wedding at the pierre
-  </div>
+  <main class="cinema">
+    <div class="stage">
+      <video id="heroVideo" src="video-variants/jM_mid2_titled_original.mp4" muted autoplay loop playsinline preload="auto"></video>
 
-  <!-- White crest band -->
-  <header class="crest">
-    <div class="crest-row">
-      <span class="crest-rule"></span>
-      <span class="crest-name">Sam + Jenni</span>
-      <span class="crest-rule"></span>
-    </div>
-    <div class="crest-tag">a wedding weekend · new york city</div>
-  </header>
-
-  <!-- Hero with film frame markings -->
-  <section class="hero">
-    <div class="film-frame">
-
-      <!-- Analog film edge markings -->
-      <span class="film-mark mark-top-left">SHLANG 400TX</span>
-      <span class="film-mark mark-top-right">3</span>
-
-      <span class="film-mark mark-left-side">PIERRE OR BE SQUARE</span>
-      <span class="film-mark mark-right-side">S + J · 400TX</span>
-
-      <span class="film-mark mark-bot-left">▸ 2</span>
-      <span class="film-mark mark-bot-right">SHLANG</span>
-
-      <!-- Video stage -->
-      <div class="stage">
-        <video id="heroVideo"
-               muted autoplay loop playsinline preload="auto"
-               poster="poster.jpg">
-          <source src="hero-mobile.mp4" type="video/mp4" media="(max-width: 720px)">
-        <source src="hero.mp4" type="video/mp4">
-        </video>
-
-        <!-- Centered "tap for sound" entry overlay with breathing ring -->
-        <div class="sound-overlay" id="soundOverlay" role="button" aria-label="Tap for sound">
-          <span class="speaker-wrap">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z"/></svg>
-          </span>
-          <span class="label">tap for sound</span>
-        </div>
+      <div class="video-controls">
+        <button class="cta-text cta-primary" id="soundBtn" type="button" aria-label="Turn sound on">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z"/></svg>
+          <span id="soundLabel">Sound on</span>
+        </button>
+        <button class="cta-text cta-secondary" type="button" id="openReel">
+          <span>Watch full reel</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </button>
       </div>
+
+      <p class="fit-caption">formal invitation to follow</p>
     </div>
+  </main>
 
-    <!-- Watch full reel — upper-right of hero, in the black canvas outside the film frame -->
-    <button class="hero-watch-reel" type="button" id="openReel">
-      <span>Watch full reel</span>
-      <span class="arrow" aria-hidden="true">→</span>
-    </button>
-
-    <!-- Sound toggle — under Watch Full Reel, in the black canvas -->
-    <button class="sound-toggle" id="soundToggle" type="button" aria-label="Mute">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z"/></svg>
-      <span id="soundToggleLabel">Sound off</span>
-    </button>
-
-    <p class="fitf-caption">formal invitation to follow</p>
-    <button class="reel-link-mobile" type="button" id="openReelMobile">
-      watch full reel<span class="arrow">→</span>
-    </button>
-    <p class="video-fallback-notice" id="videoFallback">
-      having trouble loading the video? try switching off wifi or to cellular — some networks block media
-    </p>
-  </section>
-
-  <!-- Modal for full reel -->
   <div class="modal" id="reel" role="dialog" aria-modal="true">
     <div class="modal-inner">
       <button class="modal-close" type="button" aria-label="Close" id="closeReel">×</button>
-      <video id="reelVideo" controls preload="metadata" playsinline poster="poster.jpg">
-        <source src="full-reel.mp4" type="video/mp4">
-      </video>
-      <div class="reel-credit">
-        film by
-        <a href="https://www.instagram.com/blennon.creatives/" target="_blank" rel="noopener noreferrer">@blennon.creatives</a>
-        <span class="dot">·</span>
-        <a href="https://www.blennoncreatives.com/" target="_blank" rel="noopener noreferrer">blennoncreatives.com</a>
-      </div>
+      <video id="reelVideo" src="video-variants/jM_long_clean.mp4" controls preload="metadata" playsinline></video>
     </div>
   </div>
 
   <script>
     (function () {
-      const hero        = document.getElementById('heroVideo'),
-            soundOverlay= document.getElementById('soundOverlay'),
-            soundToggle = document.getElementById('soundToggle'),
-            soundToggleLbl = document.getElementById('soundToggleLabel'),
-            openReel    = document.getElementById('openReel'),
-            closeReel   = document.getElementById('closeReel'),
-            modal       = document.getElementById('reel'),
-            reelVid     = document.getElementById('reelVideo');
-
-      // First-click: unmute + restart + dismiss overlay + reveal toggle
-      function enableSound() {
-        hero.muted = false;
-        hero.currentTime = 0;
-        hero.play().catch(()=>{});
-        soundOverlay.classList.add('hidden');
-        soundToggle.classList.add('show');
-        soundToggleLbl.textContent = 'Sound off';
+      const hero=document.getElementById('heroVideo'),
+            soundBtn=document.getElementById('soundBtn'),
+            soundLbl=document.getElementById('soundLabel'),
+            openReel=document.getElementById('openReel'),
+            closeReel=document.getElementById('closeReel'),
+            modal=document.getElementById('reel'),
+            reelVid=document.getElementById('reelVideo');
+      function setSound(on){
+        if(on){ hero.muted=false; hero.currentTime=0; hero.play().catch(()=>{}); soundBtn.classList.add('is-on'); soundBtn.setAttribute('aria-label','Turn sound off'); soundLbl.textContent='Sound off'; }
+        else { hero.muted=true; soundBtn.classList.remove('is-on'); soundBtn.setAttribute('aria-label','Turn sound on'); soundLbl.textContent='Sound on'; }
       }
-      soundOverlay.addEventListener('click', enableSound);
-
-      // Subsequent toggle
-      soundToggle.addEventListener('click', () => {
-        if (hero.muted) {
-          hero.muted = false;
-          hero.play().catch(()=>{});
-          soundToggleLbl.textContent = 'Sound off';
-        } else {
-          hero.muted = true;
-          soundToggleLbl.textContent = 'Sound on';
-        }
-      });
-
-      // Modal for full reel
+      soundBtn.addEventListener('click', () => setSound(hero.muted));
       function openModal(){ modal.classList.add('open'); hero.pause(); reelVid.currentTime=0; reelVid.play().catch(()=>{}); }
       function closeModal(){ modal.classList.remove('open'); reelVid.pause(); hero.play().catch(()=>{}); }
       openReel.addEventListener('click', openModal);
-      const openReelMobile = document.getElementById('openReelMobile');
-      if (openReelMobile) openReelMobile.addEventListener('click', openModal);
       closeReel.addEventListener('click', closeModal);
       document.addEventListener('keydown', e => { if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
       modal.addEventListener('click', e => { if(e.target===modal) closeModal(); });
-      hero.addEventListener('error', () => {
-        console.error('Hero video error:', hero.error);
-        showFallback();
-      });
-
-      // Detect slow/blocked video — if readyState hasn't passed loadeddata in 6s, show fallback
-      let videoLoaded = false;
-      hero.addEventListener('loadeddata', () => { videoLoaded = true; });
-      setTimeout(() => {
-        if (!videoLoaded && hero.readyState < 2) showFallback();
-      }, 6000);
-
-      function showFallback() {
-        const f = document.getElementById('videoFallback');
-        if (f) f.classList.add('show');
-      }
     })();
   </script>
 
