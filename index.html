@@ -144,11 +144,18 @@
   }
 
   .stage video {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    background: var(--dark);
+    /* Hidden until metadata loads — prevents brief flash at intrinsic source dimensions */
+    opacity: 0;
+    transition: opacity 0.35s ease;
   }
+  .stage video.ready { opacity: 1; }
   .stage::after {
     content: "";
     position: absolute;
@@ -584,6 +591,16 @@
         console.error('Hero video error:', hero.error);
         showFallback();
       });
+
+      // Reveal video only once metadata + first frame are ready — prevents
+      // a flash of the video at its intrinsic source aspect (vertical 1080x1235
+      // on mobile) before the parent's aspect-ratio layout takes effect.
+      function markReady() { hero.classList.add('ready'); }
+      if (hero.readyState >= 2) markReady();
+      else {
+        hero.addEventListener('loadeddata', markReady, { once: true });
+        hero.addEventListener('loadedmetadata', markReady, { once: true });
+      }
 
       // Detect slow/blocked video — if readyState hasn't passed loadeddata in 6s, show fallback
       let videoLoaded = false;
