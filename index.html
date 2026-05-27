@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sam + Jenni · 3.19–3.20.27</title>
-<meta name="description" content="A wedding weekend · New York, New York">
+<title>sam + jenni · 3.19–3.20.27</title>
+<meta name="description" content="a wedding weekend · new york, new york">
 
 <!-- Open Graph / iMessage / WhatsApp / Slack / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://samandjenni.com/">
-<meta property="og:title" content="Sam + Jenni · 3.19–3.20.27">
-<meta property="og:description" content="A wedding weekend · New York, New York">
+<meta property="og:title" content="sam + jenni · 3.19–3.20.27">
+<meta property="og:description" content="a wedding weekend · new york, new york">
 <meta property="og:image" content="https://samandjenni.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Sam + Jenni · Save the Weekend · March 19–20, 2027">
+<meta property="og:image:alt" content="sam + jenni · save the weekend · march 19–20, 2027">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sam + Jenni · 3.19–3.20.27">
-<meta name="twitter:description" content="A wedding weekend · New York, New York">
+<meta name="twitter:title" content="sam + jenni · 3.19–3.20.27">
+<meta name="twitter:description" content="a wedding weekend · new york, new york">
 <meta name="twitter:image" content="https://samandjenni.com/og-image.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -132,10 +132,10 @@
   .film-frame {
     position: relative;
     /* Fit by whichever dimension binds first: viewport width, or height-based 16:10 */
-    width: min(95vw, calc((100vh - 240px) * 1.6 + 100px));
+    width: min(90vw, calc((100vh - 300px) * 1.6 + 100px));
     max-width: 1500px;
     aspect-ratio: calc(1280/800 + 0.08);  /* tiny extra width for side markings */
-    padding: 32px 50px;
+    padding: 56px 70px;
   }
   @media (max-width: 720px) {
     /* Mobile: vertical 1080x1235 aspect, fills phone width.
@@ -151,7 +151,7 @@
 
   .stage {
     position: absolute;
-    inset: 32px 50px;
+    inset: 56px 70px;
     background: #000;
     overflow: hidden;
   }
@@ -198,22 +198,26 @@
   }
 
   /* Top edge markings */
-  .mark-top-left  { top: 14px; left: 60px; }
-  .mark-top-mid   { top: 14px; left: 50%; transform: translateX(-50%); }
-  .mark-top-right { top: 14px; right: 60px; }
+  .mark-top-left  { top: 26px; left: 80px; }
+  .mark-top-mid   { top: 26px; left: 50%; transform: translateX(-50%); }
+  .mark-top-right { top: 26px; right: 80px; }
   /* Bottom edge markings */
-  .mark-bot-left  { bottom: 14px; left: 60px; }
-  .mark-bot-right { bottom: 14px; right: 60px; }
-  /* Vertical side markings */
+  .mark-bot-left  { bottom: 26px; left: 80px; }
+  .mark-bot-right { bottom: 26px; right: 80px; }
+  /* Vertical side markings — use writing-mode so they auto-fit and never clip */
   .mark-left-side {
-    top: 50%; left: 8px;
-    transform: rotate(-90deg) translateX(50%);
-    transform-origin: left center;
+    top: 50%;
+    left: 22px;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    white-space: nowrap;
   }
   .mark-right-side {
-    top: 50%; right: 8px;
-    transform: rotate(90deg) translateX(-50%);
-    transform-origin: right center;
+    top: 50%;
+    right: 22px;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    white-space: nowrap;
   }
   @media (max-width: 720px) {
     /* Mobile: SHLANG 400TX positioned higher in the top padding band so it sits clearly above the video vignette */
@@ -434,6 +438,43 @@
     .fitf-caption { font-size: 9px; letter-spacing: 0.32em; margin-top: 14px; }
   }
 
+  /* ===== Add to Calendar — small subtle text links below FITF ===== */
+  .cal-add {
+    margin-top: 10px;
+    text-align: center;
+    font-family: 'Figtree', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.28em;
+    text-transform: lowercase;
+    color: var(--ivory);
+    opacity: 0.6;
+    flex: 0 0 auto;
+  }
+  .cal-add .lead {
+    color: var(--ivory);
+    opacity: 0.75;
+    margin-right: 6px;
+  }
+  .cal-add a {
+    color: var(--ivory);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(250, 243, 224, 0.32);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s, opacity 0.2s;
+  }
+  .cal-add a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  .cal-add .dot {
+    margin: 0 7px;
+    opacity: 0.5;
+  }
+  @media (max-width: 720px) {
+    .cal-add { font-size: 9px; letter-spacing: 0.2em; margin-top: 8px; }
+    .cal-add .dot { margin: 0 5px; }
+  }
+
   /* ===== Modal for full reel ===== */
   .modal { position: fixed; inset: 0; background: rgba(13, 9, 5, 0.95); display: none; align-items: center; justify-content: center; z-index: 100; padding: 32px; }
   .modal.open { display: flex; }
@@ -488,7 +529,7 @@
       <span class="crest-name">Sam + Jenni</span>
       <span class="crest-rule"></span>
     </div>
-    <div class="crest-tag">a wedding weekend · new york city</div>
+    <div class="crest-tag">march 19–20, 2027 · new york city</div>
   </header>
 
   <!-- Hero with film frame markings -->
@@ -503,7 +544,6 @@
       <span class="film-mark mark-right-side">S + J · 400TX</span>
 
       <span class="film-mark mark-bot-left">▸ 2</span>
-      <span class="film-mark mark-bot-right">SHLANG</span>
 
       <!-- Video stage -->
       <div class="stage">
@@ -537,6 +577,14 @@
     </button>
 
     <p class="fitf-caption">formal invitation to follow</p>
+    <p class="cal-add">
+      <span class="lead">add to calendar —</span>
+      <a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding%20Weekend&amp;dates=20270319/20270321&amp;details=Save%20the%20weekend!%20Friday%20welcome%20party%20%2B%20Saturday%20wedding%20at%20The%20Pierre%20Hotel%2C%20New%20York%20City.%20Formal%20invitation%20to%20follow.%0A%0Ahttps%3A%2F%2Fsamandjenni.com&amp;location=New%20York%2C%20NY" target="_blank" rel="noopener noreferrer">google</a>
+      <span class="dot">·</span>
+      <a href="save-the-date.ics" download="Sam-and-Jenni-Wedding-Weekend.ics">apple</a>
+      <span class="dot">·</span>
+      <a href="save-the-date.ics" download="Sam-and-Jenni-Wedding-Weekend.ics">outlook</a>
+    </p>
     <button class="reel-link-mobile" type="button" id="openReelMobile">
       watch full reel<span class="arrow">→</span>
     </button>

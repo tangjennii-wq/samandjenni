@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sam + Jenni//Save the Date//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:samandjenni-weekend-2027@samandjenni.com
+DTSTAMP:20260527T000000Z
+DTSTART;VALUE=DATE:20270319
+DTEND;VALUE=DATE:20270321
+SUMMARY:Sam + Jenni · Wedding Weekend
+DESCRIPTION:Save the weekend! Friday welcome party + Saturday wedding at The Pierre Hotel\, New York City. Formal invitation to follow.\n\nhttps://samandjenni.com
+LOCATION:New York\, NY
+URL:https://samandjenni.com
+END:VEVENT
+END:VCALENDAR
