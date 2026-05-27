@@ -192,15 +192,15 @@
     transform-origin: right center;
   }
   @media (max-width: 720px) {
-    /* Mobile: tighter SHLANG 400TX — closer to video edge, hide "3" (collides with sound toggle) */
-    .mark-top-left  { top: 12px; left: 34px; font-size: 8.5px; letter-spacing: 0.18em; }
+    /* Mobile: tighter to video edges — SHLANG 400TX flush left, side markings tucked closer */
+    .mark-top-left  { top: 14px; left: 32px; font-size: 8.5px; letter-spacing: 0.18em; }
     .mark-top-right { display: none; }
     /* Hide bottom markings on mobile — no floating frame numbers between video & FITF */
     .mark-bot-left  { display: none; }
     .mark-bot-right { display: none; }
-    /* Side vertical markings sit in the 32px side padding, partially tucked toward video edge */
-    .mark-left-side  { left: 6px;  font-size: 8.5px; letter-spacing: 0.18em; }
-    .mark-right-side { right: 6px; font-size: 8.5px; letter-spacing: 0.18em; }
+    /* Side vertical markings — pulled in closer to the video edge for a tighter, embedded feel */
+    .mark-left-side  { left: 14px; font-size: 8.5px; letter-spacing: 0.18em; }
+    .mark-right-side { right: 14px; font-size: 8.5px; letter-spacing: 0.18em; }
   }
 
   /* ===== Centered SOUND ON overlay (initial state) ===== */
@@ -364,6 +364,8 @@
   @media (max-width: 720px) {
     /* Mobile: keep upper-right watch reel visible, just smaller */
     .hero-watch-reel { top: 14px; right: 18px; font-size: 10px; letter-spacing: 0.22em; gap: 6px; }
+    /* Remove the resting underline on mobile — no hover to reveal it, half-line looks awkward */
+    .hero-watch-reel::after { display: none; }
   }
 
   /* Hide the inline mobile link entirely — we restored the upper-right watch reel */
