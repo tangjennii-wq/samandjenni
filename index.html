@@ -50,7 +50,7 @@
     opacity: 0.7;
   }
   @media (max-width: 720px) {
-    .ribbon { font-size: 10px; letter-spacing: 0.16em; padding: 10px 10px; }
+    .ribbon { font-size: 9.5px; letter-spacing: 0.14em; padding: 10px 8px; white-space: nowrap; overflow: hidden; }
     .ribbon .sep { margin: 0 8px; }
   }
 
@@ -191,23 +191,16 @@
     transform-origin: right center;
   }
   @media (max-width: 720px) {
-    /* Mobile: hide busy corner numbers; show single SHLANG label centered up top */
-    .mark-top-right { display: none; }
+    /* Mobile: keep desktop-style positions, just smaller offsets and font sizes */
+    .mark-top-left  { top: 14px; left: 38px; font-size: 8.5px; letter-spacing: 0.18em; }
+    .mark-top-mid   { top: 14px; font-size: 8.5px; letter-spacing: 0.18em; }
+    .mark-top-right { top: 14px; right: 38px; font-size: 8.5px; letter-spacing: 0.18em; }
+    /* Hide bottom markings on mobile — no floating frame numbers between video & FITF */
+    .mark-bot-left  { display: none; }
     .mark-bot-right { display: none; }
-    .mark-top-mid   { display: none; }
-    /* Promote SHLANG 400TX (top-left) to centered top edge */
-    .mark-top-left {
-      top: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 9px;
-      letter-spacing: 0.22em;
-    }
-    /* Keep one analog frame number bottom-left as texture */
-    .mark-bot-left { left: 50%; transform: translateX(-50%); bottom: -2px; font-size: 9px; }
-    /* Side vertical markings — partially tucked behind the stage edge so they feel embedded */
-    .mark-left-side  { left: -4px; font-size: 8px; letter-spacing: 0.18em; }
-    .mark-right-side { right: -4px; font-size: 8px; letter-spacing: 0.18em; }
+    /* Side vertical markings sit in the 32px side padding, partially tucked toward video edge */
+    .mark-left-side  { left: 6px;  font-size: 8.5px; letter-spacing: 0.18em; }
+    .mark-right-side { right: 6px; font-size: 8.5px; letter-spacing: 0.18em; }
   }
 
   /* ===== Centered SOUND ON overlay (initial state) ===== */
@@ -369,32 +362,12 @@
   .hero-watch-reel .arrow { transition: transform 0.22s; font-size: 13px; }
   .hero-watch-reel:hover .arrow { transform: translateX(4px); }
   @media (max-width: 720px) {
-    /* Hide upper-right watch reel on mobile — replaced by tiny link under FITF */
-    .hero-watch-reel { display: none; }
+    /* Mobile: keep upper-right watch reel visible, just smaller */
+    .hero-watch-reel { top: 14px; right: 18px; font-size: 10px; letter-spacing: 0.22em; gap: 6px; }
   }
 
-  /* Mobile-only inline watch reel link (sits below FITF caption) */
-  .reel-link-mobile {
-    display: none;
-    margin-top: 10px;
-    text-align: center;
-    font-family: 'Figtree', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.32em;
-    text-transform: lowercase;
-    color: var(--gold);
-    background: none;
-    border: none;
-    cursor: pointer;
-    opacity: 0.55;
-    transition: opacity 0.2s;
-    padding: 4px 8px;
-  }
-  .reel-link-mobile:hover { opacity: 1; }
-  .reel-link-mobile .arrow { margin-left: 4px; }
-  @media (max-width: 720px) {
-    .reel-link-mobile { display: inline-block; }
-  }
+  /* Hide the inline mobile link entirely — we restored the upper-right watch reel */
+  .reel-link-mobile { display: none; }
 
   /* ===== Centered FITF caption below video ===== */
   .fitf-caption {
@@ -457,7 +430,7 @@
 
   <!-- Red ticker bar: itinerary -->
   <div class="ribbon">
-    friday welcome party <span class="sep">✦</span> saturday wedding at the pierre hotel
+    friday welcome party <span class="sep">✦</span> saturday wedding at the pierre
   </div>
 
   <!-- White crest band -->
