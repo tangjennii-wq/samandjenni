@@ -124,7 +124,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 24px 16px;
+    padding: 42px 16px 24px;
   }
 
   /* The film-frame wraps the video and gets the analog markings.
@@ -132,10 +132,10 @@
   .film-frame {
     position: relative;
     /* Fit by whichever dimension binds first: viewport width, or height-based 16:10 */
-    width: min(90vw, calc((100vh - 300px) * 1.6 + 100px));
+    width: min(95vw, calc((100vh - 240px) * 1.6 + 100px));
     max-width: 1500px;
     aspect-ratio: calc(1280/800 + 0.08);  /* tiny extra width for side markings */
-    padding: 56px 70px;
+    padding: 32px 50px;
   }
   @media (max-width: 720px) {
     /* Mobile: vertical 1080x1235 aspect, fills phone width.
@@ -151,7 +151,7 @@
 
   .stage {
     position: absolute;
-    inset: 56px 70px;
+    inset: 32px 50px;
     background: #000;
     overflow: hidden;
   }
@@ -198,23 +198,23 @@
   }
 
   /* Top edge markings */
-  .mark-top-left  { top: 26px; left: 80px; }
-  .mark-top-mid   { top: 26px; left: 50%; transform: translateX(-50%); }
-  .mark-top-right { top: 26px; right: 80px; }
+  .mark-top-left  { top: 18px; left: 60px; }
+  .mark-top-mid   { top: 18px; left: 50%; transform: translateX(-50%); }
+  .mark-top-right { top: 18px; right: 60px; }
   /* Bottom edge markings */
-  .mark-bot-left  { bottom: 26px; left: 80px; }
-  .mark-bot-right { bottom: 26px; right: 80px; }
+  .mark-bot-left  { bottom: 18px; left: 60px; }
+  .mark-bot-right { bottom: 18px; right: 60px; }
   /* Vertical side markings — use writing-mode so they auto-fit and never clip */
   .mark-left-side {
     top: 50%;
-    left: 22px;
+    left: 14px;
     transform: translateY(-50%);
     writing-mode: vertical-rl;
     white-space: nowrap;
   }
   .mark-right-side {
     top: 50%;
-    right: 22px;
+    right: 14px;
     transform: translateY(-50%);
     writing-mode: vertical-rl;
     white-space: nowrap;
@@ -538,12 +538,11 @@
 
       <!-- Analog film edge markings -->
       <span class="film-mark mark-top-left">SHLANG 400TX</span>
-      <span class="film-mark mark-top-right">3</span>
 
       <span class="film-mark mark-left-side">PIERRE OR BE SQUARE</span>
       <span class="film-mark mark-right-side">S + J · 400TX</span>
 
-      <span class="film-mark mark-bot-left">▸ 2</span>
+      <span class="film-mark mark-bot-right">♡ with love, s + j</span>
 
       <!-- Video stage -->
       <div class="stage">
