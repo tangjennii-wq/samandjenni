@@ -486,7 +486,7 @@
     text-align: center;
     font-family: 'Figtree', sans-serif;
     font-size: 10.5px;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.18em;
     text-transform: lowercase;
     color: var(--gold);
     flex: 0 0 auto;
@@ -494,7 +494,7 @@
   .cal-add .lead {
     color: var(--gold);
     opacity: 0.7;        /* lead reads as caption */
-    margin-right: 6px;
+    margin-right: 5px;
   }
   .cal-add a {
     color: var(--gold);
@@ -509,12 +509,38 @@
     border-color: #fff;
   }
   .cal-add .dot {
-    margin: 0 7px;
+    margin: 0 5px;
     opacity: 0.45;
   }
+  /* Share / download icon buttons — pulled close to the calendar links so they read as part of the same row */
+  .cal-action-sep {
+    margin: 0 4px 0 7px;
+    opacity: 0.45;
+  }
+  .cal-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin: 0 1px;
+    padding: 0;
+    color: var(--gold);
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.85;
+    vertical-align: middle;
+    transition: opacity 0.2s, transform 0.2s, color 0.2s;
+  }
+  .cal-action:hover { opacity: 1; color: #fff; transform: translateY(-1px); }
+  .cal-action svg { width: 13px; height: 13px; display: block; }
   @media (max-width: 720px) {
-    .cal-add { font-size: 9px; letter-spacing: 0.2em; margin-top: 8px; }
-    .cal-add .dot { margin: 0 5px; }
+    .cal-add { font-size: 9px; letter-spacing: 0.14em; margin-top: 8px; }
+    .cal-add .dot { margin: 0 4px; }
+    .cal-action { width: 18px; height: 18px; }
+    .cal-action svg { width: 11px; height: 11px; }
+    .cal-action-sep { margin: 0 3px 0 5px; }
   }
 
   /* ===== Modal for full reel ===== */
@@ -641,9 +667,26 @@
       <span class="lead">add to calendar —</span>
       <a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding%20Weekend&amp;dates=20270319/20270321&amp;details=Save%20the%20weekend!%20Friday%20welcome%20party%20%2B%20Saturday%20wedding%20at%20The%20Pierre%20Hotel%2C%20New%20York%20City.%20Formal%20invitation%20to%20follow.%0A%0Ahttps%3A%2F%2Fsamandjenni.com&amp;location=New%20York%2C%20NY" target="_blank" rel="noopener noreferrer">google</a>
       <span class="dot">·</span>
-      <a href="save-the-date.ics" download="Sam-and-Jenni-Wedding-Weekend.ics">apple</a>
+      <!-- No download attr — lets iOS/macOS open the .ics in Calendar app natively -->
+      <a href="save-the-date.ics" type="text/calendar">apple</a>
       <span class="dot">·</span>
-      <a href="save-the-date.ics" download="Sam-and-Jenni-Wedding-Weekend.ics">outlook</a>
+      <!-- Download attr for Windows users to save and open in Outlook -->
+      <a href="save-the-date.ics" download="Sam-and-Jenni-Wedding-Weekend.ics" type="text/calendar">outlook</a>
+      <span class="cal-action-sep">·</span>
+      <button class="cal-action" type="button" id="shareBtn" title="Share" aria-label="Share">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+          <polyline points="16 6 12 2 8 6"/>
+          <line x1="12" y1="2" x2="12" y2="15"/>
+        </svg>
+      </button>
+      <a class="cal-action" href="hero-mobile.mp4" download="Sam-and-Jenni-Save-the-Date.mp4" title="Download video" aria-label="Download save-the-date video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </a>
     </p>
     <button class="reel-link-mobile" type="button" id="openReelMobile">
       watch full reel<span class="arrow">→</span>
@@ -699,6 +742,36 @@
           soundToggleLbl.textContent = 'Sound on';
         }
       });
+
+      // Share button — uses Web Share API on mobile/supported browsers, falls back to clipboard copy
+      const shareBtn = document.getElementById('shareBtn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+          const shareData = {
+            title: 'sam + jenni · 3.19–3.20.27',
+            text: 'a wedding weekend · new york, new york',
+            url: 'https://samandjenni.com'
+          };
+          if (navigator.share) {
+            try { await navigator.share(shareData); } catch (e) { /* user cancelled */ }
+          } else if (navigator.clipboard) {
+            try {
+              await navigator.clipboard.writeText(shareData.url);
+              const originalLabel = shareBtn.getAttribute('aria-label');
+              shareBtn.setAttribute('aria-label', 'Link copied!');
+              shareBtn.style.color = '#fff';
+              setTimeout(() => {
+                shareBtn.setAttribute('aria-label', originalLabel);
+                shareBtn.style.color = '';
+              }, 1600);
+            } catch (e) {
+              prompt('Copy this link:', shareData.url);
+            }
+          } else {
+            prompt('Copy this link:', shareData.url);
+          }
+        });
+      }
 
       // Modal for full reel
       function openModal(){ modal.classList.add('open'); hero.pause(); reelVid.currentTime=0; reelVid.play().catch(()=>{}); }
