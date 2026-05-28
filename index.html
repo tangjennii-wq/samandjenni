@@ -132,12 +132,13 @@
   .film-frame {
     position: relative;
     /* Fit by whichever dimension binds first: viewport width, or height-based 16:10.
-       300px reserved for ribbon + crest + hero padding + fitf/cal-add caption stack
-       so the frame fits cleanly and SHLANG isn't clipped at the top. */
-    width: min(95vw, calc((100vh - 300px) * 1.6 + 100px));
+       260px reserved for ribbon + crest + hero padding + fitf/cal-add caption stack.
+       Asymmetric padding gives SHLANG more breathing room at top so it stays
+       visible even with small overflows. */
+    width: min(95vw, calc((100vh - 260px) * 1.6 + 100px));
     max-width: 1500px;
     aspect-ratio: calc(1280/800 + 0.08);  /* tiny extra width for side markings */
-    padding: 24px 38px;
+    padding: 36px 38px 24px;
   }
   @media (max-width: 720px) {
     /* Mobile: vertical 1080x1235 aspect, fills phone width.
@@ -153,7 +154,7 @@
 
   .stage {
     position: absolute;
-    inset: 24px 38px;
+    inset: 36px 38px 24px;
     background: #000;
     overflow: hidden;
   }
@@ -199,11 +200,11 @@
     .film-mark { font-size: 8px; letter-spacing: 0.16em; }
   }
 
-  /* Top edge markings (inside film-frame) */
-  .mark-top-left  { top: 9px; left: 46px; }
-  .mark-top-mid   { top: 9px; left: 50%; transform: translateX(-50%); }
-  .mark-top-right { top: 9px; right: 46px; }
-  /* Bottom edge markings (inside film-frame) */
+  /* Top edge markings (inside film-frame, deeper in 36px top padding band) */
+  .mark-top-left  { top: 16px; left: 46px; }
+  .mark-top-mid   { top: 16px; left: 50%; transform: translateX(-50%); }
+  .mark-top-right { top: 16px; right: 46px; }
+  /* Bottom edge markings (inside film-frame, 24px bottom padding band) */
   .mark-bot-left  { bottom: 9px; left: 46px; }
   .mark-bot-right { bottom: 9px; right: 46px; }
 
@@ -447,27 +448,6 @@
     .date-fallback .df-loc  { font-size: 11px; }
   }
 
-  /* Video load-failure fallback notice — appears below FITF if hero video won't load */
-  .video-fallback-notice {
-    display: none;
-    margin-top: 14px;
-    text-align: center;
-    font-family: 'Figtree', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.24em;
-    text-transform: lowercase;
-    color: var(--gold);
-    opacity: 0.65;
-    line-height: 1.6;
-    max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 24px;
-  }
-  .video-fallback-notice.show { display: block; }
-  @media (max-width: 720px) {
-    .video-fallback-notice { font-size: 9.5px; letter-spacing: 0.18em; margin-top: 10px; padding: 0 18px; }
-  }
 
   /* ===== Centered FITF caption below video ===== */
   .fitf-caption {
@@ -652,9 +632,6 @@
     <button class="reel-link-mobile" type="button" id="openReelMobile">
       watch full reel<span class="arrow">→</span>
     </button>
-    <p class="video-fallback-notice" id="videoFallback">
-      having trouble loading the video? try switching off wifi or to cellular — some networks block media
-    </p>
   </section>
 
   <!-- Modal for full reel -->
@@ -716,8 +693,12 @@
       closeReel.addEventListener('click', closeModal);
       document.addEventListener('keydown', e => { if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
       modal.addEventListener('click', e => { if(e.target===modal) closeModal(); });
+      const dateFallback = document.getElementById('dateFallback');
+      let videoErrored = false;
+
       hero.addEventListener('error', () => {
         console.error('Hero video error:', hero.error);
+        videoErrored = true;
         showFallback();
       });
 
@@ -731,21 +712,23 @@
         hero.addEventListener('loadedmetadata', markReady, { once: true });
       }
 
-      // Detect slow/blocked video — if readyState hasn't passed loadeddata in 6s, show fallback
+      // Detect slow/blocked video — if readyState hasn't passed loadeddata in 6s, show fallback.
+      // If video does eventually load, hide the date overlay so it doesn't double-up with the
+      // burned-in date in the video itself.
       let videoLoaded = false;
-      hero.addEventListener('loadeddata', () => { videoLoaded = true; });
+      hero.addEventListener('loadeddata', () => {
+        videoLoaded = true;
+        if (dateFallback && !videoErrored) dateFallback.classList.remove('show');
+      });
       setTimeout(() => {
         if (!videoLoaded && hero.readyState < 2) showFallback();
       }, 6000);
 
       function showFallback() {
-        const f = document.getElementById('videoFallback');
-        if (f) f.classList.add('show');
-        // Reveal the poster (it has the burned-in date) by removing the opacity:0
-        // and show the HTML date fallback overlay on top in case the poster fails too.
+        // Reveal the video element (its poster has the burned-in date too) and
+        // show the HTML date overlay in case the poster fails to load as well.
         hero.classList.add('ready');
-        const df = document.getElementById('dateFallback');
-        if (df) df.classList.add('show');
+        if (dateFallback) dateFallback.classList.add('show');
       }
     })();
   </script>
