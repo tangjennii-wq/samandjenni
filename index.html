@@ -124,7 +124,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 42px 16px 24px;
+    padding: 24px 16px;
   }
 
   /* The film-frame wraps the video and gets the analog markings.
@@ -132,9 +132,9 @@
   .film-frame {
     position: relative;
     /* Fit by whichever dimension binds first: viewport width, or height-based 16:10.
-       Constant raised to 320px so frame never overflows the hero content area
-       (was clipping SHLANG at the top on medium-height viewports). */
-    width: min(95vw, calc((100vh - 320px) * 1.6 + 100px));
+       300px reserved for ribbon + crest + hero padding + fitf/cal-add caption stack
+       so the frame fits cleanly and SHLANG isn't clipped at the top. */
+    width: min(95vw, calc((100vh - 300px) * 1.6 + 100px));
     max-width: 1500px;
     aspect-ratio: calc(1280/800 + 0.08);  /* tiny extra width for side markings */
     padding: 24px 38px;
@@ -199,13 +199,14 @@
     .film-mark { font-size: 8px; letter-spacing: 0.16em; }
   }
 
-  /* Top edge markings */
+  /* Top edge markings (inside film-frame) */
   .mark-top-left  { top: 9px; left: 46px; }
   .mark-top-mid   { top: 9px; left: 50%; transform: translateX(-50%); }
   .mark-top-right { top: 9px; right: 46px; }
-  /* Bottom edge markings */
+  /* Bottom edge markings (inside film-frame) */
   .mark-bot-left  { bottom: 9px; left: 46px; }
   .mark-bot-right { bottom: 9px; right: 46px; }
+
   /* Vertical side markings — use writing-mode so they auto-fit and never clip */
   .mark-left-side {
     top: 30%;
@@ -215,7 +216,7 @@
     white-space: nowrap;
   }
   .mark-right-side {
-    top: 50%;
+    top: 70%;
     right: 10px;
     transform: translateY(-50%);
     writing-mode: vertical-rl;
@@ -389,8 +390,13 @@
   }
   .hero-watch-reel:hover { opacity: 1; }
   .hero-watch-reel:hover::after { transform: scaleX(1); opacity: 1; }
-  .hero-watch-reel .arrow { transition: transform 0.22s; font-size: 13px; }
-  .hero-watch-reel:hover .arrow { transform: translateX(4px); }
+  .hero-watch-reel .play-tri {
+    transition: transform 0.22s;
+    font-size: 16px;
+    line-height: 1;
+    display: inline-block;
+  }
+  .hero-watch-reel:hover .play-tri { transform: translateX(2px) scale(1.1); }
   @media (max-width: 720px) {
     /* Mobile: keep upper-right watch reel visible, just smaller */
     .hero-watch-reel { top: 14px; right: 18px; font-size: 10px; letter-spacing: 0.22em; gap: 6px; }
@@ -578,12 +584,13 @@
   <section class="hero">
     <div class="film-frame">
 
-      <!-- Analog film edge markings -->
+      <!-- Analog film edge markings — all anchored to the film-frame so they border the video -->
       <span class="film-mark mark-top-left">SHLANG</span>
 
       <span class="film-mark mark-left-side">PIERRE OR BE SQUARE</span>
+      <span class="film-mark mark-right-side">shot on super 8 film</span>
 
-      <span class="film-mark mark-bot-right">shot on super 8 film  ·  ♡ with love, s + j</span>
+      <span class="film-mark mark-bot-right">♡ with love, s + j</span>
 
       <!-- Video stage -->
       <div class="stage">
@@ -623,8 +630,8 @@
 
     <!-- Watch full reel — upper-right of hero, in the black canvas outside the film frame -->
     <button class="hero-watch-reel" type="button" id="openReel">
+      <span class="play-tri" aria-hidden="true">▸</span>
       <span>Watch full reel</span>
-      <span class="arrow" aria-hidden="true">→</span>
     </button>
 
     <!-- Sound toggle — under Watch Full Reel, in the black canvas -->
