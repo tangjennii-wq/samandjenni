@@ -235,8 +235,6 @@
     white-space: nowrap;
   }
 
-  /* Mobile / desktop visibility helpers — used to swap right-side marking content */
-  .mark-mobile { display: none; }
   @media (max-width: 720px) {
     /* Mobile: top marking sits tight to the video edge */
     .mark-top-left  { top: 3px; left: 22px; font-size: 8.5px; letter-spacing: 0.18em; }
@@ -248,9 +246,6 @@
        Left (PIERRE) high at top: 22%, right (heart) low at top: 70% — mirrors diagonal. */
     .mark-left-side  { left: 6px; top: 22%; font-size: 8.5px; letter-spacing: 0.18em; }
     .mark-right-side { right: 6px; font-size: 8.5px; letter-spacing: 0.18em; }
-    /* Swap right-side marking content on mobile — hide "shot on super 8 film", show heart */
-    .mark-desktop { display: none; }
-    .mark-mobile  { display: block; }
   }
 
   /* ===== Centered SOUND ON overlay (initial state) ===== */
@@ -587,14 +582,11 @@
   <section class="hero">
     <div class="film-frame">
 
-      <!-- Analog film edge markings — all anchored to the film-frame so they border the video -->
-      <span class="film-mark mark-top-left">SHLANG</span>
+      <!-- Analog film edge markings — desktop and mobile share the same layout now -->
+      <span class="film-mark mark-top-left">shlang on super 8</span>
 
       <span class="film-mark mark-left-side">PIERRE OR BE SQUARE</span>
-      <span class="film-mark mark-right-side mark-desktop">shot on super 8 film</span>
-      <span class="film-mark mark-right-side mark-mobile">♡ with love, s + j</span>
-
-      <span class="film-mark mark-bot-right">♡ with love, s + j</span>
+      <span class="film-mark mark-right-side">♡ with love, s + j</span>
 
       <!-- Video stage -->
       <div class="stage">
