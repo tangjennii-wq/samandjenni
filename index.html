@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>sam + jenni · 3.19–3.20.27</title>
-<meta name="description" content="a wedding weekend · new york, new york">
+<meta name="description" content="shlang's wedding weekend · new york city">
 
 <!-- Open Graph / iMessage / WhatsApp / Slack / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://samandjenni.com/">
 <meta property="og:title" content="sam + jenni · 3.19–3.20.27">
-<meta property="og:description" content="a wedding weekend · new york, new york">
+<meta property="og:description" content="shlang's wedding weekend · new york city">
 <meta property="og:image" content="https://samandjenni.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -19,7 +19,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="sam + jenni · 3.19–3.20.27">
-<meta name="twitter:description" content="a wedding weekend · new york, new york">
+<meta name="twitter:description" content="shlang's wedding weekend · new york city">
 <meta name="twitter:image" content="https://samandjenni.com/og-image.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -182,11 +182,7 @@
     object-fit: cover;
     display: block;
     background: var(--dark);
-    /* Hidden until metadata loads — prevents brief flash at intrinsic source dimensions */
-    opacity: 0;
-    transition: opacity 0.35s ease;
   }
-  .stage video.ready { opacity: 1; }
   .stage::after {
     content: "";
     position: absolute;
@@ -617,7 +613,7 @@
       <!-- Video stage -->
       <div class="stage">
         <video id="heroVideo"
-               muted loop playsinline preload="auto"
+               muted autoplay loop playsinline preload="auto"
                poster="poster.jpg"
                data-mobile-src="hero-mobile.mp4"
                data-desktop-src="hero.mp4"></video>
@@ -754,7 +750,7 @@
         shareBtn.addEventListener('click', async () => {
           const shareData = {
             title: 'sam + jenni · 3.19–3.20.27',
-            text: 'a wedding weekend · new york, new york',
+            text: "shlang's wedding weekend · new york city",
             url: 'https://samandjenni.com'
           };
           if (navigator.share) {
@@ -796,30 +792,15 @@
         showFallback();
       });
 
-      // Reveal video ONLY after canplay (readyState 3) AND a double-rAF — by then
-      // iOS Safari has fully laid out the video at the container's dimensions, not
-      // at the video's intrinsic 1080x1235 size. We also call play() ourselves
-      // (rather than using the autoplay attribute) so the video doesn't start
-      // before we're ready to show it.
-      function markReady() {
-        hero.classList.add('ready');
-        // Kick off muted playback now that we're ready to show the video
-        hero.play().catch(() => {});
-      }
-      function revealWhenSettled() {
-        // Two animation frames = wait for the next paint after canplay
-        // (ensures container-sized rendering has actually committed)
-        requestAnimationFrame(() => requestAnimationFrame(markReady));
-      }
-      if (hero.readyState >= 3) {
-        revealWhenSettled();
-      } else {
-        hero.addEventListener('canplay', revealWhenSettled, { once: true });
-      }
+      // Autoplay is set on the <video> element — browser starts playing as soon as
+      // possible. We don't hide the video while loading because that left users on
+      // slow cellular connections staring at a black box waiting for canplay.
+      // The poster (with burned-in date) shows during load instead, and the brief
+      // iOS resize flash on first frame is an acceptable trade-off for reliability.
 
-      // Detect slow/blocked video — if readyState hasn't passed loadeddata in 6s, show fallback.
-      // If video does eventually load, hide the date overlay so it doesn't double-up with the
-      // burned-in date in the video itself.
+      // Detect slow/blocked video — if readyState hasn't passed loadeddata in 8s,
+      // show the HTML date overlay as belt-and-suspenders. If video does eventually
+      // load, hide the overlay so it doesn't double-up with the burned-in date.
       let videoLoaded = false;
       hero.addEventListener('loadeddata', () => {
         videoLoaded = true;
@@ -827,12 +808,9 @@
       });
       setTimeout(() => {
         if (!videoLoaded && hero.readyState < 2) showFallback();
-      }, 6000);
+      }, 8000);
 
       function showFallback() {
-        // Reveal the video element (its poster has the burned-in date too) and
-        // show the HTML date overlay in case the poster fails to load as well.
-        hero.classList.add('ready');
         if (dateFallback) dateFallback.classList.add('show');
       }
     })();
