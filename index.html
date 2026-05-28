@@ -131,33 +131,35 @@
      Video aspect 1280/800 = 16:10 — fills width (with padding for markings) */
   .film-frame {
     position: relative;
-    /* Fit by whichever dimension binds first: viewport width, or height-based 16:10 */
-    width: min(95vw, calc((100vh - 240px) * 1.6 + 100px));
+    /* Fit by whichever dimension binds first: viewport width, or height-based 16:10.
+       Constant raised to 320px so frame never overflows the hero content area
+       (was clipping SHLANG at the top on medium-height viewports). */
+    width: min(95vw, calc((100vh - 320px) * 1.6 + 100px));
     max-width: 1500px;
     aspect-ratio: calc(1280/800 + 0.08);  /* tiny extra width for side markings */
-    padding: 32px 50px;
+    padding: 24px 38px;
   }
   @media (max-width: 720px) {
     /* Mobile: vertical 1080x1235 aspect, fills phone width.
-       Tighter top padding so SHLANG 400TX sits close to the video edge. */
+       Tighter padding so markings sit right at the video edge. */
     .film-frame {
       width: 100vw;
       max-width: none;
       aspect-ratio: 1080 / 1235;
-      padding: 22px 32px 8px;
+      padding: 14px 18px 4px;
     }
     .hero { padding: 12px 0; }
   }
 
   .stage {
     position: absolute;
-    inset: 32px 50px;
+    inset: 24px 38px;
     background: #000;
     overflow: hidden;
   }
   @media (max-width: 720px) {
-    /* Inset matches new padding — top/bottom asymmetric so markings show above */
-    .stage { top: 22px; left: 32px; right: 32px; bottom: 8px; }
+    /* Inset matches new padding */
+    .stage { top: 14px; left: 18px; right: 18px; bottom: 4px; }
   }
 
   .stage video {
@@ -198,37 +200,37 @@
   }
 
   /* Top edge markings */
-  .mark-top-left  { top: 18px; left: 60px; }
-  .mark-top-mid   { top: 18px; left: 50%; transform: translateX(-50%); }
-  .mark-top-right { top: 18px; right: 60px; }
+  .mark-top-left  { top: 9px; left: 46px; }
+  .mark-top-mid   { top: 9px; left: 50%; transform: translateX(-50%); }
+  .mark-top-right { top: 9px; right: 46px; }
   /* Bottom edge markings */
-  .mark-bot-left  { bottom: 18px; left: 60px; }
-  .mark-bot-right { bottom: 18px; right: 60px; }
+  .mark-bot-left  { bottom: 9px; left: 46px; }
+  .mark-bot-right { bottom: 9px; right: 46px; }
   /* Vertical side markings — use writing-mode so they auto-fit and never clip */
   .mark-left-side {
-    top: 50%;
-    left: 14px;
+    top: 30%;
+    left: 10px;
     transform: translateY(-50%);
     writing-mode: vertical-rl;
     white-space: nowrap;
   }
   .mark-right-side {
     top: 50%;
-    right: 14px;
+    right: 10px;
     transform: translateY(-50%);
     writing-mode: vertical-rl;
     white-space: nowrap;
   }
   @media (max-width: 720px) {
-    /* Mobile: SHLANG 400TX positioned higher in the top padding band so it sits clearly above the video vignette */
-    .mark-top-left  { top: 6px; left: 38px; font-size: 8.5px; letter-spacing: 0.18em; }
+    /* Mobile: top marking sits tight to the video edge */
+    .mark-top-left  { top: 3px; left: 22px; font-size: 8.5px; letter-spacing: 0.18em; }
     .mark-top-right { display: none; }
     /* Hide bottom markings on mobile — no floating frame numbers between video & FITF */
     .mark-bot-left  { display: none; }
     .mark-bot-right { display: none; }
-    /* Side vertical markings — pulled in closer to the video edge for a tighter, embedded feel */
-    .mark-left-side  { left: 14px; font-size: 8.5px; letter-spacing: 0.18em; }
-    .mark-right-side { right: 14px; font-size: 8.5px; letter-spacing: 0.18em; }
+    /* Side vertical markings — pulled tight to video edge */
+    .mark-left-side  { left: 6px; font-size: 8.5px; letter-spacing: 0.18em; }
+    .mark-right-side { right: 6px; font-size: 8.5px; letter-spacing: 0.18em; }
   }
 
   /* ===== Centered SOUND ON overlay (initial state) ===== */
@@ -399,6 +401,46 @@
   /* Hide the inline mobile link entirely — we restored the upper-right watch reel */
   .reel-link-mobile { display: none; }
 
+  /* Date text fallback — shown over the black stage if the video fails entirely.
+     Mirrors the burned-in lower-left date typography so guests still see when/where. */
+  .date-fallback {
+    position: absolute;
+    bottom: 8%;
+    left: 5%;
+    z-index: 4;
+    color: var(--gold);
+    font-family: 'Figtree', sans-serif;
+    line-height: 1.3;
+    text-transform: lowercase;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .date-fallback.show { opacity: 1; }
+  .date-fallback .df-tag {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    opacity: 0.85;
+  }
+  .date-fallback .df-date {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .date-fallback .df-loc {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.85;
+  }
+  @media (max-width: 720px) {
+    .date-fallback .df-tag  { font-size: 11px; }
+    .date-fallback .df-date { font-size: 30px; }
+    .date-fallback .df-loc  { font-size: 11px; }
+  }
+
   /* Video load-failure fallback notice — appears below FITF if hero video won't load */
   .video-fallback-notice {
     display: none;
@@ -438,7 +480,7 @@
     .fitf-caption { font-size: 9px; letter-spacing: 0.32em; margin-top: 14px; }
   }
 
-  /* ===== Add to Calendar — small subtle text links below FITF ===== */
+  /* ===== Add to Calendar — small gold text links below FITF (matches caption color) ===== */
   .cal-add {
     margin-top: 10px;
     text-align: center;
@@ -446,25 +488,25 @@
     font-size: 10.5px;
     letter-spacing: 0.28em;
     text-transform: lowercase;
-    color: var(--ivory);
-    opacity: 0.6;
+    color: var(--gold);
+    opacity: 0.82;
     flex: 0 0 auto;
   }
   .cal-add .lead {
-    color: var(--ivory);
-    opacity: 0.75;
+    color: var(--gold);
     margin-right: 6px;
   }
   .cal-add a {
-    color: var(--ivory);
+    color: var(--gold);
     text-decoration: none;
-    border-bottom: 1px solid rgba(250, 243, 224, 0.32);
+    border-bottom: 1px solid rgba(229, 200, 34, 0.4);
     padding-bottom: 1px;
     transition: color 0.2s, border-color 0.2s, opacity 0.2s;
   }
   .cal-add a:hover {
     color: var(--gold);
     border-color: var(--gold);
+    opacity: 1;
   }
   .cal-add .dot {
     margin: 0 7px;
@@ -529,7 +571,7 @@
       <span class="crest-name">Sam + Jenni</span>
       <span class="crest-rule"></span>
     </div>
-    <div class="crest-tag">march 19–20, 2027 · new york city</div>
+    <div class="crest-tag">new york or nowhere</div>
   </header>
 
   <!-- Hero with film frame markings -->
@@ -537,21 +579,37 @@
     <div class="film-frame">
 
       <!-- Analog film edge markings -->
-      <span class="film-mark mark-top-left">SHLANG 400TX</span>
+      <span class="film-mark mark-top-left">SHLANG</span>
 
       <span class="film-mark mark-left-side">PIERRE OR BE SQUARE</span>
-      <span class="film-mark mark-right-side">S + J · 400TX</span>
 
-      <span class="film-mark mark-bot-right">♡ with love, s + j</span>
+      <span class="film-mark mark-bot-right">shot on super 8 film  ·  ♡ with love, s + j</span>
 
       <!-- Video stage -->
       <div class="stage">
         <video id="heroVideo"
                muted autoplay loop playsinline preload="auto"
-               poster="poster.jpg">
-          <source src="hero-mobile.mp4" type="video/mp4" media="(max-width: 720px)">
-        <source src="hero.mp4" type="video/mp4">
-        </video>
+               poster="poster.jpg"
+               data-mobile-src="hero-mobile.mp4"
+               data-desktop-src="hero.mp4"></video>
+        <script>
+          // Set the correct source for the current viewport synchronously, before
+          // the browser starts pre-loading. Avoids the iOS Safari bug where the
+          // <source media> queries aren't honored on first load, causing the
+          // desktop video to flash briefly inside the mobile-aspect frame.
+          (function() {
+            var v = document.getElementById('heroVideo');
+            var isMobile = window.matchMedia('(max-width: 720px)').matches;
+            v.src = isMobile ? v.dataset.mobileSrc : v.dataset.desktopSrc;
+          })();
+        </script>
+
+        <!-- Date text fallback — shown only if the video fails to load -->
+        <div class="date-fallback" id="dateFallback" aria-hidden="true">
+          <div class="df-tag">save the weekend.</div>
+          <div class="df-date">3.19–3.20.27</div>
+          <div class="df-loc">new york, new york</div>
+        </div>
 
         <!-- Centered "tap for sound" entry overlay with breathing ring -->
         <div class="sound-overlay" id="soundOverlay" role="button" aria-label="Tap for sound">
@@ -676,6 +734,11 @@
       function showFallback() {
         const f = document.getElementById('videoFallback');
         if (f) f.classList.add('show');
+        // Reveal the poster (it has the burned-in date) by removing the opacity:0
+        // and show the HTML date fallback overlay on top in case the poster fails too.
+        hero.classList.add('ready');
+        const df = document.getElementById('dateFallback');
+        if (df) df.classList.add('show');
       }
     })();
   </script>
