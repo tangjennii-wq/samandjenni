@@ -617,7 +617,7 @@
       <!-- Video stage -->
       <div class="stage">
         <video id="heroVideo"
-               muted autoplay loop playsinline preload="auto"
+               muted loop playsinline preload="auto"
                poster="poster.jpg"
                data-mobile-src="hero-mobile.mp4"
                data-desktop-src="hero.mp4"></video>
@@ -626,6 +626,11 @@
           // the browser starts pre-loading. Avoids the iOS Safari bug where the
           // <source media> queries aren't honored on first load, causing the
           // desktop video to flash briefly inside the mobile-aspect frame.
+          //
+          // We also intentionally OMIT the autoplay attribute and trigger play()
+          // from JS only after canplay + double-rAF — this prevents iOS from
+          // briefly rendering the video at its intrinsic dimensions (1080x1235)
+          // before object-fit + container CSS take effect.
           (function() {
             var v = document.getElementById('heroVideo');
             var isMobile = window.matchMedia('(max-width: 720px)').matches;
@@ -791,14 +796,25 @@
         showFallback();
       });
 
-      // Reveal video only once metadata + first frame are ready — prevents
-      // a flash of the video at its intrinsic source aspect (vertical 1080x1235
-      // on mobile) before the parent's aspect-ratio layout takes effect.
-      function markReady() { hero.classList.add('ready'); }
-      if (hero.readyState >= 2) markReady();
-      else {
-        hero.addEventListener('loadeddata', markReady, { once: true });
-        hero.addEventListener('loadedmetadata', markReady, { once: true });
+      // Reveal video ONLY after canplay (readyState 3) AND a double-rAF — by then
+      // iOS Safari has fully laid out the video at the container's dimensions, not
+      // at the video's intrinsic 1080x1235 size. We also call play() ourselves
+      // (rather than using the autoplay attribute) so the video doesn't start
+      // before we're ready to show it.
+      function markReady() {
+        hero.classList.add('ready');
+        // Kick off muted playback now that we're ready to show the video
+        hero.play().catch(() => {});
+      }
+      function revealWhenSettled() {
+        // Two animation frames = wait for the next paint after canplay
+        // (ensures container-sized rendering has actually committed)
+        requestAnimationFrame(() => requestAnimationFrame(markReady));
+      }
+      if (hero.readyState >= 3) {
+        revealWhenSettled();
+      } else {
+        hero.addEventListener('canplay', revealWhenSettled, { once: true });
       }
 
       // Detect slow/blocked video — if readyState hasn't passed loadeddata in 6s, show fallback.
