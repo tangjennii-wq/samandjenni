@@ -39,6 +39,17 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
+
+  /* Keyboard accessibility — show focus indicator only for keyboard navigation, not mouse clicks */
+  button:focus:not(:focus-visible),
+  a:focus:not(:focus-visible) { outline: none; }
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
   body {
     font-family: 'Figtree', system-ui, -apple-system, sans-serif;
     background: var(--dark);
@@ -208,21 +219,24 @@
   .mark-bot-left  { bottom: 9px; left: 46px; }
   .mark-bot-right { bottom: 9px; right: 46px; }
 
-  /* Vertical side markings — use writing-mode so they auto-fit and never clip */
+  /* Vertical side markings — left mirrors right by reading bottom-to-top */
   .mark-left-side {
     top: 30%;
     left: 10px;
     transform: translateY(-50%);
-    writing-mode: vertical-rl;
+    writing-mode: sideways-lr;  /* bottom-to-top with upright chars */
     white-space: nowrap;
   }
   .mark-right-side {
     top: 70%;
     right: 10px;
     transform: translateY(-50%);
-    writing-mode: vertical-rl;
+    writing-mode: vertical-rl;  /* top-to-bottom */
     white-space: nowrap;
   }
+
+  /* Mobile / desktop visibility helpers — used to swap right-side marking content */
+  .mark-mobile { display: none; }
   @media (max-width: 720px) {
     /* Mobile: top marking sits tight to the video edge */
     .mark-top-left  { top: 3px; left: 22px; font-size: 8.5px; letter-spacing: 0.18em; }
@@ -230,9 +244,12 @@
     /* Hide bottom markings on mobile — no floating frame numbers between video & FITF */
     .mark-bot-left  { display: none; }
     .mark-bot-right { display: none; }
-    /* Side vertical markings — pulled tight to video edge */
-    .mark-left-side  { left: 6px; font-size: 8.5px; letter-spacing: 0.18em; }
-    .mark-right-side { right: 6px; font-size: 8.5px; letter-spacing: 0.18em; }
+    /* Side vertical markings — pulled tight to video edge, PIERRE higher up */
+    .mark-left-side  { left: 6px; top: 22%; font-size: 8.5px; letter-spacing: 0.18em; }
+    .mark-right-side { right: 6px; top: 22%; font-size: 8.5px; letter-spacing: 0.18em; }
+    /* Swap right-side marking content on mobile — hide "shot on super 8 film", show heart */
+    .mark-desktop { display: none; }
+    .mark-mobile  { display: block; }
   }
 
   /* ===== Centered SOUND ON overlay (initial state) ===== */
@@ -389,6 +406,7 @@
     opacity: 0.6;
     transition: transform 0.3s ease-out, opacity 0.25s;
   }
+  .hero-watch-reel { opacity: 0.5; }
   .hero-watch-reel:hover { opacity: 1; }
   .hero-watch-reel:hover::after { transform: scaleX(1); opacity: 1; }
   .hero-watch-reel .play-tri {
@@ -466,7 +484,7 @@
     .fitf-caption { font-size: 9px; letter-spacing: 0.32em; margin-top: 14px; }
   }
 
-  /* ===== Add to Calendar — small gold text links below FITF (matches caption color) ===== */
+  /* ===== Add to Calendar — gold links below FITF (links at full opacity = clearly tappable) ===== */
   .cal-add {
     margin-top: 10px;
     text-align: center;
@@ -475,28 +493,28 @@
     letter-spacing: 0.28em;
     text-transform: lowercase;
     color: var(--gold);
-    opacity: 0.82;
     flex: 0 0 auto;
   }
   .cal-add .lead {
     color: var(--gold);
+    opacity: 0.7;        /* lead reads as caption */
     margin-right: 6px;
   }
   .cal-add a {
     color: var(--gold);
+    opacity: 1;           /* link words at full gold — clearly tappable */
     text-decoration: none;
-    border-bottom: 1px solid rgba(229, 200, 34, 0.4);
+    border-bottom: 1px solid rgba(229, 200, 34, 0.65);  /* underline more visible */
     padding-bottom: 1px;
-    transition: color 0.2s, border-color 0.2s, opacity 0.2s;
+    transition: color 0.2s, border-color 0.2s;
   }
   .cal-add a:hover {
-    color: var(--gold);
-    border-color: var(--gold);
-    opacity: 1;
+    color: #fff;
+    border-color: #fff;
   }
   .cal-add .dot {
     margin: 0 7px;
-    opacity: 0.5;
+    opacity: 0.45;
   }
   @media (max-width: 720px) {
     .cal-add { font-size: 9px; letter-spacing: 0.2em; margin-top: 8px; }
@@ -508,7 +526,11 @@
   .modal.open { display: flex; }
   .modal-inner { background: #000; max-width: 1100px; width: 100%; border: 2px solid var(--gold); border-radius: 2px; position: relative; }
   .modal video { width: 100%; height: auto; display: block; }
-  .modal-close { position: absolute; top: -18px; right: -18px; background: var(--red); color: var(--white); border: none; width: 40px; height: 40px; border-radius: 999px; cursor: pointer; font-size: 18px; font-weight: 700; line-height: 1; box-shadow: 0 4px 18px rgba(0,0,0,0.5); }
+  .modal-close { position: absolute; top: -18px; right: -18px; background: var(--red); color: var(--white); border: none; width: 40px; height: 40px; border-radius: 999px; cursor: pointer; font-size: 18px; font-weight: 700; line-height: 1; box-shadow: 0 4px 18px rgba(0,0,0,0.5); z-index: 2; }
+  @media (max-width: 720px) {
+    /* Mobile: keep close button inside the modal-inner so it won't clip against the screen edge or iOS notch */
+    .modal-close { top: 10px; right: 10px; width: 36px; height: 36px; }
+  }
 
   /* Reel credit — tiny film-credit strip below the video in the modal */
   .reel-credit {
@@ -568,7 +590,8 @@
       <span class="film-mark mark-top-left">SHLANG</span>
 
       <span class="film-mark mark-left-side">PIERRE OR BE SQUARE</span>
-      <span class="film-mark mark-right-side">shot on super 8 film</span>
+      <span class="film-mark mark-right-side mark-desktop">shot on super 8 film</span>
+      <span class="film-mark mark-right-side mark-mobile">♡ with love, s + j</span>
 
       <span class="film-mark mark-bot-right">♡ with love, s + j</span>
 
