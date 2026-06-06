@@ -77,9 +77,12 @@
     margin: 0 18px;
     opacity: 0.7;
   }
+  .ribbon-mobile { display: none; }
   @media (max-width: 720px) {
     .ribbon { font-size: 9.5px; letter-spacing: 0.14em; padding: 10px 8px; white-space: nowrap; overflow: hidden; }
     .ribbon .sep { margin: 0 8px; }
+    .ribbon-desktop { display: none; }
+    .ribbon-mobile { display: inline; }
   }
 
   /* ===== White crest band ===== */
@@ -587,7 +590,8 @@
 
   <!-- Red ticker bar: itinerary -->
   <div class="ribbon">
-    friday welcome party <span class="sep">✦</span> saturday wedding at the pierre
+    <span class="ribbon-desktop">friday welcome at <a href="https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">chinese tuxedo</a> <span class="sep">✦</span> saturday wedding at <a href="https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">the pierre</a></span>
+    <span class="ribbon-mobile">fri party @ <a href="https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">chinese tuxedo</a> <span class="sep">✦</span> sat wedding @ <a href="https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">the pierre</a></span>
   </div>
 
   <!-- White crest band -->
