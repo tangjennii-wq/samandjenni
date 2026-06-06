@@ -9,8 +9,8 @@ DTSTAMP:20260527T000000Z
 DTSTART;VALUE=DATE:20270319
 DTEND;VALUE=DATE:20270321
 SUMMARY:Sam + Jenni · Wedding Weekend
-DESCRIPTION:Save the weekend! Friday welcome party + Saturday wedding at The Pierre Hotel\, New York City. Formal invitation to follow.\n\nhttps://samandjenni.com
-LOCATION:New York\, NY
+DESCRIPTION:Save the weekend!\n\nFriday 3.19 — Welcome party at Chinese Tuxedo (5 Doyers St\, New York\, NY 10013)\nSaturday 3.20 — Wedding at The Pierre Hotel (2 E 61st St\, New York\, NY 10065)\n\nFormal invitation to follow.\n\nhttps://samandjenni.com
+LOCATION:Chinese Tuxedo (Fri) & The Pierre Hotel (Sat)\, New York\, NY
 URL:https://samandjenni.com
 END:VEVENT
 END:VCALENDAR
