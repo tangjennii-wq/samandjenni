@@ -1,17 +1,27 @@
-// Server-side password gate. Runs on Vercel's Edge before any page is served,
-// so the site HTML is never sent to someone who hasn't entered the passphrase.
+// Server-side gate. Runs on Vercel's Edge before any page is served.
+// NOTE: this is a plain Vercel middleware (no Next.js), so `request` is a
+// standard Web Request — it has NO `.cookies` helper. We parse the Cookie
+// header ourselves. (Using request.cookies is what caused MIDDLEWARE_INVOCATION_FAILED.)
+
 export const config = {
-  // Gate everything EXCEPT: the gate page itself, the login API, and static assets
-  // (videos/images still need to be fetchable once you're through the gate).
   matcher: ['/((?!gate|api/login|_next|favicon.ico|.*\\.(?:mp4|jpg|jpeg|png|gif|ics|svg|webp|css|js|woff|woff2|ico)).*)'],
 };
 
-export default function middleware(request) {
-  const cookie = request.cookies.get('sj_pass');
-  const expected = process.env.SITE_PASSWORD || 'shlang';
+function parseCookies(header) {
+  const out = {};
+  (header || '').split(';').forEach((part) => {
+    const i = part.indexOf('=');
+    if (i > -1) out[part.slice(0, i).trim()] = decodeURIComponent(part.slice(i + 1).trim());
+  });
+  return out;
+}
 
-  if (cookie && cookie.value === expected) {
-    return; // authenticated — serve the site
+export default function middleware(request) {
+  const expected = process.env.SITE_PASSWORD || 'shlang';
+  const cookies = parseCookies(request.headers.get('cookie'));
+
+  if (cookies.sj_pass === expected) {
+    return; // authenticated — let the request through
   }
 
   const url = new URL(request.url);

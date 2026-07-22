@@ -26,13 +26,13 @@
   .sub{margin-top:13px;font-size:10.5px;font-weight:800;letter-spacing:.3em;
     text-transform:uppercase;color:var(--red)}
   .date{margin-top:20px;font-size:16px;font-weight:700;letter-spacing:.1em;color:#8a7863}
-  form{margin-top:34px;display:flex;flex-direction:column;gap:12px}
-  label{font-size:10px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#a2907a}
+  form{margin-top:32px;display:flex;flex-direction:column;gap:12px;text-align:left}
+  label{font-size:10px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#a2907a;margin-bottom:-4px}
   input{border:2px solid var(--dark);border-radius:14px;background:#fbf7ef;color:var(--dark);
-    font-family:inherit;font-size:16px;padding:15px 16px;text-align:center;letter-spacing:.08em;outline:none}
-  input::placeholder{color:#c9b8a2}
+    font-family:inherit;font-size:16px;padding:15px 16px;text-align:center;letter-spacing:.06em;outline:none}
+  input::placeholder{color:#c9b8a2;letter-spacing:.02em;font-size:14px}
   input:focus{border-color:var(--red);background:#fff}
-  button{border:2px solid var(--dark);border-radius:14px;background:var(--gold);color:var(--dark);
+  button{margin-top:6px;border:2px solid var(--dark);border-radius:14px;background:var(--gold);color:var(--dark);
     font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
     padding:16px;cursor:pointer;transition:background .15s,color .15s}
   button:hover{background:var(--red);color:#fff;border-color:var(--red)}
@@ -50,13 +50,16 @@
       <div class="date">3.19 — 3.20.27</div>
 
       <form method="POST" action="/api/login">
+        <label for="lastname">Your last name</label>
+        <input id="lastname" name="lastname" type="text" autocomplete="off" autofocus
+               placeholder="lowercase, please" autocapitalize="none" spellcheck="false" />
         <label for="password">Passphrase</label>
-        <input id="password" name="password" type="password" autocomplete="off" autofocus placeholder="••••••••••••" />
+        <input id="password" name="password" type="password" autocomplete="off" placeholder="••••••••••••" />
         <button type="submit">Enter</button>
       </form>
 
       <div class="err" id="err">that's not it — try again ♡</div>
-      <div class="hint">the passphrase is in our email to you.<br>lost it? just text us.</div>
+      <div class="hint">last name in lowercase, and the passphrase from our email.<br>lost it? just text us.</div>
     </div>
   </div>
 <script>
