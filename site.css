@@ -60,7 +60,7 @@ a{color:inherit}
   letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
 
 /* Hotels */
-.hotel{border:2px solid var(--dark);background:#fff;margin-bottom:-2px;display:grid;
+.hotel{border:2px solid var(--dark);background:#fff;margin-bottom:12px;display:grid;
   grid-template-columns:1fr auto;gap:18px;align-items:center;padding:20px 22px}
 .hotel.star{outline:3px solid var(--red);outline-offset:-3px;position:relative;z-index:1}
 .hname{font-size:19px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
@@ -117,3 +117,11 @@ a{color:inherit}
   .sitenav a{font-size:9.5px;letter-spacing:.13em}
   .sect{padding:52px 18px 60px}
 }
+
+/* ===== Rounded corners — soften every card & button ===== */
+.dcard, .hotel, .rec, .faq, .travelnote, .rsvpbox{ border-radius:18px; overflow:hidden; }
+.dcard .band{ border-radius:0; }
+.bookbtn{ border-radius:999px; }
+.sitenav a.active, .sitenav a:hover{ } /* nav stays underline-style */
+.gtable-wrap{ border-radius:18px; overflow:hidden; }
+.gf{ border-radius:999px; }
