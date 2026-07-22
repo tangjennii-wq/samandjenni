@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>over/under · sam + jenni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+
+  .hdr{text-align:center;padding:66px 24px 10px}
+  h1{margin-top:12px;font-size:46px;font-weight:900;letter-spacing:.03em;text-transform:uppercase;line-height:1}
+  h1 .slash{color:var(--red)}
+
+  .board{max-width:840px;margin:44px auto 0;padding:0 24px}
+  .scorebar{display:flex;justify-content:space-between;align-items:center;border:2px solid var(--dark);
+    background:var(--dark);color:var(--gold);padding:13px 18px;font-size:11px;font-weight:800;
+    letter-spacing:.2em;text-transform:uppercase}
+  .scorebar span{color:var(--white)}
+
+  .line{border:2px solid var(--dark);border-top:none;background:#fff;padding:20px 20px 18px}
+  .line:nth-child(even){background:#fdfaf3}
+  .q{font-size:16px;font-weight:600;line-height:1.5}
+  .num{display:inline-block;background:var(--gold);border:2px solid var(--dark);border-radius:6px;
+    padding:1px 9px;font-weight:900;font-variant-numeric:tabular-nums;margin:0 2px}
+  .picks{display:flex;gap:10px;margin-top:14px}
+  .pick{flex:1;border:2px solid var(--dark);background:#fff;font-family:inherit;font-size:12px;font-weight:800;
+    letter-spacing:.16em;text-transform:uppercase;padding:11px;cursor:pointer;border-radius:8px;
+    transition:background .12s,color .12s}
+  .pick:hover{background:var(--ivory)}
+  .pick.on.over{background:var(--green);color:#fff;border-color:var(--dark)}
+  .pick.on.under{background:var(--red);color:#fff;border-color:var(--dark)}
+  .hot{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--red);color:#fff;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+
+  .actions{max-width:840px;margin:30px auto 0;padding:0 24px 80px;text-align:center}
+  .btn{display:inline-block;border:2px solid var(--dark);background:var(--gold);color:var(--dark);
+    text-decoration:none;font-size:11.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+    padding:16px 28px;border-radius:12px;cursor:pointer;font-family:inherit}
+  .btn:hover{background:var(--red);color:#fff}
+  .btn.ghost{background:#fff}
+  .fineprint{margin-top:22px;font-size:12.5px;color:#8a7863;font-style:italic;line-height:1.7}
+  .copied{margin-top:14px;font-size:12.5px;font-weight:700;color:var(--green);display:none}
+  .copied.show{display:block}
+  @media(max-width:760px){
+    h1{font-size:32px}
+        .picks{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+  <div class="ribbon">
+    friday welcome at <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener">chinese tuxedo</a>
+    <span class="sep">✦</span>
+    saturday wedding at <a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener">the pierre</a>
+  </div>
+  <header class="crest">
+    <div class="crest-name"><a href="index.html">Sam + Jenni</a></div>
+    <div class="crest-tag">new york or nowhere</div>
+  </header>
+
+  <nav class="sitenav">
+    <a href="index.html">home</a>
+    <a href="weekend.html">the weekend</a>
+    <a class="active" href="over-under.html">over/under</a>
+    <a href="recommendations.html">recommendations</a>
+    <a href="travel.html">travel &amp; hotels</a>
+    <a href="rsvp.html">rsvp</a>
+  </nav>
+
+  <div class="hdr">
+    <div class="eyebrow">The Shlang Line · 3.20.27</div>
+    <h1>Over<span class="slash">/</span>Under</h1>
+    <div class="rule"></div>
+    <p class="lede">set your line, place your bets, hold us accountable. no money changes hands — only reputations. picks lock when the ceremony starts.</p>
+  </div>
+
+  <div class="board">
+    <div class="scorebar"><span>Your Card</span><span id="tally">0 of 10 picked</span></div>
+    <div id="lines"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="copyBtn">Copy my picks</button>
+    <a class="btn ghost" id="mailBtn" href="#">Email them to us</a>
+    <div class="copied" id="copied">copied — now go paste it and talk your talk ♡</div>
+    <p class="fineprint">
+      your picks save on this device, so you can come back and change your mind (we'll know).<br>
+      the house always wins, and in this case the house is getting married.
+    </p>
+  </div>
+
+  <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
+
+<script>
+  const LINES = [
+    { n: 4.5,  q: "minutes into his vows before <b>Sam</b> cries", hot: true },
+    { n: 8.5,  q: "Taylor Swift songs played across the whole weekend" },
+    { n: 5.5,  q: "doctors on the dance floor at any one time (have you <i>seen</i> this guest list)", hot: true },
+    { n: 11.5, q: "the hour <b>Jenni's</b> shoes come off (p.m., and we're being generous)" },
+    { n: 3.5,  q: "speeches that run over their allotted time" },
+    { n: 45,   q: "minutes past its official end that the Friday party actually ends" },
+    { n: 2.5,  q: "guests who ask if the video on the website was 'a real film camera'" },
+    { n: 14.5, q: "people still standing at the after-party at 2 a.m." },
+    { n: 1.5,  q: "relatives who call it 'Shlang's wedding' out loud, at the wedding" },
+    { n: 6.5,  q: "times someone says 'New York or nowhere' unironically" }
+  ];
+
+  const KEY = 'sj-overunder-v1';
+  let picks = JSON.parse(localStorage.getItem(KEY) || '{}');
+
+  function save(){ localStorage.setItem(KEY, JSON.stringify(picks)); }
+
+  function render(){
+    const box = document.getElementById('lines');
+    box.innerHTML = '';
+    LINES.forEach((L, i) => {
+      const p = picks[i];
+      const d = document.createElement('div');
+      d.className = 'line';
+      d.innerHTML =
+        '<div class="q"><span class="num">' + L.n + '</span> ' + L.q +
+        (L.hot ? '<span class="hot">crowd favorite</span>' : '') + '</div>' +
+        '<div class="picks">' +
+          '<button class="pick over ' + (p === 'over' ? 'on' : '') + '" data-i="' + i + '" data-v="over">Over</button>' +
+          '<button class="pick under ' + (p === 'under' ? 'on' : '') + '" data-i="' + i + '" data-v="under">Under</button>' +
+        '</div>';
+      box.appendChild(d);
+    });
+    box.querySelectorAll('.pick').forEach(b => {
+      b.onclick = () => {
+        const i = b.dataset.i;
+        picks[i] = (picks[i] === b.dataset.v) ? undefined : b.dataset.v;
+        if (!picks[i]) delete picks[i];
+        save(); render();
+      };
+    });
+    const n = Object.keys(picks).length;
+    document.getElementById('tally').textContent = n + ' of ' + LINES.length + ' picked';
+    document.getElementById('mailBtn').href =
+      'mailto:tangjennii@gmail.com?subject=' + encodeURIComponent('my over/under picks') +
+      '&body=' + encodeURIComponent(asText());
+  }
+
+  function asText(){
+    const strip = s => s.replace(/<[^>]+>/g, '');
+    let out = 'my over/under card — sam + jenni, 3.20.27\n\n';
+    LINES.forEach((L, i) => {
+      const p = picks[i];
+      out += (p ? p.toUpperCase().padEnd(6) : '—     ') + L.n + '  ' + strip(L.q) + '\n';
+    });
+    const n = Object.keys(picks).length;
+    out += '\n(' + n + ' of ' + LINES.length + ' picked)';
+    return out;
+  }
+
+  document.getElementById('copyBtn').onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(asText());
+      const c = document.getElementById('copied');
+      c.classList.add('show');
+      setTimeout(() => c.classList.remove('show'), 2600);
+    } catch (e) {
+      alert(asText());
+    }
+  };
+
+  render();
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* ===== Shared chrome + components for every page ===== */
+:root{
+  --red:#E53C2D; --red-deep:#C2301F; --gold:#E5C822; --gold-dim:rgba(229,200,34,.78);
+  --ivory:#FAF3E0; --film-rust:#D08534; --dark:#0D0905; --white:#FFFFFF; --green:#5C8A52;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#fff;color:var(--dark);
+  font-family:'Figtree',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+
+/* Top ticker */
+.ribbon{background:var(--red);color:#fff;text-align:center;font-weight:700;font-size:12px;
+  letter-spacing:.18em;text-transform:uppercase;padding:12px 10px}
+.ribbon a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.ribbon .sep{opacity:.7;margin:0 6px}
+
+/* Crest */
+.crest{background:#fff;text-align:center;padding:22px 16px;border-bottom:1px solid var(--red)}
+.crest-name{font-size:30px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--red)}
+.crest-name a{text-decoration:none}
+.crest-tag{margin-top:7px;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+
+/* Sticky nav */
+.sitenav{position:sticky;top:0;z-index:100;display:flex;justify-content:center;gap:22px;flex-wrap:wrap;
+  background:#fff;border-top:2px solid var(--dark);border-bottom:2px solid var(--dark);padding:14px 20px}
+.sitenav a{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+  text-decoration:none;padding:2px 0;border-bottom:2px solid transparent;white-space:nowrap}
+.sitenav a:hover{color:var(--red);border-bottom-color:var(--red)}
+.sitenav a.active{color:var(--red);border-bottom-color:var(--red)}
+
+/* Page shell */
+.sect{background:#fff;padding:70px 24px 78px}
+.wrap{max-width:960px;margin:0 auto}
+.eyebrow{text-align:center;font-size:10.5px;font-weight:800;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--red);margin-bottom:12px}
+.sect h1,.sect h2{text-align:center;font-size:38px;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;line-height:1.04}
+.rule{width:60px;height:3px;background:var(--red);margin:18px auto 0}
+.lede{text-align:center;font-size:15px;color:#6b5a50;font-style:italic;margin:18px auto 0;max-width:640px;line-height:1.7}
+.subhead{margin:52px 0 20px;text-align:center;font-size:12px;font-weight:800;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--dark)}
+.subhead::after{content:'';display:block;width:34px;height:2px;background:var(--gold);margin:10px auto 0}
+.spacer{height:38px}
+
+/* Schedule cards */
+.days{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px}
+.dcard{border:2px solid var(--dark);background:#fff}
+.dcard .band{border-bottom:2px solid var(--dark);padding:12px;text-align:center;font-size:11px;
+  font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+.dcard.fri .band{background:var(--gold)}
+.dcard.sat .band{background:var(--red);color:#fff}
+.dcard .in{padding:28px 22px;text-align:center}
+.dcard h3{font-size:25px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.dcard .addr{font-size:13.5px;color:#6b5a50;margin-top:8px;line-height:1.55}
+.dcard .addr b{color:var(--dark)}
+.dcard .tag{display:inline-block;margin-top:16px;font-size:10px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;border:1.5px solid var(--dark);border-radius:999px;padding:6px 13px}
+.dcard a.maplink{display:inline-block;margin-top:14px;font-size:11px;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+
+/* Hotels */
+.hotel{border:2px solid var(--dark);background:#fff;margin-bottom:-2px;display:grid;
+  grid-template-columns:1fr auto;gap:18px;align-items:center;padding:20px 22px}
+.hotel.star{outline:3px solid var(--red);outline-offset:-3px;position:relative;z-index:1}
+.hname{font-size:19px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.hmeta{font-size:13px;color:#6b5a50;margin-top:5px;line-height:1.6}
+.hmeta b{color:var(--dark)}
+.flag{display:inline-block;background:var(--red);color:#fff;font-size:9px;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:7px}
+.bookbtn{display:inline-block;border:2px solid var(--dark);background:var(--gold);color:var(--dark);
+  text-decoration:none;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  padding:12px 20px;white-space:nowrap}
+.bookbtn:hover{background:var(--red);color:#fff}
+
+/* Note box */
+.travelnote{margin-top:28px;border:2px dashed var(--dark);padding:18px 20px;
+  font-size:13.5px;line-height:1.75;background:#fff}
+.travelnote .tnlabel{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:10.5px;
+  font-weight:800;color:var(--red);margin-bottom:8px}
+.travelnote b{font-weight:700;color:var(--dark)}
+
+/* Recommendations */
+.recgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rec{border:2px solid var(--dark);background:#fff;padding:20px 18px}
+.rec .rtag{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.rec .rname{font-size:19px;font-weight:800;margin-top:7px}
+.rec .rwhy{font-size:13px;color:#6b5a50;margin-top:8px;line-height:1.6}
+.rec.placeholder{border-style:dashed;background:#fdfaf3}
+
+/* FAQ */
+.faq{border:2px solid var(--dark);background:#fff}
+.faq details{border-bottom:1px dashed #d6c6ac}
+.faq details:last-child{border-bottom:none}
+.faq summary{cursor:pointer;list-style:none;padding:17px 22px;font-size:14.5px;font-weight:700;
+  display:flex;justify-content:space-between;gap:14px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';color:var(--red);font-weight:800;font-size:19px;line-height:1}
+.faq details[open] summary::after{content:'–'}
+.faq .a{padding:0 22px 19px;font-size:13.5px;line-height:1.75;color:#5f5148}
+
+/* RSVP */
+.rsvpbox{text-align:center;border:2px solid var(--dark);background:var(--red);color:#fff;padding:48px 30px;margin-top:40px}
+.rsvpbox h3{font-size:26px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.rsvpbox p{max-width:580px;margin:16px auto 0;font-size:15px;line-height:1.7}
+
+/* Footer */
+.sfoot{text-align:center;padding:40px 20px;background:var(--dark);color:var(--gold);
+  font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase}
+.sfoot .heart{color:var(--red)}
+
+@media(max-width:760px){
+  .sect h1,.sect h2{font-size:27px}
+  .days,.recgrid{grid-template-columns:1fr}
+  .hotel{grid-template-columns:1fr}
+  .sitenav{gap:13px;padding:12px 12px}
+  .sitenav a{font-size:9.5px;letter-spacing:.13em}
+  .sect{padding:52px 18px 60px}
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>sam + jenni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E53C2D;--gold:#E5C822;--ivory:#FAF3E0;--dark:#0D0905;--white:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:var(--white);color:var(--dark);
+    font-family:'Figtree',system-ui,sans-serif;padding:28px}
+  .card{width:100%;max-width:440px;text-align:center;
+    border:2px solid var(--dark);border-radius:22px;overflow:hidden;
+    box-shadow:0 18px 50px rgba(13,9,5,.10);background:var(--white)}
+  .band{background:var(--red);color:#fff;font-size:10px;font-weight:800;letter-spacing:.3em;
+    text-transform:uppercase;padding:13px}
+  .box{padding:46px 34px 40px;background:var(--white)}
+  h1{font-size:40px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--dark);line-height:1.05}
+  h1 .plus{color:var(--red)}
+  .sub{margin-top:13px;font-size:10.5px;font-weight:800;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--red)}
+  .date{margin-top:20px;font-size:16px;font-weight:700;letter-spacing:.1em;color:#8a7863}
+  form{margin-top:34px;display:flex;flex-direction:column;gap:12px}
+  label{font-size:10px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#a2907a}
+  input{border:2px solid var(--dark);border-radius:14px;background:#fbf7ef;color:var(--dark);
+    font-family:inherit;font-size:16px;padding:15px 16px;text-align:center;letter-spacing:.08em;outline:none}
+  input::placeholder{color:#c9b8a2}
+  input:focus{border-color:var(--red);background:#fff}
+  button{border:2px solid var(--dark);border-radius:14px;background:var(--gold);color:var(--dark);
+    font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+    padding:16px;cursor:pointer;transition:background .15s,color .15s}
+  button:hover{background:var(--red);color:#fff;border-color:var(--red)}
+  .err{margin-top:16px;font-size:12.5px;color:var(--red);font-weight:600;display:none}
+  .err.show{display:block}
+  .hint{margin-top:26px;font-size:11.5px;color:#a2907a;font-style:italic;line-height:1.7}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="band">New York or Nowhere</div>
+    <div class="box">
+      <h1>Sam <span class="plus">+</span> Jenni</h1>
+      <div class="sub">The Pierre · New York</div>
+      <div class="date">3.19 — 3.20.27</div>
+
+      <form method="POST" action="/api/login">
+        <label for="password">Passphrase</label>
+        <input id="password" name="password" type="password" autocomplete="off" autofocus placeholder="••••••••••••" />
+        <button type="submit">Enter</button>
+      </form>
+
+      <div class="err" id="err">that's not it — try again ♡</div>
+      <div class="hint">the passphrase is in our email to you.<br>lost it? just text us.</div>
+    </div>
+  </div>
+<script>
+  if (new URLSearchParams(location.search).get('e')) {
+    document.getElementById('err').classList.add('show');
+  }
+</script>
+</body>
+</html>
