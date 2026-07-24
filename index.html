@@ -854,10 +854,15 @@
       <!-- Video stage -->
       <div class="stage">
         <video id="heroVideo"
-               muted autoplay playsinline preload="auto"
+               muted autoplay loop playsinline preload="auto"
                poster="poster.jpg"
-               data-mobile-src="full-reel.mp4"
-               data-desktop-src="full-reel.mp4"></video>
+               data-mobile-src="hero-home.mp4"
+               data-desktop-src="hero-home.mp4"></video>
+        <!-- Off-screen full reel — played (from 0:00) fullscreen when "watch full screen" is tapped -->
+        <video id="reelVideo" preload="none" playsinline controls
+               style="position:fixed;left:-9999px;top:0;width:1px;height:1px;">
+          <source src="full-reel.mp4" type="video/mp4">
+        </video>
         <script>
           // Set the correct source for the current viewport synchronously, before
           // the browser starts pre-loading. Avoids the iOS Safari bug where the
@@ -946,14 +951,11 @@
   <script>
     (function () {
       const hero     = document.getElementById('heroVideo'),
+            reelVid  = document.getElementById('reelVideo'),
             openReel = document.getElementById('openReel'),
             openReelMobile = document.getElementById('openReelMobile'),
             soundOverlay = document.getElementById('soundOverlay');
-
-      // Begin the reel at 0:21 and loop back to there (not to 0)
-      const START = 21;
-      hero.addEventListener('loadedmetadata', () => { try { hero.currentTime = START; } catch (e) {} });
-      hero.addEventListener('ended', () => { hero.currentTime = START; hero.play().catch(()=>{}); });
+      // hero-home.mp4 already begins at 0:20 and loops on its own (loop attribute).
 
       // Tap the overlay → unmute + reveal the native player controls (hidden until then)
       function revealPlayer() {
@@ -964,12 +966,22 @@
       }
       if (soundOverlay) soundOverlay.addEventListener('click', revealPlayer);
 
-      // "Watch full screen" — fullscreen the film (with native controls)
+      // "Watch full screen" — play the WHOLE reel from 0:00, fullscreen (like the original)
       function goFullscreen() {
-        if (hero.requestFullscreen) hero.requestFullscreen();
-        else if (hero.webkitEnterFullscreen) hero.webkitEnterFullscreen();      // iOS Safari
-        else if (hero.webkitRequestFullscreen) hero.webkitRequestFullscreen();
+        try { reelVid.currentTime = 0; } catch (e) {}
+        reelVid.muted = false;
+        const p = reelVid.play(); if (p && p.catch) p.catch(()=>{});
+        if (reelVid.requestFullscreen) reelVid.requestFullscreen();
+        else if (reelVid.webkitEnterFullscreen) reelVid.webkitEnterFullscreen();   // iOS Safari
+        else if (reelVid.webkitRequestFullscreen) reelVid.webkitRequestFullscreen();
       }
+      function onFsExit() {
+        const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+        if (!fsEl) reelVid.pause();
+      }
+      document.addEventListener('fullscreenchange', onFsExit);
+      document.addEventListener('webkitfullscreenchange', onFsExit);
+      reelVid.addEventListener('webkitendfullscreen', () => reelVid.pause());       // iOS
       if (openReel) openReel.addEventListener('click', goFullscreen);
       if (openReelMobile) openReelMobile.addEventListener('click', goFullscreen);
 
