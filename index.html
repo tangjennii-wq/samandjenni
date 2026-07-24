@@ -854,10 +854,10 @@
       <!-- Video stage -->
       <div class="stage">
         <video id="heroVideo"
-               muted autoplay loop playsinline preload="auto"
+               muted autoplay playsinline controls preload="auto"
                poster="poster.jpg"
-               data-mobile-src="hero-reel.mp4"
-               data-desktop-src="hero-reel.mp4"></video>
+               data-mobile-src="full-reel.mp4"
+               data-desktop-src="full-reel.mp4"></video>
         <script>
           // Set the correct source for the current viewport synchronously, before
           // the browser starts pre-loading. Avoids the iOS Safari bug where the
@@ -881,26 +881,13 @@
           <div class="df-loc">new york, new york</div>
         </div>
 
-        <!-- Centered "tap for sound" entry overlay with breathing ring -->
-        <div class="sound-overlay" id="soundOverlay" role="button" aria-label="Tap for sound">
-          <span class="speaker-wrap">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z"/></svg>
-          </span>
-          <span class="label">tap for sound</span>
-        </div>
       </div>
     </div>
 
-    <!-- Watch full reel — upper-right of hero, in the black canvas outside the film frame -->
+    <!-- Fullscreen the film — upper-right of hero, in the black canvas outside the film frame -->
     <button class="hero-watch-reel" type="button" id="openReel">
       <span class="play-tri" aria-hidden="true">▸</span>
-      <span>Watch full reel</span>
-    </button>
-
-    <!-- Sound toggle — under Watch Full Reel, in the black canvas -->
-    <button class="sound-toggle" id="soundToggle" type="button" aria-label="Mute">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z"/></svg>
-      <span id="soundToggleLabel">Sound off</span>
+      <span>Watch full screen</span>
     </button>
 
     <p class="cal-add">
@@ -932,7 +919,7 @@
       </a>
     </p>
     <button class="reel-link-mobile" type="button" id="openReelMobile">
-      watch full reel<span class="arrow">→</span>
+      watch full screen<span class="arrow">→</span>
     </button>
   </section>
 
@@ -948,55 +935,25 @@
   
 
 
-  <!-- Modal for full reel -->
-  <div class="modal" id="reel" role="dialog" aria-modal="true">
-    <div class="modal-inner">
-      <button class="modal-close" type="button" aria-label="Close" id="closeReel">×</button>
-      <video id="reelVideo" controls preload="metadata" playsinline poster="poster.jpg">
-        <source src="full-reel.mp4" type="video/mp4">
-      </video>
-      <div class="reel-credit">
-        film by
-        <a href="https://www.instagram.com/blennon.creatives/" target="_blank" rel="noopener noreferrer">@blennon.creatives</a>
-        <span class="dot">·</span>
-        <a href="https://www.blennoncreatives.com/" target="_blank" rel="noopener noreferrer">blennoncreatives.com</a>
-      </div>
-    </div>
-  </div>
-
   <script>
     (function () {
-      const hero        = document.getElementById('heroVideo'),
-            soundOverlay= document.getElementById('soundOverlay'),
-            soundToggle = document.getElementById('soundToggle'),
-            soundToggleLbl = document.getElementById('soundToggleLabel'),
-            openReel    = document.getElementById('openReel'),
-            closeReel   = document.getElementById('closeReel'),
-            modal       = document.getElementById('reel'),
-            reelVid     = document.getElementById('reelVideo');
+      const hero     = document.getElementById('heroVideo'),
+            openReel = document.getElementById('openReel'),
+            openReelMobile = document.getElementById('openReelMobile');
 
-      // First-click: unmute + restart + dismiss overlay + reveal toggle
-      function enableSound() {
-        hero.muted = false;
-        hero.currentTime = 0;
-        hero.play().catch(()=>{});
-        soundOverlay.classList.add('hidden');
-        soundToggle.classList.add('show');
-        soundToggleLbl.textContent = 'Sound off';
+      // Begin the reel at 0:21 and loop back to there (not to 0)
+      const START = 21;
+      hero.addEventListener('loadedmetadata', () => { try { hero.currentTime = START; } catch (e) {} });
+      hero.addEventListener('ended', () => { hero.currentTime = START; hero.play().catch(()=>{}); });
+
+      // "Watch full screen" — fullscreen the film (with native controls)
+      function goFullscreen() {
+        if (hero.requestFullscreen) hero.requestFullscreen();
+        else if (hero.webkitEnterFullscreen) hero.webkitEnterFullscreen();      // iOS Safari
+        else if (hero.webkitRequestFullscreen) hero.webkitRequestFullscreen();
       }
-      soundOverlay.addEventListener('click', enableSound);
-
-      // Subsequent toggle
-      soundToggle.addEventListener('click', () => {
-        if (hero.muted) {
-          hero.muted = false;
-          hero.play().catch(()=>{});
-          soundToggleLbl.textContent = 'Sound off';
-        } else {
-          hero.muted = true;
-          soundToggleLbl.textContent = 'Sound on';
-        }
-      });
+      if (openReel) openReel.addEventListener('click', goFullscreen);
+      if (openReelMobile) openReelMobile.addEventListener('click', goFullscreen);
 
       // Share button — uses Web Share API on mobile/supported browsers, falls back to clipboard copy
       const shareBtn = document.getElementById('shareBtn');
@@ -1028,19 +985,6 @@
         });
       }
 
-      // Modal for full reel
-      function openModal(){ modal.classList.add('open'); hero.pause(); reelVid.currentTime=0; reelVid.play().catch(()=>{}); }
-      function closeModal(){ modal.classList.remove('open'); reelVid.pause(); hero.play().catch(()=>{}); }
-      openReel.addEventListener('click', openModal);
-      const openReelMobile = document.getElementById('openReelMobile');
-      if (openReelMobile) openReelMobile.addEventListener('click', openModal);
-      closeReel.addEventListener('click', closeModal);
-      document.addEventListener('keydown', e => { if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
-      modal.addEventListener('click', e => { if(e.target===modal) closeModal(); });
-
-      // Modal: where to stay
-      stayModal.addEventListener('click', e => { if(e.target===stayModal) stayModal.classList.remove('open'); });
-      document.addEventListener('keydown', e => { if(e.key==='Escape' && stayModal.classList.contains('open')) stayModal.classList.remove('open'); });
       const dateFallback = document.getElementById('dateFallback');
       let videoErrored = false;
 
