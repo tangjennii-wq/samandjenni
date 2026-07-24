@@ -109,13 +109,42 @@ a{color:inherit}
   font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase}
 .sfoot .heart{color:var(--red)}
 
+/* ===== Mobile — reinforced across every page ===== */
+html,body{overflow-x:hidden;max-width:100%}
+img,video{max-width:100%;height:auto}
+
 @media(max-width:760px){
-  .sect h1,.sect h2{font-size:27px}
-  .days,.recgrid{grid-template-columns:1fr}
-  .hotel{grid-template-columns:1fr}
-  .sitenav{gap:13px;padding:12px 12px}
-  .sitenav a{font-size:9.5px;letter-spacing:.13em}
-  .sect{padding:52px 18px 60px}
+  .ribbon{font-size:9.5px;letter-spacing:.08em;padding:10px 12px;line-height:1.55}
+  .ribbon .sep{margin:0 5px}
+  .crest{padding:18px 14px}
+  .crest-name{font-size:23px;letter-spacing:.04em}
+  .crest-tag{font-size:9px;letter-spacing:.18em}
+  .sitenav{gap:10px 14px;padding:11px 12px}
+  .sitenav a{font-size:9.5px;letter-spacing:.12em}
+  .sect{padding:46px 18px 56px}
+  .sect h1,.sect h2{font-size:26px}
+  .eyebrow{font-size:9.5px;letter-spacing:.26em}
+  .lede{font-size:14px}
+  .subhead{font-size:11px;letter-spacing:.2em}
+  .days,.recgrid{grid-template-columns:1fr;gap:16px}
+  .dcard h3{font-size:22px}
+  /* hotels stack: name over button, full-width tappable button */
+  .hotel{grid-template-columns:1fr;gap:12px;padding:18px 18px}
+  .bookbtn{justify-self:stretch;text-align:center;padding:13px 20px}
+  .hname{font-size:17px}
+  .travelnote{padding:16px 16px;font-size:13px}
+  .faq summary{font-size:13.5px;padding:15px 16px}
+  .faq .a{padding:0 16px 16px}
+  .rsvpbox{padding:36px 22px}
+  .rsvpbox h3{font-size:22px}
+  .sfoot{font-size:9.5px;letter-spacing:.2em;padding:32px 16px}
+}
+@media(max-width:430px){
+  .crest-name{font-size:20px}
+  .sitenav{gap:8px 12px}
+  .sitenav a{font-size:9px;letter-spacing:.08em}
+  .ribbon{font-size:9px;letter-spacing:.05em}
+  .sect h1,.sect h2{font-size:23px}
 }
 
 /* ===== Rounded corners — soften every card & button ===== */

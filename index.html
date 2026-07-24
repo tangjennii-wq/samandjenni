@@ -422,11 +422,18 @@
     display: inline-block;
   }
   .hero-watch-reel:hover .play-tri { transform: translateX(2px) scale(1.1); }
-  /* Icon-only variant: just the fullscreen glyph, no underline */
-  .hero-watch-reel.icon-only { padding: 6px; gap: 0; }
+  /* Icon-only fullscreen button — lower-right of the video */
+  .hero-watch-reel.icon-only {
+    top: auto; bottom: 12px; right: 12px;
+    padding: 7px; gap: 0;
+    background: rgba(0,0,0,0.4); border-radius: 8px; opacity: 0.85; color: var(--ivory);
+  }
   .hero-watch-reel.icon-only::after { display: none; }
+  .hero-watch-reel.icon-only:hover { opacity: 1; background: rgba(0,0,0,0.6); }
   .hero-watch-reel.icon-only svg { display: block; transition: transform 0.2s; }
   .hero-watch-reel.icon-only:hover svg { transform: scale(1.12); }
+  /* Use our overlay for fullscreen — hide the native controls' fullscreen button */
+  #heroVideo::-webkit-media-controls-fullscreen-button { display: none; }
   /* Full-screen reel overlay */
   .reel-modal {
     position: fixed; inset: 0; z-index: 1000;
@@ -876,7 +883,7 @@
       <!-- Video stage -->
       <div class="stage">
         <video id="heroVideo"
-               muted autoplay loop playsinline preload="auto"
+               muted autoplay loop playsinline controls preload="auto"
                poster="poster.jpg"
                data-mobile-src="hero-home.mp4"
                data-desktop-src="hero-home.mp4"></video>
@@ -911,15 +918,15 @@
           <span class="label">tap for sound</span>
         </div>
 
+        <!-- Fullscreen the film — small icon, lower-right of the video -->
+        <button class="hero-watch-reel icon-only" type="button" id="openReel" aria-label="Watch full screen" title="Watch full screen">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/>
+          </svg>
+        </button>
+
       </div>
     </div>
-
-    <!-- Fullscreen the film — small icon, upper-right of hero -->
-    <button class="hero-watch-reel icon-only" type="button" id="openReel" aria-label="Watch full screen" title="Watch full screen">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/>
-      </svg>
-    </button>
 
     <p class="cal-add">
       <svg class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
