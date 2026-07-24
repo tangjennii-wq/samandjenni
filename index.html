@@ -854,7 +854,7 @@
       <!-- Video stage -->
       <div class="stage">
         <video id="heroVideo"
-               muted autoplay playsinline controls preload="auto"
+               muted autoplay playsinline preload="auto"
                poster="poster.jpg"
                data-mobile-src="full-reel.mp4"
                data-desktop-src="full-reel.mp4"></video>
@@ -879,6 +879,14 @@
         <div class="date-fallback" id="dateFallback" aria-hidden="true">
           <div class="df-date">3.19–3.20.27</div>
           <div class="df-loc">new york, new york</div>
+        </div>
+
+        <!-- Centered play/sound overlay — tap reveals the native player controls -->
+        <div class="sound-overlay" id="soundOverlay" role="button" aria-label="Tap to play with sound">
+          <span class="speaker-wrap">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <span class="label">tap for sound</span>
         </div>
 
       </div>
@@ -939,12 +947,22 @@
     (function () {
       const hero     = document.getElementById('heroVideo'),
             openReel = document.getElementById('openReel'),
-            openReelMobile = document.getElementById('openReelMobile');
+            openReelMobile = document.getElementById('openReelMobile'),
+            soundOverlay = document.getElementById('soundOverlay');
 
       // Begin the reel at 0:21 and loop back to there (not to 0)
       const START = 21;
       hero.addEventListener('loadedmetadata', () => { try { hero.currentTime = START; } catch (e) {} });
       hero.addEventListener('ended', () => { hero.currentTime = START; hero.play().catch(()=>{}); });
+
+      // Tap the overlay → unmute + reveal the native player controls (hidden until then)
+      function revealPlayer() {
+        hero.muted = false;
+        hero.controls = true;
+        hero.play().catch(()=>{});
+        if (soundOverlay) soundOverlay.style.display = 'none';
+      }
+      if (soundOverlay) soundOverlay.addEventListener('click', revealPlayer);
 
       // "Watch full screen" — fullscreen the film (with native controls)
       function goFullscreen() {
