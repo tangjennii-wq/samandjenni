@@ -427,6 +427,23 @@
   .hero-watch-reel.icon-only::after { display: none; }
   .hero-watch-reel.icon-only svg { display: block; transition: transform 0.2s; }
   .hero-watch-reel.icon-only:hover svg { transform: scale(1.12); }
+  /* Full-screen reel overlay */
+  .reel-modal {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(13,9,5,0.94);
+    display: none; align-items: center; justify-content: center; padding: 24px;
+  }
+  .reel-modal.open { display: flex; }
+  .reel-modal video { max-width: 100%; max-height: 86vh; width: auto; border: 2px solid var(--ivory); background:#000; }
+  .reel-close {
+    position: absolute; top: 18px; right: 22px;
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 2px solid var(--ivory); background: rgba(0,0,0,0.45); color: var(--ivory);
+    font-size: 26px; line-height: 42px; text-align: center; cursor: pointer; z-index: 2;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .reel-close:hover { background: var(--red); border-color: var(--red); color: #fff; }
+  @media (max-width: 720px) { .reel-close { top: 12px; right: 14px; } }
   @media (max-width: 720px) {
     /* Mobile: keep upper-right watch reel visible, just smaller */
     .hero-watch-reel { top: 14px; right: 18px; font-size: 10px; letter-spacing: 0.22em; gap: 6px; }
@@ -863,11 +880,6 @@
                poster="poster.jpg"
                data-mobile-src="hero-home.mp4"
                data-desktop-src="hero-home.mp4"></video>
-        <!-- Off-screen full reel — played (from 0:00) fullscreen when "watch full screen" is tapped -->
-        <video id="reelVideo" preload="none" playsinline controls
-               style="position:fixed;left:-9999px;top:0;width:1px;height:1px;">
-          <source src="full-reel.mp4" type="video/mp4">
-        </video>
         <script>
           // Set the correct source for the current viewport synchronously, before
           // the browser starts pre-loading. Avoids the iOS Safari bug where the
@@ -954,6 +966,14 @@
   
 
 
+  <!-- Full-screen reel overlay — the whole film, easy to exit -->
+  <div class="reel-modal" id="reelModal" aria-hidden="true">
+    <button class="reel-close" id="reelClose" type="button" aria-label="Close">×</button>
+    <video id="reelVideo" playsinline controls preload="none" poster="poster.jpg">
+      <source src="full-reel.mp4" type="video/mp4">
+    </video>
+  </div>
+
   <script>
     (function () {
       const hero     = document.getElementById('heroVideo'),
@@ -972,24 +992,26 @@
       }
       if (soundOverlay) soundOverlay.addEventListener('click', revealPlayer);
 
-      // "Watch full screen" — play the WHOLE reel from 0:00, fullscreen (like the original)
-      function goFullscreen() {
+      // "Watch full screen" — open a full-viewport overlay with the WHOLE reel; easy to exit
+      const reelModal = document.getElementById('reelModal'),
+            reelClose = document.getElementById('reelClose');
+      function openReelOverlay() {
+        reelModal.classList.add('open');
+        hero.pause();
         try { reelVid.currentTime = 0; } catch (e) {}
         reelVid.muted = false;
         const p = reelVid.play(); if (p && p.catch) p.catch(()=>{});
-        if (reelVid.requestFullscreen) reelVid.requestFullscreen();
-        else if (reelVid.webkitEnterFullscreen) reelVid.webkitEnterFullscreen();   // iOS Safari
-        else if (reelVid.webkitRequestFullscreen) reelVid.webkitRequestFullscreen();
       }
-      function onFsExit() {
-        const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
-        if (!fsEl) reelVid.pause();
+      function closeReelOverlay() {
+        reelModal.classList.remove('open');
+        reelVid.pause();
+        hero.play().catch(()=>{});
       }
-      document.addEventListener('fullscreenchange', onFsExit);
-      document.addEventListener('webkitfullscreenchange', onFsExit);
-      reelVid.addEventListener('webkitendfullscreen', () => reelVid.pause());       // iOS
-      if (openReel) openReel.addEventListener('click', goFullscreen);
-      if (openReelMobile) openReelMobile.addEventListener('click', goFullscreen);
+      if (openReel) openReel.addEventListener('click', openReelOverlay);
+      if (openReelMobile) openReelMobile.addEventListener('click', openReelOverlay);
+      if (reelClose) reelClose.addEventListener('click', closeReelOverlay);
+      reelModal.addEventListener('click', e => { if (e.target === reelModal) closeReelOverlay(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && reelModal.classList.contains('open')) closeReelOverlay(); });
 
       // Share button — uses Web Share API on mobile/supported browsers, falls back to clipboard copy
       const shareBtn = document.getElementById('shareBtn');
