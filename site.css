@@ -154,3 +154,7 @@ img,video{max-width:100%;height:auto}
 .sitenav a.active, .sitenav a:hover{ } /* nav stays underline-style */
 .gtable-wrap{ border-radius:18px; overflow:hidden; }
 .gf{ border-radius:999px; }
+
+/* Ribbon: full text on desktop, short on mobile (matches home) */
+.ribbon-short{display:none}
+@media(max-width:760px){ .ribbon-full{display:none} .ribbon-short{display:inline} }

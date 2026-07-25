@@ -9,12 +9,45 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<style>
+  /* Schedule as a vertical timeline — reads cleanly no matter how many
+     events a given guest is invited to. */
+  .timeline{max-width:680px;margin:44px auto 0;position:relative}
+  .timeline::before{content:'';position:absolute;left:26px;top:8px;bottom:8px;width:2px;background:var(--gold)}
+  .ev{position:relative;padding:0 0 26px 68px}
+  .ev:last-child{padding-bottom:0}
+  .ev .dot{position:absolute;left:18px;top:4px;width:18px;height:18px;border-radius:50%;
+    background:#fff;border:3px solid var(--red);z-index:1}
+  .ev.hero .dot{background:var(--red)}
+  .ev .when{font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+  .ev .card{border:2px solid var(--dark);border-radius:16px;background:#fff;margin-top:8px;overflow:hidden}
+  .ev.hero .card{outline:3px solid var(--red);outline-offset:-3px}
+  .ev .band{padding:9px 16px;font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+    border-bottom:2px solid var(--dark);background:var(--ivory)}
+  .ev.hero .band{background:var(--red);color:#fff}
+  .ev.welcome .band{background:var(--gold)}
+  .ev .in{padding:20px 20px 18px}
+  .ev h3{font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+  .ev .addr{font-size:13.5px;color:#6b5a50;margin-top:7px;line-height:1.55}
+  .ev .addr b{color:var(--dark)}
+  .ev .tag{display:inline-block;margin-top:14px;font-size:9.5px;font-weight:800;letter-spacing:.14em;
+    text-transform:uppercase;border:1.5px solid var(--dark);border-radius:999px;padding:5px 12px}
+  .ev .maplink{display:inline-block;margin-top:12px;margin-left:10px;font-size:10.5px;font-weight:800;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--red);text-decoration:none}
+  .tbd{color:#a2907a;font-style:italic}
+  @media(max-width:760px){
+    .timeline{margin-top:32px}
+    .timeline::before{left:20px}
+    .ev{padding-left:54px;padding-bottom:22px}
+    .ev .dot{left:12px}
+    .ev h3{font-size:19px}
+  }
+</style>
 </head>
 <body>
   <div class="ribbon">
-    friday welcome at <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener">chinese tuxedo</a>
-    <span class="sep">✦</span>
-    saturday wedding at <a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener">the pierre</a>
+    <span class="ribbon-full">friday welcome at <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener">chinese tuxedo</a> <span class="sep">✦</span> saturday wedding at <a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener">the pierre</a></span>
+    <span class="ribbon-short">fri @ <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener">chinese tuxedo</a> <span class="sep">✦</span> sat @ <a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener">the pierre</a></span>
   </div>
   <header class="crest">
     <div class="crest-name"><a href="index.html">Sam + Jenni</a></div>
@@ -29,34 +62,88 @@
     <a href="rsvp.html">rsvp</a>
   </nav>
 
-<section class="sect" id="weekend">
+  <section class="sect" id="weekend">
     <div class="wrap">
-      <div class="eyebrow">March 19–20, 2027</div>
+      <div class="eyebrow">March 18–21, 2027</div>
       <h2>The Weekend</h2>
       <div class="rule"></div>
-      <div class="days">
-        <div class="dcard fri">
-          <div class="band">Friday · March 19</div>
-          <div class="in">
-            <h3>Welcome Party</h3>
-            <div class="addr"><b>Chinese Tuxedo</b><br>5 Doyers St, Chinatown</div>
-            <span class="tag">Evening · time to come</span><br>
-            <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+5+Doyers+St+New+York" target="_blank" rel="noopener">map →</a>
+      <p class="lede">here's the whole run of it. you'll only see the events you're invited to — everything else is a surprise for someone else.</p>
+
+      <div class="timeline">
+
+        <div class="ev" data-event="thursday">
+          <div class="dot"></div>
+          <div class="when">Thursday · March 18</div>
+          <div class="card">
+            <div class="band">Inner circle</div>
+            <div class="in">
+              <h3>Welcome Dinner</h3>
+              <div class="addr tbd">location &amp; time to come</div>
+              <span class="tag">Close family &amp; friends</span>
+            </div>
           </div>
         </div>
-        <div class="dcard sat">
-          <div class="band">Saturday · March 20</div>
-          <div class="in">
-            <h3>The Wedding</h3>
-            <div class="addr"><b>The Pierre</b><br>2 E 61st St, at Fifth Avenue</div>
-            <span class="tag">Ceremony &amp; reception</span><br>
-            <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+2+E+61st+St+New+York" target="_blank" rel="noopener">map →</a>
+
+        <div class="ev" data-event="rehearsal">
+          <div class="dot"></div>
+          <div class="when">Friday · March 19 · afternoon</div>
+          <div class="card">
+            <div class="band">Wedding party &amp; family</div>
+            <div class="in">
+              <h3>The Rehearsal</h3>
+              <div class="addr tbd">location &amp; time to come</div>
+              <span class="tag">Before the welcome party</span>
+            </div>
           </div>
         </div>
+
+        <div class="ev welcome" data-event="friday">
+          <div class="dot"></div>
+          <div class="when">Friday · March 19 · evening</div>
+          <div class="card">
+            <div class="band">Welcome party</div>
+            <div class="in">
+              <h3>Welcome Party</h3>
+              <div class="addr"><b>Chinese Tuxedo</b><br>5 Doyers St, Chinatown</div>
+              <span class="tag">Evening · time to come</span>
+              <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+5+Doyers+St+New+York" target="_blank" rel="noopener">map →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ev hero" data-event="saturday">
+          <div class="dot"></div>
+          <div class="when">Saturday · March 20</div>
+          <div class="card">
+            <div class="band">The main event</div>
+            <div class="in">
+              <h3>The Wedding</h3>
+              <div class="addr"><b>The Pierre</b><br>2 E 61st St, at Fifth Avenue</div>
+              <span class="tag">Ceremony &amp; reception</span>
+              <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+2+E+61st+St+New+York" target="_blank" rel="noopener">map →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ev" data-event="sunday">
+          <div class="dot"></div>
+          <div class="when">Sunday · March 21</div>
+          <div class="card">
+            <div class="band">Inner circle</div>
+            <div class="in">
+              <h3>Farewell Brunch</h3>
+              <div class="addr tbd">location &amp; time to come</div>
+              <span class="tag">Before everyone scatters</span>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="travelnote"><span class="tnlabel">Still to come</span>Exact times and dress code will arrive with the formal invitation in January. For now: save both nights.</div>
+
+      <div class="travelnote"><span class="tnlabel">Still to come</span>Exact times and dress code arrive with the formal invitation in January. For now: save the dates you see above.</div>
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
+  <script src="personalize.js" defer></script>
 </body>
 </html>
