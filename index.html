@@ -603,6 +603,59 @@
     .cal-add.in-frame .lead{ display:none; }
   }
 
+
+  /* ===== Floating hero utilities: calendar (left) + book (right) ===== */
+  .hero-utils{
+    position:absolute; left:0; right:0; bottom:10px; z-index:8;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 26px; pointer-events:none;
+  }
+  .hero-utils > *, .cal-wrap{ pointer-events:auto; }
+  .util-pill{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:'Figtree',sans-serif; font-size:11px; font-weight:800;
+    letter-spacing:.16em; text-transform:uppercase; text-decoration:none;
+    padding:11px 20px; border-radius:999px; cursor:pointer; white-space:nowrap;
+    transition:background .15s,color .15s,transform .15s;
+  }
+  .util-pill svg{ width:14px; height:14px; }
+  .cal-toggle{
+    background:rgba(13,9,5,.55); color:var(--gold); border:1.5px solid var(--gold-dim);
+    -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
+  }
+  .cal-toggle:hover{ background:rgba(13,9,5,.8); color:#fff; border-color:#fff; }
+  .cal-toggle .caret{ font-size:10px; opacity:.8; transition:transform .18s; }
+  .cal-toggle[aria-expanded="true"] .caret{ transform:rotate(180deg); }
+  .util-book{
+    background:var(--red); color:#fff; border:2px solid var(--dark);
+    box-shadow:0 3px 14px rgba(0,0,0,.45);
+  }
+  .util-book:hover{ background:var(--gold); color:var(--dark); border-color:var(--dark); transform:translateY(-1px); }
+
+  .cal-wrap{ position:relative; }
+  .cal-pop{
+    position:absolute; bottom:calc(100% + 10px); left:0; min-width:230px;
+    background:#fff; border:2px solid var(--dark); border-radius:14px;
+    box-shadow:0 14px 40px rgba(0,0,0,.45); padding:7px; z-index:9;
+  }
+  .cal-pop[hidden]{ display:none; }
+  .cal-pop a, .cal-pop button{
+    display:block; width:100%; text-align:left; background:none; border:none;
+    font-family:'Figtree',sans-serif; font-size:13px; font-weight:600; color:var(--dark);
+    text-decoration:none; padding:10px 12px; border-radius:9px; cursor:pointer;
+  }
+  .cal-pop a:hover, .cal-pop button:hover{ background:var(--ivory); color:var(--red); }
+  .cal-pop-sep{ height:1px; background:#e4d9c4; margin:5px 8px; }
+
+  @media (max-width:720px){
+    /* two-button dock */
+    .hero-utils{ position:static; padding:10px 12px 0; gap:10px; }
+    .hero-utils .util-pill{ flex:1; justify-content:center; font-size:10px; padding:12px 10px; letter-spacing:.1em; }
+    .cal-wrap{ flex:1; display:flex; }
+    .cal-toggle{ width:100%; justify-content:center; }
+    .cal-pop{ left:0; right:0; min-width:0; }
+  }
+
   /* ===== Modal for full reel ===== */
   .modal { position: fixed; inset: 0; background: rgba(13, 9, 5, 0.95); display: none; align-items: center; justify-content: center; z-index: 100; padding: 32px; }
   .modal.open { display: flex; }
@@ -947,47 +1000,31 @@
 
       </div>
 
-      <p class="cal-add in-frame">
-      <svg class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-        <line x1="16" y1="2" x2="16" y2="6"/>
-        <line x1="8" y1="2" x2="8" y2="6"/>
-        <line x1="3" y1="10" x2="21" y2="10"/>
-      </svg>
-      <span class="lead">add to calendar —</span>
-      <a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding%20Weekend&amp;dates=20270319/20270321&amp;details=Save%20the%20weekend!%0A%0AFriday%203.19%20%E2%80%94%20Welcome%20party%20at%20Chinese%20Tuxedo%20(5%20Doyers%20St%2C%20New%20York%2C%20NY%2010013)%0ASaturday%203.20%20%E2%80%94%20Wedding%20at%20The%20Pierre%20Hotel%20(2%20E%2061st%20St%2C%20New%20York%2C%20NY%2010065)%0A%0AFormal%20invitation%20to%20follow.%0A%0Ahttps%3A%2F%2Fsamandjenni.com&amp;location=Chinese%20Tuxedo%20(Fri)%20%26%20The%20Pierre%20Hotel%20(Sat)%2C%20New%20York%2C%20NY" target="_blank" rel="noopener noreferrer">google</a>
-      <span class="dot">·</span>
-      <!-- No download attr — lets iOS/macOS open the .ics in Calendar app natively. -->
-      <a href="save-the-date.ics" type="text/calendar">apple</a>
-      <span class="cal-action-sep">·</span>
-      <button class="cal-action" type="button" id="shareBtn" title="Share" aria-label="Share">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-          <polyline points="16 6 12 2 8 6"/>
-          <line x1="12" y1="2" x2="12" y2="15"/>
-        </svg>
-      </button>
-      <a class="cal-action" href="hero-mobile.mp4" download="Sam-and-Jenni-Save-the-Date.mp4" title="Download video" aria-label="Download save-the-date video">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
-      </a>
-      </p>
+      
     </div>
+    <div class="hero-utils">
+      <div class="cal-wrap">
+        <button class="util-pill cal-toggle" type="button" id="calToggle" aria-expanded="false" aria-haspopup="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>add to calendar</span><span class="caret">▾</span>
+        </button>
+        <div class="cal-pop" id="calPop" role="menu" hidden>
+          <a role="menuitem" href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding%20Weekend&amp;dates=20270319/20270321&amp;details=Save%20the%20weekend!%0A%0AFriday%203.19%20%E2%80%94%20Welcome%20party%20at%20Chinese%20Tuxedo%20(5%20Doyers%20St%2C%20New%20York%2C%20NY%2010013)%0ASaturday%203.20%20%E2%80%94%20Wedding%20at%20The%20Pierre%20Hotel%20(2%20E%2061st%20St%2C%20New%20York%2C%20NY%2010065)%0A%0AFormal%20invitation%20to%20follow.%0A%0Ahttps%3A%2F%2Fsamandjenni.com&amp;location=Chinese%20Tuxedo%20(Fri)%20%26%20The%20Pierre%20Hotel%20(Sat)%2C%20New%20York%2C%20NY" target="_blank" rel="noopener noreferrer">Google Calendar</a>
+          <a role="menuitem" href="save-the-date.ics" type="text/calendar">Apple Calendar</a>
+          <a role="menuitem" href="save-the-date.ics" download="sam-and-jenni.ics">Outlook / download .ics</a>
+          <div class="cal-pop-sep"></div>
+          <button role="menuitem" type="button" id="shareBtn">Share this page</button>
+          <a role="menuitem" href="hero-mobile.mp4" download="Sam-and-Jenni-Save-the-Date.mp4">Download the film</a>
+        </div>
+      </div>
+      <a class="util-pill util-book" href="stay.html#hotels">Book your room <span aria-hidden="true">→</span></a>
+    </div>
+
     <button class="reel-link-mobile" type="button" id="openReelMobile">
       watch full screen<span class="arrow">→</span>
     </button>
   </section>
-  <!-- Booking band — the most urgent guest action right now -->
-  <div class="book-band">
-    <div class="bb-copy">
-      <b>Rooms are held — and limited</b>
-      <span>4 hotels from $279/night · only 10 rooms at The Pierre · blocks release closer to the date</span>
-    </div>
-    <a class="bb-btn" href="stay.html#hotels">Book your room →</a>
-  </div>
+  
 
 
   <!-- Full-screen reel overlay — the whole film, easy to exit -->
@@ -1097,6 +1134,33 @@
       function showFallback() {
         if (dateFallback) dateFallback.classList.add('show');
       }
+    })();
+  </script>
+
+
+  <script>
+    (function () {
+      var t = document.getElementById('calToggle'), p = document.getElementById('calPop');
+      if (!t || !p) return;
+      function openPop(){ p.hidden = false; t.setAttribute('aria-expanded','true'); }
+      function closePop(){ p.hidden = true;  t.setAttribute('aria-expanded','false'); }
+      t.addEventListener('click', function (e) {
+        e.stopPropagation();
+        p.hidden ? openPop() : closePop();
+      });
+      document.addEventListener('click', function (e) {
+        if (!p.hidden && !p.contains(e.target) && e.target !== t) closePop();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !p.hidden) { closePop(); t.focus(); }
+      });
+      // keyboard: arrow through items
+      p.addEventListener('keydown', function (e) {
+        var items = Array.prototype.slice.call(p.querySelectorAll('a,button'));
+        var i = items.indexOf(document.activeElement);
+        if (e.key === 'ArrowDown'){ e.preventDefault(); items[(i+1) % items.length].focus(); }
+        if (e.key === 'ArrowUp'){ e.preventDefault(); items[(i-1+items.length) % items.length].focus(); }
+      });
     })();
   </script>
 
