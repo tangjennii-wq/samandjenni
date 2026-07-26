@@ -33,6 +33,11 @@
   .pick:hover{background:var(--ivory)}
   .pick.on.over{background:var(--green);color:#fff;border-color:var(--dark)}
   .pick.on.under{background:var(--red);color:#fff;border-color:var(--dark)}
+  .mc-opts{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+  .mc-opt{border:2px solid var(--dark);background:#fff;font-family:inherit;font-size:12px;font-weight:800;
+    letter-spacing:.06em;padding:10px 14px;cursor:pointer;border-radius:999px;transition:background .12s,color .12s}
+  .mc-opt:hover{background:var(--ivory)}
+  .mc-opt.on{background:var(--gold);color:var(--dark);border-color:var(--dark)}
   .hot{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
     background:var(--red);color:#fff;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}
 
@@ -92,8 +97,13 @@
   </div>
 
   <div class="board">
-    <div class="scorebar"><span>Your Card</span><span id="tally">0 of 10 picked</span></div>
+    <div class="scorebar"><span>Over / Under</span><span id="tally">0 of 7 picked</span></div>
     <div id="lines"></div>
+  </div>
+
+  <div class="board" style="margin-top:22px">
+    <div class="scorebar"><span>Multiple Choice</span><span id="mctally">0 of 4 picked</span></div>
+    <div id="mclines"></div>
   </div>
 
   <div class="actions">
@@ -154,6 +164,42 @@
       '&body=' + encodeURIComponent(asText());
   }
 
+  // ---- multiple choice ----
+  const MC = [
+    { q: "Who cries first at the ceremony?", opts: ["Sam", "Jenni", "Gainey", "A parent"] },
+    { q: "Wedding-day weather (it's March in NY)?", opts: ["Sunny", "Cloudy", "Rain", "Snow"] },
+    { q: "Who closes down the dance floor?", opts: ["The doctors", "College crew", "The family", "Sam & Jenni"] },
+    { q: "First to kick off their shoes?", opts: ["Jenni", "A bridesmaid", "A groomsman", "Gainey"] }
+  ];
+  const MKEY = 'sj-mc-v1';
+  let mc = JSON.parse(localStorage.getItem(MKEY) || '{}');
+  function msave(){ localStorage.setItem(MKEY, JSON.stringify(mc)); }
+
+  function mrender(){
+    const box = document.getElementById('mclines');
+    box.innerHTML = '';
+    MC.forEach((M, i) => {
+      const d = document.createElement('div');
+      d.className = 'line';
+      let opts = '<div class="mc-opts">';
+      M.opts.forEach(o => {
+        opts += '<button class="mc-opt ' + (mc[i] === o ? 'on' : '') + '" data-i="' + i + '" data-o="' + o.replace(/"/g,'&quot;') + '">' + o + '</button>';
+      });
+      opts += '</div>';
+      d.innerHTML = '<div class="q">' + M.q + '</div>' + opts;
+      box.appendChild(d);
+    });
+    box.querySelectorAll('.mc-opt').forEach(b => {
+      b.onclick = () => {
+        const i = b.dataset.i;
+        mc[i] = (mc[i] === b.dataset.o) ? undefined : b.dataset.o;
+        if (!mc[i]) delete mc[i];
+        msave(); mrender(); syncMail();
+      };
+    });
+    document.getElementById('mctally').textContent = Object.keys(mc).length + ' of ' + MC.length + ' picked';
+  }
+
   function asText(){
     const strip = s => s.replace(/<[^>]+>/g, '');
     let out = 'my over/under card — sam + jenni, 3.20.27\n\n';
@@ -161,9 +207,19 @@
       const p = picks[i];
       out += (p ? p.toUpperCase().padEnd(6) : '—     ') + L.n + '  ' + strip(L.q) + '\n';
     });
-    const n = Object.keys(picks).length;
-    out += '\n(' + n + ' of ' + LINES.length + ' picked)';
+    out += '\nmultiple choice\n';
+    MC.forEach((M, i) => {
+      out += '• ' + strip(M.q) + '  →  ' + (mc[i] || '—') + '\n';
+    });
+    const n = Object.keys(picks).length + Object.keys(mc).length;
+    out += '\n(' + n + ' picks total)';
     return out;
+  }
+
+  function syncMail(){
+    document.getElementById('mailBtn').href =
+      'mailto:tangjennii@gmail.com?subject=' + encodeURIComponent('my over/under + picks') +
+      '&body=' + encodeURIComponent(asText());
   }
 
   document.getElementById('copyBtn').onclick = async () => {
@@ -178,6 +234,7 @@
   };
 
   render();
+  mrender();
 </script>
   <script src="personalize.js" defer></script>
 </body>
