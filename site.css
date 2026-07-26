@@ -2,6 +2,8 @@
 :root{
   --red:#E53C2D; --red-deep:#C2301F; --gold:#E5C822; --gold-dim:rgba(229,200,34,.78);
   --ivory:#FAF3E0; --film-rust:#D08534; --dark:#0D0905; --white:#FFFFFF; --green:#5C8A52;
+  /* Radius scale — nothing on this site has a 90° corner */
+  --r-xs:8px; --r-sm:10px; --r-md:14px; --r-lg:18px; --r-pill:999px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -11,15 +13,16 @@ a{color:inherit}
 
 /* Top ticker */
 .ribbon{background:var(--red);color:#fff;text-align:center;font-weight:700;font-size:12px;
-  letter-spacing:.18em;text-transform:uppercase;padding:12px 10px}
+  letter-spacing:.18em;text-transform:uppercase;padding:9px 10px}
 .ribbon a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .ribbon .sep{opacity:.7;margin:0 6px}
 
 /* Crest */
-.crest{background:#fff;text-align:center;padding:14px 16px;border-bottom:1px solid var(--red)}
-.crest-name{font-size:30px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--red)}
+.crest{background:#fff;text-align:center;padding:11px 16px;border-bottom:1px solid var(--red);
+  border-radius:0 0 var(--r-sm) var(--r-sm)}
+.crest-name{font-size:27px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--red)}
 .crest-name a{text-decoration:none}
-.crest-tag{margin-top:7px;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+.crest-tag{margin-top:5px;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
 
 /* Sticky nav */
 .sitenav{position:sticky;top:0;z-index:100;display:flex;justify-content:center;align-items:center;gap:22px;flex-wrap:wrap;
@@ -34,82 +37,83 @@ a{color:inherit}
 .sitenav a.active{color:var(--red)}
 
 /* Page shell */
-.sect{background:#fff;padding:34px 24px 40px}
+.sect{background:#fff;padding:24px 20px 30px}
 .wrap{max-width:960px;margin:0 auto}
 .eyebrow{text-align:center;font-size:10.5px;font-weight:800;letter-spacing:.34em;
-  text-transform:uppercase;color:var(--red);margin-bottom:12px}
-.sect h1,.sect h2{text-align:center;font-size:38px;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.sect h1,.sect h2{text-align:center;font-size:30px;font-weight:800;letter-spacing:.04em;
   text-transform:uppercase;line-height:1.04}
-.rule{width:60px;height:3px;background:var(--red);margin:14px auto 0}
-.lede{text-align:center;font-size:14px;color:#6b5a50;font-style:italic;margin:14px auto 0;max-width:660px;line-height:1.65}
-.subhead{margin:38px 0 16px;text-align:center;font-size:12px;font-weight:800;letter-spacing:.26em;
+.rule{width:46px;height:2.5px;background:var(--red);margin:10px auto 0;border-radius:var(--r-pill)}
+.lede{text-align:center;font-size:13.5px;color:#6b5a50;font-style:italic;margin:10px auto 0;max-width:660px;line-height:1.55}
+.subhead{margin:24px 0 10px;text-align:center;font-size:12px;font-weight:800;letter-spacing:.26em;
   text-transform:uppercase;color:var(--dark)}
-.subhead::after{content:'';display:block;width:34px;height:2px;background:var(--gold);margin:10px auto 0}
-.spacer{height:38px}
+.subhead::after{content:'';display:block;width:34px;height:2px;background:var(--gold);margin:7px auto 0;border-radius:var(--r-pill)}
+.spacer{height:24px}
 
 /* Schedule cards */
-.days{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px}
-.dcard{border:2px solid var(--dark);background:#fff}
-.dcard .band{border-bottom:2px solid var(--dark);padding:12px;text-align:center;font-size:11px;
+.days{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.dcard{border:2px solid var(--dark);background:#fff;border-radius:var(--r-lg);overflow:hidden}
+.dcard .band{border-bottom:2px solid var(--dark);padding:9px 12px;text-align:center;font-size:11px;
   font-weight:800;letter-spacing:.22em;text-transform:uppercase}
 .dcard.fri .band{background:var(--gold)}
 .dcard.sat .band{background:var(--red);color:#fff}
-.dcard .in{padding:28px 22px;text-align:center}
-.dcard h3{font-size:25px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
-.dcard .addr{font-size:13.5px;color:#6b5a50;margin-top:8px;line-height:1.55}
+.dcard .in{padding:18px 18px;text-align:center}
+.dcard h3{font-size:21px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.dcard .addr{font-size:13px;color:#6b5a50;margin-top:6px;line-height:1.5}
 .dcard .addr b{color:var(--dark)}
-.dcard .tag{display:inline-block;margin-top:16px;font-size:10px;font-weight:800;letter-spacing:.16em;
-  text-transform:uppercase;border:1.5px solid var(--dark);border-radius:999px;padding:6px 13px}
-.dcard a.maplink{display:inline-block;margin-top:14px;font-size:11px;font-weight:800;
+.dcard .tag{display:inline-block;margin-top:11px;font-size:10px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;border:1.5px solid var(--dark);border-radius:var(--r-pill);padding:6px 13px}
+.dcard a.maplink{display:inline-block;margin-top:10px;font-size:11px;font-weight:800;
   letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
 
 /* Hotels */
-.hotel{border:2px solid var(--dark);background:#fff;margin-bottom:12px;display:grid;
-  grid-template-columns:1fr auto;gap:18px;align-items:center;padding:20px 22px}
-.hotel.star{outline:3px solid var(--red);outline-offset:-3px;position:relative;z-index:1}
-.hname{font-size:19px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
-.hmeta{font-size:13px;color:#6b5a50;margin-top:5px;line-height:1.6}
+.hotel{border:2px solid var(--dark);background:#fff;margin-bottom:8px;display:grid;
+  grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 16px;border-radius:var(--r-lg)}
+.hotel.star{outline:3px solid var(--red);outline-offset:-3px;position:relative;z-index:1;border-radius:var(--r-lg)}
+.hname{font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.hmeta{font-size:12.5px;color:#6b5a50;margin-top:4px;line-height:1.5}
 .hmeta b{color:var(--dark)}
 .flag{display:inline-block;background:var(--red);color:#fff;font-size:9px;font-weight:800;
-  letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:7px}
+  letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:var(--r-pill);margin-bottom:7px}
 .bookbtn{display:inline-block;border:2px solid var(--dark);background:var(--gold);color:var(--dark);
   text-decoration:none;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
-  padding:12px 20px;white-space:nowrap}
+  padding:11px 18px;white-space:nowrap;border-radius:var(--r-pill)}
 .bookbtn:hover{background:var(--red);color:#fff}
 
 /* Note box */
-.travelnote{margin-top:22px;border:2px dashed var(--dark);padding:18px 20px;
-  font-size:13.5px;line-height:1.75;background:#fff}
+.travelnote{margin-top:14px;border:2px dashed var(--dark);padding:13px 16px;
+  font-size:13px;line-height:1.6;background:#fff;border-radius:var(--r-md)}
 .travelnote .tnlabel{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:10.5px;
-  font-weight:800;color:var(--red);margin-bottom:8px}
+  font-weight:800;color:var(--red);margin-bottom:5px}
 .travelnote b{font-weight:700;color:var(--dark)}
 
 /* Recommendations */
-.recgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.rec{border:2px solid var(--dark);background:#fff;padding:20px 18px}
+.recgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rec{border:2px solid var(--dark);background:#fff;padding:13px 14px;border-radius:var(--r-md)}
 .rec .rtag{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
-.rec .rname{font-size:19px;font-weight:800;margin-top:7px}
-.rec .rwhy{font-size:13px;color:#6b5a50;margin-top:8px;line-height:1.6}
+.rec .rname{font-size:16.5px;font-weight:800;margin-top:4px;line-height:1.2}
+.rec .rwhy{font-size:12.5px;color:#6b5a50;margin-top:5px;line-height:1.45}
 .rec.placeholder{border-style:dashed;background:#fdfaf3}
 
 /* FAQ */
-.faq{border:2px solid var(--dark);background:#fff}
+.faq{border:2px solid var(--dark);background:#fff;border-radius:var(--r-lg);overflow:hidden}
 .faq details{border-bottom:1px dashed #d6c6ac}
 .faq details:last-child{border-bottom:none}
-.faq summary{cursor:pointer;list-style:none;padding:17px 22px;font-size:14.5px;font-weight:700;
+.faq summary{cursor:pointer;list-style:none;padding:12px 16px;font-size:13.5px;font-weight:700;
   display:flex;justify-content:space-between;gap:14px}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:'+';color:var(--red);font-weight:800;font-size:19px;line-height:1}
 .faq details[open] summary::after{content:'–'}
-.faq .a{padding:0 22px 19px;font-size:13.5px;line-height:1.75;color:#5f5148}
+.faq .a{padding:0 16px 14px;font-size:13px;line-height:1.6;color:#5f5148}
 
 /* RSVP */
-.rsvpbox{text-align:center;border:2px solid var(--dark);background:var(--red);color:#fff;padding:48px 30px;margin-top:40px}
-.rsvpbox h3{font-size:26px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
-.rsvpbox p{max-width:580px;margin:16px auto 0;font-size:15px;line-height:1.7}
+.rsvpbox{text-align:center;border:2px solid var(--dark);background:var(--red);color:#fff;
+  padding:30px 24px;margin-top:24px;border-radius:var(--r-lg)}
+.rsvpbox h3{font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.rsvpbox p{max-width:580px;margin:10px auto 0;font-size:13.5px;line-height:1.6}
 
 /* Footer */
-.sfoot{text-align:center;padding:40px 20px;background:var(--dark);color:var(--gold);
+.sfoot{text-align:center;padding:24px 18px;background:var(--dark);color:var(--gold);
   font-size:10.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase}
 .sfoot .heart{color:var(--red)}
 
@@ -120,107 +124,109 @@ img,video{max-width:100%;height:auto}
 @media(max-width:760px){
   .ribbon{font-size:9.5px;letter-spacing:.08em;padding:10px 12px;line-height:1.55}
   .ribbon .sep{margin:0 5px}
-  .crest{padding:18px 14px}
-  .crest-name{font-size:23px;letter-spacing:.04em}
+  .crest{padding:12px 14px}
+  .crest-name{font-size:22px;letter-spacing:.04em}
   .crest-tag{font-size:9px;letter-spacing:.18em}
   .sitenav{gap:10px 14px;padding:11px 12px}
   .sitenav a{font-size:9.5px;letter-spacing:.12em}
-  .sect{padding:46px 18px 56px}
-  .sect h1,.sect h2{font-size:26px}
+  .sect{padding:26px 16px 32px}
+  .sect h1,.sect h2{font-size:23px}
   .eyebrow{font-size:9.5px;letter-spacing:.26em}
-  .lede{font-size:14px}
+  .lede{font-size:13.5px}
   .subhead{font-size:11px;letter-spacing:.2em}
-  .days,.recgrid{grid-template-columns:1fr;gap:16px}
-  .dcard h3{font-size:22px}
+  .days,.recgrid{grid-template-columns:1fr;gap:10px}
+  .dcard h3{font-size:19px}
   /* hotels stack: name over button, full-width tappable button */
-  .hotel{grid-template-columns:1fr;gap:12px;padding:18px 18px}
-  .bookbtn{justify-self:stretch;text-align:center;padding:13px 20px}
-  .hname{font-size:17px}
-  .travelnote{padding:16px 16px;font-size:13px}
-  .faq summary{font-size:13.5px;padding:15px 16px}
-  .faq .a{padding:0 16px 16px}
-  .rsvpbox{padding:36px 22px}
-  .rsvpbox h3{font-size:22px}
-  .sfoot{font-size:9.5px;letter-spacing:.2em;padding:32px 16px}
+  .hotel{grid-template-columns:1fr;gap:10px;padding:14px 15px}
+  .bookbtn{justify-self:stretch;text-align:center;padding:13px 20px;min-height:44px;
+    display:inline-flex;align-items:center;justify-content:center}
+  .hname{font-size:16.5px}
+  .travelnote{padding:13px 14px;font-size:13px}
+  .faq summary{font-size:13.5px;padding:13px 14px;min-height:44px;align-items:center}
+  .faq .a{padding:0 14px 13px}
+  .rsvpbox{padding:26px 18px}
+  .rsvpbox h3{font-size:20px}
+  .sfoot{font-size:9.5px;letter-spacing:.2em;padding:22px 14px}
 }
 @media(max-width:430px){
-  .crest-name{font-size:20px}
+  .crest-name{font-size:19px}
   .sitenav{gap:8px 12px}
   .sitenav a{font-size:9px;letter-spacing:.08em}
   .ribbon{font-size:9px;letter-spacing:.05em}
-  .sect h1,.sect h2{font-size:23px}
+  .sect h1,.sect h2{font-size:21px}
 }
 
 /* ===== Rounded corners — soften every card & button ===== */
-.dcard, .hotel, .rec, .faq, .travelnote, .rsvpbox{ border-radius:18px; overflow:hidden; }
+.dcard, .hotel, .rec, .faq, .travelnote, .rsvpbox{ border-radius:var(--r-lg); overflow:hidden; }
+.rec{ border-radius:var(--r-md); }
 .dcard .band{ border-radius:0; }
-.bookbtn{ border-radius:999px; }
+.bookbtn{ border-radius:var(--r-pill); }
 .sitenav a.active, .sitenav a:hover{ } /* nav stays underline-style */
-.gtable-wrap{ border-radius:18px; overflow:hidden; }
-.gf{ border-radius:999px; }
+.gtable-wrap{ border-radius:var(--r-lg); overflow:hidden; }
+.gf{ border-radius:var(--r-pill); }
 
 /* Ribbon: full text on desktop, short on mobile (matches home) */
 .ribbon-short{display:none}
 @media(max-width:760px){ .ribbon-full{display:none} .ribbon-short{display:inline} }
 
 /* ===== Interactive map ===== */
-.sjmap{ height:520px; width:100%; border:2px solid var(--dark); border-radius:18px;
-  overflow:hidden; margin-top:34px; background:#e9e5da; z-index:0; }
+.sjmap{ height:460px; width:100%; border:2px solid var(--dark); border-radius:var(--r-lg);
+  overflow:hidden; margin-top:18px; background:#e9e5da; z-index:0; }
 .sjmap-pin .dot{ display:block; width:16px; height:16px; border-radius:50%;
   border:2.5px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.4); }
 .sjmap-pop{ font-family:'Figtree',sans-serif; font-size:13px; line-height:1.5; text-align:center; }
 .sjmap-pop b{ font-size:14px; }
 .sjmap-pop span{ color:#6b5a50; }
 .sjmap-pop a{ color:var(--red); font-weight:700; text-decoration:none; }
-.sjmap-legend{ background:rgba(255,255,255,.92); border:1.5px solid var(--dark); border-radius:12px;
-  padding:9px 12px; font-family:'Figtree',sans-serif; font-size:11px; font-weight:700;
+.sjmap-legend{ background:rgba(255,255,255,.92); border:1.5px solid var(--dark); border-radius:var(--r-md);
+  padding:8px 11px; font-family:'Figtree',sans-serif; font-size:11px; font-weight:700;
   display:flex; flex-direction:column; gap:5px; line-height:1; }
 .sjmap-legend span{ display:flex; align-items:center; gap:7px; }
 .sjmap-legend i{ width:12px; height:12px; border-radius:50%; display:inline-block; }
 .leaflet-container{ font-family:'Figtree',sans-serif; }
-.map-caption{ text-align:center; font-size:12.5px; color:#8a7863; font-style:italic; margin-top:14px; line-height:1.8; }
+.map-caption{ text-align:center; font-size:12.5px; color:#8a7863; font-style:italic; margin-top:9px; line-height:1.6; }
 .map-caption a{ color:var(--red); font-style:normal; font-weight:700; text-decoration:none; border-bottom:1px solid var(--gold); }
 .map-caption a:hover{ border-bottom-color:var(--red); }
 
 /* "Leave us a note" form (home + rsvp) — compact, ~one screen */
-.note-card{ max-width:820px; margin:0 auto; border:2px solid var(--dark); border-radius:18px; background:#fff; padding:32px; text-align:left; }
-.note-h{ text-align:center; font-size:22px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
-.note-sub{ text-align:center; font-size:13px; color:#8a7863; font-style:italic; margin:6px 0 10px; }
-.note-intro{ text-align:center; font-size:13px; color:#6b5a50; line-height:1.6; margin:0 auto 20px; max-width:640px; }
+.note-card{ max-width:820px; margin:0 auto; border:2px solid var(--dark); border-radius:var(--r-lg); background:#fff; padding:22px; text-align:left; overflow:hidden; }
+.note-h{ text-align:center; font-size:20px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+.note-sub{ text-align:center; font-size:12.5px; color:#8a7863; font-style:italic; margin:5px 0 8px; }
+.note-intro{ text-align:center; font-size:12.5px; color:#6b5a50; line-height:1.55; margin:0 auto 14px; max-width:640px; }
 .note-intro b{ color:var(--dark); }
 .note-field{ display:flex; flex-direction:column; }
 .note-l{ font-size:10px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:#a2907a; margin:0 0 6px; }
-.note-f{ width:100%; border:2px solid var(--dark); border-radius:12px; background:#fbf7ef; font-family:inherit; font-size:15px; padding:10px 13px; outline:none; }
+.note-f{ width:100%; border:2px solid var(--dark); border-radius:var(--r-md); background:#fbf7ef; font-family:inherit; font-size:15px; padding:9px 12px; outline:none; }
 .note-f:focus{ border-color:var(--red); background:#fff; }
-.note-ta{ min-height:100px; resize:vertical; }
-.note-row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px; }
-.note-row3{ display:grid; grid-template-columns:2fr 1fr; gap:16px; align-items:end; margin-top:14px; }
-.note-btn{ border:2px solid var(--dark); border-radius:999px; background:var(--gold); color:var(--dark);
+.note-ta{ min-height:84px; resize:vertical; }
+.note-row2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
+.note-row3{ display:grid; grid-template-columns:2fr 1fr; gap:12px; align-items:end; margin-top:10px; }
+.note-btn{ border:2px solid var(--dark); border-radius:var(--r-pill); background:var(--gold); color:var(--dark);
   font-family:inherit; font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; padding:12px 14px; cursor:pointer; height:44px; }
 .note-btn:hover{ background:var(--red); color:#fff; border-color:var(--red); }
 .note-done{ display:none; text-align:center; margin-top:14px; font-size:13px; font-weight:700; color:var(--green); }
 .note-done.show{ display:block; }
 /* Photo upload */
-.photo-field{ margin-top:14px; }
+.photo-field{ margin-top:10px; }
 .photo-input{ position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
 .photo-drop{ display:flex; align-items:center; justify-content:center; gap:9px; cursor:pointer;
-  border:2px dashed var(--dark); border-radius:12px; background:#fbf7ef; padding:14px;
+  border:2px dashed var(--dark); border-radius:var(--r-md); background:#fbf7ef; padding:11px;
   font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#8a7863;
   transition:background .15s,color .15s,border-color .15s; }
 .photo-drop:hover{ background:var(--ivory); color:var(--red); border-color:var(--red); }
 .photo-drop svg{ width:18px; height:18px; }
 .photo-preview[hidden]{ display:none !important; }
-.photo-preview{ display:flex; align-items:center; gap:12px; margin-top:10px;
-  border:1.5px solid var(--dark); border-radius:12px; padding:8px 10px; background:#fff; }
-.photo-preview img{ width:52px; height:52px; object-fit:cover; border-radius:8px; border:1.5px solid var(--dark); }
+.photo-preview{ display:flex; align-items:center; gap:12px; margin-top:8px;
+  border:1.5px solid var(--dark); border-radius:var(--r-md); padding:7px 9px; background:#fff; }
+.photo-preview img{ width:48px; height:48px; object-fit:cover; border-radius:var(--r-xs); border:1.5px solid var(--dark); }
 .photo-preview span{ font-size:12px; font-weight:700; line-height:1.5; word-break:break-all; }
 .photo-preview i{ font-weight:500; color:var(--red); font-size:11px; }
 
 @media(max-width:700px){
-  .note-card{ padding:24px 20px; }
+  .note-card{ padding:18px 16px; }
   .note-row2, .note-row3{ grid-template-columns:1fr; gap:0; }
-  .note-row2 .note-field, .note-row3 .note-field{ margin-top:14px; }
-  .note-btn{ width:100%; margin-top:16px; }
+  .note-row2 .note-field, .note-row3 .note-field{ margin-top:10px; }
+  .note-btn{ width:100%; margin-top:12px; }
 }
 
 /* Nav action buttons (RSVP + leave a note) */
@@ -234,36 +240,36 @@ img,video{max-width:100%;height:auto}
 }
 
 /* Two-column split: booking list left, sticky map right */
-.split{ display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start; margin-top:24px; }
-.split-tight{ margin-top:18px; }
-.split-map{ position:sticky; top:64px; }
-.split-map .sjmap{ margin-top:0; height:100%; min-height:480px; }
-.split-list .hotel{ margin-bottom:10px; padding:15px 17px; }
-.split-list .hname{ font-size:17px; }
-.split-list .hmeta{ font-size:12.5px; line-height:1.5; margin-top:4px; }
-.split-list .flag{ margin-bottom:5px; padding:2px 8px; }
+.split{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; margin-top:16px; }
+.split-tight{ margin-top:12px; }
+.split-map{ position:sticky; top:56px; }
+.split-map .sjmap{ margin-top:0; height:100%; min-height:430px; }
+.split-list .hotel{ margin-bottom:7px; padding:12px 14px; }
+.split-list .hname{ font-size:16px; }
+.split-list .hmeta{ font-size:12.5px; line-height:1.45; margin-top:3px; }
+.split-list .flag{ margin-bottom:4px; padding:2px 8px; }
 .split-list .bookbtn{ padding:10px 16px; font-size:10px; }
-.split-map .map-caption{ margin-top:9px; font-size:11.5px; line-height:1.6; }
+.split-map .map-caption{ margin-top:8px; font-size:11.5px; line-height:1.55; }
 @media(max-width:900px){
-  .split{ grid-template-columns:1fr; gap:18px; }
+  .split{ grid-template-columns:1fr; gap:14px; }
   .split-map{ position:static; }
-  .split-map .sjmap{ height:380px; }
+  .split-map .sjmap{ height:340px; }
 }
 
 /* Section jump-nav (hotels & recs page) */
-.jumpnav{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:22px 0 4px; }
-.jumpnav a{ border:2px solid var(--dark); border-radius:999px; padding:8px 18px; text-decoration:none;
+.jumpnav{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin:14px 0 4px; }
+.jumpnav a{ border:2px solid var(--dark); border-radius:var(--r-pill); padding:8px 18px; text-decoration:none;
   font-size:10.5px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; background:#fff; }
 .jumpnav a:hover{ background:var(--gold); }
 .subhead{ scroll-margin-top:120px; }
 
 /* Compact CTA strip under the film */
-.cta-strip{ display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap;
-  padding:18px 24px; background:#fff; border-top:2px solid var(--dark); }
+.cta-strip{ display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap;
+  padding:13px 20px; background:#fff; border-top:2px solid var(--dark); }
 .cta-copy{ text-align:right; line-height:1.45; }
 .cta-copy b{ display:block; font-size:13px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--red); }
 .cta-copy span{ font-size:12.5px; color:#8a7863; font-style:italic; }
-.cta-btn{ border:2px solid var(--dark); border-radius:999px; background:var(--gold); color:var(--dark);
+.cta-btn{ border:2px solid var(--dark); border-radius:var(--r-pill); background:var(--gold); color:var(--dark);
   font-family:inherit; font-size:11.5px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
   padding:13px 26px; cursor:pointer; white-space:nowrap; }
 .cta-btn:hover{ background:var(--red); color:#fff; border-color:var(--red); }
@@ -312,22 +318,22 @@ a.cta-btn{ text-decoration:none; display:inline-block; }
 }
 
 /* ===== RSVP — compact, symmetric, color-blocked (fits without scrolling) ===== */
-.rsvp-head{ background:var(--red); color:#fff; text-align:center; padding:16px 18px 13px;
+.rsvp-head{ background:var(--red); color:#fff; text-align:center; padding:13px 16px 11px;
   border-bottom:2px solid var(--dark); }
-.rsvp-title{ font-size:30px; font-weight:900; letter-spacing:.22em; text-transform:uppercase; line-height:1; }
-.rsvp-sub{ margin-top:6px; font-size:10px; font-weight:700; letter-spacing:.22em;
+.rsvp-title{ font-size:26px; font-weight:900; letter-spacing:.22em; text-transform:uppercase; line-height:1; }
+.rsvp-sub{ margin-top:5px; font-size:10px; font-weight:700; letter-spacing:.22em;
   text-transform:uppercase; opacity:.9; }
-.rsvp-body{ background:var(--ivory); padding:16px 20px 20px; }
+.rsvp-body{ background:var(--ivory); padding:13px 16px 16px; }
 
-.rsvp-list{ border:1.5px solid var(--dark); border-radius:12px; background:#fff; overflow:hidden; }
+.rsvp-list{ border:1.5px solid var(--dark); border-radius:var(--r-md); background:#fff; overflow:hidden; }
 .rsvp-ev{ display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center;
-  padding:9px 13px; border-bottom:1px dashed #e0d5c2; }
+  padding:8px 12px; border-bottom:1px dashed #e0d5c2; }
 .rsvp-ev:last-child{ border-bottom:none; }
 .rsvp-ev:nth-child(even){ background:#fdfaf3; }
 .rsvp-evname b{ display:block; font-size:13.5px; font-weight:800; line-height:1.15; }
 .rsvp-evname span{ font-size:9.5px; color:#a2907a; letter-spacing:.12em; text-transform:uppercase; }
 .rsvp-yn{ display:flex; gap:6px; }
-.yn{ border:1.5px solid var(--dark); background:#fff; border-radius:999px; font-family:inherit;
+.yn{ border:1.5px solid var(--dark); background:#fff; border-radius:var(--r-pill); font-family:inherit;
   font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
   padding:6px 14px; cursor:pointer; white-space:nowrap; min-width:52px;
   transition:background .12s,color .12s; }
@@ -335,18 +341,18 @@ a.cta-btn{ text-decoration:none; display:inline-block; }
 .yn.yes.on{ background:var(--green); color:#fff; border-color:var(--green); }
 .yn.no.on{ background:var(--red); color:#fff; border-color:var(--red); }
 
-.rsvp-fields{ display:grid; grid-template-columns:1fr 1fr 74px; gap:9px 10px; margin-top:14px; }
+.rsvp-fields{ display:grid; grid-template-columns:1fr 1fr 74px; gap:8px 9px; margin-top:11px; }
 .rsvp-fields .span2{ grid-column:span 2; }
 .rsvp-fields .span3{ grid-column:1 / -1; }
 .rsvp-fields .note-l{ font-size:9px; letter-spacing:.14em; margin-bottom:4px; }
-.rsvp-fields .note-f{ padding:8px 11px; font-size:14px; border-width:1.5px; border-radius:10px; }
+.rsvp-fields .note-f{ padding:8px 11px; font-size:14px; border-width:1.5px; border-radius:var(--r-sm); }
 .rsvp-send{ width:100%; margin-top:12px; padding:12px; height:auto; }
 /* compact photo row + cross-link to the note drawer */
 .rsvp-extra{ margin-top:12px; }
 .rsvp-extra{ display:flex; justify-content:center; }
 .rsvp-photo-btn.compact{ width:auto; align-self:center; padding:8px 18px; }
 .rsvp-photo-btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; cursor:pointer;
-  border:1.5px dashed var(--dark); border-radius:999px; background:#fff; padding:9px 14px;
+  border:1.5px dashed var(--dark); border-radius:var(--r-pill); background:#fff; padding:9px 14px;
   font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#8a7863;
   transition:background .15s,color .15s,border-color .15s; }
 .rsvp-photo-btn:hover{ background:var(--gold); color:var(--dark); border-color:var(--dark); }
@@ -365,10 +371,10 @@ a.cta-btn{ text-decoration:none; display:inline-block; }
   .rsvp-ev{ padding:9px 11px; }
   .yn{ min-width:46px; padding:7px 11px; }
 }
-@media(max-width:760px){ .sjmap{ height:420px; margin-top:26px; } }
+@media(max-width:760px){ .sjmap{ height:340px; margin-top:14px; } }
 
 /* Alternative-stays sub-lists */
-.areahead{ margin:24px 0 12px; font-size:12px; font-weight:800; letter-spacing:.18em;
+.areahead{ margin:16px 0 8px; font-size:12px; font-weight:800; letter-spacing:.18em;
   text-transform:uppercase; color:var(--red); text-align:center; }
 .rec .rname a{ text-decoration:none; border-bottom:2px solid var(--gold); }
 .rec .rname a:hover{ color:var(--red); border-bottom-color:var(--red); }
@@ -426,7 +432,7 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
 .nav-cal{ display:none; }
 @media (max-width:760px){
   .nav-cal{ display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto;
-    width:44px; height:44px; border:2px solid var(--dark); border-radius:999px;
+    width:44px; height:44px; border:2px solid var(--dark); border-radius:var(--r-pill);
     background:#fff; color:var(--dark); cursor:pointer; }
   .nav-cal svg{ width:17px; height:17px; }
   .nav-cal[aria-expanded="true"]{ background:var(--gold); }
@@ -441,7 +447,7 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
     background:#fff; border-bottom:2px solid var(--dark);
   }
   .ma-btn{ display:flex; align-items:center; justify-content:center; min-height:48px;
-    border:2px solid var(--dark); border-radius:999px; text-decoration:none; cursor:pointer;
+    border:2px solid var(--dark); border-radius:var(--r-pill); text-decoration:none; cursor:pointer;
     font-family:inherit; font-size:11.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
   .ma-rsvp{ background:var(--red); color:#fff; border-color:var(--red); }
   .ma-note{ background:var(--gold); color:var(--dark); }
@@ -503,7 +509,7 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
 }
 
 /* Footer clears the home indicator */
-.sfoot{ padding-bottom:max(40px, calc(24px + env(safe-area-inset-bottom))); }
+.sfoot{ padding-bottom:max(24px, calc(14px + env(safe-area-inset-bottom))); }
 
 /* Landscape phones: don't let the film eat the screen */
 @media (max-width:900px) and (orientation:landscape){
@@ -519,15 +525,15 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
 /* RSVP: party size + one block per guest */
 .rsvp-party{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; }
 .rsvp-party .note-l{ margin:0; }
-.rsvp-party .note-f{ width:84px; text-align:center; padding:8px 10px; border-width:1.5px; border-radius:10px; }
+.rsvp-party .note-f{ width:84px; text-align:center; padding:8px 10px; border-width:1.5px; border-radius:var(--r-sm); }
 .rsvp-guests{ margin-top:12px; display:flex; flex-direction:column; gap:10px; }
-.guest-row{ border:1.5px solid var(--dark); border-radius:12px; background:#fff; padding:11px 13px; }
+.guest-row{ border:1.5px solid var(--dark); border-radius:var(--r-md); background:#fff; padding:10px 12px; }
 .guest-n{ font-size:9.5px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
   color:var(--red); margin-bottom:8px; }
 .guest-fields{ display:grid; grid-template-columns:1fr 1fr; gap:9px 10px; }
 .guest-fields .span2{ grid-column:1 / -1; }
 .guest-fields .note-l{ font-size:9px; letter-spacing:.12em; margin-bottom:4px; }
-.guest-fields .note-f{ padding:8px 11px; border-width:1.5px; border-radius:10px; }
+.guest-fields .note-f{ padding:8px 11px; border-width:1.5px; border-radius:var(--r-sm); }
 .note-l .opt{ text-transform:none; letter-spacing:0; font-style:italic; font-weight:600; }
 @media(max-width:700px){
   .guest-fields{ grid-template-columns:1fr; }
@@ -553,7 +559,7 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
 /* Thank-you: onward pills */
 .thanks-pills{ display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
 .thanks-pill{ flex:1 1 0; min-width:130px; display:inline-flex; align-items:center; justify-content:center;
-  min-height:46px; padding:12px 18px; border:2px solid var(--dark); border-radius:999px;
+  min-height:46px; padding:12px 18px; border:2px solid var(--dark); border-radius:var(--r-pill);
   font-family:inherit; font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
   text-decoration:none; cursor:pointer; }
 .pill-rsvp{ background:var(--red); color:#fff; border-color:var(--red); }
@@ -619,15 +625,114 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
 }
 
 /* Split layout: cards reflow inside the narrower left column */
-.split-list .recgrid{ grid-template-columns:1fr 1fr; gap:12px; }
-.split-list .subhead{ margin:0 0 12px; text-align:left; }
-.split-list .subhead::after{ margin:8px 0 0; }
-.split-list .subhead + .recgrid + .subhead{ margin-top:24px; }
-.split-list .rec{ padding:14px 15px; }
-.split-list .rec .rname{ font-size:16px; }
-.split-list .rec .rwhy{ font-size:12.5px; margin-top:6px; }
+.split-list .recgrid{ grid-template-columns:1fr 1fr; gap:9px; }
+.split-list .subhead{ margin:0 0 9px; text-align:left; }
+.split-list .subhead::after{ margin:6px 0 0; }
+.split-list .subhead + .recgrid + .subhead{ margin-top:16px; }
+.split-list .rec{ padding:11px 13px; }
+.split-list .rec .rname{ font-size:15.5px; }
+.split-list .rec .rwhy{ font-size:12.5px; margin-top:4px; }
 @media(max-width:900px){
   .split-list .recgrid{ grid-template-columns:1fr; }
   .split-list .subhead{ text-align:center; }
   .split-list .subhead::after{ margin:8px auto 0; }
 }
+
+/* ============================================================
+   AWA PASS — rounded everything + tighter vertical rhythm.
+   Appended last (this file is append-ordered) so it wins.
+   ============================================================ */
+
+/* --- 1. No 90° corners. Element-level defaults; every class rule
+       above still wins on specificity, so pills stay pills. --- */
+input, select, textarea, button{ border-radius:var(--r-sm); }
+video{ border-radius:var(--r-sm); }
+.leaflet-container img, .leaflet-container canvas{ border-radius:0; }
+
+/* --- 2. Ivory page, white cards: separation without extra space.
+       (index.html keeps its white body via its own !important rule) --- */
+body{ background:var(--ivory); }
+.sect{ background:var(--ivory); }
+.sect .dcard, .sect .hotel, .sect .rec, .sect .faq, .sect .evcard,
+.sect .note-card, .sect .rsvp-list, .sect .guest-row,
+.sect .travelnote{ background:#fff; }
+.sect .rec.placeholder{ background:#fffdf7; }
+
+/* --- 3. Rounding for everything the earlier rules left square --- */
+.sjmap-subkey{ border-radius:var(--r-md); }
+.leaflet-control-layers, .leaflet-popup-content-wrapper{ border-radius:var(--r-md); }
+.leaflet-bar, .leaflet-bar a{ border-radius:var(--r-sm); }
+.leaflet-bar a:first-child{ border-radius:var(--r-sm) var(--r-sm) 0 0; }
+.leaflet-bar a:last-child{ border-radius:0 0 var(--r-sm) var(--r-sm); }
+.sfoot{ border-radius:var(--r-lg) var(--r-lg) 0 0; }
+.thanks-skip, .rsvp-note-link{ border-radius:var(--r-pill); }
+@media (min-width:761px){
+  /* side drawer reads as a rounded panel, not a wall */
+  .note-drawer{ border-radius:var(--r-lg) 0 0 var(--r-lg); }
+}
+.note-card--drawer{ border-radius:0; }
+
+/* --- 4. Denser editorial grid for the rec cards (desktop only —
+       the mobile 1-column rule above must keep winning) --- */
+@media (min-width:761px){
+  /* .split-list .recgrid (2-up) is more specific, so it still wins inside the split */
+  .recgrid{ grid-template-columns:repeat(auto-fill, minmax(215px, 1fr)); gap:10px; }
+}
+
+/* --- 5. Tighter rhythm on the last stragglers --- */
+.subhead{ scroll-margin-top:96px; }
+.rsvp-send{ margin-top:10px; }
+.rsvp-extra{ margin-top:10px; }
+.rsvp-guests{ margin-top:10px; }
+.rsvp-party{ margin-top:10px; }
+.rsvp-photo-block{ margin-top:11px; padding-top:11px; }
+.thanks-pills{ margin-top:11px; }
+.note-thanks{ padding:26px 20px; }
+
+/* --- 6. Touch targets stay >= 44px even though everything shrank --- */
+@media (max-width:760px){
+  .bookbtn, .jumpnav a, .yn, .note-btn, .ma-btn, .thanks-pill, .cta-btn{ min-height:44px; }
+  .faq summary{ min-height:44px; align-items:center; }
+}
+
+/* ===== RSVP: fit the whole form without scrolling ===== */
+.rsvp-head{ padding:11px 16px 9px; }
+.rsvp-title{ font-size:24px; letter-spacing:.2em; }
+.rsvp-sub{ margin-top:4px; font-size:9px; }
+.rsvp-body{ padding:12px 14px 16px; }
+
+.rsvp-ev{ padding:7px 11px; gap:8px; }
+.rsvp-evname b{ font-size:13px; }
+.rsvp-evname span{ font-size:9px; letter-spacing:.06em; }
+.ev-loc{ color:var(--red); font-weight:800; text-decoration:none; border-bottom:1px solid var(--gold); }
+.ev-loc:hover{ border-bottom-color:var(--red); }
+.ev-tbd{ color:#a2907a; font-style:italic; text-transform:none; letter-spacing:0; }
+.yn{ padding:5px 12px; min-width:48px; font-size:9.5px; }
+
+.rsvp-party{ margin-top:10px; }
+.rsvp-party .note-f{ width:70px; padding:6px 8px; }
+.rsvp-guests{ margin-top:8px; gap:8px; }
+.guest-row{ padding:9px 11px; }
+.guest-n{ margin-bottom:6px; font-size:9px; }
+.guest-fields{ gap:7px 9px; }
+.guest-fields .note-f{ padding:6px 10px; font-size:16px; }   /* 16px keeps iOS from zooming */
+.guest-fields .note-l{ margin-bottom:2px; }
+.rsvp-send{ margin-top:10px; padding:11px; }
+.rsvp-photo-block{ margin-top:10px; padding-top:10px; }
+.rsvp-photo-note{ font-size:11.5px; margin-bottom:7px; }
+.rsvp-photo-btn.compact{ padding:7px 16px; font-size:9.5px; }
+
+/* Desktop drawer: a touch wider so rows breathe while staying short */
+@media (min-width:761px){ .note-drawer{ width:560px; } }
+
+/* Guest blocks: one tight row (name · email · dietary) instead of stacking */
+.guest-fields{ grid-template-columns:1.1fr 1.2fr 1fr; }
+.guest-fields .span2{ grid-column:auto; }
+@media (max-width:560px){
+  .guest-fields{ grid-template-columns:1fr 1fr; }
+  .guest-fields .span2{ grid-column:1 / -1; }
+}
+/* photo prompt sits on one line with the button */
+.rsvp-photo-block{ display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+.rsvp-photo-note{ margin:0; font-size:11px; }
+.rsvp-extra{ margin-top:0; }

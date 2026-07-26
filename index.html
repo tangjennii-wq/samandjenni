@@ -969,6 +969,34 @@
     .hero-utils{ position:static !important; padding:12px !important; }
   }
 </style>
+
+<style>
+  /* ===== AWA pass — rounded + compact, matching site.css ===== */
+  /* the film itself gets the same soft corner as every card */
+  .stage{ border-radius:var(--r-sm); }
+  .reel-modal video{ border-radius:var(--r-md); }
+  .modal-inner{ border-radius:var(--r-md); overflow:hidden; }
+  .modal-inner video{ border-radius:0; }
+  .hotels-inner{ border-radius:var(--r-lg); }
+  .hero-watch-reel.icon-only{ border-radius:var(--r-sm); }
+  .cal-pop{ border-radius:var(--r-md); }
+  .cal-pop a, .cal-pop button{ border-radius:var(--r-sm); }
+  /* denser section rhythm (mirrors site.css) if a section is ever added here */
+  .sect{ padding:24px 20px 30px; }
+  .sect h2{ font-size:30px; }
+  .sect .rule{ margin:10px auto 6px; width:46px; height:2.5px; border-radius:var(--r-pill); }
+  .sect .lede{ font-size:13.5px; margin-bottom:22px; }
+  .subhead{ margin:24px 0 10px; }
+  .days{ gap:14px; }
+  .dcard, .faq{ border-radius:var(--r-lg); overflow:hidden; }
+  .hotel{ border-radius:var(--r-lg); padding:14px 16px; }
+  .rec{ border-radius:var(--r-md); padding:13px 14px; }
+  .travelnote{ border-radius:var(--r-md); padding:13px 16px; margin-top:14px; }
+  .rsvp{ border-radius:var(--r-lg); padding:30px 24px; }
+  .bookbtn{ border-radius:var(--r-pill); }
+  .recgrid{ gap:10px; }
+  .sfoot{ padding:24px 18px; border-radius:var(--r-lg) var(--r-lg) 0 0; }
+</style>
 </head>
 <body class="has-mobile-actions">
   <span id="top"></span>
