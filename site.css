@@ -203,6 +203,16 @@ img,video{max-width:100%;height:auto}
   .note-btn{ width:100%; margin-top:16px; }
 }
 
+/* Nav action buttons (RSVP + leave a note) */
+.sitenav{ position:relative; }
+.nav-cta{ display:inline-flex; gap:9px; align-items:center; margin-left:auto; }
+.nav-cta .cta-btn{ padding:8px 18px; font-size:10.5px; letter-spacing:.16em; }
+@media(max-width:900px){
+  .sitenav{ flex-wrap:wrap; padding:8px 14px; }
+  .nav-cta{ margin-left:0; width:100%; justify-content:center; padding-top:2px; }
+  .nav-cta .cta-btn{ flex:1; text-align:center; max-width:200px; }
+}
+
 /* Compact CTA strip under the film */
 .cta-strip{ display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap;
   padding:18px 24px; background:#fff; border-top:2px solid var(--dark); }

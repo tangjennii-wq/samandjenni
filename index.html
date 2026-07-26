@@ -752,6 +752,12 @@
   .sitenav a{font-family:'Figtree',sans-serif;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
     color:var(--dark);text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
   .sitenav a:hover{color:var(--red);border-bottom-color:var(--red)}
+  .nav-cta{display:inline-flex;gap:9px;align-items:center;margin-left:auto}
+  .nav-cta .cta-btn{border:2px solid var(--dark);border-radius:999px;background:var(--gold);color:var(--dark);font-family:inherit;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding:8px 18px;cursor:pointer;text-decoration:none;white-space:nowrap;border-bottom:2px solid var(--dark)}
+  .nav-cta .cta-btn:hover{background:var(--red);color:#fff;border-color:var(--red)}
+  .nav-cta .cta-primary{background:var(--red);color:#fff;border-color:var(--red)}
+  .nav-cta .cta-primary:hover{background:var(--dark);border-color:var(--dark)}
+  @media(max-width:900px){.sitenav{flex-wrap:wrap;padding:8px 14px}.nav-cta{margin-left:0;width:100%;justify-content:center}.nav-cta .cta-btn{flex:1;text-align:center;max-width:200px}}
   .sect{background:var(--ivory);color:var(--dark);padding:44px 24px;border-bottom:2px solid var(--dark)}
   .sect.alt{background:var(--white)}
   .wrap{max-width:960px;margin:0 auto}
@@ -879,7 +885,10 @@
     <a href="over-under.html">over/under</a>
     <a href="recommendations.html">recommendations</a>
     <a href="travel.html">travel &amp; hotels</a>
-    <a href="rsvp.html">rsvp</a>
+      <span class="nav-cta">
+      <a class="cta-btn cta-primary" href="rsvp.html" data-rsvp-open>RSVP</a>
+      <button type="button" class="cta-btn" data-note-open>Leave a note</button>
+    </span>
   </nav>
 
   <!-- Hero with film frame markings -->
@@ -972,30 +981,6 @@
       watch full screen<span class="arrow">→</span>
     </button>
   </section>
-
-
-  
-
-
-  
-
-  
-
-
-  
-
-
-  <!-- Compact CTA strip — the note form itself lives in a drawer -->
-  <div class="cta-strip" id="rsvp">
-    <div class="cta-copy">
-      <b>RSVPs open January 2027</b>
-      <span>replies due February 26 · for now, book your room or leave us a note</span>
-    </div>
-    <div class="cta-actions">
-      <a class="cta-btn cta-primary" href="rsvp.html">RSVP</a>
-      <button type="button" class="cta-btn" data-note-open>Leave us a note</button>
-    </div>
-  </div>
 
   <!-- Full-screen reel overlay — the whole film, easy to exit -->
   <div class="reel-modal" id="reelModal" aria-hidden="true">
@@ -1108,6 +1093,8 @@
   </script>
 
   <script src="personalize.js" defer></script>
+  <script src="drawer.js" defer></script>
+  <script src="rsvpform.js" defer></script>
   <script src="notes.js" defer></script>
 </body>
 </html>
