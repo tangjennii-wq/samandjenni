@@ -191,6 +191,9 @@ textarea.note-f{ resize:vertical; }
 .note-btn:hover{ background:var(--red); color:#fff; border-color:var(--red); }
 .note-done{ display:none; text-align:center; margin-top:14px; font-size:13px; font-weight:700; color:var(--green); }
 .note-done.show{ display:block; }
+.note-embed{ padding:24px 20px; }
+.note-iframe{ width:100%; min-height:900px; border:0; border-radius:12px; background:#fff; display:block; }
+@media(max-width:760px){ .note-iframe{ min-height:1040px; } }
 @media(max-width:760px){ .sjmap{ height:420px; margin-top:26px; } }
 
 /* Alternative-stays sub-lists */
