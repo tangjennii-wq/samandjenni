@@ -530,3 +530,9 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
   .rsvp-party{ flex-direction:column; align-items:flex-start; }
   .rsvp-party .note-f{ width:100%; }
 }
+
+/* Thank-you: nudge onward to over/under */
+.thanks-then{ margin-top:12px; font-size:12.5px; color:#8a7863; font-style:italic; line-height:1.6; }
+.thanks-then a{ color:var(--red); font-weight:800; font-style:normal; text-decoration:none;
+  border-bottom:2px solid var(--gold); }
+.thanks-then a:hover{ border-bottom-color:var(--red); }

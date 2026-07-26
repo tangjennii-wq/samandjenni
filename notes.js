@@ -58,30 +58,23 @@
     });
     root.querySelector('[data-send]').addEventListener('click', function () {
       var val = function(k){ var n = g(k); return n ? n.value.trim() : ''; };
-      if (GFORM) {
-        var fd = new FormData();
-        fd.append(GFORM.mem, val('Mem'));
-        fd.append(GFORM.word, 'Sam: ' + val('WordS') + ' | Jenni: ' + val('WordJ'));
-        fd.append(GFORM.song, val('Song'));
-        fd.append(GFORM.name, val('Name'));
-        fetch(GFORM.action, { method:'POST', mode:'no-cors', body:fd }).catch(function(){});
-      } else {
-        var body =
-          'a note for sam + jenni\n\n' +
-          'favorite memory:\n' + val('Mem') + '\n\n' +
-          'one word for sam: ' + val('WordS') + '\n' +
-          'one word for jenni: ' + val('WordJ') + '\n' +
-          'song request: ' + val('Song') + '\n' +
-          'from: ' + val('Name') + '\n' +
-          (up ? up.getRef() : '');
-        window.location.href = 'mailto:tangjennii@gmail.com' +
-          '?subject=' + encodeURIComponent('a note for sam + jenni') +
-          '&body=' + encodeURIComponent(body);
+      if (window.SJUpload) {
+        window.SJUpload.save('wedding_notes', {
+          guest_key: window.SJUpload.guestKey(),
+          memory: val('Mem'),
+          word_sam: val('WordS'),
+          word_jenni: val('WordJ'),
+          song: val('Song'),
+          from_name: val('Name'),
+          photo_path: up ? up.getPath() : ''
+        }).catch(function(){});
       }
+
       Object.keys(cache).forEach(function(k){ cache[k] = ''; });
       var card = root.querySelector('.note-card') || root;
       card.innerHTML = '<div class="note-thanks"><div class="note-h">Thank you ♡</div>' +
-        '<p class="note-sub">we’ve got it — see you in New York.</p></div>';
+        '<p class="note-sub">we’ve got it — see you in New York.</p>' +
+        '<p class="thanks-then">now go set your line on <a href="over-under.html">over/under</a> ♡</p></div>';
       if (onSent) setTimeout(onSent, 1500);
     });
   }
