@@ -736,3 +736,12 @@ body{ background:var(--ivory); }
 .rsvp-photo-block{ display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
 .rsvp-photo-note{ margin:0; font-size:11px; }
 .rsvp-extra{ margin-top:0; }
+
+/* FIX: Leaflet draws vector layers (subway lines, neighborhood shapes) into an
+   SVG that is deliberately larger than its container and positioned by transform.
+   The global `svg{max-width:100%}` rule clipped it and made those layers vanish.
+   Exempt anything inside the map. */
+.leaflet-container svg,
+.leaflet-pane svg,
+.leaflet-overlay-pane svg{ max-width:none !important; max-height:none !important; }
+.leaflet-container img{ max-width:none !important; }
