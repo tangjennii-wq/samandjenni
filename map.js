@@ -20,7 +20,7 @@
     { n: 'Estela', cat: 'eat', lat: 40.72440, lng: -73.99460, note: 'Nolita · Our date-night place. Small, loud, perfect.' },
     { n: 'Carbone', cat: 'eat', lat: 40.72840, lng: -74.00110, note: 'Greenwich Village · Sceney red-sauce Italian. Get the Caesar.' },
     { n: 'Semma', cat: 'eat', lat: 40.73450, lng: -74.00210, note: 'West Village · South Indian, and unlike anything else in the city.' },
-    { n: 'Cote', cat: 'eat', lat: 40.74150, lng: -73.99030, note: 'Flatiron · Korean steakhouse. Sceney, and genuinely great.' },
+    { n: 'Cote', cat: 'eat', lat: 40.74150, lng: -73.99030, note: 'Flatiron · Sceney Korean steakhouse.' },
     { n: 'Shmoné', cat: 'eat', lat: 40.73600, lng: -74.00060, note: 'West Village · Israeli, big fun energy.' },
     { n: 'Oiji Mi', cat: 'eat', lat: 40.73810, lng: -73.99250, note: 'Flatiron · Modern Korean, beautiful room.' },
     { n: 'Claud', cat: 'eat', lat: 40.72800, lng: -73.98990, note: 'East Village · Small, seasonal, always good.' },
@@ -61,13 +61,13 @@
     { n: 'Madison Square Park', cat: 'do', lat: 40.74240, lng: -73.98770, note: 'Flatiron · Shake Shack\'s original, plus whatever sculpture is up.' },
     { n: 'Union Square Greenmarket', cat: 'do', lat: 40.73590, lng: -73.99110, note: 'Union Square · Mon/Wed/Fri/Sat. The best browsing in the city.' },
     { n: 'Tokyo Record Bar', cat: 'eat', lat: 40.72850, lng: -73.99950, note: 'Greenwich Village · Omakase where the courses come with a record side. Reservation-only, tiny.' },
-    { n: 'Bar Miller', cat: 'eat', lat: 40.72680, lng: -73.98340, note: 'East Village · Omakase counter, 12 seats. Precise and very good.' },
-    { n: 'Office of Mr. Moto', cat: 'eat', lat: 40.71570, lng: -73.99300, note: 'Chinatown · Hidden-ish, natural wine and small plates.' },
+    { n: 'Bar Miller', cat: 'eat', lat: 40.72680, lng: -73.98340, note: 'East Village · Homey hipster omakase.' },
+    { n: 'Office of Mr. Moto', cat: 'eat', lat: 40.71570, lng: -73.99300, note: 'Chinatown · Low-key but cool omakase.' },
     { n: 'Crevette', cat: 'eat', lat: 40.72180, lng: -73.99620, note: 'Nolita · LA-ish seafood — bright, breezy, raw bar.' },
     { n: 'Coqodaq', cat: 'eat', lat: 40.73950, lng: -73.98950, note: 'Flatiron · Korean fried chicken in a gilded room. Overhyped, still fun.' },
     { n: 'Cervo\'s', cat: 'eat', lat: 40.71860, lng: -73.99030, note: 'Lower East Side · Portuguese-Spanish seafood, small and lively.' },
     { n: 'Sunn\'s', cat: 'eat', lat: 40.72730, lng: -73.98380, note: 'East Village · Jenni loves this spot — and it\'s on OpenTable, so actually bookable.' },
-    { n: 'Café Zaffri', cat: 'eat', lat: 40.75920, lng: -73.98550, note: 'Times Square · Overpriced but beautiful — reminds us of LA. Go for the room.' },
+    { n: 'Café Zaffri', cat: 'eat', lat: 40.73600, lng: -73.99000, note: 'Union Square · Overpriced, but a beautiful space.' },
     { n: 'Fedora', cat: 'eat', lat: 40.73550, lng: -74.00430, note: 'West Village · Cozy and intimate.' },
     { n: 'The Portrait Bar', cat: 'eat', lat: 40.76270, lng: -73.97700, note: 'Midtown · Hotel bar done properly — dressy, quiet, good martini.' },
     { n: 'Parcelle', cat: 'eat', lat: 40.71570, lng: -73.99030, note: 'Lower East Side · Wine bar with a serious list and small plates to match.' },
@@ -88,6 +88,7 @@
     { n: 'Chelsea Piers Golf Club', cat: 'do', lat: 40.74730, lng: -74.01040, note: 'Chelsea · Four-tier driving range hitting straight out over the Hudson. Sillier and better than it sounds.' },
     { n: 'The Edge', cat: 'do', lat: 40.75380, lng: -74.00000, note: 'Hudson Yards · The outdoor sky deck with the glass floor. Do it at sunset.' },
   ];
+
 
 
 
