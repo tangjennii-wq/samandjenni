@@ -86,7 +86,10 @@
     { n: 'Malaparte', cat: 'eat', lat: 40.73690, lng: -74.00870, note: 'West Village · Walk-in Italian. Go early, put your name down.' },
     { n: 'Ci Siamo', cat: 'eat', lat: 40.75300, lng: -74.00100, note: 'Hudson Yards · Live-fire Italian in a huge, handsome room.' },
     { n: 'Cooper Hewitt', cat: 'do', lat: 40.78450, lng: -73.95800, note: 'Upper East Side · Smithsonian design museum in the Carnegie Mansion. Small, and a nice pair with the Guggenheim up the block.' },
+    { n: 'Chelsea Piers Golf Club', cat: 'do', lat: 40.74730, lng: -74.01040, note: 'Chelsea · Four-tier driving range hitting straight out over the Hudson. Sillier and better than it sounds.' },
+    { n: 'The Edge', cat: 'do', lat: 40.75380, lng: -74.00000, note: 'Hudson Yards · The outdoor sky deck with the glass floor. Do it at sunset.' },
   ];
+
 
 
 
