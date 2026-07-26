@@ -912,17 +912,67 @@
   #recs{scroll-margin-top:62px}
   @media(max-width:760px){ .recgrid{grid-template-columns:1fr} #recs{scroll-margin-top:54px} }
 </style>
+
+<style>
+  /* ===== One-viewport homepage: header <=140px, hero fills the rest ===== */
+  :root{ --sj-header: 140px; }
+
+  /* Crest ~92px tall */
+  .crest{ padding:13px 16px 15px !important; }
+  .crest-name{ font-size:38px; line-height:1; }
+  .crest-tag{ margin-top:8px; }
+
+  /* Nav 48px */
+  .sitenav{ min-height:48px !important; padding:0 20px !important; }
+
+  /* Hero owns the remaining height */
+  .hero{
+    height: calc(100svh - var(--sj-header)) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 8px 16px !important;
+    position: relative;
+  }
+
+  /* Film sized by AVAILABLE HEIGHT, not viewport width */
+  .film-frame{
+    height: calc(100% - 34px) !important;
+    width: auto !important;
+    max-width: calc(100vw - 100px) !important;
+    margin: 0 auto !important;
+  }
+
+  /* Utilities pinned just above the hero's bottom edge */
+  .hero-utils{ bottom:16px !important; padding:0 24px !important; }
+
+  /* Short screens: trim chrome, never the title */
+  @media (max-height: 800px){
+    .crest{ padding:10px 16px 12px !important; }
+    .crest-tag{ font-size:9px; letter-spacing:.28em; margin-top:6px; }
+    .crest-rule{ width:48px; }
+    .hero{ padding:6px 12px !important; }
+    .film-frame{ height: calc(100% - 30px) !important; }
+    .film-mark{ font-size:9.5px; letter-spacing:.16em; }
+    .hero-utils{ bottom:12px !important; }
+    .util-pill{ padding:9px 16px; font-size:10px; }
+  }
+  @media (max-height: 700px){
+    .crest-name{ font-size:32px; }
+    .film-mark{ display:none; }
+    .film-frame{ max-width: calc(100vw - 40px) !important; }
+  }
+
+  /* Mobile keeps its own scrollable rhythm */
+  @media (max-width: 720px){
+    .hero{ height:auto !important; min-height:0 !important; padding:10px 0 !important; }
+    .film-frame{ height:auto !important; width:100vw !important; max-width:none !important; }
+    .hero-utils{ position:static !important; padding:12px !important; }
+  }
+</style>
 </head>
 <body>
   <span id="top"></span>
-
-  <!-- Red ticker bar: itinerary -->
-  <div class="ribbon">
-    <span class="ribbon-desktop">friday welcome at <a href="https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">chinese tuxedo</a> <span class="sep">✦</span> saturday wedding at <a href="https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">the pierre</a></span>
-    <span class="ribbon-mobile">fri party @ <a href="https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">chinese tuxedo</a> <span class="sep">✦</span> sat wedding @ <a href="https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">the pierre</a></span>
-  </div>
-
-  <!-- White crest band -->
+<!-- White crest band -->
   <header class="crest">
     <div class="crest-row">
       <span class="crest-rule"></span>

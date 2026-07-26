@@ -4,43 +4,51 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>the weekend · sam + jenni</title>
+<title>events · sam + jenni</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 <style>
-  /* Schedule as a vertical timeline — reads cleanly no matter how many
-     events a given guest is invited to. */
-  .timeline{max-width:680px;margin:44px auto 0;position:relative}
-  .timeline::before{content:'';position:absolute;left:26px;top:8px;bottom:8px;width:2px;background:var(--gold)}
-  .ev{position:relative;padding:0 0 26px 68px}
-  .ev:last-child{padding-bottom:0}
-  .ev .dot{position:absolute;left:18px;top:4px;width:18px;height:18px;border-radius:50%;
-    background:#fff;border:3px solid var(--red);z-index:1}
-  .ev.hero .dot{background:var(--red)}
-  .ev .when{font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
-  .ev .card{border:2px solid var(--dark);border-radius:16px;background:#fff;margin-top:8px;overflow:hidden}
-  .ev.hero .card{outline:3px solid var(--red);outline-offset:-3px}
-  .ev .band{padding:9px 16px;font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
-    border-bottom:2px solid var(--dark);background:var(--ivory)}
-  .ev.hero .band{background:var(--red);color:#fff}
-  .ev.welcome .band{background:var(--gold)}
-  .ev .in{padding:20px 20px 18px}
-  .ev h3{font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
-  .ev .addr{font-size:13.5px;color:#6b5a50;margin-top:7px;line-height:1.55}
-  .ev .addr b{color:var(--dark)}
-  .ev .tag{display:inline-block;margin-top:14px;font-size:9.5px;font-weight:800;letter-spacing:.14em;
-    text-transform:uppercase;border:1.5px solid var(--dark);border-radius:999px;padding:5px 12px}
-  .ev .maplink{display:inline-block;margin-top:12px;margin-left:10px;font-size:10.5px;font-weight:800;
-    letter-spacing:.12em;text-transform:uppercase;color:var(--red);text-decoration:none}
-  .tbd{color:#a2907a;font-style:italic}
-  @media(max-width:760px){
-    .timeline{margin-top:32px}
-    .timeline::before{left:20px}
-    .ev{padding-left:54px;padding-bottom:22px}
-    .ev .dot{left:12px}
-    .ev h3{font-size:19px}
+  /* Compact intro — keeps the grid in the first viewport (~130px) */
+  .ev-intro{ text-align:center; padding-top:2px; }
+  .ev-intro h2{ margin-top:4px; }
+  .ev-intro .rule{ margin-top:12px; }
+
+  /* Event card grid */
+  .evgrid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:26px; }
+  .evcard{ display:flex; flex-direction:column; min-height:230px;
+    border:2px solid var(--dark); border-radius:16px; background:#fff; overflow:hidden; }
+  .evcard .band{ padding:8px 26px; font-size:9.5px; font-weight:800; letter-spacing:.2em;
+    text-transform:uppercase; border-bottom:2px solid var(--dark); background:var(--gold); color:var(--dark); }
+  .evcard.is-wedding .band{ background:var(--red); color:#fff; }
+  .evcard .in{ padding:22px 26px 20px; display:flex; flex-direction:column; flex:1; }
+  .evcard .when{ font-size:10px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:var(--red); }
+  .evcard h3{ font-size:25px; font-weight:900; text-transform:uppercase; letter-spacing:.02em; line-height:1.05; margin-top:7px; }
+  .evcard .where{ font-size:13.5px; color:#6b5a50; line-height:1.5; margin-top:8px; }
+  .evcard .where b{ color:var(--dark); }
+  .evcard .tbd{ color:#a2907a; font-style:italic; }
+  .evcard .chip{ display:inline-block; align-self:flex-start; margin-top:12px; font-size:9px; font-weight:800;
+    letter-spacing:.14em; text-transform:uppercase; border:1.5px solid var(--dark); border-radius:999px; padding:5px 12px; }
+  .evcard .links{ margin-top:auto; padding-top:14px; display:flex; gap:16px; align-items:center; }
+  .evcard .links a{ font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--red); text-decoration:none; border-bottom:1.5px solid transparent; }
+  .evcard .links a:hover{ border-bottom-color:var(--red); }
+  .evcard.is-wedding{ outline:3px solid var(--red); outline-offset:-3px; }
+
+  /* Tablet: snap rail showing ~1.5 cards */
+  @media(max-width:1000px) and (min-width:701px){
+    .evgrid{ display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory;
+      padding:0 18px 10px; margin:26px -18px 0; }
+    .evcard{ flex:0 0 66%; scroll-snap-align:start; }
+  }
+  /* Mobile: stacked */
+  @media(max-width:700px){
+    .evgrid{ grid-template-columns:1fr; gap:14px; }
+    .evcard{ min-height:0; }
+    .evcard h3{ font-size:21px; }
+    .evcard .in{ padding:18px 20px 16px; }
+    .evcard .band{ padding:8px 20px; }
   }
 </style>
 </head>
@@ -53,7 +61,7 @@
     <div class="crest-name"><a href="index.html">Sam + Jenni</a></div>
     <div class="crest-tag">new york or nowhere</div>
   </header>
-      <nav class="sitenav">
+  <nav class="sitenav">
     <a href="index.html">home</a>
     <a class="active" href="weekend.html">events</a>
     <a href="travel.html">hotels</a>
@@ -67,82 +75,75 @@
 
   <section class="sect" id="weekend">
     <div class="wrap">
-      <div class="eyebrow">March 18–21, 2027</div>
-      <h2>The Weekend</h2>
-      <div class="rule"></div>
+      <div class="ev-intro">
+        <div class="eyebrow">March 18–21, 2027</div>
+        <h2>The Weekend</h2>
+        <div class="rule"></div>
+      </div>
 
-      <div class="timeline">
+      <div class="evgrid">
 
-        <div class="ev" data-event="thursday">
-          <div class="dot"></div>
-          <div class="when">Thursday · March 18</div>
-          <div class="card">
-            <div class="band">Inner circle</div>
-            <div class="in">
-              <h3>Welcome Dinner</h3>
-              <div class="addr tbd">location &amp; time to come</div>
-              <span class="tag">Close family &amp; friends</span>
+        <div class="evcard" data-event="thursday">
+          <div class="band">Inner circle</div>
+          <div class="in">
+            <div class="when">Thu · Mar 18</div>
+            <h3>Welcome Dinner</h3>
+            <div class="where tbd">location &amp; time to come</div>
+            <span class="chip">Close family &amp; friends</span>
+          </div>
+        </div>
+
+        <div class="evcard" data-event="rehearsal">
+          <div class="band">Wedding party &amp; family</div>
+          <div class="in">
+            <div class="when">Fri · Mar 19 · afternoon</div>
+            <h3>The Rehearsal</h3>
+            <div class="where tbd">location &amp; time to come</div>
+            <span class="chip">Before the welcome party</span>
+          </div>
+        </div>
+
+        <div class="evcard" data-event="friday">
+          <div class="band">Welcome party</div>
+          <div class="in">
+            <div class="when">Fri · Mar 19 · evening</div>
+            <h3>Welcome Party</h3>
+            <div class="where"><b>Chinese Tuxedo</b><br>5 Doyers St, Chinatown</div>
+            <span class="chip">Time to come</span>
+            <div class="links">
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+5+Doyers+St+New+York" target="_blank" rel="noopener">Map →</a>
+              <a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Welcome%20Party&amp;dates=20270319/20270320&amp;location=Chinese%20Tuxedo%2C%205%20Doyers%20St%2C%20New%20York%2C%20NY%2010013" target="_blank" rel="noopener">Add to calendar</a>
             </div>
           </div>
         </div>
 
-        <div class="ev" data-event="rehearsal">
-          <div class="dot"></div>
-          <div class="when">Friday · March 19 · afternoon</div>
-          <div class="card">
-            <div class="band">Wedding party &amp; family</div>
-            <div class="in">
-              <h3>The Rehearsal</h3>
-              <div class="addr tbd">location &amp; time to come</div>
-              <span class="tag">Before the welcome party</span>
+        <div class="evcard is-wedding" data-event="saturday">
+          <div class="band">The main event</div>
+          <div class="in">
+            <div class="when">Sat · Mar 20</div>
+            <h3>The Wedding</h3>
+            <div class="where"><b>The Pierre</b><br>2 E 61st St, at Fifth Avenue</div>
+            <span class="chip">Ceremony &amp; reception</span>
+            <div class="links">
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+2+E+61st+St+New+York" target="_blank" rel="noopener">Map →</a>
+              <a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding&amp;dates=20270320/20270321&amp;location=The%20Pierre%2C%202%20E%2061st%20St%2C%20New%20York%2C%20NY%2010065" target="_blank" rel="noopener">Add to calendar</a>
             </div>
           </div>
         </div>
 
-        <div class="ev welcome" data-event="friday">
-          <div class="dot"></div>
-          <div class="when">Friday · March 19 · evening</div>
-          <div class="card">
-            <div class="band">Welcome party</div>
-            <div class="in">
-              <h3>Welcome Party</h3>
-              <div class="addr"><b>Chinese Tuxedo</b><br>5 Doyers St, Chinatown</div>
-              <span class="tag">Evening · time to come</span>
-              <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+5+Doyers+St+New+York" target="_blank" rel="noopener">map →</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="ev hero" data-event="saturday">
-          <div class="dot"></div>
-          <div class="when">Saturday · March 20</div>
-          <div class="card">
-            <div class="band">The main event</div>
-            <div class="in">
-              <h3>The Wedding</h3>
-              <div class="addr"><b>The Pierre</b><br>2 E 61st St, at Fifth Avenue</div>
-              <span class="tag">Ceremony &amp; reception</span>
-              <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+2+E+61st+St+New+York" target="_blank" rel="noopener">map →</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="ev" data-event="sunday">
-          <div class="dot"></div>
-          <div class="when">Sunday · March 21</div>
-          <div class="card">
-            <div class="band">Inner circle</div>
-            <div class="in">
-              <h3>Farewell Brunch</h3>
-              <div class="addr tbd">location &amp; time to come</div>
-              <span class="tag">Before everyone scatters</span>
-            </div>
+        <div class="evcard is-wedding" data-event="sunday">
+          <div class="band">Inner circle</div>
+          <div class="in">
+            <div class="when">Sun · Mar 21</div>
+            <h3>Farewell Brunch</h3>
+            <div class="where tbd">location &amp; time to come</div>
+            <span class="chip">Before everyone scatters</span>
           </div>
         </div>
 
       </div>
 
-      <div class="travelnote"><span class="tnlabel">Still to come</span>Exact times and dress code arrive with the formal invitation in January. For now: save the dates you see above.</div>
+      <div class="travelnote"><span class="tnlabel">Still to come</span>Exact times and dress code arrive with the formal invitation in January. For now: save the dates above.</div>
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
