@@ -617,3 +617,17 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
   }
   .note-btn:active, .ma-btn:active, .thanks-pill:active{ transform:scale(.985); }
 }
+
+/* Split layout: cards reflow inside the narrower left column */
+.split-list .recgrid{ grid-template-columns:1fr 1fr; gap:12px; }
+.split-list .subhead{ margin:0 0 12px; text-align:left; }
+.split-list .subhead::after{ margin:8px 0 0; }
+.split-list .subhead + .recgrid + .subhead{ margin-top:24px; }
+.split-list .rec{ padding:14px 15px; }
+.split-list .rec .rname{ font-size:16px; }
+.split-list .rec .rwhy{ font-size:12.5px; margin-top:6px; }
+@media(max-width:900px){
+  .split-list .recgrid{ grid-template-columns:1fr; }
+  .split-list .subhead{ text-align:center; }
+  .split-list .subhead::after{ margin:8px auto 0; }
+}
