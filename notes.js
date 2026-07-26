@@ -11,15 +11,14 @@
 
   function formHTML(p, intro){
     return ('' +
-      '<div class="note-h">Leave us a note</div>' +
-      '<p class="note-sub">totally optional — but we’d love these ♡</p>' +
+      '<p class="note-sub note-sub--top">totally optional — but we’d love these ♡</p>' +
       (intro ? '<p class="note-intro">' + intro + '</p>' : '') +
       '<div class="note-field">' +
         '<label class="note-l" for="{p}Mem">a favorite memory with Sam and/or Jenni</label>' +
         '<textarea id="{p}Mem" class="note-f note-ta"></textarea>' +
       '</div>' +
       '<div class="note-field photo-field">' +
-        '<label class="note-l" for="{p}Photo">a favorite photo with Sam and/or Jenni</label>' +
+        '<label class="note-l" for="{p}Photo">a favorite photo</label>' +
         '<label class="photo-drop" for="{p}Photo">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
             '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +

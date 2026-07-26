@@ -575,3 +575,45 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
     background:#fff; border-bottom:2px solid var(--dark); }
   .ma-btn{ min-height:40px; font-size:10px; letter-spacing:.12em; padding:9px 12px; }
 }
+
+/* ===== Drawer: sticky close bar so exit is always one tap away ===== */
+.drawer-bar{
+  position:sticky; top:0; z-index:5;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:10px 12px 10px 18px;
+  background:#fff; border-bottom:2px solid var(--dark);
+}
+.drawer-title{ font-size:10px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:#a2907a; }
+.note-drawer .note-x{
+  position:static; width:44px; height:44px; flex:0 0 44px;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:24px; line-height:1; border:2px solid var(--dark); border-radius:50%;
+  background:#fff; cursor:pointer;
+}
+.note-drawer .note-x:active{ background:var(--red); color:#fff; border-color:var(--red); }
+/* card no longer needs top room for a floating × */
+.note-card--drawer{ padding:20px 22px 32px; }
+.note-drawer .note-card--drawer:has(.rsvp-head){ padding:0; }
+.note-drawer .rsvp-head{ padding-top:16px; }
+.note-sub--top{ margin-top:2px; }
+
+/* Snappier on touch: no laggy transitions, no scroll chaining */
+@media (max-width:760px){
+  .note-drawer{
+    transition:transform .2s ease-out;
+    will-change:transform; -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+  }
+  .note-backdrop{ transition:opacity .18s ease-out; }
+  .note-card--drawer{ padding:16px 16px calc(28px + env(safe-area-inset-bottom)); }
+  .note-ta{ min-height:78px; }                    /* shorter memory box */
+  .photo-drop{ padding:11px; font-size:10px; }    /* compact photo tile */
+  .note-l{ margin-bottom:3px; }
+  .note-row2 .note-field, .note-row3 .note-field{ margin-top:10px; }
+  .note-f{ padding:9px 12px; }
+  /* buttons respond immediately to touch */
+  .note-btn, .ma-btn, .yn, .thanks-pill, .cta-btn, .note-x{
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  }
+  .note-btn:active, .ma-btn:active, .thanks-pill:active{ transform:scale(.985); }
+}

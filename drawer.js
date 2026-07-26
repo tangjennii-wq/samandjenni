@@ -19,8 +19,12 @@
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
     el.setAttribute('aria-label', opts.label || 'Dialog');
-    el.innerHTML = '<button class="note-x" type="button" aria-label="Close">×</button>' +
-                   '<div class="drawer-body"></div>';
+    el.innerHTML =
+      '<div class="drawer-bar">' +
+        '<span class="drawer-title">' + (opts.label || '') + '</span>' +
+        '<button class="note-x" type="button" aria-label="Close">×</button>' +
+      '</div>' +
+      '<div class="drawer-body"></div>';
     el.querySelector('.drawer-body').innerHTML = opts.html || '';
     document.body.appendChild(el);
 
@@ -40,6 +44,7 @@
       if (f.length > 1) f[1].focus(); else if (f.length) f[0].focus();
     }
     function close(){
+      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       el.classList.remove('open');
       if (!document.querySelector('.note-drawer.open')) {
         bd.classList.remove('open');
