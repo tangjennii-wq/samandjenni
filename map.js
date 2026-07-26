@@ -156,10 +156,17 @@
         style: function(f){ return { color: routeColor(f.properties), weight:4, opacity:1, lineCap:'round' }; }
       }).addTo(subway);
     });
-    // Subway stations — small, labels only after zooming in.
+    // Subway stations — hidden at city-wide zoom, revealed only when zoomed in.
+    var stationsGeo = null;
+    function updateStations(){
+      if(!stationsGeo) return;
+      var show = subwayOn && map.getZoom() >= STATION_ZOOM;
+      if(show && !map.hasLayer(stationsGeo)) stationsGeo.addTo(map);
+      else if(!show && map.hasLayer(stationsGeo)) map.removeLayer(stationsGeo);
+    }
     tryFetch(STATIONS).then(function(gj){
       if(!gj) return;
-      L.geoJSON(gj, {
+      stationsGeo = L.geoJSON(gj, {
         pane:'subStopPane',
         pointToLayer: function(f, latlng){
           return L.circleMarker(latlng, { pane:'subStopPane', radius:2.6, color:'#333', weight:1, fillColor:'#fff', fillOpacity:1 });
@@ -167,15 +174,15 @@
         onEachFeature: function(f, layer){
           var name = prop(f.properties, ['name','stop_name','NAME','station']);
           if(name) layer.bindTooltip(name, { direction:'top' });
-          // suppress labels until zoomed in
-          layer.on('add', function(){ if(map.getZoom() < STATION_ZOOM && layer.closeTooltip) layer.closeTooltip(); });
         }
-      }).addTo(subway);
+      });
+      updateStations();
     });
+    map.on('zoomend', updateStations);
 
-    // Fade neighborhoods when subway is on; restore when off.
-    map.on('overlayadd', function(e){ if(e.name === 'Subway'){ subwayOn = true; styleHoods(); } });
-    map.on('overlayremove', function(e){ if(e.name === 'Subway'){ subwayOn = false; styleHoods(); } });
+    // Fade neighborhoods + manage stations when subway toggles.
+    map.on('overlayadd', function(e){ if(e.name === 'Subway'){ subwayOn = true; styleHoods(); updateStations(); } });
+    map.on('overlayremove', function(e){ if(e.name === 'Subway'){ subwayOn = false; styleHoods(); updateStations(); } });
 
     L.control.layers(null, { 'Neighborhoods': hoods, 'Subway': subway, 'Places': pins }, { collapsed:false, position:'topright' }).addTo(map);
 
