@@ -46,6 +46,21 @@
 
   function hash(s){ var h=0; s=s||''; for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;} return h; }
 
+  // Figure out a subway segment's color by scanning ALL its property values for a
+  // route designation (1,2,3,A,C,E...) — robust to whatever the field is named.
+  var ROUTE_ORDER = ['1','2','3','4','5','6','7','A','C','E','B','D','F','M','N','Q','R','W','G','J','Z','L','S'];
+  function routeColor(props){
+    var s = ' ';
+    for (var k in props){ if(props.hasOwnProperty(k)) s += ' ' + props[k]; }
+    s = s.toUpperCase();
+    for (var i=0;i<ROUTE_ORDER.length;i++){
+      var t = ROUTE_ORDER[i];
+      var re = new RegExp('(^|[^A-Z0-9])' + t + '([^A-Z0-9]|$)');
+      if (re.test(s)) return TRUNK[t];
+    }
+    return '#8a8a8a';
+  }
+
   // Try a list of URLs; resolve with the first that returns valid GeoJSON.
   function tryFetch(urls){
     var i = 0;
@@ -116,9 +131,7 @@
       if(!gj) return;
       L.geoJSON(gj, {
         style: function(f){
-          var rt = String(prop(f.properties, ['name','rt_symbol','route_short_name','ROUTE','line']));
-          var c = TRUNK[rt.charAt(0).toUpperCase()] || '#666';
-          return { color:c, weight:3, opacity:0.85 };
+          return { color: routeColor(f.properties), weight:3.5, opacity:0.9 };
         }
       }).addTo(subway);
     });
