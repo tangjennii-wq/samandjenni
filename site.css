@@ -174,7 +174,9 @@ img,video{max-width:100%;height:auto}
 .sjmap-legend span{ display:flex; align-items:center; gap:7px; }
 .sjmap-legend i{ width:12px; height:12px; border-radius:50%; display:inline-block; }
 .leaflet-container{ font-family:'Figtree',sans-serif; }
-.map-caption{ text-align:center; font-size:12.5px; color:#8a7863; font-style:italic; margin-top:14px; }
+.map-caption{ text-align:center; font-size:12.5px; color:#8a7863; font-style:italic; margin-top:14px; line-height:1.8; }
+.map-caption a{ color:var(--red); font-style:normal; font-weight:700; text-decoration:none; border-bottom:1px solid var(--gold); }
+.map-caption a:hover{ border-bottom-color:var(--red); }
 @media(max-width:760px){ .sjmap{ height:420px; margin-top:26px; } }
 
 /* Alternative-stays sub-lists */

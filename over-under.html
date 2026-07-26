@@ -88,7 +88,7 @@
     <div class="eyebrow">The Shlang Line · 3.20.27</div>
     <h1>Over<span class="slash">/</span>Under</h1>
     <div class="rule"></div>
-    <p class="lede">set your line, place your bets, hold us accountable. no money changes hands — only reputations. picks lock when the ceremony starts.</p>
+    <p class="lede">set your line, place your bets, hold us accountable. the closest card wins a <b>curated Sam &amp; Jenni gift</b> — no money changes hands, only reputations. picks lock when the ceremony starts.</p>
   </div>
 
   <div class="board">
@@ -110,16 +110,13 @@
 
 <script>
   const LINES = [
-    { n: 4.5,  q: "minutes into his vows before <b>Sam</b> cries", hot: true },
-    { n: 8.5,  q: "Taylor Swift songs played across the whole weekend" },
-    { n: 5.5,  q: "doctors on the dance floor at any one time (have you <i>seen</i> this guest list)", hot: true },
-    { n: 11.5, q: "the hour <b>Jenni's</b> shoes come off (p.m., and we're being generous)" },
-    { n: 3.5,  q: "speeches that run over their allotted time" },
-    { n: 45,   q: "minutes past its official end that the Friday party actually ends" },
-    { n: 2.5,  q: "guests who ask if the video on the website was 'a real film camera'" },
-    { n: 14.5, q: "people still standing at the after-party at 2 a.m." },
-    { n: 1.5,  q: "relatives who call it 'Shlang's wedding' out loud, at the wedding" },
-    { n: 6.5,  q: "times someone says 'New York or nowhere' unironically" }
+    { n: 4.5,  q: "minutes into his vows before <b>Sam</b> cries" },
+    { n: 4.5,  q: "<b>Taylor Swift</b> songs played on the wedding day" },
+    { n: 5.5,  q: "doctors on the dance floor at any one time (have you <i>seen</i> this guest list)" },
+    { n: 3.5,  q: "times <b>Jenni</b> trips (heels, all night — be kind)" },
+    { n: 10.5, q: "minutes long the <i>longest</i> speech runs" },
+    { n: 3.5,  q: "minutes long the <i>shortest</i> speech runs" },
+    { n: 2.5,  q: "times <b>Gainey</b> cries" }
   ];
 
   const KEY = 'sj-overunder-v1';
@@ -135,8 +132,7 @@
       const d = document.createElement('div');
       d.className = 'line';
       d.innerHTML =
-        '<div class="q"><span class="num">' + L.n + '</span> ' + L.q +
-        (L.hot ? '<span class="hot">crowd favorite</span>' : '') + '</div>' +
+        '<div class="q"><span class="num">' + L.n + '</span> ' + L.q + '</div>' +
         '<div class="picks">' +
           '<button class="pick over ' + (p === 'over' ? 'on' : '') + '" data-i="' + i + '" data-v="over">Over</button>' +
           '<button class="pick under ' + (p === 'under' ? 'on' : '') + '" data-i="' + i + '" data-v="under">Under</button>' +
