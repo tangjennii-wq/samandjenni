@@ -46,7 +46,7 @@
     { n: 'Los Tacos No. 1', cat: 'eat', lat: 40.74073, lng: -74.00561, note: 'Multiple · The adobada. Standing room only, always.' },
     { n: 'Santo Taco', cat: 'eat', lat: 40.72120, lng: -73.99685, note: 'Nolita · Good tacos.' },
     { n: 'Huso', cat: 'eat', lat: 40.71740, lng: -74.01063, note: 'Tribeca · Caviar tasting counter — a small, ridiculous treat.' },
-    { n: 'Sorate', cat: 'eat', lat: 40.72559, lng: -74.00301, note: 'SoHo · Matcha.' },
+    { n: 'Sorate', cat: 'eat', lat: 40.73798, lng: -73.98932, note: 'Union Square · Matcha.' },
     { n: 'Penny', cat: 'eat', lat: 40.73082, lng: -73.98971, note: 'East Village · Seafood bar, natural wine, our kind of night.' },
     { n: 'Saint Tuesday', cat: 'eat', lat: 40.71820, lng: -74.00175, note: 'Tribeca · Basement jazz bar under the Walker Hotel. Go late.' },
     { n: 'Elvis', cat: 'eat', lat: 40.72694, lng: -73.99278, note: 'NoHo · Fun, girly.' },
