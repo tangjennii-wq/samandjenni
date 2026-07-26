@@ -48,6 +48,7 @@
     function hide(){ if (preview) { preview.hidden = true; preview.innerHTML = ''; } state = { name:'', path:'', status:'' }; }
 
     return {
+      getPath: function(){ return state.path || ''; },
       getRef: function(){
         if (state.status === 'sent') return '\n[photo uploaded: ' + state.name + ']\n';
         if (state.name) return '\n[photo: ' + state.name + ' — please attach it to this email ♡]\n';
@@ -57,5 +58,20 @@
     };
   }
 
-  window.SJUpload = { wire: wire };
+  // Save a row to a table (insert-only for guests).
+  function save(table, row){
+    return fetch(URL_BASE + '/rest/v1/' + table, {
+      method:'POST',
+      headers:{ 'apikey':KEY, 'Authorization':'Bearer '+KEY,
+                'Content-Type':'application/json', 'Prefer':'return=minimal' },
+      body: JSON.stringify(row)
+    });
+  }
+
+  function guestKey(){
+    var m = document.cookie.split('; ').find(function(r){ return r.indexOf('sj_guest=') === 0; });
+    return m ? decodeURIComponent(m.split('=').slice(1).join('=')) : '';
+  }
+
+  window.SJUpload = { wire: wire, save: save, guestKey: guestKey };
 })();

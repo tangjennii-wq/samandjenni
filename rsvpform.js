@@ -31,7 +31,7 @@
   var PRE = {
     email: known.email || (who.indexOf('@') > -1 ? who : ''),
     name:  known.name  || (who && who.indexOf('@') === -1 ? titleCase(who) : ''),
-    party: known.party || 1
+    party: Math.min(2, known.party || 1)
   };
 
   var EVENTS = [
@@ -61,7 +61,7 @@
         '<div class="rsvp-list">' + rows + '</div>' +
         '<div class="rsvp-party">' +
           '<label class="note-l" for="{p}Count">how many in your party</label>' +
-          '<input id="{p}Count" class="note-f" type="number" min="1" max="8" value="' + PRE.party + '">' +
+          '<input id="{p}Count" class="note-f" type="number" min="1" max="2" value="' + PRE.party + '">' +
         '</div>' +
         '<div class="rsvp-guests" data-guests></div>' +
         '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
@@ -106,7 +106,7 @@
     // Render one block per person; keeps whatever's already typed.
     var box = root.querySelector('[data-guests]');
     function renderGuests(){
-      var n = Math.max(1, Math.min(8, parseInt(g('Count').value, 10) || 1));
+      var n = Math.max(1, Math.min(2, parseInt(g('Count').value, 10) || 1));
       var keep = [].map.call(box.querySelectorAll('.guest-row'), function(r){
         return { name:r.querySelector('.gname').value, email:r.querySelector('.gemail').value,
                  diet:r.querySelector('.gdiet').value };
@@ -151,28 +151,32 @@
           (r.querySelector('.gdiet').value.trim()  || 'none');
       }).join('\n');
 
-      if (GFORM) {
-        var fd = new FormData();
-        fd.append(GFORM.name, guests.replace(/\n/g, ' | '));
-        fd.append(GFORM.events, lines.replace(/\n/g, ' | '));
-        fd.append(GFORM.count, val('Count'));
-        fetch(GFORM.action, { method:'POST', mode:'no-cors', body:fd }).catch(function(){});
-      } else {
-        var body =
-          'RSVP — sam + jenni, 3.20.27\n\n' + lines + '\n\n' +
-          'party size: ' + val('Count') + '\n' +
-          guests + '\n' +
-          (up ? up.getRef() : '');
-        window.location.href = 'mailto:tangjennii@gmail.com' +
-          '?subject=' + encodeURIComponent('RSVP — ' + ((root.querySelector('.gname')||{}).value || 'sam + jenni wedding')) +
-          '&body=' + encodeURIComponent(body);
+      var guestRows = [].map.call(root.querySelectorAll('.guest-row'), function(r){
+        return { name:r.querySelector('.gname').value.trim(),
+                 email:r.querySelector('.gemail').value.trim(),
+                 dietary:r.querySelector('.gdiet').value.trim() };
+      });
+      var evAnswers = {};
+      EVENTS.forEach(function(e){ evAnswers[e.k] = answers[e.k] || null; });
+
+      if (window.SJUpload) {
+        window.SJUpload.save('wedding_rsvps', {
+          guest_key: window.SJUpload.guestKey(),
+          tier: tier,
+          party_size: parseInt(val('Count'), 10) || 1,
+          events: evAnswers,
+          guests: guestRows,
+          photo_path: up ? up.getPath() : ''
+        }).catch(function(){});
       }
+
       var card = root.querySelector('.note-card') || root;
       card.innerHTML = '<div class="note-thanks">' +
         '<div class="note-h">Thank you ♡</div>' +
         '<p class="note-sub">your reply is in — we can’t wait.</p>' +
-        '<p class="thanks-ask">while you’re here — leave us a note?</p>' +
+        '<p class="thanks-ask">while you’re here — leave us a note, submit a song request, share a favorite memory.</p>' +
         '<button class="note-btn thanks-btn" type="button" data-note-open>Leave us a note &rarr;</button>' +
+        '<p class="thanks-then">and when you’re done, go set your line on <a href="over-under.html">over/under</a> ♡</p>' +
         '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
         '</div>';
       // wire the freshly-rendered buttons
