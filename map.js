@@ -110,16 +110,21 @@
     map.createPane('subLinePane').style.zIndex = 450;
     map.createPane('subStopPane').style.zIndex = 460;
 
-    var HOOD_OPACITY = 0.42, HOOD_FADED = 0.12;
+    var HOOD_OPACITY = 0.42, HOOD_FADED = 0.30;
 
     var hoods = L.layerGroup();
     var subway = L.layerGroup();
     var pins = L.layerGroup().addTo(map);
     var hoodGeo = null;         // reference so we can fade/restore
     var subwayOn = false;
-    var STATION_ZOOM = 15;      // station labels only appear once zoomed in
+    var STATION_ZOOM = 15;      // stations only appear once zoomed in
 
     drawPins(map, pins);
+
+    // Layer control starts with only Places; each data layer is added ONLY once
+    // its GeoJSON actually loads with features — so a toggle never appears (or
+    // fades neighborhoods) over empty data.
+    var ctl = L.control.layers(null, { 'Places': pins }, { collapsed:false, position:'topright' }).addTo(map);
 
     function styleHoods(){
       if(!hoodGeo) return;
@@ -132,7 +137,7 @@
 
     // Neighborhoods (colored polygons + labels)
     tryFetch(NEIGH).then(function(gj){
-      if(!gj) return;
+      if(!gj || !(gj.features && gj.features.length)) return;
       hoodGeo = L.geoJSON(gj, {
         pane:'hoodPane',
         onEachFeature: function(f, layer){
@@ -141,21 +146,25 @@
         }
       }).addTo(hoods);
       styleHoods();
+      ctl.addOverlay(hoods, 'Neighborhoods');
       if(mode !== 'hotels') hoods.addTo(map);   // on by default when zoomed out
     });
 
-    // Subway lines — white casing beneath, colored route on top.
+    // Subway lines — white casing beneath, colored route on top. Only wired up
+    // if we actually receive line features.
     tryFetch(LINES).then(function(gj){
-      if(!gj) return;
+      if(!gj || !(gj.features && gj.features.length)) return;
       L.geoJSON(gj, {                       // casing
         pane:'subCasePane',
-        style: function(){ return { color:'#ffffff', weight:6, opacity:0.95, lineCap:'round' }; }
+        style: function(){ return { color:'#ffffff', weight:8, opacity:0.95, lineCap:'round' }; }
       }).addTo(subway);
       L.geoJSON(gj, {                       // colored route
         pane:'subLinePane',
         style: function(f){ return { color: routeColor(f.properties), weight:4, opacity:1, lineCap:'round' }; }
       }).addTo(subway);
+      ctl.addOverlay(subway, 'Subway lines');
     });
+
     // Subway stations — hidden at city-wide zoom, revealed only when zoomed in.
     var stationsGeo = null;
     function updateStations(){
@@ -165,7 +174,7 @@
       else if(!show && map.hasLayer(stationsGeo)) map.removeLayer(stationsGeo);
     }
     tryFetch(STATIONS).then(function(gj){
-      if(!gj) return;
+      if(!gj || !(gj.features && gj.features.length)) return;
       stationsGeo = L.geoJSON(gj, {
         pane:'subStopPane',
         pointToLayer: function(f, latlng){
@@ -173,7 +182,7 @@
         },
         onEachFeature: function(f, layer){
           var name = prop(f.properties, ['name','stop_name','NAME','station']);
-          if(name) layer.bindTooltip(name, { direction:'top' });
+          if(name) layer.bindTooltip(name, { direction:'top' });   // hover only
         }
       });
       updateStations();
@@ -181,10 +190,8 @@
     map.on('zoomend', updateStations);
 
     // Fade neighborhoods + manage stations when subway toggles.
-    map.on('overlayadd', function(e){ if(e.name === 'Subway'){ subwayOn = true; styleHoods(); updateStations(); } });
-    map.on('overlayremove', function(e){ if(e.name === 'Subway'){ subwayOn = false; styleHoods(); updateStations(); } });
-
-    L.control.layers(null, { 'Neighborhoods': hoods, 'Subway': subway, 'Places': pins }, { collapsed:false, position:'topright' }).addTo(map);
+    map.on('overlayadd', function(e){ if(e.name === 'Subway lines'){ subwayOn = true; styleHoods(); updateStations(); } });
+    map.on('overlayremove', function(e){ if(e.name === 'Subway lines'){ subwayOn = false; styleHoods(); updateStations(); } });
 
     // legend
     var lg = L.control({position:'bottomleft'});
