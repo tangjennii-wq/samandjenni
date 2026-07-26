@@ -52,7 +52,17 @@
           '<div class="note-field"><label class="note-l" for="{p}Note">anything else</label>' +
             '<input id="{p}Note" class="note-f" type="text"></div>' +
         '</div>' +
+        '<div class="rsvp-extra">' +
+          '<label class="rsvp-photo-btn" for="{p}Photo">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
+            '<span class="photo-txt">add a favorite photo</span>' +
+          '</label>' +
+          '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
+        '</div>' +
+        '<div class="photo-preview" data-preview hidden></div>' +
         '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
+        '<button class="rsvp-note-link" type="button" data-note-open>… and leave us a note &rarr;</button>' +
       '</div>').replace(/\{p\}/g, p);
   }
 
@@ -61,6 +71,21 @@
 
   function wire(root, p, onSent){
     function g(k){ return root.querySelector('#' + p + k); }
+
+    var photo = g('Photo'), preview = root.querySelector('[data-preview]');
+    var photoName = '';
+    if (photo) {
+      photo.addEventListener('change', function () {
+        var f = photo.files && photo.files[0];
+        if (!f) { preview.hidden = true; photoName = ''; return; }
+        photoName = f.name;
+        var url = URL.createObjectURL(f);
+        preview.innerHTML = '<img src="' + url + '" alt=""><span>' + f.name +
+          '<br><i>attach this to the email that opens</i></span>';
+        preview.hidden = false;
+        var t = root.querySelector('.photo-txt'); if (t) t.textContent = 'change photo';
+      });
+    }
     Object.keys(cache).forEach(function(k){
       var n = g(k); if(!n) return;
       n.value = cache[k] || '';
@@ -97,7 +122,8 @@
           'email: ' + val('Email') + '\n' +
           'party size: ' + val('Count') + '\n' +
           'dietary: ' + val('Diet') + '\n' +
-          'notes: ' + val('Note') + '\n';
+          'notes: ' + val('Note') + '\n' +
+          (photoName ? '\n[photo: ' + photoName + ' — please attach it to this email ♡]\n' : '');
         window.location.href = 'mailto:tangjennii@gmail.com' +
           '?subject=' + encodeURIComponent('RSVP — ' + (val('Name') || 'sam + jenni wedding')) +
           '&body=' + encodeURIComponent(body);
