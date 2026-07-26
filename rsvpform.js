@@ -15,6 +15,25 @@
 
   var tier = parseInt(document.documentElement.getAttribute('data-tier') || '1', 10) || 1;
 
+  // What the guest typed at the gate (email or last name) — used to prefill.
+  // GUEST_MAP can later map that key to a full household name + party size,
+  // generated from the guest spreadsheet alongside personalize.js's TIER_MAP.
+  var GUEST_MAP = {}; // e.g. "tangjennii@gmail.com": { name:"Jenni Tang", party:2 }
+
+  function cookie(name){
+    var m = document.cookie.split('; ').find(function(r){ return r.indexOf(name + '=') === 0; });
+    return m ? decodeURIComponent(m.split('=').slice(1).join('=')) : '';
+  }
+  function titleCase(x){ return x.replace(/\b[a-z]/g, function(c){ return c.toUpperCase(); }); }
+
+  var who = cookie('sj_guest').trim().toLowerCase();
+  var known = GUEST_MAP[who] || {};
+  var PRE = {
+    email: known.email || (who.indexOf('@') > -1 ? who : ''),
+    name:  known.name  || (who && who.indexOf('@') === -1 ? titleCase(who) : ''),
+    party: known.party || 1
+  };
+
   var EVENTS = [
     { k:'thursday',  label:'Thursday · welcome dinner', when:'Mar 18', show: tier === 1 },
     { k:'rehearsal', label:'Friday · rehearsal',        when:'Mar 19', show: tier <= 2 },
@@ -40,16 +59,11 @@
       '</div>' +
       '<div class="rsvp-body">' +
         '<div class="rsvp-list">' + rows + '</div>' +
-        '<div class="rsvp-fields">' +
-          '<div class="note-field"><label class="note-l" for="{p}Name">name(s)</label>' +
-            '<input id="{p}Name" class="note-f" type="text"></div>' +
-          '<div class="note-field"><label class="note-l" for="{p}Email">email</label>' +
-            '<input id="{p}Email" class="note-f" type="email"></div>' +
-          '<div class="note-field"><label class="note-l" for="{p}Count">party</label>' +
-            '<input id="{p}Count" class="note-f" type="number" min="1" value="1"></div>' +
-          '<div class="note-field span3"><label class="note-l" for="{p}Diet">dietary needs / allergies / anything else</label>' +
-            '<input id="{p}Diet" class="note-f" type="text"></div>' +
+        '<div class="rsvp-party">' +
+          '<label class="note-l" for="{p}Count">how many in your party</label>' +
+          '<input id="{p}Count" class="note-f" type="number" min="1" max="8" value="' + PRE.party + '">' +
         '</div>' +
+        '<div class="rsvp-guests" data-guests></div>' +
         '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
         '<div class="rsvp-photo-block">' +
           '<p class="rsvp-photo-note">add a favorite photo with Sam and/or Jenni <span>(optional)</span></p>' +
@@ -66,16 +80,54 @@
       '</div>').replace(/\{p\}/g, p);
   }
 
-  var cache = { Name:'', Email:'', Count:'1', Diet:'' };
+  var cache = { Count: String(PRE.party) };
   var answers = {};
+
+  function guestRow(p, i){
+    var who = i === 0 ? 'you' : 'guest ' + (i + 1);
+    return '<div class="guest-row">' +
+      '<div class="guest-n">' + who + '</div>' +
+      '<div class="guest-fields">' +
+        '<div class="note-field"><label class="note-l" for="' + p + 'GN' + i + '">name</label>' +
+          '<input id="' + p + 'GN' + i + '" class="note-f gname" type="text" value="' +
+            (i === 0 ? PRE.name.replace(/"/g,'&quot;') : '') + '"></div>' +
+        '<div class="note-field"><label class="note-l" for="' + p + 'GE' + i + '">email' +
+          (i === 0 ? '' : ' <span class="opt">(optional)</span>') + '</label>' +
+          '<input id="' + p + 'GE' + i + '" class="note-f gemail" type="email" value="' +
+            (i === 0 ? PRE.email.replace(/"/g,'&quot;') : '') + '"></div>' +
+        '<div class="note-field span2"><label class="note-l" for="' + p + 'GD' + i + '">dietary needs / allergies</label>' +
+          '<input id="' + p + 'GD' + i + '" class="note-f gdiet" type="text" placeholder="none"></div>' +
+      '</div></div>';
+  }
 
   function wire(root, p, onSent){
     function g(k){ return root.querySelector('#' + p + k); }
 
+    // Render one block per person; keeps whatever's already typed.
+    var box = root.querySelector('[data-guests]');
+    function renderGuests(){
+      var n = Math.max(1, Math.min(8, parseInt(g('Count').value, 10) || 1));
+      var keep = [].map.call(box.querySelectorAll('.guest-row'), function(r){
+        return { name:r.querySelector('.gname').value, email:r.querySelector('.gemail').value,
+                 diet:r.querySelector('.gdiet').value };
+      });
+      var html = ''; for (var i = 0; i < n; i++) html += guestRow(p, i);
+      box.innerHTML = html;
+      [].forEach.call(box.querySelectorAll('.guest-row'), function(r, i){
+        if (!keep[i]) return;
+        r.querySelector('.gname').value  = keep[i].name;
+        r.querySelector('.gemail').value = keep[i].email;
+        r.querySelector('.gdiet').value  = keep[i].diet;
+      });
+    }
+    renderGuests();
+    g('Count').addEventListener('input', renderGuests);
+    g('Count').addEventListener('change', renderGuests);
+
     var up = (window.SJUpload ? window.SJUpload.wire(g('Photo'), root.querySelector('[data-preview]')) : null);
     Object.keys(cache).forEach(function(k){
       var n = g(k); if(!n) return;
-      n.value = cache[k] || '';
+      if (cache[k]) n.value = cache[k];
       n.addEventListener('input', function(){ cache[k] = n.value; });
     });
     root.querySelectorAll('.yn').forEach(function(b){
@@ -92,25 +144,27 @@
       var lines = EVENTS.map(function(e){
         return e.label + ': ' + (answers[e.k] ? answers[e.k].toUpperCase() : '—');
       }).join('\n');
+      var guests = [].map.call(root.querySelectorAll('.guest-row'), function(r, i){
+        return (i === 0 ? 'you' : 'guest ' + (i + 1)) + ': ' +
+          (r.querySelector('.gname').value.trim()  || '—') + ' · ' +
+          (r.querySelector('.gemail').value.trim() || 'no email') + ' · diet: ' +
+          (r.querySelector('.gdiet').value.trim()  || 'none');
+      }).join('\n');
 
       if (GFORM) {
         var fd = new FormData();
-        fd.append(GFORM.name, val('Name'));
-        fd.append(GFORM.email, val('Email'));
+        fd.append(GFORM.name, guests.replace(/\n/g, ' | '));
         fd.append(GFORM.events, lines.replace(/\n/g, ' | '));
         fd.append(GFORM.count, val('Count'));
-        fd.append(GFORM.diet, val('Diet'));
         fetch(GFORM.action, { method:'POST', mode:'no-cors', body:fd }).catch(function(){});
       } else {
         var body =
           'RSVP — sam + jenni, 3.20.27\n\n' + lines + '\n\n' +
-          'name(s): ' + val('Name') + '\n' +
-          'email: ' + val('Email') + '\n' +
           'party size: ' + val('Count') + '\n' +
-          'dietary / notes: ' + val('Diet') + '\n' +
+          guests + '\n' +
           (up ? up.getRef() : '');
         window.location.href = 'mailto:tangjennii@gmail.com' +
-          '?subject=' + encodeURIComponent('RSVP — ' + (val('Name') || 'sam + jenni wedding')) +
+          '?subject=' + encodeURIComponent('RSVP — ' + ((root.querySelector('.gname')||{}).value || 'sam + jenni wedding')) +
           '&body=' + encodeURIComponent(body);
       }
       var card = root.querySelector('.note-card') || root;
