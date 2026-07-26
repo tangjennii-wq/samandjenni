@@ -745,3 +745,71 @@ body{ background:var(--ivory); }
 .leaflet-pane svg,
 .leaflet-overlay-pane svg{ max-width:none !important; max-height:none !important; }
 .leaflet-container img{ max-width:none !important; }
+
+/* =========================================================
+   SOFTEN PASS — warm near-white paper, hairline borders,
+   soft lift instead of hard black keylines. (AWA feel.)
+   Everything below is scoped/appended so it can be reverted
+   by deleting this block.
+   ========================================================= */
+:root{
+  --paper:#FCFAF6;              /* warm near-white page */
+  --line:rgba(13,9,5,.10);      /* hairline instead of hard black */
+  --line-2:rgba(13,9,5,.16);
+  --lift:0 1px 2px rgba(13,9,5,.04), 0 10px 26px rgba(13,9,5,.05);
+  --lift-sm:0 1px 2px rgba(13,9,5,.04), 0 4px 12px rgba(13,9,5,.045);
+}
+
+/* Page + sections: warm white, not tan */
+body{ background:var(--paper); }
+.sect, .sect.alt{ background:var(--paper); }
+.crest{ background:#fff; border-bottom:1px solid var(--line); }
+.sitenav{ background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.mobile-actions{ background:#fff; border-bottom:1px solid var(--line); }
+
+/* Cards: hairline + lift, no black keyline */
+.evcard, .hotel, .rec, .faq, .travelnote, .dcard,
+.note-card, .guest-row, .rsvp-list, .sjmap, .cal-pop,
+.photo-preview, .board .line, .board .scorebar{
+  border-color:var(--line) !important;
+  border-width:1px !important;
+}
+.evcard, .hotel, .rec, .faq, .dcard, .note-card, .sjmap{ box-shadow:var(--lift); }
+.guest-row, .rsvp-list, .photo-preview{ box-shadow:var(--lift-sm); }
+.travelnote{ border-style:dashed !important; box-shadow:none; background:#fff; }
+
+/* Event cards: keep the colored band, lose the black rule under it */
+.evcard .band{ border-bottom:1px solid var(--line) !important; }
+.evcard.is-wedding{ outline:none; border-color:rgba(229,60,45,.35) !important; }
+.evcard.is-wedding .band{ border-bottom-color:rgba(229,60,45,.28) !important; }
+.hotel.star{ outline:none; border-color:rgba(229,60,45,.35) !important; box-shadow:0 1px 2px rgba(229,60,45,.06), 0 10px 26px rgba(229,60,45,.08); }
+
+/* Chips, pills, small controls: hairline */
+.chip, .tag, .yn, .pick, .mc-opt, .jumpnav a, .photo-drop,
+.rsvp-photo-btn, .note-x, .nav-cal, .num, .sjmap-legend, .sjmap-subkey{
+  border-color:var(--line-2) !important; border-width:1px !important;
+}
+.note-f, .rsvp-fields .note-f, .guest-fields .note-f{
+  border:1px solid var(--line-2) !important; background:#fff;
+}
+.note-f:focus{ border-color:var(--red) !important; box-shadow:0 0 0 3px rgba(229,60,45,.10); }
+
+/* Buttons keep presence via fill, not outline */
+.cta-btn, .ma-btn, .note-btn, .bookbtn, .thanks-pill, .btn{
+  border-width:1px !important; border-color:transparent !important;
+}
+.cta-btn:not(.cta-primary), .ma-note, .bookbtn, .btn:not(.ghost), .pill-ou, .note-btn{
+  background:var(--gold); color:var(--dark);
+}
+.btn.ghost, .cta-btn.ghost{ background:#fff; border-color:var(--line-2) !important; }
+.cta-primary, .ma-rsvp, .pill-rsvp{ background:var(--red); color:#fff; }
+
+/* Board (over/under) reads as one soft panel */
+.board .scorebar{ background:var(--dark); border-color:var(--dark) !important; }
+.board .line{ border-top:none !important; }
+.board .line:nth-child(even){ background:#FDFBF7; }
+
+/* Drawer + footer */
+.note-drawer{ border-left:1px solid var(--line); }
+.drawer-bar{ border-bottom:1px solid var(--line); }
+@media (max-width:760px){ .note-drawer{ border-top:1px solid var(--line); border-left:none; } }
