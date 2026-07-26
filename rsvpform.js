@@ -50,16 +50,19 @@
           '<div class="note-field span3"><label class="note-l" for="{p}Diet">dietary needs / allergies / anything else</label>' +
             '<input id="{p}Diet" class="note-f" type="text"></div>' +
         '</div>' +
-        '<div class="rsvp-extra">' +
-          '<label class="rsvp-photo-btn compact" for="{p}Photo">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-              '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
-            '<span class="photo-txt">add a photo</span>' +
-          '</label>' +
-          '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
-        '</div>' +
-        '<div class="photo-preview" data-preview hidden></div>' +
         '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
+        '<div class="rsvp-photo-block">' +
+          '<p class="rsvp-photo-note">add a favorite photo with Sam and/or Jenni <span>(optional)</span></p>' +
+          '<div class="rsvp-extra">' +
+            '<label class="rsvp-photo-btn compact" for="{p}Photo">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
+              '<span class="photo-txt">add a photo</span>' +
+            '</label>' +
+            '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
+          '</div>' +
+          '<div class="photo-preview" data-preview hidden></div>' +
+        '</div>' +
       '</div>').replace(/\{p\}/g, p);
   }
 

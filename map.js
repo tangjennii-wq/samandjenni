@@ -114,7 +114,30 @@
     var center = mode === 'hotels' ? [40.7635, -73.9760] : [40.7480, -73.9840];
     var zoom   = mode === 'hotels' ? 14 : (mode === 'all' ? 13 : 12);
 
-    var map = L.map('sjmap', { scrollWheelZoom:false, zoomControl:true }).setView(center, zoom);
+    var isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
+    var map = L.map(el, { scrollWheelZoom:false, zoomControl:true,
+                               dragging: !isTouch, tap:true }).setView(center, zoom);
+
+    // Touch: the map stays inert until tapped, so a scrolling finger never gets
+    // trapped. Tapping activates panning; scrolling it off screen releases it.
+    if (isTouch) {
+      var hint = document.createElement('div');
+      hint.className = 'map-hint';
+      hint.textContent = 'tap the map to explore';
+      el.appendChild(hint);
+      el.addEventListener('click', function () {
+        if (el.classList.contains('map-live')) return;
+        el.classList.add('map-live');
+        map.dragging.enable();
+      });
+      window.addEventListener('scroll', function () {
+        var r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) {
+          el.classList.remove('map-live');
+          map.dragging.disable();
+        }
+      }, { passive:true });
+    }
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution:'&copy; OpenStreetMap &copy; CARTO', subdomains:'abcd', maxZoom:19
     }).addTo(map);
