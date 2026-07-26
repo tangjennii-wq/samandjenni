@@ -1,28 +1,34 @@
 // notes.js — optional "leave us a note" form. Renders into <div id="sjnote">.
-// On-brand native fields. Submit currently opens the guest's email (works today).
-// SWAP-IN: once we have the form's entry.* field IDs (from its "Get pre-filled
-// link"), set GFORM below to POST answers straight into the Google Sheet.
+// Optional compact intro via data-intro on the container.
+// Submit opens the guest's email (works today). SWAP-IN: set GFORM (entry.* IDs
+// from the form's "Get pre-filled link") to POST silently into the Google Sheet.
 (function () {
   var el = document.getElementById('sjnote');
   if (!el) return;
+  var intro = el.getAttribute('data-intro') || '';
 
-  // When ready: { action:'https://docs.google.com/forms/d/e/XXXX/formResponse',
-  //   mem:'entry.111', word:'entry.222', song:'entry.333', name:'entry.444' }
-  var GFORM = null;
+  var GFORM = null; // { action, mem, word, song, name }
 
   el.innerHTML =
     '<div class="note-card">' +
       '<div class="note-h">Leave us a note</div>' +
       '<p class="note-sub">totally optional — but we’d love these ♡</p>' +
-      '<label class="note-l" for="nMem">a favorite memory with Sam or Jenni</label>' +
-      '<textarea id="nMem" class="note-f" rows="3"></textarea>' +
-      '<label class="note-l" for="nWord">one word that describes Sam (or Jenni)</label>' +
-      '<input id="nWord" class="note-f" type="text">' +
-      '<label class="note-l" for="nSong">a song you want to hear</label>' +
-      '<input id="nSong" class="note-f" type="text" placeholder="artist – title">' +
-      '<label class="note-l" for="nName">your name (optional)</label>' +
-      '<input id="nName" class="note-f" type="text">' +
-      '<button id="nSend" class="note-btn" type="button">Send to Sam + Jenni</button>' +
+      (intro ? '<p class="note-intro">' + intro + '</p>' : '') +
+      '<div class="note-field">' +
+        '<label class="note-l" for="nMem">a favorite memory with Sam or Jenni</label>' +
+        '<textarea id="nMem" class="note-f note-ta"></textarea>' +
+      '</div>' +
+      '<div class="note-row2">' +
+        '<div class="note-field"><label class="note-l" for="nWord">one word for Sam (or Jenni)</label>' +
+          '<input id="nWord" class="note-f" type="text"></div>' +
+        '<div class="note-field"><label class="note-l" for="nSong">a song you want to hear</label>' +
+          '<input id="nSong" class="note-f" type="text" placeholder="artist – title"></div>' +
+      '</div>' +
+      '<div class="note-row3">' +
+        '<div class="note-field"><label class="note-l" for="nName">your name (optional)</label>' +
+          '<input id="nName" class="note-f" type="text"></div>' +
+        '<button id="nSend" class="note-btn" type="button">Send</button>' +
+      '</div>' +
       '<div class="note-done" id="nDone">thank you ♡</div>' +
     '</div>';
 
@@ -31,7 +37,6 @@
 
   document.getElementById('nSend').addEventListener('click', function () {
     if (GFORM) {
-      // Post silently into the Google Form (answers land in the Sheet).
       var fd = new FormData();
       fd.append(GFORM.mem, v('nMem'));
       fd.append(GFORM.word, v('nWord'));
@@ -40,10 +45,9 @@
       fetch(GFORM.action, { method:'POST', mode:'no-cors', body:fd }).catch(function(){});
       done.textContent = 'thank you ♡';
       done.classList.add('show');
-      document.getElementById('nSend').disabled = true;
+      this.disabled = true;
       return;
     }
-    // Interim: open the guest's email client.
     var body =
       'a note for sam + jenni\n\n' +
       'favorite memory:\n' + v('nMem') + '\n\n' +
