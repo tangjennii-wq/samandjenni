@@ -1,8 +1,71 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="refresh" content="0; url=stay.html">
-<link rel="canonical" href="stay.html">
-<title>Recommendations · sam + jenni</title></head>
-<body><p style="font-family:sans-serif;padding:40px;text-align:center">
-Moved — <a href="stay.html">hotels &amp; recs</a>.</p>
-<script>location.replace('stay.html');</script></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>recs · sam + jenni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <div class="ribbon">
+    <span class="ribbon-full">friday welcome at <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener">chinese tuxedo</a> <span class="sep">✦</span> saturday wedding at <a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener">the pierre</a></span>
+    <span class="ribbon-short">fri @ <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+New+York" target="_blank" rel="noopener">chinese tuxedo</a> <span class="sep">✦</span> sat @ <a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener">the pierre</a></span>
+  </div>
+  <header class="crest">
+    <div class="crest-name"><a href="index.html">Sam + Jenni</a></div>
+    <div class="crest-tag">new york or nowhere</div>
+  </header>
+  <nav class="sitenav">
+    <a href="index.html">home</a>
+    <a href="weekend.html">events</a>
+    <a href="travel.html">hotels</a>
+    <a class="active" href="recommendations.html">recs</a>
+    <a href="over-under.html">over/under</a>
+      <span class="nav-cta">
+      <a class="cta-btn cta-primary" href="rsvp.html" data-rsvp-open>RSVP</a>
+      <button type="button" class="cta-btn" data-note-open>Leave a note</button>
+    </span>
+  </nav>
+
+  <section class="sect" id="recs">
+    <div class="wrap">
+      <div class="eyebrow">If you're making a weekend of it</div>
+      <h2>Sam &amp; Jenni Recommend</h2>
+      <div class="rule"></div>
+
+      <div id="sjmap" class="sjmap" data-mode="recs"></div>
+      <p class="map-caption">deeper dives: <a href="https://www.mta.info/maps/subway" target="_blank" rel="noopener">official subway map</a> · <a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html" target="_blank" rel="noopener">NYT neighborhood map</a> · <a href="https://www.nytimes.com/2025/04/02/nyregion/nyc-new-subway-map.html" target="_blank" rel="noopener">NYT subway map</a></p>
+
+      <h3 class="subhead">Eat</h3>
+      <div class="recgrid">
+        <div class="rec"><div class="rtag">Chinatown</div><div class="rname">Chinese Tuxedo</div><div class="rwhy">Where we're throwing the Friday welcome party. Go back on your own time — it's that good.</div></div>
+        <div class="rec"><div class="rtag">Soho</div><div class="rname">Balthazar</div><div class="rwhy">The French brasserie we keep coming back to. Breakfast is the move.</div></div>
+        <div class="rec"><div class="rtag">Brooklyn</div><div class="rname">César</div><div class="rwhy">Small, perfect, worth the trip across the river.</div></div>
+        <div class="rec"><div class="rtag">Flatiron</div><div class="rname">Gramercy Tavern</div><div class="rwhy">The special-occasion one. Book well ahead.</div></div>
+        <div class="rec"><div class="rtag">Tribeca</div><div class="rname">The Odeon</div><div class="rwhy">Old New York, still cool, never disappoints late at night.</div></div>
+        <div class="rec placeholder"><div class="rtag">Add yours</div><div class="rname">— your pick —</div><div class="rwhy">Swap this out for a real one.</div></div>
+      </div>
+
+      <h3 class="subhead">Do</h3>
+      <div class="recgrid">
+        <div class="rec"><div class="rtag">Steps away</div><div class="rname">Central Park</div><div class="rwhy">The Pierre sits right on it. Walk in, turn left, wander.</div></div>
+        <div class="rec"><div class="rtag">Museum</div><div class="rname">The Met</div><div class="rwhy">Ten minutes up Fifth from the hotel. You can't do it all — don't try.</div></div>
+        <div class="rec"><div class="rtag">March in NY</div><div class="rname">Bring a coat</div><div class="rwhy">It'll be somewhere between 35° and 55°F and lying to you about which.</div></div>
+      </div>
+
+      
+      <div class="travelnote"><span class="tnlabel">More coming</span>We're still building this list — the real one, not a tourist one. Check back closer to the date.</div>
+    </div>
+  </section>
+  <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
+  <script src="personalize.js" defer></script>
+  <script src="map.js" defer></script>
+  <script src="drawer.js" defer></script>
+  <script src="rsvpform.js" defer></script>
+  <script src="notes.js" defer></script>
+</body>
+</html>

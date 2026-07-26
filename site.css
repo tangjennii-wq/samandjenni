@@ -213,6 +213,17 @@ img,video{max-width:100%;height:auto}
   .nav-cta .cta-btn{ flex:1; text-align:center; max-width:190px; }
 }
 
+/* Two-column split: booking list left, sticky map right */
+.split{ display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:start; margin-top:34px; }
+.split-map{ position:sticky; top:70px; }
+.split-map .sjmap{ margin-top:0; height:560px; }
+.split-list .hotel{ margin-bottom:12px; }
+@media(max-width:900px){
+  .split{ grid-template-columns:1fr; gap:18px; }
+  .split-map{ position:static; }
+  .split-map .sjmap{ height:380px; }
+}
+
 /* Section jump-nav (hotels & recs page) */
 .jumpnav{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:22px 0 4px; }
 .jumpnav a{ border:2px solid var(--dark); border-radius:999px; padding:8px 18px; text-decoration:none;
