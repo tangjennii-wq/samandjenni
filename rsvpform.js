@@ -176,7 +176,9 @@
         '<p class="note-sub">your reply is in — we can’t wait.</p>' +
         '<p class="thanks-ask">while you’re here — leave us a note, submit a song request, share a favorite memory.</p>' +
         '<button class="note-btn thanks-btn" type="button" data-note-open>Leave us a note &rarr;</button>' +
-        '<p class="thanks-then">and when you’re done, go set your line on <a href="over-under.html">over/under</a> ♡</p>' +
+        '<div class="thanks-pills">' +
+          '<a class="thanks-pill pill-ou" href="over-under.html">Over/Under &rarr;</a>' +
+        '</div>' +
         '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
         '</div>';
       // wire the freshly-rendered buttons

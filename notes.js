@@ -74,8 +74,21 @@
       var card = root.querySelector('.note-card') || root;
       card.innerHTML = '<div class="note-thanks"><div class="note-h">Thank you ♡</div>' +
         '<p class="note-sub">we’ve got it — see you in New York.</p>' +
-        '<p class="thanks-then">now go set your line on <a href="over-under.html">over/under</a> ♡</p></div>';
-      if (onSent) setTimeout(onSent, 1500);
+        '<p class="thanks-ask">two more things, if you have a minute —</p>' +
+        '<div class="thanks-pills">' +
+          '<button class="thanks-pill pill-rsvp" type="button" data-go-rsvp>RSVP</button>' +
+          '<a class="thanks-pill pill-ou" href="over-under.html">Over/Under</a>' +
+        '</div>' +
+        '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
+        '</div>';
+      var goR = card.querySelector('[data-go-rsvp]');
+      if (goR) goR.addEventListener('click', function(){
+        var t = document.querySelector('.nav-cta [data-rsvp-open]') || document.querySelector('[data-rsvp-open]');
+        if (t) t.click();
+      });
+      var skipN = card.querySelector('[data-close]');
+      if (skipN && onSent) skipN.addEventListener('click', onSent);
+      return;
     });
   }
 
