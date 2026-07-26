@@ -61,6 +61,27 @@
     return '#8a8a8a';
   }
 
+  // Build the subway key: group route names by their color, in trunk order.
+  function buildSubwayKey(features){
+    var order = ['#D82233','#009952','#9A38A1','#0062CF','#EB6800','#FCCC0A','#6CBE45','#996633','#A7A9AC','#808183'];
+    var byColor = {};
+    features.forEach(function(f){
+      var c = (f.properties.color||'').toUpperCase(), r = f.properties.route;
+      if(!c || !r || /X$/.test(r)) return;   // skip express duplicates like 6X/FX
+      (byColor[c] = byColor[c] || {})[r] = 1;
+    });
+    var colors = Object.keys(byColor).sort(function(a,b){
+      var ia=order.indexOf(a), ib=order.indexOf(b);
+      return (ia<0?99:ia) - (ib<0?99:ib);
+    });
+    var html = '<div class="sk-title">Subway lines</div>';
+    colors.forEach(function(c){
+      var routes = Object.keys(byColor[c]).sort();
+      html += '<span class="sk-row"><i style="background:'+c+'"></i>'+routes.join(' ')+'</span>';
+    });
+    return html;
+  }
+
   // Try a list of URLs; resolve with the first that returns valid GeoJSON.
   function tryFetch(urls){
     var i = 0;
@@ -146,6 +167,7 @@
 
     // Subway lines — white casing beneath, colored route on top. Only wired up
     // if we actually receive line features.
+    var subKeyCtl = null;
     tryFetch(LINES).then(function(gj){
       if(!gj || !(gj.features && gj.features.length)) return;
       L.geoJSON(gj, {                       // casing
@@ -157,9 +179,22 @@
         style: function(f){
           var c = (f.properties && f.properties.color) || routeColor(f.properties);
           return { color:c, weight:4, opacity:1, lineCap:'round' };
+        },
+        onEachFeature: function(f, layer){
+          var r = f.properties && f.properties.route;
+          if(r) layer.bindTooltip(r + ' train', { sticky:true, className:'sjmap-linetip' });
         }
       }).addTo(subway);
       ctl.addOverlay(subway, 'Subway lines');
+
+      // Build a subway key (MTA color → line letters/numbers), shown only when
+      // the Subway layer is on.
+      subKeyCtl = L.control({ position:'bottomright' });
+      subKeyCtl.onAdd = function(){
+        var d = L.DomUtil.create('div', 'sjmap-legend sjmap-subkey');
+        d.innerHTML = buildSubwayKey(gj.features);
+        return d;
+      };
     });
 
     // Subway stations — hidden at city-wide zoom, revealed only when zoomed in.
@@ -186,9 +221,9 @@
     });
     map.on('zoomend', updateStations);
 
-    // Fade neighborhoods + manage stations when subway toggles.
-    map.on('overlayadd', function(e){ if(e.name === 'Subway lines'){ subwayOn = true; styleHoods(); updateStations(); } });
-    map.on('overlayremove', function(e){ if(e.name === 'Subway lines'){ subwayOn = false; styleHoods(); updateStations(); } });
+    // Fade neighborhoods, manage stations, and show the subway key when toggled.
+    map.on('overlayadd', function(e){ if(e.name === 'Subway lines'){ subwayOn = true; styleHoods(); updateStations(); if(subKeyCtl) subKeyCtl.addTo(map); } });
+    map.on('overlayremove', function(e){ if(e.name === 'Subway lines'){ subwayOn = false; styleHoods(); updateStations(); if(subKeyCtl) map.removeControl(subKeyCtl); } });
 
     // legend
     var lg = L.control({position:'bottomleft'});

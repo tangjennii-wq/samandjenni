@@ -182,3 +182,11 @@ img,video{max-width:100%;height:auto}
   text-transform:uppercase; color:var(--red); text-align:center; }
 .rec .rname a{ text-decoration:none; border-bottom:2px solid var(--gold); }
 .rec .rname a:hover{ color:var(--red); border-bottom-color:var(--red); }
+
+/* Subway key (color -> lines), shown when the Subway layer is on */
+.sjmap-subkey{ max-height:220px; overflow:auto; }
+.sjmap-subkey .sk-title{ font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--red); margin-bottom:6px; }
+.sjmap-subkey .sk-row{ display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; margin:3px 0; }
+.sjmap-subkey .sk-row i{ width:16px; height:5px; border-radius:3px; display:inline-block; flex:0 0 auto; }
+.sjmap-linetip{ font-weight:800; }
