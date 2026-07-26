@@ -943,7 +943,7 @@
   }
 
   /* Utilities pinned just above the hero's bottom edge */
-  .hero-utils{ bottom:16px !important; padding:0 24px !important; }
+  .hero-utils{ bottom:16px !important; padding:0 !important; width:min(95vw, calc((100svh - 196px) * 1.6 + 100px)) !important; max-width:1500px; left:50% !important; right:auto !important; transform:translateX(-50%); }
 
   /* Short screens: trim chrome, never the title */
   @media (max-height: 800px){
@@ -1216,6 +1216,7 @@
   </script>
 
   <script src="personalize.js" defer></script>
+  <script src="upload.js" defer></script>
   <script src="drawer.js" defer></script>
   <script src="rsvpform.js" defer></script>
   <script src="notes.js" defer></script>

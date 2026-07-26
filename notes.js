@@ -50,21 +50,7 @@
   function wire(root, p, onSent){
     function g(k){ return root.querySelector('#' + p + k); }
 
-    // photo: preview only — see note below about sending
-    var photo = g('Photo'), preview = root.querySelector('[data-preview]');
-    var photoName = '';
-    if (photo) {
-      photo.addEventListener('change', function () {
-        var f = photo.files && photo.files[0];
-        if (!f) { preview.hidden = true; photoName=''; return; }
-        photoName = f.name;
-        var url = URL.createObjectURL(f);
-        preview.innerHTML = '<img src="' + url + '" alt=""><span>' + f.name +
-          '<br><i>attach this to the email that opens</i></span>';
-        preview.hidden = false;
-        var t = root.querySelector('.photo-txt'); if (t) t.textContent = 'change photo';
-      });
-    }
+    var up = (window.SJUpload ? window.SJUpload.wire(g('Photo'), root.querySelector('[data-preview]')) : null);
     Object.keys(cache).forEach(function(k){
       var n = g(k); if(!n) return;
       n.value = cache[k] || '';
@@ -87,7 +73,7 @@
           'one word for jenni: ' + val('WordJ') + '\n' +
           'song request: ' + val('Song') + '\n' +
           'from: ' + val('Name') + '\n' +
-          (photoName ? '\n[photo: ' + photoName + ' — please attach it to this email ♡]\n' : '');
+          (up ? up.getRef() : '');
         window.location.href = 'mailto:tangjennii@gmail.com' +
           '?subject=' + encodeURIComponent('a note for sam + jenni') +
           '&body=' + encodeURIComponent(body);

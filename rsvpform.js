@@ -36,7 +36,7 @@
     return ('' +
       '<div class="rsvp-head">' +
         '<div class="rsvp-title">R S V P</div>' +
-        '<div class="rsvp-sub">kindly reply by 2 · 26 · 27</div>' +
+        '<div class="rsvp-sub">kindly reply by January 2027</div>' +
       '</div>' +
       '<div class="rsvp-body">' +
         '<div class="rsvp-list">' + rows + '</div>' +
@@ -47,45 +47,29 @@
             '<input id="{p}Email" class="note-f" type="email"></div>' +
           '<div class="note-field"><label class="note-l" for="{p}Count">party</label>' +
             '<input id="{p}Count" class="note-f" type="number" min="1" value="1"></div>' +
-          '<div class="note-field span2"><label class="note-l" for="{p}Diet">dietary needs / allergies</label>' +
+          '<div class="note-field span3"><label class="note-l" for="{p}Diet">dietary needs / allergies / anything else</label>' +
             '<input id="{p}Diet" class="note-f" type="text"></div>' +
-          '<div class="note-field"><label class="note-l" for="{p}Note">anything else</label>' +
-            '<input id="{p}Note" class="note-f" type="text"></div>' +
         '</div>' +
         '<div class="rsvp-extra">' +
-          '<label class="rsvp-photo-btn" for="{p}Photo">' +
+          '<label class="rsvp-photo-btn compact" for="{p}Photo">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
               '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
-            '<span class="photo-txt">add a favorite photo</span>' +
+            '<span class="photo-txt">add a photo</span>' +
           '</label>' +
           '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
         '</div>' +
         '<div class="photo-preview" data-preview hidden></div>' +
         '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
-        '<button class="rsvp-note-link" type="button" data-note-open>… and leave us a note &rarr;</button>' +
       '</div>').replace(/\{p\}/g, p);
   }
 
-  var cache = { Name:'', Email:'', Count:'1', Diet:'', Note:'' };
+  var cache = { Name:'', Email:'', Count:'1', Diet:'' };
   var answers = {};
 
   function wire(root, p, onSent){
     function g(k){ return root.querySelector('#' + p + k); }
 
-    var photo = g('Photo'), preview = root.querySelector('[data-preview]');
-    var photoName = '';
-    if (photo) {
-      photo.addEventListener('change', function () {
-        var f = photo.files && photo.files[0];
-        if (!f) { preview.hidden = true; photoName = ''; return; }
-        photoName = f.name;
-        var url = URL.createObjectURL(f);
-        preview.innerHTML = '<img src="' + url + '" alt=""><span>' + f.name +
-          '<br><i>attach this to the email that opens</i></span>';
-        preview.hidden = false;
-        var t = root.querySelector('.photo-txt'); if (t) t.textContent = 'change photo';
-      });
-    }
+    var up = (window.SJUpload ? window.SJUpload.wire(g('Photo'), root.querySelector('[data-preview]')) : null);
     Object.keys(cache).forEach(function(k){
       var n = g(k); if(!n) return;
       n.value = cache[k] || '';
@@ -113,7 +97,6 @@
         fd.append(GFORM.events, lines.replace(/\n/g, ' | '));
         fd.append(GFORM.count, val('Count'));
         fd.append(GFORM.diet, val('Diet'));
-        fd.append(GFORM.note, val('Note'));
         fetch(GFORM.action, { method:'POST', mode:'no-cors', body:fd }).catch(function(){});
       } else {
         var body =
@@ -121,17 +104,28 @@
           'name(s): ' + val('Name') + '\n' +
           'email: ' + val('Email') + '\n' +
           'party size: ' + val('Count') + '\n' +
-          'dietary: ' + val('Diet') + '\n' +
-          'notes: ' + val('Note') + '\n' +
-          (photoName ? '\n[photo: ' + photoName + ' — please attach it to this email ♡]\n' : '');
+          'dietary / notes: ' + val('Diet') + '\n' +
+          (up ? up.getRef() : '');
         window.location.href = 'mailto:tangjennii@gmail.com' +
           '?subject=' + encodeURIComponent('RSVP — ' + (val('Name') || 'sam + jenni wedding')) +
           '&body=' + encodeURIComponent(body);
       }
       var card = root.querySelector('.note-card') || root;
-      card.innerHTML = '<div class="note-thanks"><div class="note-h">Thank you ♡</div>' +
-        '<p class="note-sub">your reply is in — we can’t wait.</p></div>';
-      if (onSent) setTimeout(onSent, 1500);
+      card.innerHTML = '<div class="note-thanks">' +
+        '<div class="note-h">Thank you ♡</div>' +
+        '<p class="note-sub">your reply is in — we can’t wait.</p>' +
+        '<p class="thanks-ask">while you’re here — leave us a note?</p>' +
+        '<button class="note-btn thanks-btn" type="button" data-note-open>Leave us a note &rarr;</button>' +
+        '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
+        '</div>';
+      // wire the freshly-rendered buttons
+      var openNote = card.querySelector('[data-note-open]');
+      if (openNote) openNote.addEventListener('click', function(){
+        var t = document.querySelector('.nav-cta [data-note-open]');
+        if (t) t.click();
+      });
+      var skip = card.querySelector('[data-close]');
+      if (skip && onSent) skip.addEventListener('click', onSent);
     });
   }
 
