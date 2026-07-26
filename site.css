@@ -813,3 +813,28 @@ body{ background:var(--paper); }
 .note-drawer{ border-left:1px solid var(--line); }
 .drawer-bar{ border-bottom:1px solid var(--line); }
 @media (max-width:760px){ .note-drawer{ border-top:1px solid var(--line); border-left:none; } }
+
+/* Drawer: no white header strip — the red RSVP band IS the header.
+   Close button floats on top of it, small. */
+.note-drawer .drawer-bar{
+  position:absolute; top:0; left:0; right:0; z-index:6;
+  background:transparent; border:none; padding:0;
+  display:block; pointer-events:none;
+}
+.note-drawer .drawer-title{ display:none; }
+.note-drawer .note-x{
+  position:absolute; top:10px; right:12px; pointer-events:auto;
+  width:30px; height:30px; min-height:0; flex:none;
+  font-size:17px; line-height:1;
+  background:rgba(255,255,255,.18); color:#fff;
+  border:1px solid rgba(255,255,255,.55);
+  -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+}
+.note-drawer .note-x:hover, .note-drawer .note-x:active{ background:#fff; color:var(--red); border-color:#fff; }
+/* forms that have their own coloured head start flush at the top */
+.note-drawer .note-card--drawer:has(.rsvp-head){ padding-top:0; }
+.note-drawer .rsvp-head{ padding-top:14px; border-radius:0; }
+/* the note form has no coloured band, so give it a little room for the × */
+.note-drawer .note-card--drawer:not(:has(.rsvp-head)){ padding-top:34px; }
+.note-drawer .note-card--drawer:not(:has(.rsvp-head)) .note-x{ color:var(--dark);
+  background:rgba(13,9,5,.06); border-color:rgba(13,9,5,.18); }
