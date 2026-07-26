@@ -104,50 +104,78 @@
       attribution:'&copy; OpenStreetMap &copy; CARTO', subdomains:'abcd', maxZoom:19
     }).addTo(map);
 
+    // Stacking order via panes: neighborhoods < subway casing < subway lines < markers.
+    map.createPane('hoodPane').style.zIndex = 350;
+    map.createPane('subCasePane').style.zIndex = 440;
+    map.createPane('subLinePane').style.zIndex = 450;
+    map.createPane('subStopPane').style.zIndex = 460;
+
+    var HOOD_OPACITY = 0.42, HOOD_FADED = 0.12;
+
     var hoods = L.layerGroup();
     var subway = L.layerGroup();
     var pins = L.layerGroup().addTo(map);
+    var hoodGeo = null;         // reference so we can fade/restore
+    var subwayOn = false;
+    var STATION_ZOOM = 15;      // station labels only appear once zoomed in
 
     drawPins(map, pins);
+
+    function styleHoods(){
+      if(!hoodGeo) return;
+      hoodGeo.setStyle(function(f){
+        var name = prop(f.properties, ['neighborhood','name','NTAName','ntaname','nta2020','NTANAME']);
+        return { color:'#ffffff', weight:1, fillColor: PAL[hash(name)%PAL.length],
+                 fillOpacity: subwayOn ? HOOD_FADED : HOOD_OPACITY };
+      });
+    }
 
     // Neighborhoods (colored polygons + labels)
     tryFetch(NEIGH).then(function(gj){
       if(!gj) return;
-      L.geoJSON(gj, {
-        style: function(f){
-          var name = prop(f.properties, ['neighborhood','name','NTAName','ntaname','nta2020','NTANAME']);
-          return { color:'#ffffff', weight:1, fillColor: PAL[hash(name)%PAL.length], fillOpacity:0.42 };
-        },
+      hoodGeo = L.geoJSON(gj, {
+        pane:'hoodPane',
         onEachFeature: function(f, layer){
           var name = prop(f.properties, ['neighborhood','name','NTAName','ntaname','nta2020','NTANAME']);
           if(name) layer.bindTooltip(name, {sticky:true});
         }
       }).addTo(hoods);
+      styleHoods();
       if(mode !== 'hotels') hoods.addTo(map);   // on by default when zoomed out
     });
 
-    // Subway lines
+    // Subway lines — white casing beneath, colored route on top.
     tryFetch(LINES).then(function(gj){
       if(!gj) return;
-      L.geoJSON(gj, {
-        style: function(f){
-          return { color: routeColor(f.properties), weight:3.5, opacity:0.9 };
-        }
+      L.geoJSON(gj, {                       // casing
+        pane:'subCasePane',
+        style: function(){ return { color:'#ffffff', weight:6, opacity:0.95, lineCap:'round' }; }
+      }).addTo(subway);
+      L.geoJSON(gj, {                       // colored route
+        pane:'subLinePane',
+        style: function(f){ return { color: routeColor(f.properties), weight:4, opacity:1, lineCap:'round' }; }
       }).addTo(subway);
     });
-    // Subway stations
+    // Subway stations — small, labels only after zooming in.
     tryFetch(STATIONS).then(function(gj){
       if(!gj) return;
       L.geoJSON(gj, {
+        pane:'subStopPane',
         pointToLayer: function(f, latlng){
-          return L.circleMarker(latlng, { radius:3, color:'#111', weight:1, fillColor:'#fff', fillOpacity:1 });
+          return L.circleMarker(latlng, { pane:'subStopPane', radius:2.6, color:'#333', weight:1, fillColor:'#fff', fillOpacity:1 });
         },
         onEachFeature: function(f, layer){
           var name = prop(f.properties, ['name','stop_name','NAME','station']);
-          if(name) layer.bindTooltip(name);
+          if(name) layer.bindTooltip(name, { direction:'top' });
+          // suppress labels until zoomed in
+          layer.on('add', function(){ if(map.getZoom() < STATION_ZOOM && layer.closeTooltip) layer.closeTooltip(); });
         }
       }).addTo(subway);
     });
+
+    // Fade neighborhoods when subway is on; restore when off.
+    map.on('overlayadd', function(e){ if(e.name === 'Subway'){ subwayOn = true; styleHoods(); } });
+    map.on('overlayremove', function(e){ if(e.name === 'Subway'){ subwayOn = false; styleHoods(); } });
 
     L.control.layers(null, { 'Neighborhoods': hoods, 'Subway': subway, 'Places': pins }, { collapsed:false, position:'topright' }).addTo(map);
 
