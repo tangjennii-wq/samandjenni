@@ -66,7 +66,28 @@
     { n: 'Crevette', cat: 'eat', lat: 40.72180, lng: -73.99620, note: 'Nolita · LA-ish seafood — bright, breezy, raw bar.' },
     { n: 'Coqodaq', cat: 'eat', lat: 40.73950, lng: -73.98950, note: 'Flatiron · Korean fried chicken in a gilded room. Overhyped, still fun.' },
     { n: 'Cervo\'s', cat: 'eat', lat: 40.71860, lng: -73.99030, note: 'Lower East Side · Portuguese-Spanish seafood, small and lively.' },
+    { n: 'Sunn\'s', cat: 'eat', lat: 40.72730, lng: -73.98380, note: 'East Village · Korean, small and sharp.' },
+    { n: 'Café Zaffri', cat: 'eat', lat: 40.75920, lng: -73.98550, note: 'Times Square · Overpriced but beautiful — reminds us of LA. Go for the room.' },
+    { n: 'People\'s Bar', cat: 'eat', lat: 40.73300, lng: -74.00180, note: 'Greenwich Village · Good hang, no fuss.' },
+    { n: 'Fedora', cat: 'eat', lat: 40.73550, lng: -74.00430, note: 'West Village · Old West Village bar-restaurant. Cozy and dark.' },
+    { n: 'The Portrait Bar', cat: 'eat', lat: 40.76270, lng: -73.97700, note: 'Midtown · Hotel bar done properly — dressy, quiet, good martini.' },
+    { n: 'Parcelle', cat: 'eat', lat: 40.71570, lng: -73.99030, note: 'Lower East Side · Wine bar with a serious list and small plates to match.' },
+    { n: 'Smithereens', cat: 'eat', lat: 40.72840, lng: -73.98120, note: 'East Village · Seafood-leaning, natural wine, packed.' },
+    { n: 'Dame', cat: 'eat', lat: 40.73020, lng: -74.00060, note: 'Greenwich Village · British fish and chips, tiny, always a wait.' },
+    { n: 'Bridges', cat: 'eat', lat: 40.71590, lng: -73.99550, note: 'Chinatown · Natural wine and beautiful plates. Hard to get in.' },
+    { n: 'Cosme', cat: 'eat', lat: 40.73850, lng: -73.99030, note: 'Flatiron · Enrique Olvera\'s modern Mexican. The duck carnitas, the husk meringue.' },
+    { n: 'Family Meal at Blue Hill', cat: 'eat', lat: 40.73180, lng: -73.99940, note: 'Greenwich Village · Blue Hill\'s casual room — the Stone Barns cooking without the trek.' },
+    { n: 'Public Records', cat: 'eat', lat: 40.68660, lng: -73.98200, note: 'Brooklyn · Sound-system bar, listening room, plant-based kitchen. Go for the music.' },
+    { n: 'Sip & Guzzle', cat: 'eat', lat: 40.73220, lng: -74.00090, note: 'Greenwich Village · Two bars in one — casual upstairs, serious cocktails below.' },
+    { n: 'Eavesdrop', cat: 'eat', lat: 40.72110, lng: -73.95390, note: 'Brooklyn · Greenpoint listening bar. Records, low light.' },
+    { n: 'Lilia', cat: 'eat', lat: 40.71850, lng: -73.95400, note: 'Brooklyn · Missy Robbins\' pasta temple in Williamsburg. Book at 30 days.' },
+    { n: 'Misi', cat: 'eat', lat: 40.71060, lng: -73.96800, note: 'Brooklyn · Lilia\'s sibling — pasta and vegetables, waterfront.' },
+    { n: 'One White Street', cat: 'eat', lat: 40.71880, lng: -74.00720, note: 'Tribeca · Farmhouse cooking in a Tribeca townhouse.' },
+    { n: 'Malaparte', cat: 'eat', lat: 40.73690, lng: -74.00870, note: 'West Village · Walk-in Italian. Go early, put your name down.' },
+    { n: 'Ci Siamo', cat: 'eat', lat: 40.75300, lng: -74.00100, note: 'Hudson Yards · Live-fire Italian in a huge, handsome room.' },
+    { n: 'Cooper Hewitt', cat: 'do', lat: 40.78450, lng: -73.95800, note: 'Upper East Side · Smithsonian design museum in the Carnegie Mansion. Small, and a nice pair with the Guggenheim up the block.' },
   ];
+
 
 
   var CAT = {
