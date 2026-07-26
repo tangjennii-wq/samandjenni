@@ -129,17 +129,23 @@
 
     var hoods = L.layerGroup();
     var subway = L.layerGroup();
-    var pins = L.layerGroup().addTo(map);
+    // Pins split into separate toggle groups so hotels and places are independent.
+    var gVenues = L.layerGroup();  // wedding & welcome
+    var gHotels = L.layerGroup();  // hotels
+    var gPlaces = L.layerGroup();  // eat & do
     var hoodGeo = null;         // reference so we can fade/restore
     var subwayOn = false;
     var STATION_ZOOM = 15;      // stations only appear once zoomed in
 
-    drawPins(map, pins);
+    drawPins({ venue:gVenues, hotel:gHotels, eat:gPlaces, do:gPlaces });
+    // Defaults: travel map focuses on hotels; recs map focuses on places. Venues on both.
+    gVenues.addTo(map);
+    if (mode === 'hotels') gHotels.addTo(map); else gPlaces.addTo(map);
 
-    // Layer control starts with only Places; each data layer is added ONLY once
+    // Layer control starts with the pin groups; each data layer is added ONLY once
     // its GeoJSON actually loads with features — so a toggle never appears (or
     // fades neighborhoods) over empty data.
-    var ctl = L.control.layers(null, { 'Places': pins }, { collapsed:false, position:'topright' }).addTo(map);
+    var ctl = L.control.layers(null, { 'Venues': gVenues, 'Hotels': gHotels, 'Eat & do': gPlaces }, { collapsed:false, position:'topright' }).addTo(map);
 
     function styleHoods(){
       if(!hoodGeo) return;
@@ -236,9 +242,10 @@
     lg.addTo(map);
   }
 
-  function drawPins(map, group){
+  function drawPins(groups){
     PLACES.forEach(function(p){
       var color = (CAT[p.cat]||CAT.do).color;
+      var group = groups[p.cat] || groups.do;
       var icon = L.divIcon({
         className:'sjmap-pin',
         html:'<span class="dot" style="background:'+color+'"></span>',
