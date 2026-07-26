@@ -112,7 +112,7 @@
   function init(){
     var mode = el.getAttribute('data-mode') || 'recs';
     var center = mode === 'hotels' ? [40.7635, -73.9760] : [40.7480, -73.9840];
-    var zoom   = mode === 'hotels' ? 14 : 12;
+    var zoom   = mode === 'hotels' ? 14 : (mode === 'all' ? 13 : 12);
 
     var map = L.map('sjmap', { scrollWheelZoom:false, zoomControl:true }).setView(center, zoom);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -140,7 +140,9 @@
     drawPins({ venue:gVenues, hotel:gHotels, eat:gPlaces, do:gPlaces });
     // Defaults: travel map focuses on hotels; recs map focuses on places. Venues on both.
     gVenues.addTo(map);
-    if (mode === 'hotels') gHotels.addTo(map); else gPlaces.addTo(map);
+    if (mode === 'all') { gHotels.addTo(map); gPlaces.addTo(map); }
+    else if (mode === 'hotels') gHotels.addTo(map);
+    else gPlaces.addTo(map);
 
     // Layer control starts with the pin groups; each data layer is added ONLY once
     // its GeoJSON actually loads with features — so a toggle never appears (or
