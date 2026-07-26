@@ -15,13 +15,23 @@
       '<p class="note-sub">totally optional — but we’d love these ♡</p>' +
       (intro ? '<p class="note-intro">' + intro + '</p>' : '') +
       '<div class="note-field">' +
-        '<label class="note-l" for="{p}Mem">a favorite memory with Sam or Jenni</label>' +
+        '<label class="note-l" for="{p}Mem">a favorite memory with Sam and/or Jenni</label>' +
         '<textarea id="{p}Mem" class="note-f note-ta"></textarea>' +
       '</div>' +
+      '<div class="note-field photo-field">' +
+        '<label class="note-l" for="{p}Photo">a favorite photo with Sam and/or Jenni</label>' +
+        '<label class="photo-drop" for="{p}Photo">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
+          '<span class="photo-txt">choose a photo</span>' +
+        '</label>' +
+        '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
+        '<div class="photo-preview" data-preview hidden></div>' +
+      '</div>' +
       '<div class="note-row2">' +
-        '<div class="note-field"><label class="note-l" for="{p}WordS">one word for Sam</label>' +
+        '<div class="note-field"><label class="note-l" for="{p}WordS">one word that defines Sam</label>' +
           '<input id="{p}WordS" class="note-f" type="text"></div>' +
-        '<div class="note-field"><label class="note-l" for="{p}WordJ">one word for Jenni</label>' +
+        '<div class="note-field"><label class="note-l" for="{p}WordJ">one word that defines Jenni</label>' +
           '<input id="{p}WordJ" class="note-f" type="text"></div>' +
       '</div>' +
       '<div class="note-field" style="margin-top:14px">' +
@@ -39,6 +49,22 @@
 
   function wire(root, p, onSent){
     function g(k){ return root.querySelector('#' + p + k); }
+
+    // photo: preview only — see note below about sending
+    var photo = g('Photo'), preview = root.querySelector('[data-preview]');
+    var photoName = '';
+    if (photo) {
+      photo.addEventListener('change', function () {
+        var f = photo.files && photo.files[0];
+        if (!f) { preview.hidden = true; photoName=''; return; }
+        photoName = f.name;
+        var url = URL.createObjectURL(f);
+        preview.innerHTML = '<img src="' + url + '" alt=""><span>' + f.name +
+          '<br><i>attach this to the email that opens</i></span>';
+        preview.hidden = false;
+        var t = root.querySelector('.photo-txt'); if (t) t.textContent = 'change photo';
+      });
+    }
     Object.keys(cache).forEach(function(k){
       var n = g(k); if(!n) return;
       n.value = cache[k] || '';
@@ -60,7 +86,8 @@
           'one word for sam: ' + val('WordS') + '\n' +
           'one word for jenni: ' + val('WordJ') + '\n' +
           'song request: ' + val('Song') + '\n' +
-          'from: ' + val('Name') + '\n';
+          'from: ' + val('Name') + '\n' +
+          (photoName ? '\n[photo: ' + photoName + ' — please attach it to this email ♡]\n' : '');
         window.location.href = 'mailto:tangjennii@gmail.com' +
           '?subject=' + encodeURIComponent('a note for sam + jenni') +
           '&body=' + encodeURIComponent(body);

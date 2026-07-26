@@ -25,33 +25,34 @@
 
   function formHTML(p){
     var rows = EVENTS.map(function(e){
+      var parts = e.label.split(' · ');
       return '<div class="rsvp-ev">' +
-        '<div class="rsvp-evname"><b>' + e.label + '</b><span>' + e.when + '</span></div>' +
+        '<div class="rsvp-evname"><b>' + (parts[1] || parts[0]) + '</b><span>' + parts[0] + ' · ' + e.when + '</span></div>' +
         '<div class="rsvp-yn">' +
-          '<button type="button" class="yn yes" data-k="' + e.k + '" data-v="yes">Accepts</button>' +
-          '<button type="button" class="yn no"  data-k="' + e.k + '" data-v="no">Declines</button>' +
+          '<button type="button" class="yn yes" data-k="' + e.k + '" data-v="yes" aria-label="Accepts">Yes</button>' +
+          '<button type="button" class="yn no"  data-k="' + e.k + '" data-v="no" aria-label="Declines">No</button>' +
         '</div></div>';
     }).join('');
     return ('' +
-      '<div class="note-h">RSVP</div>' +
-      '<p class="note-sub">kindly reply by February 26, 2027 ♡</p>' +
-      '<div class="rsvp-list">' + rows + '</div>' +
-      '<div class="note-row2" style="margin-top:18px">' +
-        '<div class="note-field"><label class="note-l" for="{p}Name">your name(s)</label>' +
-          '<input id="{p}Name" class="note-f" type="text"></div>' +
-        '<div class="note-field"><label class="note-l" for="{p}Email">email</label>' +
-          '<input id="{p}Email" class="note-f" type="email"></div>' +
+      '<div class="rsvp-head">' +
+        '<div class="rsvp-title">R S V P</div>' +
+        '<div class="rsvp-sub">kindly reply by 2 · 26 · 27</div>' +
       '</div>' +
-      '<div class="note-row2" style="margin-top:14px">' +
-        '<div class="note-field"><label class="note-l" for="{p}Count">how many in your party</label>' +
-          '<input id="{p}Count" class="note-f" type="number" min="1" value="1"></div>' +
-        '<div class="note-field"><label class="note-l" for="{p}Diet">dietary needs / allergies</label>' +
-          '<input id="{p}Diet" class="note-f" type="text"></div>' +
-      '</div>' +
-      '<div class="note-row3">' +
-        '<div class="note-field"><label class="note-l" for="{p}Note">anything else we should know</label>' +
-          '<input id="{p}Note" class="note-f" type="text"></div>' +
-        '<button class="note-btn" type="button" data-send>Send RSVP</button>' +
+      '<div class="rsvp-body">' +
+        '<div class="rsvp-list">' + rows + '</div>' +
+        '<div class="rsvp-fields">' +
+          '<div class="note-field"><label class="note-l" for="{p}Name">name(s)</label>' +
+            '<input id="{p}Name" class="note-f" type="text"></div>' +
+          '<div class="note-field"><label class="note-l" for="{p}Email">email</label>' +
+            '<input id="{p}Email" class="note-f" type="email"></div>' +
+          '<div class="note-field"><label class="note-l" for="{p}Count">party</label>' +
+            '<input id="{p}Count" class="note-f" type="number" min="1" value="1"></div>' +
+          '<div class="note-field span2"><label class="note-l" for="{p}Diet">dietary needs / allergies</label>' +
+            '<input id="{p}Diet" class="note-f" type="text"></div>' +
+          '<div class="note-field"><label class="note-l" for="{p}Note">anything else</label>' +
+            '<input id="{p}Note" class="note-f" type="text"></div>' +
+        '</div>' +
+        '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
       '</div>').replace(/\{p\}/g, p);
   }
 
