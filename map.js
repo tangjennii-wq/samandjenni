@@ -73,17 +73,11 @@
     return next();
   }
 
-  var NEIGH = [
-    'https://cdn.jsdelivr.net/gh/veltman/snd3@master/data/nyc-neighborhoods.geo.json',
-    'https://cdn.jsdelivr.net/gh/blackmad/neighborhoods@master/new-york-city-boroughs.geojson'
-  ];
-  var LINES = [
-    'https://cdn.jsdelivr.net/gh/kevin-brown/nyc-open-geojson@master/transportation/subway-lines.geojson',
-    'https://cdn.jsdelivr.net/gh/kevin-brown/nyc-open-geojson@master/transportation/subway-routes.geojson'
-  ];
-  var STATIONS = [
-    'https://cdn.jsdelivr.net/gh/kevin-brown/nyc-open-geojson@master/transportation/subway-stations.geojson'
-  ];
+  // Bundled in the repo (built from the MTA GTFS feed + NYC neighborhood data) —
+  // no third-party CDN dependency at runtime.
+  var NEIGH    = ['data/neighborhoods.geojson'];
+  var LINES    = ['data/subway-lines.geojson'];
+  var STATIONS = ['data/subway-stations.geojson'];
 
   function prop(p, keys){ for(var i=0;i<keys.length;i++){ if(p && p[keys[i]]!=null && p[keys[i]]!=='') return p[keys[i]]; } return ''; }
 
@@ -160,7 +154,10 @@
       }).addTo(subway);
       L.geoJSON(gj, {                       // colored route
         pane:'subLinePane',
-        style: function(f){ return { color: routeColor(f.properties), weight:4, opacity:1, lineCap:'round' }; }
+        style: function(f){
+          var c = (f.properties && f.properties.color) || routeColor(f.properties);
+          return { color:c, weight:4, opacity:1, lineCap:'round' };
+        }
       }).addTo(subway);
       ctl.addOverlay(subway, 'Subway lines');
     });

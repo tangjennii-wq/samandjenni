@@ -4,7 +4,7 @@
 // header ourselves. (Using request.cookies is what caused MIDDLEWARE_INVOCATION_FAILED.)
 
 export const config = {
-  matcher: ['/((?!gate|api/login|_next|favicon.ico|.*\\.(?:mp4|jpg|jpeg|png|gif|ics|svg|webp|css|js|woff|woff2|ico)).*)'],
+  matcher: ['/((?!gate|api/login|_next|favicon.ico|.*\\.(?:mp4|jpg|jpeg|png|gif|ics|svg|webp|css|js|json|geojson|woff|woff2|ico)).*)'],
 };
 
 function parseCookies(header) {
