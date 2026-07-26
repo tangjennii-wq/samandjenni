@@ -19,10 +19,14 @@
         '<textarea id="nMem" class="note-f note-ta"></textarea>' +
       '</div>' +
       '<div class="note-row2">' +
-        '<div class="note-field"><label class="note-l" for="nWord">one word for Sam (or Jenni)</label>' +
-          '<input id="nWord" class="note-f" type="text"></div>' +
-        '<div class="note-field"><label class="note-l" for="nSong">a song you want to hear</label>' +
-          '<input id="nSong" class="note-f" type="text" placeholder="artist – title"></div>' +
+        '<div class="note-field"><label class="note-l" for="nWordS">one word for Sam</label>' +
+          '<input id="nWordS" class="note-f" type="text"></div>' +
+        '<div class="note-field"><label class="note-l" for="nWordJ">one word for Jenni</label>' +
+          '<input id="nWordJ" class="note-f" type="text"></div>' +
+      '</div>' +
+      '<div class="note-field" style="margin-top:14px">' +
+        '<label class="note-l" for="nSong">a song you want to hear</label>' +
+        '<input id="nSong" class="note-f" type="text" placeholder="artist – title">' +
       '</div>' +
       '<div class="note-row3">' +
         '<div class="note-field"><label class="note-l" for="nName">your name (optional)</label>' +
@@ -39,7 +43,7 @@
     if (GFORM) {
       var fd = new FormData();
       fd.append(GFORM.mem, v('nMem'));
-      fd.append(GFORM.word, v('nWord'));
+      fd.append(GFORM.word, 'Sam: ' + v('nWordS') + ' | Jenni: ' + v('nWordJ'));
       fd.append(GFORM.song, v('nSong'));
       fd.append(GFORM.name, v('nName'));
       fetch(GFORM.action, { method:'POST', mode:'no-cors', body:fd }).catch(function(){});
@@ -51,7 +55,8 @@
     var body =
       'a note for sam + jenni\n\n' +
       'favorite memory:\n' + v('nMem') + '\n\n' +
-      'one word: ' + v('nWord') + '\n' +
+      'one word for sam: ' + v('nWordS') + '\n' +
+      'one word for jenni: ' + v('nWordJ') + '\n' +
       'song request: ' + v('nSong') + '\n' +
       'from: ' + v('nName') + '\n';
     window.location.href = 'mailto:tangjennii@gmail.com' +
