@@ -43,7 +43,7 @@
     { n: 'Daily Provisions', cat: 'eat', lat: 40.73580, lng: -73.98800, note: 'Multiple · Crullers, egg sandwiches, the everyday one.' },
     { n: 'Los Tacos No. 1', cat: 'eat', lat: 40.74250, lng: -74.00600, note: 'Multiple · The adobada. Standing room only, always.' },
     { n: 'Santo Taco', cat: 'eat', lat: 40.72660, lng: -73.99380, note: 'NoHo · Good tacos.' },
-    { n: 'Huso', cat: 'eat', lat: 40.77160, lng: -73.96140, note: 'Upper East Side · Caviar tasting counter — a small, ridiculous treat.' },
+    { n: 'Huso', cat: 'eat', lat: 40.71950, lng: -74.00750, note: 'Tribeca · Caviar tasting counter — a small, ridiculous treat.' },
     { n: 'Sorate', cat: 'eat', lat: 40.73570, lng: -73.99050, note: 'Union Square · Matcha. The one near Union Square.' },
     { n: 'Penny', cat: 'eat', lat: 40.73000, lng: -73.98840, note: 'East Village · Seafood bar, natural wine, our kind of night.' },
     { n: 'Saint Tuesday', cat: 'eat', lat: 40.71910, lng: -74.00600, note: 'Tribeca · Basement jazz bar under the Walker Hotel. Go late.' },
@@ -88,6 +88,7 @@
     { n: 'Chelsea Piers Golf Club', cat: 'do', lat: 40.74730, lng: -74.01040, note: 'Chelsea · Four-tier driving range hitting straight out over the Hudson. Sillier and better than it sounds.' },
     { n: 'The Edge', cat: 'do', lat: 40.75380, lng: -74.00000, note: 'Hudson Yards · The outdoor sky deck with the glass floor. Do it at sunset.' },
   ];
+
 
 
 
