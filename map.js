@@ -11,7 +11,7 @@
   // cat: venue | hotel | eat | do
   var PLACES = [
     { n: 'The Pierre',            cat: 'venue', lat: 40.76476, lng: -73.97197, note: 'Saturday · the wedding (and a place to stay)', url: 'https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+2+E+61st+St+New+York' },
-    { n: 'Chinese Tuxedo',        cat: 'venue', lat: 40.71467, lng: -73.99772, note: 'Friday · the welcome party', url: 'https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+5+Doyers+St+New+York' },
+    { n: 'Chinese Tuxedo',        cat: 'venue', ev: 'friday', lat: 40.71467, lng: -73.99772, note: 'Friday · the welcome party', url: 'https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+5+Doyers+St+New+York' },
     { n: 'Lotte New York Palace', cat: 'hotel', lat: 40.75802, lng: -73.97573, note: 'Biggest rooms · ~15 min to the Pierre', url: 'https://www.lottenypalace.com/wedding-stories/tang--shleifer-wedding' },
     { n: 'Thompson Central Park', cat: 'hotel', lat: 40.76428, lng: -73.97869, note: 'Modern · steps from the park', url: 'https://www.hyatt.com/events/en-US/group-booking/LGATP/G-3TSW' },
     { n: 'Le Méridien Central Park', cat: 'hotel', lat: 40.76447, lng: -73.97815, note: 'Friendly price · ~12 min walk to the Pierre', url: 'https://www.marriott.com/event-reservations/reservation-link.mi?id=1780579014068&key=GRP&app=resvlink' },
@@ -243,7 +243,11 @@
   }
 
   function drawPins(groups){
+    // Match the site's tier (set on <html data-tier> by personalize.js).
+    var tier = parseInt(document.documentElement.getAttribute('data-tier') || '1', 10) || 1;
     PLACES.forEach(function(p){
+      // Friday-only venues (Chinese Tuxedo) hidden from Saturday-only guests (tier 4).
+      if (p.ev === 'friday' && tier >= 4) return;
       var color = (CAT[p.cat]||CAT.do).color;
       var group = groups[p.cat] || groups.do;
       var icon = L.divIcon({
