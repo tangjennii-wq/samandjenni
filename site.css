@@ -230,7 +230,6 @@ img,video{max-width:100%;height:auto}
 }
 
 /* Nav action buttons (RSVP + leave a note) */
-.sitenav{ position:relative; }
 .nav-cta{ display:inline-flex; gap:9px; align-items:center; }
 .nav-cta .cta-btn{ padding:8px 18px; font-size:10.5px; letter-spacing:.16em; }
 @media(max-width:900px){
@@ -1076,11 +1075,6 @@ body.map-full .map-caption{ display:none !important; }
     position:sticky; right:0; margin-left:auto; flex:0 0 auto;
     padding:5px 0 5px 14px; background:#fff;
     box-shadow:-16px 0 14px -6px #fff; }
-  /* 44px, not 32px: `.sitenav a{min-height:44px}` already stretched the RSVP
-     anchor to 44 while the Note <button> stayed at 32, so the pair rendered at
-     two different heights and the Note pill was an under-size tap target.
-     .nav-actions is already 56px tall because of the anchor, so this changes
-     the Note pill only — the nav's height is unchanged. */
   /* Short and soft: tinted rather than solid, so they sit quietly beside the
      nav links instead of shouting over them. */
   .nav-actions .nav-act{ -webkit-appearance:none; appearance:none; font-family:inherit;
