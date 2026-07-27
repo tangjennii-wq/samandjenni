@@ -1178,7 +1178,7 @@ body.map-full .map-caption{ display:none !important; }
   .rsvp-extra{ display:flex; align-items:center; justify-content:center; gap:14px; }
   .photo-pair{ display:flex; align-items:center; gap:13px; }
   .photo-eg{ display:block; flex:0 0 auto; margin:0;
-    width:104px; padding:6px 6px 4px; background:#fff;
+    width:156px; padding:8px 8px 6px; background:#fff;
     border:1px solid var(--line); border-radius:4px;
     box-shadow:0 5px 18px rgba(13,9,5,.20);
     transform:rotate(-4deg); transform-origin:center;
@@ -1186,7 +1186,7 @@ body.map-full .map-caption{ display:none !important; }
   .rsvp-extra:hover .photo-eg,
   .photo-pair:hover .photo-eg{ transform:rotate(-1deg) scale(1.06); }
   .photo-eg img{ display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:2px; }
-  .photo-eg figcaption{ margin-top:5px; text-align:center; font-size:9.5px; font-style:italic;
+  .photo-eg figcaption{ margin-top:6px; text-align:center; font-size:11px; font-style:italic;
     color:#a2907a; letter-spacing:.02em; }
   /* the button keeps its own compact height and simply sits centred beside the
      snapshot — stretching it to match the photo made it enormous */
