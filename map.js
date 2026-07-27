@@ -301,11 +301,26 @@
     ctl.addOverlay(gStays,  N_STAY);
     ctl.addOverlay(gPlaces, N_PLACE);
 
+    // Our own Google Map, if the page supplies one — sits under the layer box.
+    var gmapUrl = el.getAttribute('data-gmap');
+    if (gmapUrl) {
+      var gmapCtl = L.control({ position:'topright' });
+      gmapCtl.onAdd = function(){
+        var d = L.DomUtil.create('div', 'sjmap-gmap-wrap');
+        var a = L.DomUtil.create('a', 'sjmap-gmap', d);
+        a.href = gmapUrl; a.target = '_blank'; a.rel = 'noopener';
+        a.innerHTML = '<i></i>Open our Google Map';
+        L.DomEvent.disableClickPropagation(d);
+        return d;
+      };
+      gmapCtl.addTo(map);
+    }
+
     // ---- expand to full screen ---------------------------------------------
     // Plain absolutely-positioned button rather than a Leaflet control, so it
     // can't collide with the layers box and survives invalidateSize().
     var expandBtn = null;
-    var expandCtl = L.control({ position:'topright' });
+    var expandCtl = L.control({ position:'topleft' });
     expandCtl.onAdd = function(){
       var d = L.DomUtil.create('div', 'sjmap-expand-wrap');
       expandBtn = L.DomUtil.create('button', 'sjmap-expand', d);

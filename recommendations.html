@@ -8,15 +8,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260727i">
+<link rel="stylesheet" href="site.css?v=20260727j">
 <style>
   /* ---- recs: map on top, filters floating on it, cards underneath --------- */
-  .mapstage{ position:relative; margin-top:14px; }
-  .mapstage .sjmap{ height:min(60vh,540px); margin-top:0; }
+  .mapstage{ position:relative; margin-top:10px; }
+  .mapstage .sjmap{ height:min(46vh,420px); margin-top:0; }
+  /* tighter page head so the list starts above the fold */
+  #recs{ padding-top:14px; }
+  #recs .eyebrow{ margin-bottom:2px; }
+  #recs h2{ margin-top:2px; }
+  #recs .rule{ margin-top:7px; }
 
   /* filter bar: sits under the map, directly above the list it filters */
-  .recbar{ margin-top:16px; display:flex; flex-wrap:wrap; align-items:center; gap:7px 9px;
-    padding-top:14px; border-top:1px solid var(--line); }
+  .recbar{ margin-top:12px; display:flex; flex-wrap:wrap; align-items:center; gap:7px 9px;
+    padding-top:11px; border-top:1px solid var(--line); }
   .fgroup{ display:flex; flex-wrap:wrap; gap:5px; }
   .fgroup--areas{ width:100%; }
   .fchip{ font:inherit; font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
@@ -32,12 +37,10 @@
     text-transform:uppercase; color:#a2907a; white-space:nowrap; }
   .fcount b{ color:var(--dark); }
 
-  .maplinks{ display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:8px 18px; margin-top:11px; }
-  .maplinks .map-caption{ margin:0; }
+  .map-caption{ margin-top:14px; }
 
   /* the list, underneath, capped so the page stays a sane length */
-  .recpanel{ margin-top:12px; max-height:48vh; overflow-y:auto; overscroll-behavior:contain;
+  .recpanel{ margin-top:10px; max-height:none; overflow-y:auto; overscroll-behavior:contain;
     padding-right:6px; margin-right:-6px; }
   .recpanel::-webkit-scrollbar{ width:7px; }
   .recpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
@@ -55,12 +58,11 @@
   .recempty{ padding:22px 0; text-align:center; font-size:13px; color:#a2907a; font-style:italic; }
 
   @media(max-width:760px){
-    .mapstage .sjmap{ height:56vh; }
+    .mapstage .sjmap{ height:44vh; }
     .recbar{ margin-top:14px; }
     .recpanel{ max-height:none; overflow:visible; padding-right:0; margin-right:0; }
     .recgrid{ grid-template-columns:1fr; }
     .fchip{ min-height:32px; display:inline-flex; align-items:center; }
-    .maplinks{ flex-direction:column; align-items:flex-start; }
   }
 </style>
 </head>
@@ -98,13 +100,9 @@
 
       <!-- map first, full width; filters float on it; the list lives underneath -->
       <div class="mapstage">
-        <div id="sjmap" class="sjmap" data-mode="recs"></div>
+        <div id="sjmap" class="sjmap" data-mode="recs" data-gmap="https://maps.app.goo.gl/R9zahA3xfGoTRNCQA"></div>
       </div>
 
-      <div class="maplinks">
-        <a class="gmap-link" href="https://maps.app.goo.gl/R9zahA3xfGoTRNCQA" target="_blank" rel="noopener"><i></i>Open our Google Map</a>
-        <p class="map-caption">deeper dives: <a href="https://www.mta.info/maps/subway" target="_blank" rel="noopener">official subway map</a> · <a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html" target="_blank" rel="noopener">NYT neighborhood map</a> · <a href="https://www.nytimes.com/2025/04/02/nyregion/nyc-new-subway-map.html" target="_blank" rel="noopener">NYT subway map</a></p>
-      </div>
 
       <div class="recbar">
         <div class="fgroup">
@@ -214,17 +212,19 @@
   </div>
     </div>
 
+      <p class="map-caption">deeper dives: <a href="https://www.mta.info/maps/subway" target="_blank" rel="noopener">official subway map</a> · <a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html" target="_blank" rel="noopener">NYT neighborhood map</a> · <a href="https://www.nytimes.com/2025/04/02/nyregion/nyc-new-subway-map.html" target="_blank" rel="noopener">NYT subway map</a></p>
+
       <div class="travelnote"><span class="tnlabel">How to use this</span>These are our actual places, not a tourist list — tap any name for directions, or use the map to find what's near you. <b>Atomix</b> is Jenni's number one and <b>Torrisi</b> is Sam's; both need a reservation the minute the books open. <b>Storm King</b> is upstate and takes a whole day.</div>
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260727i" defer></script>
-  <script src="map.js?v=20260727i" defer></script>
-  <script src="cal.js?v=20260727i" defer></script>
-  <script src="upload.js?v=20260727i" defer></script>
-  <script src="drawer.js?v=20260727i" defer></script>
-  <script src="rsvpform.js?v=20260727i" defer></script>
-  <script src="notes.js?v=20260727i" defer></script>
+  <script src="personalize.js?v=20260727j" defer></script>
+  <script src="map.js?v=20260727j" defer></script>
+  <script src="cal.js?v=20260727j" defer></script>
+  <script src="upload.js?v=20260727j" defer></script>
+  <script src="drawer.js?v=20260727j" defer></script>
+  <script src="rsvpform.js?v=20260727j" defer></script>
+  <script src="notes.js?v=20260727j" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;
