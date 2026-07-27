@@ -1,4 +1,9 @@
-// Server-side gate. Runs on Vercel's Edge before any page is served.
+// Sign-in gate — no password. Runs on Vercel's Edge before any page is served.
+//
+// There's no shared secret any more: the first screen just asks who you are.
+// We still redirect to /gate until sj_guest is set, because that cookie is what
+// personalize.js uses to decide which events you see, and what prefills your RSVP.
+//
 // NOTE: this is a plain Vercel middleware (no Next.js), so `request` is a
 // standard Web Request — it has NO `.cookies` helper. We parse the Cookie
 // header ourselves. (Using request.cookies is what caused MIDDLEWARE_INVOCATION_FAILED.)
@@ -17,12 +22,10 @@ function parseCookies(header) {
 }
 
 export default function middleware(request) {
-  const expected = process.env.SITE_PASSWORD || 'shlang';
   const cookies = parseCookies(request.headers.get('cookie'));
 
-  if (cookies.sj_pass === expected) {
-    return; // authenticated — let the request through
-  }
+  // Any name at all gets you in. We only need to know who you are.
+  if (cookies.sj_guest && cookies.sj_guest.trim()) return;
 
   const url = new URL(request.url);
   url.pathname = '/gate';
