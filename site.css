@@ -1030,47 +1030,43 @@ body.map-full .map-caption{ display:none !important; }
 .plusone-yn{ display:flex; gap:7px; }
 .yn.p1{ min-width:62px; height:38px; border-radius:var(--r-pill); font-size:11px; }
 
-/* ---- Mobile: inner pages get edge tabs instead of a button row ------------ */
-.edge-tabs{ display:none; }
+/* ---- Mobile: inner pages get a floating dock instead of a button row -------
+   Deliberately NOT tabs on the right edge: that is iOS Safari's back/forward
+   swipe zone, and sideways text is hard to read. */
+.dock{ display:none; }
 @media(max-width:760px){
-  /* home keeps the big buttons; every other page uses the pull tabs */
-  body.has-edge-tabs .mobile-actions{ display:none !important; }
-  body.has-edge-tabs{ padding-right:0; }
+  body.has-dock .mobile-actions{ display:none !important; }
+  /* keep the last of the page clear of the floating bar */
+  body.has-dock{ padding-bottom:calc(78px + env(safe-area-inset-bottom)); }
 
-  .edge-tabs{ display:flex; flex-direction:column; gap:8px;
-    position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:1200; }
-  .edge-tab{ -webkit-appearance:none; appearance:none; font-family:inherit;
-    writing-mode:vertical-rl; text-orientation:mixed;
-    padding:16px 7px; border:0; border-radius:12px 0 0 12px;
-    font-size:10px; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
-    line-height:1; cursor:pointer; text-decoration:none;
-    box-shadow:-2px 2px 12px rgba(13,9,5,.22); }
-  .edge-tab--rsvp{ background:var(--red); color:#fff; }
-  .edge-tab--note{ background:var(--gold); color:var(--dark); }
-  .edge-tab:active{ filter:brightness(.92); }
-  body.map-full .edge-tabs{ display:none; }
+  .dock{ display:flex; gap:8px; position:fixed; z-index:1200;
+    left:50%; transform:translateX(-50%);
+    bottom:calc(10px + env(safe-area-inset-bottom));
+    padding:7px; border-radius:var(--r-pill);
+    background:rgba(255,255,255,.92);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border:1px solid var(--line); box-shadow:0 6px 24px rgba(13,9,5,.20); }
+  .dock-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:44px; padding:0 20px; border:0; border-radius:var(--r-pill);
+    font-size:10.5px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+    line-height:1; cursor:pointer; text-decoration:none; white-space:nowrap; }
+  .dock-btn--rsvp{ background:var(--red); color:#fff; }
+  .dock-btn--note{ background:var(--gold); color:var(--dark); }
+  .dock-btn:active{ filter:brightness(.93); }
 
-  /* home: put the action buttons back to their original weight */
-  body:not(.has-edge-tabs) .mobile-actions{ padding:10px 16px 12px; gap:10px; }
-  body:not(.has-edge-tabs) .ma-btn{ flex:1 1 0; width:auto; padding:0 16px;
+  /* out of the way while a sheet or the full map is up */
+  body.map-full .dock{ display:none; }
+  body:has(.note-drawer.open) .dock{ display:none; }
+
+  /* home keeps its full-size buttons under the nav */
+  body:not(.has-dock) .mobile-actions{ padding:10px 16px 12px; gap:10px; }
+  body:not(.has-dock) .ma-btn{ flex:1 1 0; width:auto; padding:0 16px;
     min-height:50px; font-size:12px; letter-spacing:.16em; }
 
   .plusone{ padding:10px 12px; }
   .plusone-q{ font-size:12.5px; }
 }
-
-
-/* ---- photo drop zones ----------------------------------------------------- */
-.photo-drop, .rsvp-photo-btn{ transition:border-color .14s, background .14s, transform .14s; }
-.photo-drop.is-drop, .rsvp-photo-btn.is-drop{
-  border-color:var(--red) !important; background:#fff6f4 !important;
-  transform:scale(1.01); }
-.photo-drop.is-drop .photo-txt::after,
-.rsvp-photo-btn.is-drop .photo-txt::after{ content:' — drop it'; }
-@media(hover:hover){
-  .photo-drop .photo-txt::after{ content:' or drag one in'; font-weight:400; opacity:.6; }
-}
-
 
 /* ---- RSVP: one line per event, compact rectangular yes/no ---------------- */
 .rsvp-ev{ align-items:center; }
