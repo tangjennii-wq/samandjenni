@@ -107,7 +107,7 @@
           (i === 0 ? '' : ' <span class="opt">(optional)</span>') + '</label>' +
           '<input id="' + p + 'GE' + i + '" class="note-f gemail" type="email" value="' +
             (i === 0 ? PRE.email.replace(/"/g,'&quot;') : '') + '"></div>' +
-        '<div class="note-field span2"><label class="note-l" for="' + p + 'GD' + i + '">dietary needs / allergies</label>' +
+        '<div class="note-field span2"><label class="note-l" for="' + p + 'GD' + i + '">dietary / allergies</label>' +
           '<input id="' + p + 'GD' + i + '" class="note-f gdiet" type="text" placeholder="none"></div>' +
       '</div></div>';
   }

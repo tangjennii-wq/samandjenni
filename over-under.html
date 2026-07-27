@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260728e">
+<link rel="stylesheet" href="site.css?v=20260728f">
 <style>
 
   body{background:var(--paper)}
@@ -65,17 +65,26 @@
     h1{font-size:24px}
     .num{padding:1px 7px}
   }
-  .oulabel{ display:block; font-size:10px; font-weight:800; letter-spacing:.2em;
-    text-transform:uppercase; color:#a2907a; margin-bottom:-2px; }
-  .ouname{ font-family:inherit; font-size:16px; padding:12px 16px; border-radius:var(--r-md);
-    border:1.5px solid rgba(13,9,5,.18); background:#fff; color:var(--dark); text-align:center;
-    width:100%; max-width:260px; outline:none; }
-  .subactions{ display:flex; align-items:center; gap:10px; }
-  .linkbtn{ font-family:inherit; font-size:12px; font-weight:700; letter-spacing:.02em;
-    background:none; border:0; padding:4px 2px; color:#6b5a50; cursor:pointer;
-    border-bottom:1.5px solid var(--line-2); }
-  .linkbtn:hover{ color:var(--red); border-bottom-color:var(--red); }
-  .subactions .sep{ color:#c9b8a2; }
+  .ourow{ display:flex; align-items:stretch; gap:9px; width:100%; max-width:430px; }
+  .ouname{ flex:1 1 auto; min-width:0; font-family:inherit; font-size:16px;
+    padding:0 16px; height:50px; border-radius:var(--r-pill);
+    border:1.5px solid rgba(13,9,5,.18); background:#fff; color:var(--dark);
+    text-align:left; outline:none; }
+  .ouname::placeholder{ color:#c9b8a2; }
+  .ouname:focus{ border-color:var(--red); }
+  .ourow .btn{ flex:0 0 auto; height:50px; margin:0; }
+  .subactions{ display:flex; align-items:center; justify-content:center; gap:9px; flex-wrap:wrap; }
+  .iconbtn{ display:inline-flex; align-items:center; gap:7px; font-family:inherit;
+    font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    padding:9px 14px; border-radius:var(--r-md); cursor:pointer;
+    background:#fff; color:#6b5a50; border:1.5px solid var(--line-2); }
+  .iconbtn svg{ width:14px; height:14px; flex:0 0 auto; }
+  .iconbtn:hover{ color:var(--dark); border-color:var(--dark); }
+  @media(max-width:560px){
+    .ourow{ flex-direction:column; }
+    .ourow .btn{ width:100%; }
+    .iconbtn{ flex:1 1 0; justify-content:center; }
+  }
   .ouname:focus{ border-color:var(--red); }
   .ousent{ margin-top:14px; font-size:13.5px; font-weight:700; color:var(--red); display:none; }
   .ousent.show{ display:block; }
@@ -126,13 +135,14 @@
   </div>
 
   <div class="actions">
-    <label class="oulabel" for="ouName">Your name</label>
-    <input class="ouname" id="ouName" type="text" placeholder="your name" autocomplete="name">
-    <button class="btn" id="sendBtn">Submit my picks</button>
+    <div class="ourow">
+      <input class="ouname" id="ouName" type="text" placeholder="your name"
+             autocomplete="name" aria-label="Your name">
+      <button class="btn" id="sendBtn">Submit my picks</button>
+    </div>
     <div class="subactions">
-      <button class="linkbtn" id="saveBtn" type="button">Save as image</button>
-      <span class="sep">·</span>
-      <button class="linkbtn" id="copyBtn" type="button">Copy as text</button>
+      <button class="iconbtn" id="saveBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Save as image</button>
+      <button class="iconbtn" id="copyBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy as text</button>
     </div>
     <div class="copied" id="copied">copied — now go paste it and talk your talk ♡</div>
     <div class="ousent">got it — no takebacks (there are takebacks).</div>
@@ -319,11 +329,11 @@
 
   render();
 </script>
-  <script src="personalize.js?v=20260728e" defer></script>
-  <script src="cal.js?v=20260728e" defer></script>
-  <script src="upload.js?v=20260728e" defer></script>
-  <script src="drawer.js?v=20260728e" defer></script>
-  <script src="rsvpform.js?v=20260728e" defer></script>
-  <script src="notes.js?v=20260728e" defer></script>
+  <script src="personalize.js?v=20260728f" defer></script>
+  <script src="cal.js?v=20260728f" defer></script>
+  <script src="upload.js?v=20260728f" defer></script>
+  <script src="drawer.js?v=20260728f" defer></script>
+  <script src="rsvpform.js?v=20260728f" defer></script>
+  <script src="notes.js?v=20260728f" defer></script>
 </body>
 </html>

@@ -1103,3 +1103,11 @@ body.map-full .map-caption{ display:none !important; }
   .rsvp-photo-block{ margin-top:10px; padding-top:9px; }
   .rsvp-photo-note{ font-size:11px; }
 }
+
+
+/* Guest row: keep the three labels on one line each so the fields line up */
+.guest-fields{ align-items:end; }
+.guest-fields .note-l{ white-space:nowrap; }
+@media (min-width:561px){
+  .guest-fields{ grid-template-columns:1fr 1.15fr 1.1fr; }
+}
