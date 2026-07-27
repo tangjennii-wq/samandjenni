@@ -625,7 +625,13 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
     overscroll-behavior:contain;
   }
   .note-backdrop{ transition:opacity .18s ease-out; }
-  .note-card--drawer{ padding:16px 16px calc(28px + env(safe-area-inset-bottom)); }
+  /* Plain 28px, NOT calc(28px + env(safe-area-inset-bottom)): .note-drawer
+     already carries `padding-bottom:env(safe-area-inset-bottom)` (see the
+     "Drawers → full-width bottom sheets" block above), so adding it again here
+     double-counted the home indicator and left ~34px of dead white space under
+     the Send button on notched iPhones. The RSVP form's card has padding:0 and
+     relies on the drawer-level inset, so the inset must stay on the drawer. */
+  .note-card--drawer{ padding:16px 16px 28px; }
   .note-ta{ min-height:78px; }                    /* shorter memory box */
   .photo-drop{ padding:11px; font-size:10px; }    /* compact photo tile */
   .note-l{ margin-bottom:3px; }
@@ -1067,9 +1073,14 @@ body.map-full .map-caption{ display:none !important; }
     position:sticky; right:0; margin-left:auto; flex:0 0 auto;
     padding:6px 0 6px 12px; background:#fff;
     box-shadow:-14px 0 12px -4px #fff; }
+  /* 44px, not 32px: `.sitenav a{min-height:44px}` already stretched the RSVP
+     anchor to 44 while the Note <button> stayed at 32, so the pair rendered at
+     two different heights and the Note pill was an under-size tap target.
+     .nav-actions is already 56px tall because of the anchor, so this changes
+     the Note pill only — the nav's height is unchanged. */
   .nav-act{ -webkit-appearance:none; appearance:none; font-family:inherit;
     display:inline-flex; align-items:center; justify-content:center;
-    min-height:32px; padding:0 13px; border:0; border-radius:var(--r-pill);
+    min-height:44px; padding:0 13px; border:0; border-radius:var(--r-pill);
     font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
     line-height:1; cursor:pointer; text-decoration:none; white-space:nowrap; }
   .nav-act--rsvp{ background:var(--red); color:#fff; }
