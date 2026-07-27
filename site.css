@@ -908,8 +908,8 @@ body{ background:var(--paper); }
 
 /* our Google Map — a pill above the map's top-right corner, leaving the site */
 
-.sjmap-gmap{ display:inline-flex; align-items:center; gap:8px; padding:9px 15px;
-  font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+.sjmap-gmap{ display:inline-flex; align-items:center; gap:7px; padding:8px 13px;
+  font-size:9.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
   text-decoration:none; color:var(--dark); background:#fff;
   border:1.5px solid var(--dark); border-radius:var(--r-pill); line-height:1;
   white-space:nowrap; }
