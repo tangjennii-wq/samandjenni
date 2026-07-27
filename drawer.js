@@ -18,6 +18,8 @@
     el.className = 'note-drawer';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-hidden', 'true');   // closed until opened
+    el.inert = true;
     el.setAttribute('aria-label', opts.label || 'Dialog');
     // focus target on open — the dialog itself, never a form control
     el.setAttribute('tabindex', '-1');
@@ -39,6 +41,8 @@
         if (d !== el) d.classList.remove('open');
       });
       lastFocus = document.activeElement;
+      el.removeAttribute('aria-hidden');
+      el.inert = false;
       el.classList.add('open');
       bd.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -52,6 +56,8 @@
     function close(){
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       el.classList.remove('open');
+      el.setAttribute('aria-hidden', 'true');
+      el.inert = true;
       if (!document.querySelector('.note-drawer.open')) {
         bd.classList.remove('open');
         document.body.style.overflow = '';

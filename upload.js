@@ -96,12 +96,17 @@
   }
 
   // Save a row to a table (insert-only for guests).
+  // Rejects on a non-2xx response so callers can tell the guest it failed.
   function save(table, row){
+    if (typeof fetch !== 'function') return Promise.reject(new Error('offline'));
     return fetch(URL_BASE + '/rest/v1/' + table, {
       method:'POST',
       headers:{ 'apikey':KEY, 'Authorization':'Bearer '+KEY,
                 'Content-Type':'application/json', 'Prefer':'return=minimal' },
       body: JSON.stringify(row)
+    }).then(function(r){
+      if (!r.ok) throw new Error('save failed: ' + r.status);
+      return r;
     });
   }
 

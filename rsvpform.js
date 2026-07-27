@@ -79,7 +79,7 @@
     return ('' +
       '<div class="rsvp-head">' +
         '<div class="rsvp-title">R S V P</div>' +
-        '<div class="rsvp-sub">kindly reply by January 2027</div>' +
+        '<div class="rsvp-sub">kindly reply by February 26, 2027</div>' +
       '</div>' +
       '<div class="rsvp-body">' +
         '<div class="rsvp-list">' + rows + '</div>' +
@@ -202,46 +202,66 @@
       '</div>';
     }
 
-    root.querySelector('[data-send]').addEventListener('click', function () {
-      var val = function(k){ var n = g(k); return n ? n.value.trim() : ''; };
-      var lines = EVENTS.map(function(e){
-        return e.label + ': ' + (answers[e.k] ? answers[e.k].toUpperCase() : '—');
-      }).join('\n');
-      var guests = [].map.call(root.querySelectorAll('.guest-row'), function(r, i){
-        return (i === 0 ? 'you' : 'guest ' + (i + 1)) + ': ' +
-          (r.querySelector('.gname').value.trim()  || '—') + ' · ' +
-          (r.querySelector('.gemail').value.trim() || 'no email') + ' · diet: ' +
-          (r.querySelector('.gdiet').value.trim()  || 'none');
-      }).join('\n');
+    function showErr(el, msg){
+      var box = el.querySelector('.form-err');
+      if (!box) {
+        box = document.createElement('p');
+        box.className = 'form-err';
+        box.setAttribute('role', 'alert');
+        var send = el.querySelector('[data-send]');
+        send.parentNode.insertBefore(box, send);
+      }
+      box.textContent = msg;
+    }
+    function clearErr(el){
+      var box = el.querySelector('.form-err');
+      if (box) box.remove();
+    }
 
-      var guestRows = [].map.call(root.querySelectorAll('.guest-row'), function(r){
-        return { name:r.querySelector('.gname').value.trim(),
-                 email:r.querySelector('.gemail').value.trim(),
-                 dietary:r.querySelector('.gdiet').value.trim() };
+    root.querySelector('[data-send]').addEventListener('click', function () {
+      var btn = this;
+
+      // ---- a reply with no answers isn't a reply --------------------------
+      var rows = [].slice.call(root.querySelectorAll('.guest-row'));
+      var missing = [];
+      if (EVENTS.some(function(e){ return !answers[e.k]; })) missing.push('a yes or no for every event');
+      if (!rows.length || !rows[0].querySelector('.gname').value.trim()) missing.push('your name');
+      if (missing.length) { showErr(root, 'We still need ' + missing.join(' and ') + '.'); return; }
+      clearErr(root);
+
+      var guestRows = rows.map(function(x){
+        return { name:x.querySelector('.gname').value.trim(),
+                 email:x.querySelector('.gemail').value.trim(),
+                 dietary:x.querySelector('.gdiet').value.trim() };
       });
       var evAnswers = {};
-      EVENTS.forEach(function(e){ evAnswers[e.k] = answers[e.k] || null; });
+      EVENTS.forEach(function(e){ evAnswers[e.k] = answers[e.k]; });
 
-      try { if (window.SJUpload) {
-        window.SJUpload.save('wedding_rsvps', {
-          guest_key: window.SJUpload.guestKey(),
-          tier: tier,
-          party_size: parseInt(val('Count'), 10) || 1,
-          events: evAnswers,
-          guests: guestRows,
-          photo_path: up ? up.getPath() : ''
-        }).catch(function(){});
-      } } catch (err) {}
+      var label = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending…';
 
-      var card = root.querySelector('.note-card') || root;
-      card.innerHTML = '<div class="note-thanks">' +
-        '<div class="note-h">Thank you ♡</div>' +
-        '<p class="note-sub">your reply is in — we can’t wait.</p>' +
-        calBlock() +
-        '<p class="thanks-ask">while you’re here — leave us a note, submit a song request, share a favorite memory.</p>' +
-        '<button class="note-btn thanks-btn" type="button" data-note-open>Leave us a note &rarr;</button>' +
-        '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
-        '</div>';
+      var saving = (window.SJUpload && window.SJUpload.save)
+        ? window.SJUpload.save('wedding_rsvps', {
+            guest_key: window.SJUpload.guestKey(),
+            tier: tier,
+            party_size: guestRows.length,
+            events: evAnswers,
+            guests: guestRows,
+            photo_path: up ? up.getPath() : ''
+          })
+        : Promise.reject(new Error('no uploader'));
+
+      // Only claim success once it has actually saved.
+      saving.then(function () {
+        var card = root.querySelector('.note-card') || root;
+        card.innerHTML = '<div class="note-thanks">' +
+          '<div class="note-h">Thank you \u2661</div>' +
+          '<p class="note-sub">your reply is in \u2014 we can\u2019t wait.</p>' +
+          calBlock() +
+          '<p class="thanks-ask">while you\u2019re here \u2014 leave us a note, submit a song request, share a favorite memory.</p>' +
+          '<button class="note-btn thanks-btn" type="button" data-note-open>Leave us a note &rarr;</button>' +
+          '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
+          '</div>';
       // wire the freshly-rendered buttons
       var openNote = card.querySelector('[data-note-open]');
       if (openNote) openNote.addEventListener('click', function(){
@@ -250,6 +270,11 @@
       });
       var skip = card.querySelector('[data-close]');
       if (skip && onSent) skip.addEventListener('click', onSent);
+      }).catch(function () {
+        btn.disabled = false; btn.textContent = label;
+        showErr(root, 'That didn\u2019t send \u2014 check your connection and try again. ' +
+                      'Still stuck? Text us and we\u2019ll add you by hand.');
+      });
     });
   }
 

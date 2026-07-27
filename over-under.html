@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260729j">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="stylesheet" href="site.css?v=20260729k">
 <style>
 
   body{background:var(--paper)}
@@ -307,17 +308,26 @@
     var payload = LINES.map(function(L, i){
       return { line: L.n, q: L.q.replace(/<[^>]+>/g, ''), pick: picks[i] || null };
     });
-    if (window.SJUpload) {
-      window.SJUpload.save('wedding_overunder', {
-        guest_key: window.SJUpload.guestKey(),
-        from_name: (document.getElementById('ouName').value || '').trim(),
-        picks: payload
-      }).catch(function(){});
-    }
-    btn.textContent = 'Locked in ♡';
-    btn.disabled = true;
-    var note = document.querySelector('.ousent');
-    if (note) note.classList.add('show');
+    var label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Sending…';
+    var saving = (window.SJUpload && window.SJUpload.save)
+      ? window.SJUpload.save('wedding_overunder', {
+          guest_key: window.SJUpload.guestKey(),
+          from_name: (document.getElementById('ouName').value || '').trim(),
+          picks: payload
+        })
+      : Promise.reject(new Error('no uploader'));
+
+    saving.then(function(){
+      btn.textContent = 'Locked in ♡';
+      var note = document.querySelector('.ousent');
+      if (note) { note.textContent = 'got it — no takebacks (there are takebacks).'; note.classList.add('show'); }
+    }).catch(function(){
+      btn.disabled = false; btn.textContent = label;
+      var note = document.querySelector('.ousent');
+      if (note) { note.textContent = 'that didn’t send — check your connection and try again.';
+                  note.classList.add('show'); note.style.color = 'var(--red)'; }
+    });
   };
 
   // We know who they are from the gate — prefill, but let them fix it.
@@ -331,11 +341,11 @@
 
   render();
 </script>
-  <script src="personalize.js?v=20260729j" defer></script>
-  <script src="cal.js?v=20260729j" defer></script>
-  <script src="upload.js?v=20260729j" defer></script>
-  <script src="drawer.js?v=20260729j" defer></script>
-  <script src="rsvpform.js?v=20260729j" defer></script>
-  <script src="notes.js?v=20260729j" defer></script>
+  <script src="personalize.js?v=20260729k" defer></script>
+  <script src="cal.js?v=20260729k" defer></script>
+  <script src="upload.js?v=20260729k" defer></script>
+  <script src="drawer.js?v=20260729k" defer></script>
+  <script src="rsvpform.js?v=20260729k" defer></script>
+  <script src="notes.js?v=20260729k" defer></script>
 </body>
 </html>

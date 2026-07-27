@@ -62,19 +62,24 @@
       n.addEventListener('input', function(){ cache[k] = n.value; });
     });
     root.querySelector('[data-send]').addEventListener('click', function () {
-      var val = function(k){ var n = g(k); return n ? n.value.trim() : ''; };
-      try { if (window.SJUpload) {
-        window.SJUpload.save('wedding_notes', {
-          guest_key: window.SJUpload.guestKey(),
-          memory: val('Mem'),
-          word_sam: val('WordS'),
-          word_jenni: val('WordJ'),
-          song: val('Song'),
-          from_name: val('Name'),
-          photo_path: up ? up.getPath() : ''
-        }).catch(function(){});
-      } } catch (err) {}
+      var btn = this;
+      var val = function(k){ var el = g(k); return el ? el.value.trim() : ''; };
+      var saving = (window.SJUpload && window.SJUpload.save)
+        ? window.SJUpload.save('wedding_notes', {
+            guest_key: window.SJUpload.guestKey(),
+            memory: val('Mem'),
+            word_sam: val('WordS'),
+            word_jenni: val('WordJ'),
+            song: val('Song'),
+            from_name: val('Name'),
+            photo_path: up ? up.getPath() : ''
+          })
+        : Promise.reject(new Error('no uploader'));
 
+      var label = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending\u2026';
+
+      saving.then(function () {
       Object.keys(cache).forEach(function(k){ cache[k] = ''; });
       var card = root.querySelector('.note-card') || root;
       card.innerHTML = '<div class="note-thanks"><div class="note-h">Thank you ♡</div>' +
@@ -93,6 +98,17 @@
       });
       var skipN = card.querySelector('[data-close]');
       if (skipN && onSent) skipN.addEventListener('click', onSent);
+      }).catch(function () {
+        btn.disabled = false; btn.textContent = label;
+        var box = root.querySelector('.form-err');
+        if (!box) {
+          box = document.createElement('p');
+          box.className = 'form-err';
+          box.setAttribute('role', 'alert');
+          btn.parentNode.insertBefore(box, btn);
+        }
+        box.textContent = 'That didn\u2019t send \u2014 check your connection and try again.';
+      });
       return;
     });
   }

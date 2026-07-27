@@ -23,8 +23,10 @@
   }
 
   var guest = cookie('sj_guest').trim().toLowerCase();
-  // Fail open: if we don't recognize the guest, show everything (tier 1).
-  var tier = TIER_MAP[guest] || 1;
+  // Default to tier 3 (Friday + Saturday). Defaulting to 1 — as this did while
+  // TIER_MAP sits empty — showed Thursday, the rehearsal and the brunch to
+  // everyone who got through the gate.
+  var tier = TIER_MAP[guest] || 3;
 
   var sees = {
     thursday:  tier === 1,
