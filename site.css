@@ -486,6 +486,20 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
   .leaflet-control-layers{ font-size:12px; }
 }
 
+/* Calendar popover — base look. index.html declares its own .cal-pop rules in a
+   later inline <style>, so this only reaches the five inner pages, where the
+   popover previously had NO background, border, padding or shadow (cal.js builds
+   the element but only the positioning rules below existed). */
+.cal-pop{ min-width:230px; padding:7px; background:#fff;
+  border:1px solid var(--line); border-radius:var(--r-md);
+  box-shadow:0 14px 40px rgba(13,9,5,.28); z-index:1400; }
+.cal-pop[hidden]{ display:none; }
+.cal-pop a, .cal-pop button{ display:block; width:100%; text-align:left;
+  background:none; border:none; font-family:inherit; font-size:13px; font-weight:600;
+  color:var(--dark); text-decoration:none; padding:10px 12px;
+  border-radius:var(--r-sm); cursor:pointer; }
+.cal-pop a:hover, .cal-pop button:hover{ background:var(--ivory); color:var(--red); }
+
 /* Calendar popover: inside the viewport, tap-driven */
 @media (max-width:760px){
   .cal-pop{ position:fixed; left:12px; right:12px; bottom:auto; top:auto; min-width:0; }
@@ -1004,8 +1018,8 @@ body.map-full .map-caption{ display:none !important; }
 }
 
 @media (max-width:760px){
-  /* Sheet tracks the visual viewport so the × stays on screen when the iOS
-     keyboard opens. --sj-kb / --sj-vvh are set by drawer.js; both fall back. */
+  /* Sheet hugs its content and never exceeds the small viewport, so the × stays
+     on screen (the .drawer-body is the only scroll container). */
   .note-drawer{
     top:auto; bottom:0; left:0; right:0;
     width:100%; max-width:none;
@@ -1054,7 +1068,11 @@ body.map-full .map-caption{ display:none !important; }
     transition:transform .15s ease; }
   .nav-act[aria-expanded="true"] .nav-act-caret{ transform:rotate(180deg) translateY(1px); }
 
-  .nav-act-menu{ position:absolute; top:calc(100% + 7px); right:0; z-index:1300;
+  /* FIXED, not absolute: .sitenav is a horizontally scrolling row with
+     overflow-x:auto / overflow-y:hidden, which clips (and kills hit-testing on)
+     any absolutely positioned descendant. position:fixed escapes that clip —
+     cal.js sets top/right on open. */
+  .nav-act-menu{ position:fixed; top:0; right:12px; z-index:1300;
     display:flex; flex-direction:column; min-width:168px; padding:6px;
     background:#fff; border:1px solid var(--line); border-radius:var(--r-md);
     box-shadow:0 10px 30px rgba(13,9,5,.20); }
@@ -1070,7 +1088,12 @@ body.map-full .map-caption{ display:none !important; }
 
 /* ---- Calendar, moved to the end of the page ------------------------------- */
 .cal-end{ display:flex; justify-content:center; padding:6px 20px 30px; background:var(--ivory); }
+/* .nav-cal used to live inside .sitenav, where two mobile-only rules gave it
+   `opacity:.5` (a deliberately quiet icon) and `margin-left:auto` (park at the
+   right end of the nav). The button now lives in .cal-end, so both leaked:
+   a 50%-opacity pill, right-aligned instead of centred. Undo them here. */
 .cal-end .nav-cal{ display:inline-flex; align-items:center; gap:9px; width:auto;
+  opacity:1; margin:0;
   min-height:44px; padding:0 18px; border-radius:var(--r-pill);
   border:1.5px solid var(--line-2); background:#fff; color:var(--dark); cursor:pointer;
   font-family:inherit; font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
@@ -1110,6 +1133,14 @@ body.map-full .map-caption{ display:none !important; }
   .rsvp-photo-note{ font-size:11px; }
 }
 
+
+/* Restore the 44px drawer close button on phones. An earlier rule
+   (`@media(max-width:760px){ .note-x{ width:44px; height:44px } }`) was silently
+   undone by the later, more specific `.note-drawer .note-x{ width:38px }` in the
+   SOFTEN pass, leaving a 38px target. Desktop keeps the smaller puck. */
+@media (max-width:760px){
+  .note-drawer .note-x{ width:44px; height:44px; }
+}
 
 /* Guest row: keep the three labels on one line each so the fields line up */
 .guest-fields{ align-items:end; }

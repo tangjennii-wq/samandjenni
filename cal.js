@@ -26,9 +26,17 @@
   function place(btn){
     var r = btn.getBoundingClientRect();
     pop.style.position = 'fixed';
-    pop.style.top = (r.bottom + 8) + 'px';
     if (window.innerWidth <= 760) { pop.style.left = '12px'; pop.style.right = '12px'; }
     else { pop.style.left = 'auto'; pop.style.right = Math.max(12, window.innerWidth - r.right) + 'px'; }
+    // .cal-end sits just above the footer, so "below the button" usually runs off
+    // the bottom of a phone. Flip above when it doesn't fit, then clamp.
+    var h = pop.offsetHeight || 0;
+    var top = r.bottom + 8;
+    if (top + h > window.innerHeight - 8) {
+      top = (r.top - 8 - h >= 8) ? (r.top - 8 - h)
+                                 : Math.max(8, window.innerHeight - 8 - h);
+    }
+    pop.style.top = Math.round(top) + 'px';
   }
   function open(btn){ pop.hidden = false; btn.setAttribute('aria-expanded','true'); place(btn); }
   function close(){
@@ -61,10 +69,22 @@
   var menu = wrap.querySelector('.nav-act-menu');
   if (!btn || !menu) return;
 
+  // The menu is position:fixed (the nav scrolls horizontally and clips
+  // absolutely positioned children), so anchor it to the button by hand.
+  function placeMenu() {
+    var r = btn.getBoundingClientRect();
+    menu.style.top = Math.round(r.bottom + 7) + 'px';
+    // clamp: the pill can sit off the right edge of the scrolling nav
+    menu.style.right = Math.round(Math.max(8, window.innerWidth - r.right)) + 'px';
+  }
   function setOpen(on) {
-    menu.hidden = !on;
+    if (on) { menu.hidden = false; placeMenu(); }
+    else { menu.hidden = true; }
     btn.setAttribute('aria-expanded', on ? 'true' : 'false');
   }
+  wrap.parentNode.addEventListener('scroll', function () { if (!menu.hidden) placeMenu(); });
+  window.addEventListener('resize', function () { if (!menu.hidden) setOpen(false); });
+  window.addEventListener('scroll', function () { if (!menu.hidden) placeMenu(); }, { passive: true });
   btn.addEventListener('click', function (e) {
     e.preventDefault(); e.stopPropagation();
     setOpen(menu.hidden);

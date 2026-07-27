@@ -48,7 +48,6 @@
       // Land keyboard/screen-reader users inside the dialog WITHOUT painting a
       // focus ring on a form control (this used to focus the first "Yes").
       try { el.focus({ preventScroll: true }); } catch (err) { el.focus(); }
-      syncViewport();
     }
     function close(){
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
@@ -57,7 +56,6 @@
         bd.classList.remove('open');
         document.body.style.overflow = '';
       }
-      syncViewport();
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
 
