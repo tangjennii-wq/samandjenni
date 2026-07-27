@@ -822,22 +822,24 @@ body{ background:var(--paper); }
   display:block; pointer-events:none;
 }
 .note-drawer .drawer-title{ display:none; }
+/* Solid white puck with a heavy dark ×: reads on the white note form AND on
+   the red RSVP band, so it can never disappear into the background. */
 .note-drawer .note-x{
-  position:absolute; top:10px; right:12px; pointer-events:auto;
-  width:30px; height:30px; min-height:0; flex:none;
-  font-size:17px; line-height:1;
-  background:rgba(255,255,255,.18); color:#fff;
-  border:1px solid rgba(255,255,255,.55);
-  -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+  position:absolute; top:12px; right:12px; pointer-events:auto;
+  width:38px; height:38px; min-height:0; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; font-weight:700; line-height:1;
+  background:#fff; color:var(--dark);
+  border:1.5px solid rgba(13,9,5,.24);
+  box-shadow:0 2px 12px rgba(13,9,5,.22);
 }
-.note-drawer .note-x:hover, .note-drawer .note-x:active{ background:#fff; color:var(--red); border-color:#fff; }
+.note-drawer .note-x:hover, .note-drawer .note-x:active{
+  background:var(--red); color:#fff; border-color:var(--red); }
 /* forms that have their own coloured head start flush at the top */
 .note-drawer .note-card--drawer:has(.rsvp-head){ padding-top:0; }
 .note-drawer .rsvp-head{ padding-top:14px; border-radius:0; }
 /* the note form has no coloured band, so give it a little room for the × */
-.note-drawer .note-card--drawer:not(:has(.rsvp-head)){ padding-top:34px; }
-.note-drawer .note-card--drawer:not(:has(.rsvp-head)) .note-x{ color:var(--dark);
-  background:rgba(13,9,5,.06); border-color:rgba(13,9,5,.18); }
+.note-drawer .note-card--drawer:not(:has(.rsvp-head)){ padding-top:42px; }
 
 /* Mobile stacking order for the list/map split.
    Default (hotels): the booking links come first, map underneath.
