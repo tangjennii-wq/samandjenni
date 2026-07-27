@@ -453,7 +453,9 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
   .ma-rsvp{ background:var(--red); color:#fff; border-color:var(--red); }
   .ma-note{ background:var(--gold); color:var(--dark); }
   /* the desktop hero pills step aside on mobile */
-  .hero-utils{ display:none !important; }
+  /* the calendar + booking pills stay on mobile — the row that used to
+     replace them is gone */
+  .hero-utils{ display:flex !important; }
 }
 
 /* Drawers → full-width bottom sheets that survive the keyboard */
@@ -1239,4 +1241,21 @@ body.map-full .map-caption{ display:none !important; }
 /* Home has no action pills in the nav, so centre the links there. */
 @media(max-width:760px){
   body.has-bottom-actions .sitenav{ justify-content:center; }
+}
+
+
+/* ---- RSVP thank-you: add the accepted events to a calendar ---------------- */
+.thanks-cal{ margin-top:14px; padding:13px 14px; background:var(--ivory);
+  border:1px solid var(--line); border-radius:var(--r-md); }
+.thanks-cal-h{ margin:0 0 9px; font-size:10px; font-weight:800; letter-spacing:.18em;
+  text-transform:uppercase; color:#a2907a; }
+.cal-chip{ display:inline-flex; align-items:center; gap:7px; margin:0 6px 6px 0;
+  padding:9px 13px; min-height:38px; border-radius:var(--r-pill);
+  border:1.5px solid var(--line-2); background:#fff; color:var(--dark);
+  font-size:11px; font-weight:800; letter-spacing:.04em; text-decoration:none; }
+.cal-chip svg{ width:14px; height:14px; color:var(--red); flex:0 0 auto; }
+.cal-chip:hover{ border-color:var(--dark); background:var(--gold); }
+@media(max-width:760px){
+  .thanks-cal{ padding:11px 12px; }
+  .cal-chip{ font-size:10.5px; padding:9px 12px; min-height:40px; }
 }

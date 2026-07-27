@@ -39,13 +39,29 @@
 
   // One line per event: name, then (day date, place). Keeps the whole form on
   // a single phone screen.
+  // `cal` = Google Calendar dates + the location string used in the invite.
+  var CT_ADDR  = 'Chinese Tuxedo, 5 Doyers St, New York, NY 10013';
+  var PIE_ADDR = 'The Pierre, 2 E 61st St, New York, NY 10065';
   var EVENTS = [
-    { k:'thursday',  name:'welcome dinner',   when:'Thu Mar 18', where:'TBD',            show: tier === 1 },
-    { k:'rehearsal', name:'rehearsal dinner', when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 2 },
-    { k:'friday',    name:'welcome party',    when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 3 },
-    { k:'saturday',  name:'the wedding',      when:'Sat Mar 20', where:'The Pierre',     url:PIE, show: true },
-    { k:'sunday',    name:'farewell brunch',  when:'Sun Mar 21', where:'TBD',            show: tier === 1 }
+    { k:'thursday',  name:'welcome dinner',   when:'Thu Mar 18', where:'TBD',            show: tier === 1,
+      cal:'20270318/20270319', at:'New York, NY' },
+    { k:'rehearsal', name:'rehearsal dinner', when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 2,
+      cal:'20270319T220000Z/20270320T000000Z', at:CT_ADDR },
+    { k:'friday',    name:'welcome party',    when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 3,
+      cal:'20270320T000000Z/20270320T040000Z', at:CT_ADDR },
+    { k:'saturday',  name:'the wedding',      when:'Sat Mar 20', where:'The Pierre',     url:PIE, show: true,
+      cal:'20270320T210000Z/20270321T034500Z', at:PIE_ADDR },
+    { k:'sunday',    name:'farewell brunch',  when:'Sun Mar 21', where:'TBD',            show: tier === 1,
+      cal:'20270321/20270322', at:'New York, NY' }
   ].filter(function(e){ return e.show; });
+
+  function calLink(e){
+    return 'https://www.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent('Sam + Jenni · ' + e.name) +
+      '&dates=' + e.cal +
+      '&location=' + encodeURIComponent(e.at) +
+      '&details=' + encodeURIComponent('samandjenni.com');
+  }
 
   function formHTML(p){
     var rows = EVENTS.map(function(e){
@@ -169,6 +185,23 @@
         b.classList.add('on');
       });
     });
+    // Only the events they said yes to — nobody wants five invites they declined.
+    function calBlock(){
+      var yes = EVENTS.filter(function(e){ return answers[e.k] === 'yes'; });
+      if (!yes.length) return '';
+      return '<div class="thanks-cal">' +
+        '<p class="thanks-cal-h">Add ' + (yes.length > 1 ? 'these' : 'it') + ' to your calendar</p>' +
+        yes.map(function(e){
+          return '<a class="cal-chip" href="' + calLink(e) + '" target="_blank" rel="noopener">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+            'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>' +
+            '<line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+            e.name + '</a>';
+        }).join('') +
+      '</div>';
+    }
+
     root.querySelector('[data-send]').addEventListener('click', function () {
       var val = function(k){ var n = g(k); return n ? n.value.trim() : ''; };
       var lines = EVENTS.map(function(e){
@@ -204,6 +237,7 @@
       card.innerHTML = '<div class="note-thanks">' +
         '<div class="note-h">Thank you ♡</div>' +
         '<p class="note-sub">your reply is in — we can’t wait.</p>' +
+        calBlock() +
         '<p class="thanks-ask">while you’re here — leave us a note, submit a song request, share a favorite memory.</p>' +
         '<button class="note-btn thanks-btn" type="button" data-note-open>Leave us a note &rarr;</button>' +
         '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
