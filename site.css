@@ -1174,9 +1174,9 @@ body.map-full .map-caption{ display:none !important; }
 .photo-eg{ display:none; }
 @media(min-width:761px){
   .rsvp-extra{ display:flex; align-items:center; justify-content:center; gap:14px; }
-  .photo-pair{ display:flex; align-items:center; gap:14px; }
+  .photo-pair{ display:flex; align-items:center; gap:13px; }
   .photo-eg{ display:block; flex:0 0 auto; margin:0;
-    width:118px; padding:7px 7px 5px; background:#fff;
+    width:104px; padding:6px 6px 4px; background:#fff;
     border:1px solid var(--line); border-radius:4px;
     box-shadow:0 5px 18px rgba(13,9,5,.20);
     transform:rotate(-4deg); transform-origin:center;
@@ -1186,10 +1186,12 @@ body.map-full .map-caption{ display:none !important; }
   .photo-eg img{ display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:2px; }
   .photo-eg figcaption{ margin-top:5px; text-align:center; font-size:9.5px; font-style:italic;
     color:#a2907a; letter-spacing:.02em; }
-  .photo-pair .photo-drop{ flex:1 1 auto; align-self:stretch; min-height:132px;
-    border-radius:var(--r-sm); }
-  .rsvp-extra .rsvp-photo-btn.compact{ align-self:stretch; min-height:132px;
-    padding:0 22px; border-radius:var(--r-sm); }
+  /* the button keeps its own compact height and simply sits centred beside the
+     snapshot — stretching it to match the photo made it enormous */
+  .photo-pair .photo-drop{ flex:1 1 auto; align-self:center; min-height:0;
+    padding:15px 18px; border-radius:var(--r-sm); }
+  .rsvp-extra .rsvp-photo-btn.compact{ align-self:center; min-height:0;
+    padding:13px 20px; border-radius:var(--r-sm); }
   .rsvp-photo-note b{ color:var(--dark); }
 }
 
