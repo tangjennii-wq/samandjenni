@@ -1265,3 +1265,17 @@ body.map-full .map-caption{ display:none !important; }
 .form-err{ margin:10px 0 0; padding:10px 12px; border-radius:var(--r-sm);
   background:rgba(229,60,45,.08); border:1px solid rgba(229,60,45,.35);
   color:var(--red); font-size:12.5px; font-weight:600; line-height:1.45; text-align:left; }
+
+
+/* The drawer is ~560px wide on desktop — plenty for the two one-word fields
+   side by side. `.note-card--drawer .note-row2` was forcing one column. */
+@media(min-width:761px){
+  .note-card--drawer .note-row2{ grid-template-columns:1fr 1fr; gap:12px; }
+  .note-card--drawer .note-row2 .note-field{ margin-top:0; }
+
+  /* and a smaller photo button — it only needs to read as a button */
+  .photo-pair .photo-drop{ flex:0 1 auto; padding:11px 16px; font-size:10px; gap:8px; }
+  .photo-pair .photo-drop svg{ width:15px; height:15px; }
+  .rsvp-extra .rsvp-photo-btn.compact{ padding:10px 16px; font-size:9.5px; }
+  .photo-pair{ justify-content:flex-start; }
+}
