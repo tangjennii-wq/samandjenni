@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260727u">
+<link rel="stylesheet" href="site.css?v=20260727v">
 <style>
   /* ---- recs: map on top, filters floating on it, cards underneath --------- */
   /* Manhattan is tall and narrow — a full-bleed letterbox map is mostly New
@@ -46,12 +46,9 @@
   .map-caption{ margin-top:14px; }
 
   /* the list, underneath, capped so the page stays a sane length */
-  .recpanel{ margin-top:10px; max-height:none; overflow-y:auto; overscroll-behavior:contain;
-    padding-right:6px; margin-right:-6px; }
-  .recpanel::-webkit-scrollbar{ width:7px; }
-  .recpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
+  .recpanel{ margin-top:10px; }
   .recgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr));
-    gap:9px; grid-auto-rows:1fr; }
+    gap:9px; align-items:stretch; }
   .rec{ display:flex; flex-direction:column; height:100%; padding:11px 13px 12px;
     text-decoration:none; color:inherit; transition:border-color .12s, transform .12s; }
   .rec[hidden]{ display:none !important; }
@@ -67,7 +64,6 @@
     .mapstage{ max-width:none; }
     .mapstage .sjmap{ height:46vh; }
     .recbar{ margin-top:14px; }
-    .recpanel{ max-height:none; overflow:visible; padding-right:0; margin-right:0; }
     .recgrid{ grid-template-columns:1fr; }
     .fchip{ min-height:32px; display:inline-flex; align-items:center; }
   }
@@ -225,13 +221,13 @@
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260727u" defer></script>
-  <script src="map.js?v=20260727u" defer></script>
-  <script src="cal.js?v=20260727u" defer></script>
-  <script src="upload.js?v=20260727u" defer></script>
-  <script src="drawer.js?v=20260727u" defer></script>
-  <script src="rsvpform.js?v=20260727u" defer></script>
-  <script src="notes.js?v=20260727u" defer></script>
+  <script src="personalize.js?v=20260727v" defer></script>
+  <script src="map.js?v=20260727v" defer></script>
+  <script src="cal.js?v=20260727v" defer></script>
+  <script src="upload.js?v=20260727v" defer></script>
+  <script src="drawer.js?v=20260727v" defer></script>
+  <script src="rsvpform.js?v=20260727v" defer></script>
+  <script src="notes.js?v=20260727v" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;
@@ -257,7 +253,8 @@
     f[b.dataset.f] = b.dataset.v;
     b.parentNode.querySelectorAll('.fchip').forEach(function(x){ x.classList.toggle('is-on', x === b); });
     apply();
-    var p = document.querySelector('.recpanel'); if (p) p.scrollTop = 0;
+    var p = document.querySelector('.recbar');
+    if (p && p.getBoundingClientRect().top < 0) p.scrollIntoView({ block:'start' });
   });
 
   apply();   // make the initial view match the highlighted chip

@@ -337,6 +337,7 @@
       var on = (typeof force === 'boolean') ? force : !el.classList.contains('is-full');
       el.classList.toggle('is-full', on);
       document.body.classList.toggle('map-full', on);
+      if (!on) document.body.style.overflow = '';   // never strand the page
       if (expandBtn) expandBtn.textContent = on ? 'Close map' : 'Expand map';
       if (on) { map.dragging.enable(); map.scrollWheelZoom.enable(); el.classList.add('map-live'); }
       else if (isTouch) { map.dragging.disable(); map.scrollWheelZoom.disable(); }
