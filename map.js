@@ -283,31 +283,49 @@
     // Layer control starts with the pin groups; each data layer is added ONLY once
     // its GeoJSON actually loads with features — so a toggle never appears (or
     // fades neighborhoods) over empty data.
-    var ctl = L.control.layers(null, { 'Venues': gVenues, 'Our room blocks': gHotels, 'Other hotels': gStays, 'Eat & do': gPlaces }, { collapsed:false, position:'topright' }).addTo(map);
+    // Layer names carry their own colour swatch, so the toggle box IS the key.
+    function swatch(c){ return '<i class="lgd" style="background:' + c + '"></i>'; }
+    var N_VENUE = swatch(CAT.venue.color) + CAT.venue.label;
+    var N_HOTEL = swatch(CAT.hotel.color) + CAT.hotel.label;
+    var N_STAY  = swatch(CAT.stay.color)  + CAT.stay.label;
+    var N_PLACE = '<i class="lgd lgd-split"></i>Eat &amp; do';
+    var N_HOOD  = '<i class="lgd lgd-hood"></i>Neighborhoods';
+    var N_SUB   = '<i class="lgd lgd-sub"></i>Subway lines';
+
+    var ctl = L.control.layers(null, {}, { collapsed:false, position:'topright' }).addTo(map);
+    ctl.addOverlay(gVenues, N_VENUE);
+    ctl.addOverlay(gHotels, N_HOTEL);
+    ctl.addOverlay(gStays,  N_STAY);
+    ctl.addOverlay(gPlaces, N_PLACE);
 
     // ---- expand to full screen ---------------------------------------------
     // Plain absolutely-positioned button rather than a Leaflet control, so it
     // can't collide with the layers box and survives invalidateSize().
-    var expandBtn = document.createElement('button');
-    expandBtn.type = 'button';
-    expandBtn.className = 'sjmap-expand';
-    expandBtn.textContent = 'Expand map';
-    expandBtn.setAttribute('aria-label', 'Expand map to full screen');
-    el.appendChild(expandBtn);
-    L.DomEvent.disableClickPropagation(expandBtn);
+    var expandBtn = null;
+    var expandCtl = L.control({ position:'topright' });
+    expandCtl.onAdd = function(){
+      var d = L.DomUtil.create('div', 'sjmap-expand-wrap');
+      expandBtn = L.DomUtil.create('button', 'sjmap-expand', d);
+      expandBtn.type = 'button';
+      expandBtn.textContent = 'Expand map';
+      expandBtn.setAttribute('aria-label', 'Expand map to full screen');
+      L.DomEvent.disableClickPropagation(d);
+      L.DomEvent.on(expandBtn, 'click', function(e){ L.DomEvent.preventDefault(e); toggleFull(); });
+      return d;
+    };
+    expandCtl.addTo(map);
 
     function toggleFull(force){
       var on = (typeof force === 'boolean') ? force : !el.classList.contains('is-full');
       el.classList.toggle('is-full', on);
       document.body.classList.toggle('map-full', on);
-      expandBtn.textContent = on ? 'Close map' : 'Expand map';
+      if (expandBtn) expandBtn.textContent = on ? 'Close map' : 'Expand map';
       if (on) { map.dragging.enable(); map.scrollWheelZoom.enable(); el.classList.add('map-live'); }
       else if (isTouch) { map.dragging.disable(); map.scrollWheelZoom.disable(); }
       // Re-measure on the next frame, once the browser has laid out the new size.
       requestAnimationFrame(function(){ map.invalidateSize({ animate:false }); });
       setTimeout(function(){ map.invalidateSize({ animate:false }); }, 180);
     }
-    expandBtn.addEventListener('click', function(e){ e.preventDefault(); toggleFull(); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && el.classList.contains('is-full')) toggleFull(false);
     });
@@ -340,7 +358,7 @@
         }
       }).addTo(hoods);
       styleHoods();
-      ctl.addOverlay(hoods, 'Neighborhoods');
+      ctl.addOverlay(hoods, N_HOOD);
       if(mode !== 'hotels') hoods.addTo(map);   // on by default when zoomed out
     });
 
@@ -364,7 +382,7 @@
           if(r) layer.bindTooltip(r + ' train', { sticky:true, className:'sjmap-linetip' });
         }
       }).addTo(subway);
-      ctl.addOverlay(subway, 'Subway lines');
+      ctl.addOverlay(subway, N_SUB);
 
       // Build a subway key (MTA color → line letters/numbers), shown only when
       // the Subway layer is on.
@@ -401,18 +419,9 @@
     map.on('zoomend', updateStations);
 
     // Fade neighborhoods, manage stations, and show the subway key when toggled.
-    map.on('overlayadd', function(e){ if(e.name === 'Subway lines'){ subwayOn = true; styleHoods(); updateStations(); if(subKeyCtl) subKeyCtl.addTo(map); } });
-    map.on('overlayremove', function(e){ if(e.name === 'Subway lines'){ subwayOn = false; styleHoods(); updateStations(); if(subKeyCtl) map.removeControl(subKeyCtl); } });
+    map.on('overlayadd', function(e){ if(e.name === N_SUB){ subwayOn = true; styleHoods(); updateStations(); if(subKeyCtl) subKeyCtl.addTo(map); } });
+    map.on('overlayremove', function(e){ if(e.name === N_SUB){ subwayOn = false; styleHoods(); updateStations(); if(subKeyCtl) map.removeControl(subKeyCtl); } });
 
-    // legend
-    var lg = L.control({position:'bottomleft'});
-    lg.onAdd = function(){
-      var d = L.DomUtil.create('div','sjmap-legend');
-      var html = '';
-      Object.keys(CAT).forEach(function(k){ html += '<span><i style="background:'+CAT[k].color+'"></i>'+CAT[k].label+'</span>'; });
-      d.innerHTML = html; return d;
-    };
-    lg.addTo(map);
   }
 
   var markerIndex = {};
@@ -431,8 +440,8 @@
         iconSize:[18,18], iconAnchor:[9,9]
       });
       var m = L.marker([p.lat, p.lng], {icon:icon}).addTo(group);
-      var body = '<div class="sjmap-pop"><b>'+p.n+'</b>'+(p.note?'<br><span>'+p.note+'</span>':'');
-      if(p.url) body += '<br><a href="'+p.url+'" target="_blank" rel="noopener">open in maps →</a>';
+      var body = '<div class="sjmap-pop"><b>'+p.n+'</b>';
+      if(p.url) body += '<a href="'+p.url+'" target="_blank" rel="noopener">open in maps →</a>';
       body += '</div>';
       m.bindPopup(body);
       markerIndex[p.n] = m;
