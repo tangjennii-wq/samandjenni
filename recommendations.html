@@ -8,11 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260727l">
+<link rel="stylesheet" href="site.css?v=20260727m">
 <style>
   /* ---- recs: map on top, filters floating on it, cards underneath --------- */
-  .mapstage{ position:relative; margin-top:10px; }
-  .mapstage .sjmap{ height:min(46vh,420px); margin-top:0; }
+  /* Manhattan is tall and narrow — a full-bleed letterbox map is mostly New
+     Jersey. Constrain the frame so the pins fill it. */
+  .mapstage{ position:relative; margin:10px auto 0; max-width:760px; }
+  .mapstage .sjmap{ height:min(52vh,470px); margin-top:0; }
   /* tighter page head so the list starts above the fold */
   #recs{ padding-top:14px; }
   #recs .eyebrow{ margin-bottom:2px; }
@@ -20,10 +22,14 @@
   #recs .rule{ margin-top:7px; }
 
   /* filter bar: sits under the map, directly above the list it filters */
-  .recbar{ margin-top:12px; display:flex; flex-wrap:wrap; align-items:center; gap:7px 9px;
-    padding-top:11px; border-top:1px solid var(--line); }
+  .recbar{ margin-top:16px; display:flex; flex-wrap:wrap; align-items:center; gap:6px 9px;
+    padding-top:12px; border-top:1px solid var(--line); }
   .fgroup{ display:flex; flex-wrap:wrap; gap:5px; }
-  .fgroup--areas{ width:100%; }
+  .fgroup--areas{ width:100%; padding-top:8px; margin-top:1px;
+    border-top:1px dashed var(--line); }
+  .fgroup--areas .fchip{ font-size:9px; padding:4px 9px; letter-spacing:.07em;
+    border-color:var(--line); color:#9a8878; background:transparent; }
+  .fgroup--areas .fchip:hover{ background:#fff; color:var(--dark); border-color:var(--line-2); }
   .fchip{ font:inherit; font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
     padding:5px 10px; border-radius:var(--r-pill); border:1px solid var(--line-2);
     background:#fff; color:#6b5a50; cursor:pointer; line-height:1.1; white-space:nowrap;
@@ -58,7 +64,8 @@
   .recempty{ padding:22px 0; text-align:center; font-size:13px; color:#a2907a; font-style:italic; }
 
   @media(max-width:760px){
-    .mapstage .sjmap{ height:44vh; }
+    .mapstage{ max-width:none; }
+    .mapstage .sjmap{ height:46vh; }
     .recbar{ margin-top:14px; }
     .recpanel{ max-height:none; overflow:visible; padding-right:0; margin-right:0; }
     .recgrid{ grid-template-columns:1fr; }
@@ -218,13 +225,13 @@
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260727l" defer></script>
-  <script src="map.js?v=20260727l" defer></script>
-  <script src="cal.js?v=20260727l" defer></script>
-  <script src="upload.js?v=20260727l" defer></script>
-  <script src="drawer.js?v=20260727l" defer></script>
-  <script src="rsvpform.js?v=20260727l" defer></script>
-  <script src="notes.js?v=20260727l" defer></script>
+  <script src="personalize.js?v=20260727m" defer></script>
+  <script src="map.js?v=20260727m" defer></script>
+  <script src="cal.js?v=20260727m" defer></script>
+  <script src="upload.js?v=20260727m" defer></script>
+  <script src="drawer.js?v=20260727m" defer></script>
+  <script src="rsvpform.js?v=20260727m" defer></script>
+  <script src="notes.js?v=20260727m" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;

@@ -225,7 +225,7 @@
   function init(){
     var mode = el.getAttribute('data-mode') || 'recs';
     var center = mode === 'hotels' ? [40.7635, -73.9760] : [40.7480, -73.9840];
-    var zoom   = mode === 'hotels' ? 13 : (mode === 'all' ? 13 : 12);
+    var zoom   = mode === 'hotels' ? 13 : (mode === 'all' ? 13 : 12.4);
 
     var isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
     var map = L.map(el, { scrollWheelZoom:false, zoomControl:false,
@@ -377,7 +377,6 @@
       }).addTo(hoods);
       styleHoods();
       ctl.addOverlay(hoods, N_HOOD);
-      if(mode !== 'hotels') hoods.addTo(map);   // on by default when zoomed out
     });
 
     // Subway lines — white casing beneath, colored route on top. Only wired up
