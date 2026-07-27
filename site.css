@@ -838,3 +838,16 @@ body{ background:var(--paper); }
 .note-drawer .note-card--drawer:not(:has(.rsvp-head)){ padding-top:34px; }
 .note-drawer .note-card--drawer:not(:has(.rsvp-head)) .note-x{ color:var(--dark);
   background:rgba(13,9,5,.06); border-color:rgba(13,9,5,.18); }
+
+/* Mobile stacking order for the list/map split.
+   Default (hotels): the booking links come first, map underneath.
+   Recs opts in to map-first with .split--mapfirst. */
+@media(max-width:900px){
+  .split{ display:flex; flex-direction:column; }
+  .split-list{ order:1; }
+  .split-map{ order:2; }
+  .split--mapfirst .split-map{ order:0; }
+  .split--mapfirst .split-map .sjmap{ height:290px; }
+  .split--mapfirst .split-map .map-caption{ margin-bottom:14px; }
+}
+
