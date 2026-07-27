@@ -851,23 +851,46 @@ body{ background:var(--paper); }
   .split--mapfirst .split-map .map-caption{ margin-bottom:14px; }
 }
 
-/* Map: expand to full screen (recs + hotels) --------------------------------
-   Expanded = map only. Every bit of page chrome is hidden and the neighbourhood
-   filter floats over the map, top-left, at reduced opacity. */
+/* Map: one control box (toggles double as the key) + expand ------------------
+   Expanded = map only: page chrome hidden, filter floats top-left, low opacity. */
 .sjmap{ position:relative; }
 
-.sjmap-expand{ position:absolute; right:10px; bottom:10px; z-index:500;
-  font:inherit; font-size:9.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
-  padding:8px 13px; border-radius:var(--r-pill); border:1px solid rgba(13,9,5,.2);
-  background:#fff; color:var(--dark); cursor:pointer; line-height:1;
-  box-shadow:0 2px 8px rgba(13,9,5,.18); }
-.sjmap-expand:hover{ background:var(--dark); color:#fff; border-color:var(--dark); }
+/* colour swatch inside each layer toggle — the toggle box IS the key now */
+.leaflet-control-layers-overlays label{ display:flex; align-items:center; gap:2px; }
+.lgd{ width:11px; height:11px; border-radius:50%; display:inline-block; flex:0 0 auto;
+  margin:0 6px 0 3px; border:1.5px solid #fff; box-shadow:0 0 0 1px rgba(13,9,5,.25); }
+.lgd-split{ background:linear-gradient(135deg,#5C8A52 0 50%,#2F6DB5 50% 100%); }
+.lgd-hood{ background:linear-gradient(135deg,#F3C6C6 0 33%,#CFE0F0 33% 66%,#DCE8CE 66% 100%); }
+.lgd-sub{ background:linear-gradient(90deg,#EE352E 0 25%,#00933C 25% 50%,#0039A6 50% 75%,#FF6319 75% 100%);
+  border-radius:3px; }
+.leaflet-control-layers{ border-radius:var(--r-md) !important; }
+
+/* Expand — sits directly under the toggle box, deliberately loud */
+.sjmap-expand-wrap{ margin-top:8px !important; }
+.sjmap-expand{ font:inherit; font-size:10px; font-weight:800; letter-spacing:.13em;
+  text-transform:uppercase; padding:10px 15px; border-radius:var(--r-pill);
+  border:1.5px solid var(--red); background:var(--red); color:#fff; cursor:pointer;
+  line-height:1; white-space:nowrap; box-shadow:0 2px 10px rgba(229,60,45,.35); }
+.sjmap-expand:hover{ background:var(--dark); border-color:var(--dark); }
+
+/* pin popup: name + link, nothing else */
+.sjmap-pop{ text-align:center; }
+.sjmap-pop b{ display:block; font-size:14.5px; font-weight:800; }
+.sjmap-pop a{ display:inline-block; margin-top:5px; font-size:11.5px; font-weight:700;
+  color:var(--red); text-decoration:none; border-bottom:1.5px solid var(--gold); }
+.sjmap-pop a:hover{ border-bottom-color:var(--red); }
+
+/* our own Google Map */
+.gmap-link{ display:inline-flex; align-items:center; gap:7px; margin-top:10px;
+  font-size:12px; font-weight:800; letter-spacing:.04em; text-decoration:none;
+  color:var(--dark); background:#fff; border:1.5px solid var(--dark);
+  border-radius:var(--r-pill); padding:8px 15px; }
+.gmap-link:hover{ background:var(--red); border-color:var(--red); color:#fff; }
+.gmap-link i{ width:9px; height:9px; border-radius:50%; background:var(--red); display:inline-block; }
 
 .sjmap.is-full{ position:fixed; inset:0; z-index:2000; width:100vw; height:100vh !important;
   max-height:none; border-radius:0; border:0; margin:0; box-shadow:none; }
 .sjmap.is-full .map-hint{ display:none; }
-.sjmap.is-full .sjmap-expand{ position:fixed; right:14px; bottom:14px; z-index:2100;
-  background:var(--red); color:#fff; border-color:var(--red); font-size:11px; padding:12px 20px; }
 
 /* map only: strip the page down to the map */
 body.map-full{ overflow:hidden; }
@@ -883,13 +906,14 @@ body.map-full .areahead,
 body.map-full .lede,
 body.map-full .travelnote,
 body.map-full .recpanel,
+body.map-full .gmap-link,
 body.map-full .split-list .hotel,
 body.map-full .split-list .recgrid,
 body.map-full .map-caption{ display:none !important; }
 
 /* the filter, floated over the map */
 body.map-full .recbar{ position:fixed; top:14px; left:14px; z-index:2100;
-  width:auto; max-width:min(620px, calc(100vw - 200px));
+  width:auto; max-width:min(620px, calc(100vw - 230px));
   margin:0; padding:11px 13px 12px; border:1px solid rgba(13,9,5,.10);
   border-radius:16px; background:rgba(255,255,255,.72);
   -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
@@ -901,6 +925,6 @@ body.map-full .fgroup--areas{ border-left:0; padding-left:0; margin-left:0; }
 
 @media(max-width:760px){
   body.map-full .recbar{ top:10px; left:10px; right:10px; max-width:none;
-    max-height:44vh; overflow-y:auto; }
-  .sjmap.is-full .sjmap-expand{ right:12px; bottom:calc(12px + env(safe-area-inset-bottom)); }
+    max-height:42vh; overflow-y:auto; }
+  .sjmap-expand{ padding:11px 16px; }
 }
