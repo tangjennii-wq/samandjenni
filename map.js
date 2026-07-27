@@ -102,11 +102,6 @@
     { n: 'Dagon', cat: 'eat', lat: 40.79098, lng: -73.97455, note: 'Upper West Side · Modern Israeli. Worth going uptown for.', url: 'https://www.google.com/maps/search/?api=1&query=Dagon%20Upper%20West%20Side%20New%20York' },
     { n: 'Blue Hill at Stone Barns', cat: 'eat', lat: 41.10409, lng: -73.82852, note: 'Pocantico Hills · Dan Barber\'s farm. A tasting menu and a whole afternoon, 45 min north.', url: 'https://www.google.com/maps/search/?api=1&query=Blue%20Hill%20at%20Stone%20Barns%20Pocantico%20Hills%20NY' },
     { n: 'Jongro BBQ', cat: 'eat', lat: 40.74736, lng: -73.98615, note: 'Koreatown · Tabletop grill, no reservations. The K-town anchor.', url: 'https://www.google.com/maps/search/?api=1&query=Jongro%20BBQ%20Koreatown%20New%20York' },
-    { n: 'New Wonjo', cat: 'eat', lat: 40.74748, lng: -73.98612, note: 'Koreatown · Charcoal BBQ until 5am. Open since 1993.', url: 'https://www.google.com/maps/search/?api=1&query=New%20Wonjo%20Koreatown%20New%20York' },
-    { n: 'Gammeeok', cat: 'eat', lat: 40.74732, lng: -73.98574, note: 'Koreatown · 24-hour ox bone soup counter. No frills, no menu decisions.', url: 'https://www.google.com/maps/search/?api=1&query=Gammeeok%20Koreatown%20New%20York' },
-    { n: 'Pocha 32', cat: 'eat', lat: 40.74739, lng: -73.98591, note: 'Koreatown · Watermelon soju bowls and late-night anju.', url: 'https://www.google.com/maps/search/?api=1&query=Pocha%2032%20Koreatown%20New%20York' },
-    { n: 'Her Name Is Han', cat: 'eat', lat: 40.74606, lng: -73.98467, note: 'Koreatown · Rustic Korean bistro. Banchan and a good wine list.', url: 'https://www.google.com/maps/search/?api=1&query=Her%20Name%20Is%20Han%20Koreatown%20New%20York' },
-    { n: 'Grace Street', cat: 'eat', lat: 40.74741, lng: -73.98596, note: 'Koreatown · Shaved-snow bingsu and croffles. The dessert stop.', url: 'https://www.google.com/maps/search/?api=1&query=Grace%20Street%20Koreatown%20New%20York' },
     { n: 'Karaoke City', cat: 'do', lat: 40.74736, lng: -73.98615, note: 'Koreatown · 22 W 32nd, 7th floor. Private rooms, open very late.', url: 'https://www.google.com/maps/search/?api=1&query=Karaoke%20City%20Koreatown%20New%20York' },
     { n: 'Karaoke Boho', cat: 'do', lat: 40.73180, lng: -74.00190, note: 'West Village · Cosier and less fluorescent than K-town. Book the room.', url: 'https://www.google.com/maps/search/?api=1&query=Karaoke%20Boho%20West%20Village%20New%20York' },
     { n: 'Guggenheim', cat: 'do', lat: 40.78278, lng: -73.95917, note: 'Upper East Side · Jenni\'s favorite museum — the Frank Lloyd Wright spiral is the point.', url: 'https://www.google.com/maps/search/?api=1&query=Guggenheim%20Upper%20East%20Side%20New%20York' },
@@ -130,6 +125,7 @@
     { n: 'Hudson Hills Golf Course', cat: 'do', lat: 41.20150, lng: -73.85230, note: 'Ossining · Public Westchester course, 45 min up. Rolling and scenic.', url: 'https://www.google.com/maps/search/?api=1&query=Hudson%20Hills%20Golf%20Course%20Ossining%20NY' },
     { n: 'Centennial Golf Club', cat: 'do', lat: 41.42417, lng: -73.65583, note: 'Carmel · 27 holes by Larry Nelson. The best public track in the Hudson Valley.', url: 'https://www.google.com/maps/search/?api=1&query=Centennial%20Golf%20Club%20Carmel%20NY' },
   ];
+
 
 
 
