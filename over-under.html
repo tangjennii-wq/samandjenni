@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260728r">
+<link rel="stylesheet" href="site.css?v=20260728s">
 <style>
 
   body{background:var(--paper)}
@@ -55,15 +55,19 @@
     .board,.actions{padding:0 16px}
     .board{margin-top:18px}
     .scorebar{padding:10px 13px;font-size:10px;letter-spacing:.14em}
-    .line{padding:12px 14px}
-    .q{font-size:14.5px}
-    .picks{flex-direction:column}
+    .line{padding:10px 13px}
+    .q{font-size:14px;line-height:1.35}
+    .picks{flex-direction:row;gap:7px;margin-top:8px}
+    .pick{font-size:11px;padding:9px 6px;letter-spacing:.1em}
+    .hdr .rule{margin-top:8px}
     .actions{padding-bottom:40px}
     .btn{display:block;width:100%;margin-bottom:8px;min-height:46px}
   }
   @media(max-width:430px){
     h1{font-size:24px}
     .num{padding:1px 7px}
+    .lede{font-size:12.5px;line-height:1.5}
+    .hdr{padding:16px 16px 2px}
   }
   .ourow{ display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
     gap:9px; width:100%; }
@@ -324,11 +328,11 @@
 
   render();
 </script>
-  <script src="personalize.js?v=20260728r" defer></script>
-  <script src="cal.js?v=20260728r" defer></script>
-  <script src="upload.js?v=20260728r" defer></script>
-  <script src="drawer.js?v=20260728r" defer></script>
-  <script src="rsvpform.js?v=20260728r" defer></script>
-  <script src="notes.js?v=20260728r" defer></script>
+  <script src="personalize.js?v=20260728s" defer></script>
+  <script src="cal.js?v=20260728s" defer></script>
+  <script src="upload.js?v=20260728s" defer></script>
+  <script src="drawer.js?v=20260728s" defer></script>
+  <script src="rsvpform.js?v=20260728s" defer></script>
+  <script src="notes.js?v=20260728s" defer></script>
 </body>
 </html>

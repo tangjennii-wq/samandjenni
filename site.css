@@ -1176,3 +1176,31 @@ body.map-full .map-caption{ display:none !important; }
   .photo-field .photo-eg{ bottom:auto; top:0; right:0; margin:0; }
   .rsvp-photo-note b{ color:var(--dark); }
 }
+
+
+/* ---- RSVP on a phone: fit the whole form on one screen -------------------- */
+@media(max-width:760px){
+  .rsvp-head{ padding:9px 14px 8px; }
+  .rsvp-title{ font-size:17px; letter-spacing:.3em; }
+  .rsvp-sub{ font-size:8.5px; margin-top:2px; }
+  .rsvp-body{ padding:10px 12px 12px; }
+  .rsvp-list{ margin-bottom:8px; }
+  .rsvp-ev{ padding:8px 11px; }
+  .rsvp-evname b{ font-size:13px; }
+  .rsvp-evname .ev-meta,
+  .rsvp-evname .ev-meta .ev-loc,
+  .rsvp-evname .ev-meta .ev-tbd{ font-size:10.5px; }
+  .yn{ min-width:44px; min-height:32px; padding:6px 9px; font-size:9.5px; }
+  .guest-row{ padding:9px 11px; }
+  .note-l{ font-size:8.5px; margin-bottom:1px; letter-spacing:.14em; }
+  .guest-fields .note-f{ padding:8px 10px; }
+  .plusone{ margin-top:7px; padding:8px 11px; }
+  .plusone-q{ font-size:12px; }
+  .yn.p1{ height:32px; min-width:52px; }
+  .rsvp-send{ margin-top:9px; min-height:44px; font-size:11px; }
+  /* the photo ask collapses to one compact line */
+  .rsvp-photo-block{ margin-top:9px; padding-top:8px; }
+  .rsvp-photo-note{ font-size:10.5px; line-height:1.35; }
+  .rsvp-photo-note b{ display:inline; }
+  .rsvp-photo-btn.compact{ min-height:38px; padding:0 13px; font-size:9.5px; }
+}

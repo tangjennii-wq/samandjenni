@@ -102,14 +102,13 @@
   var answers = {};
 
   function guestRow(p, i){
-    var who = i === 0 ? 'you' : 'your +1';
+    var who = i === 0 ? 'your' : '+1';
     return '<div class="guest-row">' +
-      '<div class="guest-n">' + who + '</div>' +
       '<div class="guest-fields">' +
-        '<div class="note-field"><label class="note-l" for="' + p + 'GN' + i + '">name</label>' +
+        '<div class="note-field"><label class="note-l" for="' + p + 'GN' + i + '">' + who + ' name</label>' +
           '<input id="' + p + 'GN' + i + '" class="note-f gname" type="text" value="' +
             (i === 0 ? PRE.name.replace(/"/g,'&quot;') : '') + '"></div>' +
-        '<div class="note-field"><label class="note-l" for="' + p + 'GE' + i + '">email' +
+        '<div class="note-field"><label class="note-l" for="' + p + 'GE' + i + '">' + who + ' email' +
           (i === 0 ? '' : ' <span class="opt">(optional)</span>') + '</label>' +
           '<input id="' + p + 'GE' + i + '" class="note-f gemail" type="email" value="' +
             (i === 0 ? PRE.email.replace(/"/g,'&quot;') : '') + '"></div>' +
