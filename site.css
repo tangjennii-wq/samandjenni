@@ -851,18 +851,56 @@ body{ background:var(--paper); }
   .split--mapfirst .split-map .map-caption{ margin-bottom:14px; }
 }
 
-/* Map: expand to full screen (recs + hotels) */
+/* Map: expand to full screen (recs + hotels) --------------------------------
+   Expanded = map only. Every bit of page chrome is hidden and the neighbourhood
+   filter floats over the map, top-left, at reduced opacity. */
 .sjmap{ position:relative; }
+
 .sjmap-expand{ position:absolute; right:10px; bottom:10px; z-index:500;
   font:inherit; font-size:9.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
   padding:8px 13px; border-radius:var(--r-pill); border:1px solid rgba(13,9,5,.2);
   background:#fff; color:var(--dark); cursor:pointer; line-height:1;
   box-shadow:0 2px 8px rgba(13,9,5,.18); }
 .sjmap-expand:hover{ background:var(--dark); color:#fff; border-color:var(--dark); }
-.sjmap.is-full{ position:fixed; inset:0; z-index:1200; width:100vw; height:100vh !important;
-  max-height:none; border-radius:0; border:0; margin:0; }
-.sjmap.is-full .sjmap-expand{ background:var(--red); color:#fff; border-color:var(--red);
-  right:14px; bottom:14px; font-size:11px; padding:11px 18px; }
-body.map-full{ overflow:hidden; }
-/* the tap-to-explore hint is pointless once expanded */
+
+.sjmap.is-full{ position:fixed; inset:0; z-index:2000; width:100vw; height:100vh !important;
+  max-height:none; border-radius:0; border:0; margin:0; box-shadow:none; }
 .sjmap.is-full .map-hint{ display:none; }
+.sjmap.is-full .sjmap-expand{ position:fixed; right:14px; bottom:14px; z-index:2100;
+  background:var(--red); color:#fff; border-color:var(--red); font-size:11px; padding:12px 20px; }
+
+/* map only: strip the page down to the map */
+body.map-full{ overflow:hidden; }
+body.map-full .crest,
+body.map-full .sitenav,
+body.map-full .mobile-actions,
+body.map-full .sfoot,
+body.map-full .eyebrow,
+body.map-full .sect h2,
+body.map-full .sect .rule,
+body.map-full .subhead,
+body.map-full .areahead,
+body.map-full .lede,
+body.map-full .travelnote,
+body.map-full .recpanel,
+body.map-full .split-list .hotel,
+body.map-full .split-list .recgrid,
+body.map-full .map-caption{ display:none !important; }
+
+/* the filter, floated over the map */
+body.map-full .recbar{ position:fixed; top:14px; left:14px; z-index:2100;
+  width:auto; max-width:min(620px, calc(100vw - 200px));
+  margin:0; padding:11px 13px 12px; border:1px solid rgba(13,9,5,.10);
+  border-radius:16px; background:rgba(255,255,255,.72);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 8px 28px rgba(13,9,5,.14);
+  opacity:.72; transition:opacity .16s ease; }
+body.map-full .recbar:hover,
+body.map-full .recbar:focus-within{ opacity:1; }
+body.map-full .fgroup--areas{ border-left:0; padding-left:0; margin-left:0; }
+
+@media(max-width:760px){
+  body.map-full .recbar{ top:10px; left:10px; right:10px; max-width:none;
+    max-height:44vh; overflow-y:auto; }
+  .sjmap.is-full .sjmap-expand{ right:12px; bottom:calc(12px + env(safe-area-inset-bottom)); }
+}

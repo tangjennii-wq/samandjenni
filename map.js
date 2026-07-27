@@ -303,9 +303,9 @@
       expandBtn.textContent = on ? 'Close map' : 'Expand map';
       if (on) { map.dragging.enable(); map.scrollWheelZoom.enable(); el.classList.add('map-live'); }
       else if (isTouch) { map.dragging.disable(); map.scrollWheelZoom.disable(); }
-      // Leaflet has to re-measure once the container has finished resizing.
-      setTimeout(function(){ map.invalidateSize(); }, 60);
-      setTimeout(function(){ map.invalidateSize(); }, 260);
+      // Re-measure on the next frame, once the browser has laid out the new size.
+      requestAnimationFrame(function(){ map.invalidateSize({ animate:false }); });
+      setTimeout(function(){ map.invalidateSize({ animate:false }); }, 180);
     }
     expandBtn.addEventListener('click', function(e){ e.preventDefault(); toggleFull(); });
     document.addEventListener('keydown', function (e) {
