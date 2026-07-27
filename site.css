@@ -1163,15 +1163,15 @@ body.map-full .map-caption{ display:none !important; }
   .rsvp-extra{ display:flex; align-items:center; justify-content:center; gap:14px; }
   .photo-pair{ display:flex; align-items:center; gap:14px; }
   .photo-eg{ display:block; flex:0 0 auto; margin:0;
-    width:74px; padding:5px 5px 3px; background:#fff;
+    width:118px; padding:7px 7px 5px; background:#fff;
     border:1px solid var(--line); border-radius:4px;
-    box-shadow:0 4px 14px rgba(13,9,5,.16);
+    box-shadow:0 5px 18px rgba(13,9,5,.20);
     transform:rotate(-4deg); transform-origin:center;
     transition:transform .2s ease; }
   .rsvp-extra:hover .photo-eg,
   .photo-pair:hover .photo-eg{ transform:rotate(-1deg) scale(1.06); }
   .photo-eg img{ display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:2px; }
-  .photo-eg figcaption{ margin-top:3px; text-align:center; font-size:8px; font-style:italic;
+  .photo-eg figcaption{ margin-top:5px; text-align:center; font-size:9.5px; font-style:italic;
     color:#a2907a; letter-spacing:.02em; }
   .photo-pair .photo-drop{ flex:1 1 auto; }
   .rsvp-photo-note b{ color:var(--dark); }
