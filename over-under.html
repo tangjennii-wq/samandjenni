@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260728i">
+<link rel="stylesheet" href="site.css?v=20260728j">
 <style>
 
   body{background:var(--paper)}
@@ -100,15 +100,12 @@
     <a href="index.html"><svg class="nav-home-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.6V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.6"/><path d="M9.5 21v-6h5v6"/></svg><span class="nav-word">home</span></a>
     <a href="weekend.html">events</a>
     <a href="recommendations.html">recs</a>
-    <a href="travel.html">hotels/faq</a>
+    <a href="travel.html">hotels</a>
     <a class="active" href="over-under.html">over/under</a>
-      <div class="nav-actions">
-        <button type="button" class="nav-act" aria-expanded="false" aria-controls="navActMenu">RSVP + Note <span class="nav-act-caret" aria-hidden="true">⌄</span></button>
-        <div class="nav-act-menu" id="navActMenu" hidden>
-          <a href="rsvp.html" data-rsvp-open>RSVP</a>
-          <button type="button" data-note-open>Leave a note</button>
-        </div>
-      </div>
+      <span class="nav-actions">
+        <a class="nav-act nav-act--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
+        <button type="button" class="nav-act nav-act--note" data-note-open>Note</button>
+      </span>
       <span class="nav-cta">
       <a class="cta-btn cta-primary" href="rsvp.html" data-rsvp-open>RSVP</a>
       <button type="button" class="cta-btn" data-note-open>Leave a note</button>
@@ -332,11 +329,11 @@
 
   render();
 </script>
-  <script src="personalize.js?v=20260728i" defer></script>
-  <script src="cal.js?v=20260728i" defer></script>
-  <script src="upload.js?v=20260728i" defer></script>
-  <script src="drawer.js?v=20260728i" defer></script>
-  <script src="rsvpform.js?v=20260728i" defer></script>
-  <script src="notes.js?v=20260728i" defer></script>
+  <script src="personalize.js?v=20260728j" defer></script>
+  <script src="cal.js?v=20260728j" defer></script>
+  <script src="upload.js?v=20260728j" defer></script>
+  <script src="drawer.js?v=20260728j" defer></script>
+  <script src="rsvpform.js?v=20260728j" defer></script>
+  <script src="notes.js?v=20260728j" defer></script>
 </body>
 </html>

@@ -1044,12 +1044,12 @@ body.map-full .map-caption{ display:none !important; }
 .plusone-yn{ display:flex; gap:7px; }
 .yn.p1{ min-width:62px; height:38px; border-radius:var(--r-pill); font-size:11px; }
 
-/* ---- Nav: home icon + an RSVP/Note menu at the right (mobile) -------------- */
+/* ---- Nav: home icon + two action pills pinned right (mobile) --------------- */
 .nav-home-ico{ display:none; width:17px; height:17px; }
-.nav-actions{ display:none; position:relative; }
+.nav-actions{ display:none; }
 
 @media(max-width:760px){
-  /* the word "home" becomes a house, buying room for the actions pill */
+  /* "home" becomes a house, which buys the room for the action pills */
   .sitenav a[href="index.html"]{ display:inline-flex; align-items:center; }
   .nav-home-ico{ display:block; }
   .nav-word{ display:none; }
@@ -1058,32 +1058,23 @@ body.map-full .map-caption{ display:none !important; }
   .mobile-actions{ display:none !important; }
   body.has-mobile-actions{ padding-bottom:0; }
 
-  .nav-actions{ display:block; margin-left:auto; }
-  .nav-act{ -webkit-appearance:none; appearance:none; font-family:inherit;
-    display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
-    min-height:34px; padding:0 13px; border:0; border-radius:var(--r-pill);
-    background:var(--red); color:#fff; cursor:pointer;
-    font-size:10px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
-  .nav-act-caret{ font-size:12px; line-height:1; transform:translateY(-1px);
-    transition:transform .15s ease; }
-  .nav-act[aria-expanded="true"] .nav-act-caret{ transform:rotate(180deg) translateY(1px); }
+  .sitenav{ gap:13px; }
+  .sitenav a{ font-size:10.5px; letter-spacing:.11em; }
 
-  /* FIXED, not absolute: .sitenav is a horizontally scrolling row with
-     overflow-x:auto / overflow-y:hidden, which clips (and kills hit-testing on)
-     any absolutely positioned descendant. position:fixed escapes that clip —
-     cal.js sets top/right on open. */
-  .nav-act-menu{ position:fixed; top:0; right:12px; z-index:1300;
-    display:flex; flex-direction:column; min-width:168px; padding:6px;
-    background:#fff; border:1px solid var(--line); border-radius:var(--r-md);
-    box-shadow:0 10px 30px rgba(13,9,5,.20); }
-  .nav-act-menu[hidden]{ display:none; }
-  .nav-act-menu > *{ -webkit-appearance:none; appearance:none; font-family:inherit;
-    display:flex; align-items:center; min-height:44px; padding:0 13px; border:0;
-    border-radius:var(--r-sm); background:none; color:var(--dark); cursor:pointer;
-    text-decoration:none; text-align:left;
-    font-size:11px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
-  .nav-act-menu > *:first-child{ color:var(--red); }
-  .nav-act-menu > *:active{ background:var(--ivory); }
+  /* The nav scrolls sideways; the pills stay pinned to the right edge so they
+     are always reachable, with a white fade so links pass under them. */
+  .nav-actions{ display:inline-flex; align-items:center; gap:6px;
+    position:sticky; right:0; margin-left:auto; flex:0 0 auto;
+    padding:6px 0 6px 12px; background:#fff;
+    box-shadow:-14px 0 12px -4px #fff; }
+  .nav-act{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:32px; padding:0 13px; border:0; border-radius:var(--r-pill);
+    font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+    line-height:1; cursor:pointer; text-decoration:none; white-space:nowrap; }
+  .nav-act--rsvp{ background:var(--red); color:#fff; }
+  .nav-act--note{ background:var(--gold); color:var(--dark); }
+  .nav-act:active{ filter:brightness(.93); }
 }
 
 /* ---- Calendar, moved to the end of the page ------------------------------- */
