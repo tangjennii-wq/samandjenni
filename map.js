@@ -295,7 +295,7 @@
     var N_HOOD  = '<i class="lgd lgd-hood"></i>Neighborhoods';
     var N_SUB   = '<i class="lgd lgd-sub"></i>Subway lines';
 
-    var ctl = L.control.layers(null, {}, { collapsed:false, position:'topright' }).addTo(map);
+    var ctl = L.control.layers(null, {}, { collapsed:false, position:'bottomright' }).addTo(map);
     ctl.addOverlay(gVenues, N_VENUE);
     ctl.addOverlay(gHotels, N_HOTEL);
     ctl.addOverlay(gStays,  N_STAY);
