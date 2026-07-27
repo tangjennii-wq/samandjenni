@@ -15,6 +15,21 @@
     { n: 'Lotte New York Palace', cat: 'hotel', lat: 40.75802, lng: -73.97573, note: 'Biggest rooms · ~15 min to the Pierre', url: 'https://www.lottenypalace.com/wedding-stories/tang--shleifer-wedding' },
     { n: 'Thompson Central Park', cat: 'hotel', lat: 40.76428, lng: -73.97869, note: 'Modern · steps from the park', url: 'https://www.hyatt.com/events/en-US/group-booking/LGATP/G-3TSW' },
     { n: 'Le Méridien Central Park', cat: 'hotel', lat: 40.76447, lng: -73.97815, note: 'Friendly price · ~12 min walk to the Pierre', url: 'https://www.marriott.com/event-reservations/reservation-link.mi?id=1780579014068&key=GRP&app=resvlink' },
+    { n: 'citizenM Bowery', cat: 'stay', lat: 40.72180, lng: -73.99330, note: 'Bowery · $ · sleek and compact, walkable to the Friday party', url: 'https://www.google.com/maps/search/?api=1&query=citizenM%20Bowery%20Bowery%20New%20York' },
+    { n: 'Walker Hotel Tribeca', cat: 'stay', lat: 40.71770, lng: -74.00230, note: 'Tribeca · $$ · cozy boutique on cobblestoned blocks', url: 'https://www.google.com/maps/search/?api=1&query=Walker%20Hotel%20Tribeca%20Tribeca%20New%20York' },
+    { n: 'Warren Street Hotel', cat: 'stay', lat: 40.71550, lng: -74.00970, note: 'Tribeca · $$$ · Firmdale\'s Tribeca one, two Michelin Keys', url: 'https://www.google.com/maps/search/?api=1&query=Warren%20Street%20Hotel%20Tribeca%20New%20York' },
+    { n: 'The Beekman', cat: 'stay', lat: 40.71120, lng: -74.00640, note: 'Financial District · $$$ · 1883 landmark with a nine-story atrium', url: 'https://www.google.com/maps/search/?api=1&query=The%20Beekman%20Financial%20District%20New%20York' },
+    { n: 'Nine Orchard', cat: 'stay', lat: 40.71469, lng: -73.99208, note: 'Lower East Side · $$$ · a 1912 bank turned arty-luxe. The design pick', url: 'https://www.google.com/maps/search/?api=1&query=Nine%20Orchard%20Lower%20East%20Side%20New%20York' },
+    { n: 'Ace Hotel New York', cat: 'stay', lat: 40.74540, lng: -73.98790, note: 'NoMad · $$ · the original design-hotel lobby scene', url: 'https://www.google.com/maps/search/?api=1&query=Ace%20Hotel%20New%20York%20NoMad%20New%20York' },
+    { n: 'The Greenwich Hotel', cat: 'stay', lat: 40.71920, lng: -74.01030, note: 'Tribeca · $$$$ · De Niro\'s. The Shibui Spa is unreal', url: 'https://www.google.com/maps/search/?api=1&query=The%20Greenwich%20Hotel%20Tribeca%20New%20York' },
+    { n: 'The Roxy Hotel', cat: 'stay', lat: 40.71800, lng: -74.00440, note: 'Tribeca · $$$ · jazz club, cinema and a great lobby bar', url: 'https://www.google.com/maps/search/?api=1&query=The%20Roxy%20Hotel%20Tribeca%20New%20York' },
+    { n: 'The Standard, High Line', cat: 'stay', lat: 40.74060, lng: -74.00890, note: 'Meatpacking · $$$ · straddles the High Line. Iconic, a little wild', url: 'https://www.google.com/maps/search/?api=1&query=The%20Standard%2C%20High%20Line%20Meatpacking%20New%20York' },
+    { n: 'Park Central Hotel', cat: 'stay', lat: 40.76499, lng: -73.98357, note: 'Midtown · $$ · classic Midtown, a short hop to the Pierre', url: 'https://www.google.com/maps/search/?api=1&query=Park%20Central%20Hotel%20Midtown%20New%20York' },
+    { n: 'JW Marriott Essex House', cat: 'stay', lat: 40.76618, lng: -73.97852, note: 'Central Park South · $$$ · grand, and steps from the wedding', url: 'https://www.google.com/maps/search/?api=1&query=JW%20Marriott%20Essex%20House%20Central%20Park%20South%20New%20York' },
+    { n: 'Wythe Hotel', cat: 'stay', lat: 40.72110, lng: -73.95750, note: 'Williamsburg · $$$ · factory conversion, best skyline views in the city', url: 'https://www.google.com/maps/search/?api=1&query=Wythe%20Hotel%20Williamsburg%20Brooklyn' },
+    { n: 'The William Vale', cat: 'stay', lat: 40.72170, lng: -73.95720, note: 'Williamsburg · $$$ · rooftop pool and huge views', url: 'https://www.google.com/maps/search/?api=1&query=The%20William%20Vale%20Williamsburg%20Brooklyn' },
+    { n: 'The Hoxton, Williamsburg', cat: 'stay', lat: 40.72050, lng: -73.95790, note: 'Williamsburg · $$ · hip lobby, good restaurants, easy Brooklyn cool', url: 'https://www.google.com/maps/search/?api=1&query=The%20Hoxton%2C%20Williamsburg%20Williamsburg%20Brooklyn' },
+    { n: 'Ace Hotel Brooklyn', cat: 'stay', lat: 40.68850, lng: -73.98270, note: 'Downtown Brooklyn · $$ · sleek, and a quick ride back over the bridge', url: 'https://www.google.com/maps/search/?api=1&query=Ace%20Hotel%20Brooklyn%20Downtown%20Brooklyn%20Brooklyn' },
     { n: 'Atomix', cat: 'eat', lat: 40.74440, lng: -73.98295, note: 'NoMad · Jenni\'s #1. Two-star Korean tasting counter — book the second reservations open.', url: 'https://www.google.com/maps/search/?api=1&query=Atomix%20NoMad%20New%20York' },
     { n: 'Torrisi', cat: 'eat', lat: 40.72415, lng: -73.99540, note: 'Nolita · Sam\'s #1. Italian-American in the old Puck Building — if you can get a table, take it.', url: 'https://www.google.com/maps/search/?api=1&query=Torrisi%20Nolita%20New%20York' },
     { n: 'Estela', cat: 'eat', lat: 40.72468, lng: -73.99476, note: 'Nolita · Our date-night place. Small, loud, perfect.', url: 'https://www.google.com/maps/search/?api=1&query=Estela%20Nolita%20New%20York' },
@@ -117,9 +132,11 @@
 
 
 
+
   var CAT = {
     venue: { color: '#E53C2D', label: 'Wedding & welcome' },
-    hotel: { color: '#E5A11F', label: 'Hotels' },
+    hotel: { color: '#E5A11F', label: 'Our room blocks' },
+    stay:  { color: '#7A5AA6', label: 'Other hotels' },
     eat:   { color: '#5C8A52', label: 'Eat' },
     do:    { color: '#2F6DB5', label: 'Do' }
   };
@@ -207,7 +224,7 @@
   function init(){
     var mode = el.getAttribute('data-mode') || 'recs';
     var center = mode === 'hotels' ? [40.7635, -73.9760] : [40.7480, -73.9840];
-    var zoom   = mode === 'hotels' ? 14 : (mode === 'all' ? 13 : 12);
+    var zoom   = mode === 'hotels' ? 13 : (mode === 'all' ? 13 : 12);
 
     var isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
     var map = L.map(el, { scrollWheelZoom:false, zoomControl:true,
@@ -249,23 +266,59 @@
     var subway = L.layerGroup();
     // Pins split into separate toggle groups so hotels and places are independent.
     var gVenues = L.layerGroup();  // wedding & welcome
-    var gHotels = L.layerGroup();  // hotels
+    var gHotels = L.layerGroup();  // hotels we hold blocks at
+    var gStays  = L.layerGroup();  // hotels guests book themselves
     var gPlaces = L.layerGroup();  // eat & do
     var hoodGeo = null;         // reference so we can fade/restore
     var subwayOn = false;
     var STATION_ZOOM = 15;      // stations only appear once zoomed in
 
-    drawPins({ venue:gVenues, hotel:gHotels, eat:gPlaces, do:gPlaces });
+    drawPins({ venue:gVenues, hotel:gHotels, stay:gStays, eat:gPlaces, do:gPlaces });
     // Defaults: travel map focuses on hotels; recs map focuses on places. Venues on both.
     gVenues.addTo(map);
-    if (mode === 'all') { gHotels.addTo(map); gPlaces.addTo(map); }
-    else if (mode === 'hotels') gHotels.addTo(map);
+    if (mode === 'all') { gHotels.addTo(map); gStays.addTo(map); gPlaces.addTo(map); }
+    else if (mode === 'hotels') { gHotels.addTo(map); gStays.addTo(map); }
     else gPlaces.addTo(map);
 
     // Layer control starts with the pin groups; each data layer is added ONLY once
     // its GeoJSON actually loads with features — so a toggle never appears (or
     // fades neighborhoods) over empty data.
-    var ctl = L.control.layers(null, { 'Venues': gVenues, 'Hotels': gHotels, 'Eat & do': gPlaces }, { collapsed:false, position:'topright' }).addTo(map);
+    var ctl = L.control.layers(null, { 'Venues': gVenues, 'Our room blocks': gHotels, 'Other hotels': gStays, 'Eat & do': gPlaces }, { collapsed:false, position:'topright' }).addTo(map);
+
+    // ---- expand to full screen ---------------------------------------------
+    // Plain absolutely-positioned button rather than a Leaflet control, so it
+    // can't collide with the layers box and survives invalidateSize().
+    var expandBtn = document.createElement('button');
+    expandBtn.type = 'button';
+    expandBtn.className = 'sjmap-expand';
+    expandBtn.textContent = 'Expand map';
+    expandBtn.setAttribute('aria-label', 'Expand map to full screen');
+    el.appendChild(expandBtn);
+    L.DomEvent.disableClickPropagation(expandBtn);
+
+    function toggleFull(force){
+      var on = (typeof force === 'boolean') ? force : !el.classList.contains('is-full');
+      el.classList.toggle('is-full', on);
+      document.body.classList.toggle('map-full', on);
+      expandBtn.textContent = on ? 'Close map' : 'Expand map';
+      if (on) { map.dragging.enable(); map.scrollWheelZoom.enable(); el.classList.add('map-live'); }
+      else if (isTouch) { map.dragging.disable(); map.scrollWheelZoom.disable(); }
+      // Leaflet has to re-measure once the container has finished resizing.
+      setTimeout(function(){ map.invalidateSize(); }, 60);
+      setTimeout(function(){ map.invalidateSize(); }, 260);
+    }
+    expandBtn.addEventListener('click', function(e){ e.preventDefault(); toggleFull(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && el.classList.contains('is-full')) toggleFull(false);
+    });
+
+    // Hovering a card in the recs list nudges the map to that pin.
+    document.addEventListener('sj:focus', function (e) {
+      var d = e.detail || {}; if (typeof d.lat !== 'number') return;
+      map.panTo([d.lat, d.lng], { animate:true, duration:.4 });
+      var mk = markerIndex[d.name];
+      if (mk && mk.openPopup) mk.openPopup();
+    });
 
     function styleHoods(){
       if(!hoodGeo) return;
@@ -386,41 +439,4 @@
     });
   }
 
-  // Hovering a card in the recs list nudges the map to that pin.
-  document.addEventListener('sj:focus', function (e) {
-    var d = e.detail || {}; if (typeof d.lat !== 'number') return;
-    var mk = markerIndex[d.name];
-    if (mk && mk.openPopup) { map.panTo([d.lat, d.lng], { animate:true, duration:.4 }); mk.openPopup(); }
-    else { map.panTo([d.lat, d.lng], { animate:true, duration:.4 }); }
-  });
-
-  // ---- expand to full screen ------------------------------------------------
-  var Expand = L.Control.extend({
-    options: { position: 'topright' },
-    onAdd: function () {
-      var b = L.DomUtil.create('button', 'sjmap-expand');
-      b.type = 'button';
-      b.textContent = 'Expand';
-      b.setAttribute('aria-label', 'Expand map to full screen');
-      L.DomEvent.disableClickPropagation(b);
-      L.DomEvent.on(b, 'click', function () { toggleFull(); });
-      return b;
-    }
-  });
-  map.addControl(new Expand());
-
-  function toggleFull(force){
-    var on = (typeof force === 'boolean') ? force : !el.classList.contains('is-full');
-    el.classList.toggle('is-full', on);
-    document.body.classList.toggle('map-full', on);
-    var b = el.querySelector('.sjmap-expand');
-    if (b) b.textContent = on ? 'Close' : 'Expand';
-    // Leaflet has to re-measure after the container resizes.
-    setTimeout(function(){ map.invalidateSize(); }, 210);
-    if (on && isTouch) { map.dragging.enable(); map.scrollWheelZoom.enable(); }
-  }
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && el.classList.contains('is-full')) toggleFull(false);
-  });
 })();

@@ -852,12 +852,17 @@ body{ background:var(--paper); }
 }
 
 /* Map: expand to full screen (recs + hotels) */
-/* full-screen map */
-  .sjmap-expand{ font:inherit; font-size:9.5px; font-weight:800; letter-spacing:.12em;
-    text-transform:uppercase; padding:7px 11px; border-radius:var(--r-pill);
-    border:1px solid var(--line-2); background:#fff; color:var(--dark); cursor:pointer;
-    box-shadow:0 1px 3px rgba(13,9,5,.14); }
-  .sjmap-expand:hover{ background:var(--dark); color:#fff; border-color:var(--dark); }
-  .sjmap.is-full{ position:fixed; inset:0; z-index:900; width:100vw; height:100vh !important;
-    max-height:none; border-radius:0; border:0; margin:0; }
-  body.map-full{ overflow:hidden; }
+.sjmap{ position:relative; }
+.sjmap-expand{ position:absolute; right:10px; bottom:10px; z-index:500;
+  font:inherit; font-size:9.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  padding:8px 13px; border-radius:var(--r-pill); border:1px solid rgba(13,9,5,.2);
+  background:#fff; color:var(--dark); cursor:pointer; line-height:1;
+  box-shadow:0 2px 8px rgba(13,9,5,.18); }
+.sjmap-expand:hover{ background:var(--dark); color:#fff; border-color:var(--dark); }
+.sjmap.is-full{ position:fixed; inset:0; z-index:1200; width:100vw; height:100vh !important;
+  max-height:none; border-radius:0; border:0; margin:0; }
+.sjmap.is-full .sjmap-expand{ background:var(--red); color:#fff; border-color:var(--red);
+  right:14px; bottom:14px; font-size:11px; padding:11px 18px; }
+body.map-full{ overflow:hidden; }
+/* the tap-to-explore hint is pointless once expanded */
+.sjmap.is-full .map-hint{ display:none; }
