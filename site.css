@@ -1030,43 +1030,53 @@ body.map-full .map-caption{ display:none !important; }
 .plusone-yn{ display:flex; gap:7px; }
 .yn.p1{ min-width:62px; height:38px; border-radius:var(--r-pill); font-size:11px; }
 
-/* ---- Mobile: inner pages get a floating dock instead of a button row -------
-   Deliberately NOT tabs on the right edge: that is iOS Safari's back/forward
-   swipe zone, and sideways text is hard to read. */
-.dock{ display:none; }
+/* ---- Nav: home icon + an RSVP/Note menu at the right (mobile) -------------- */
+.nav-home-ico{ display:none; width:17px; height:17px; }
+.nav-actions{ display:none; position:relative; }
+
 @media(max-width:760px){
-  body.has-dock .mobile-actions{ display:none !important; }
-  /* keep the last of the page clear of the floating bar */
-  body.has-dock{ padding-bottom:calc(78px + env(safe-area-inset-bottom)); }
+  /* the word "home" becomes a house, buying room for the actions pill */
+  .sitenav a[href="index.html"]{ display:inline-flex; align-items:center; }
+  .nav-home-ico{ display:block; }
+  .nav-word{ display:none; }
 
-  .dock{ display:flex; gap:8px; position:fixed; z-index:1200;
-    left:50%; transform:translateX(-50%);
-    bottom:calc(10px + env(safe-area-inset-bottom));
-    padding:7px; border-radius:var(--r-pill);
-    background:rgba(255,255,255,.92);
-    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-    border:1px solid var(--line); box-shadow:0 6px 24px rgba(13,9,5,.20); }
-  .dock-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
-    display:inline-flex; align-items:center; justify-content:center;
-    min-height:44px; padding:0 20px; border:0; border-radius:var(--r-pill);
-    font-size:10.5px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
-    line-height:1; cursor:pointer; text-decoration:none; white-space:nowrap; }
-  .dock-btn--rsvp{ background:var(--red); color:#fff; }
-  .dock-btn--note{ background:var(--gold); color:var(--dark); }
-  .dock-btn:active{ filter:brightness(.93); }
+  .sitenav .nav-cta{ display:none !important; }
+  .mobile-actions{ display:none !important; }
+  body.has-mobile-actions{ padding-bottom:0; }
 
-  /* out of the way while a sheet or the full map is up */
-  body.map-full .dock{ display:none; }
-  body:has(.note-drawer.open) .dock{ display:none; }
+  .nav-actions{ display:block; margin-left:auto; }
+  .nav-act{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
+    min-height:34px; padding:0 13px; border:0; border-radius:var(--r-pill);
+    background:var(--red); color:#fff; cursor:pointer;
+    font-size:10px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
+  .nav-act-caret{ font-size:12px; line-height:1; transform:translateY(-1px);
+    transition:transform .15s ease; }
+  .nav-act[aria-expanded="true"] .nav-act-caret{ transform:rotate(180deg) translateY(1px); }
 
-  /* home keeps its full-size buttons under the nav */
-  body:not(.has-dock) .mobile-actions{ padding:10px 16px 12px; gap:10px; }
-  body:not(.has-dock) .ma-btn{ flex:1 1 0; width:auto; padding:0 16px;
-    min-height:50px; font-size:12px; letter-spacing:.16em; }
-
-  .plusone{ padding:10px 12px; }
-  .plusone-q{ font-size:12.5px; }
+  .nav-act-menu{ position:absolute; top:calc(100% + 7px); right:0; z-index:1300;
+    display:flex; flex-direction:column; min-width:168px; padding:6px;
+    background:#fff; border:1px solid var(--line); border-radius:var(--r-md);
+    box-shadow:0 10px 30px rgba(13,9,5,.20); }
+  .nav-act-menu[hidden]{ display:none; }
+  .nav-act-menu > *{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    display:flex; align-items:center; min-height:44px; padding:0 13px; border:0;
+    border-radius:var(--r-sm); background:none; color:var(--dark); cursor:pointer;
+    text-decoration:none; text-align:left;
+    font-size:11px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+  .nav-act-menu > *:first-child{ color:var(--red); }
+  .nav-act-menu > *:active{ background:var(--ivory); }
 }
+
+/* ---- Calendar, moved to the end of the page ------------------------------- */
+.cal-end{ display:flex; justify-content:center; padding:6px 20px 30px; background:var(--ivory); }
+.cal-end .nav-cal{ display:inline-flex; align-items:center; gap:9px; width:auto;
+  min-height:44px; padding:0 18px; border-radius:var(--r-pill);
+  border:1.5px solid var(--line-2); background:#fff; color:var(--dark); cursor:pointer;
+  font-family:inherit; font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+.cal-end .nav-cal svg{ width:15px; height:15px; }
+.cal-end .nav-cal:hover{ border-color:var(--dark); }
+
 
 /* ---- RSVP: one line per event, compact rectangular yes/no ---------------- */
 .rsvp-ev{ align-items:center; }

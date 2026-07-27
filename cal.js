@@ -52,3 +52,29 @@
   });
   window.addEventListener('resize', function(){ if (!pop.hidden) close(); });
 })();
+
+// Nav "RSVP + Note" menu (mobile). Kept here so every page picks it up.
+(function () {
+  var wrap = document.querySelector('.nav-actions');
+  if (!wrap) return;
+  var btn = wrap.querySelector('.nav-act');
+  var menu = wrap.querySelector('.nav-act-menu');
+  if (!btn || !menu) return;
+
+  function setOpen(on) {
+    menu.hidden = !on;
+    btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function (e) {
+    e.preventDefault(); e.stopPropagation();
+    setOpen(menu.hidden);
+  });
+  // picking either action opens its drawer, so close up behind it
+  menu.addEventListener('click', function () { setOpen(false); });
+  document.addEventListener('click', function (e) {
+    if (!menu.hidden && !wrap.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !menu.hidden) { setOpen(false); btn.focus(); }
+  });
+})();
