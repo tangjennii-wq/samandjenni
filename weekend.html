@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260727n">
+<link rel="stylesheet" href="site.css?v=20260727o">
 <style>
   /* Compact intro */
   .ev-intro{ text-align:center; padding-top:2px; }
@@ -65,6 +65,53 @@
     .evcard .shot{ aspect-ratio:16/9; }
     .evcard h3{ font-size:20px; }
     .evcard .links a{ min-height:44px; display:inline-flex; align-items:center; }
+  }
+
+  /* --- what to wear ------------------------------------------------------- */
+  .subhead#wear{ margin-top:30px; }
+  .wear{ display:grid; gap:8px; }
+  .wearrow{ display:grid; grid-template-columns:120px 1fr; gap:14px; align-items:baseline;
+    background:#fff; border:1px solid var(--line); border-radius:var(--r-md); padding:12px 15px; }
+  .wearrow.is-main{ border-color:var(--red); }
+  .wday{ font-size:10px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--red); }
+  .wtext{ font-size:13.5px; line-height:1.55; color:#6b5a50; }
+  .wtext b{ color:var(--dark); font-weight:700; }
+
+  /* --- inspiration lookbook ---------------------------------------------- */
+  .lookbook{ margin-top:18px; }
+  .lookhead{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:9px; }
+  .lookeyebrow{ font-size:10px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:var(--red); }
+  .lookhint{ font-size:11px; font-style:italic; color:#a2907a; }
+  .looks{ display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding-bottom:8px; margin:0 -20px; padding-left:20px; padding-right:20px; }
+  .looks::-webkit-scrollbar{ height:7px; }
+  .looks::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
+  .look{ flex:0 0 168px; aspect-ratio:3/4; padding:0; border:1px solid var(--line);
+    border-radius:var(--r-md); overflow:hidden; background:#F4EEE3; cursor:zoom-in;
+    scroll-snap-align:start; transition:transform .14s ease, border-color .14s ease; }
+  .look img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .look:hover{ transform:translateY(-2px); border-color:var(--red); }
+
+  .lightbox{ position:fixed; inset:0; z-index:3000; background:rgba(13,9,5,.92);
+    display:flex; align-items:center; justify-content:center; padding:28px; }
+  .lightbox[hidden]{ display:none; }
+  .lightbox img{ max-width:100%; max-height:100%; border-radius:var(--r-md); }
+  .lb-btn{ position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px;
+    border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(255,255,255,.14);
+    color:#fff; font-size:22px; line-height:1; cursor:pointer; }
+  .lb-prev{ left:16px; } .lb-next{ right:16px; }
+  .lb-close{ position:absolute; top:16px; right:16px; width:44px; height:44px; border-radius:50%;
+    border:1.5px solid rgba(13,9,5,.24); background:#fff; color:var(--dark);
+    font-size:24px; font-weight:700; line-height:1; cursor:pointer;
+    box-shadow:0 2px 12px rgba(0,0,0,.4); }
+  .lb-count{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+    font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.7); }
+
+  @media(max-width:700px){
+    .wearrow{ grid-template-columns:1fr; gap:4px; }
+    .look{ flex-basis:138px; }
+    .looks{ margin:0 -16px; padding-left:16px; padding-right:16px; }
+    .lb-btn{ width:52px; height:52px; }
   }
 </style>
 </head>
@@ -181,14 +228,108 @@
 
       </div>
 
+
+      <h3 class="subhead" id="wear">What to wear</h3>
+      <div class="wear">
+        <div class="wearrow" data-event="thursday">
+          <div class="wday">Thursday</div>
+          <div class="wtext"><b>Smart casual.</b> It's dinner downtown — whatever you'd wear to a restaurant you were excited about.</div>
+        </div>
+        <div class="wearrow" data-event="rehearsal">
+          <div class="wday">Friday, early</div>
+          <div class="wtext"><b>Smart casual.</b> Same room as the party, an hour ahead of it.</div>
+        </div>
+        <div class="wearrow" data-event="friday">
+          <div class="wday">Friday, late</div>
+          <div class="wtext"><b>Cocktail, with personality.</b> Chinese Tuxedo is dark, lantern-lit and a little theatrical. It can take some drama.</div>
+        </div>
+        <div class="wearrow is-main" data-event="saturday">
+          <div class="wday">Saturday</div>
+          <div class="wtext"><b>Black tie — and please wear colour.</b> Tuxedos and long dresses, but we'd love the room to look like a party. Consider this permission to skip the black dress.</div>
+        </div>
+        <div class="wearrow" data-event="sunday">
+          <div class="wday">Sunday</div>
+          <div class="wtext"><b>Whatever gets you to the airport.</b></div>
+        </div>
+      </div>
+
+      <div class="lookbook" hidden>
+        <div class="lookhead"><span class="lookeyebrow">Some looks we love</span><span class="lookhint">tap to enlarge</span></div>
+        <div class="looks">
+        <button class="look" type="button" data-i="1"><img src="img/dress/look-01.jpg" alt="Dress code inspiration 1" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="2"><img src="img/dress/look-02.jpg" alt="Dress code inspiration 2" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="3"><img src="img/dress/look-03.jpg" alt="Dress code inspiration 3" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="4"><img src="img/dress/look-04.jpg" alt="Dress code inspiration 4" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="5"><img src="img/dress/look-05.jpg" alt="Dress code inspiration 5" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="6"><img src="img/dress/look-06.jpg" alt="Dress code inspiration 6" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="7"><img src="img/dress/look-07.jpg" alt="Dress code inspiration 7" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="8"><img src="img/dress/look-08.jpg" alt="Dress code inspiration 8" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="9"><img src="img/dress/look-09.jpg" alt="Dress code inspiration 9" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="10"><img src="img/dress/look-10.jpg" alt="Dress code inspiration 10" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="11"><img src="img/dress/look-11.jpg" alt="Dress code inspiration 11" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="12"><img src="img/dress/look-12.jpg" alt="Dress code inspiration 12" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="13"><img src="img/dress/look-13.jpg" alt="Dress code inspiration 13" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="14"><img src="img/dress/look-14.jpg" alt="Dress code inspiration 14" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="15"><img src="img/dress/look-15.jpg" alt="Dress code inspiration 15" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        <button class="look" type="button" data-i="16"><img src="img/dress/look-16.jpg" alt="Dress code inspiration 16" loading="lazy" onerror="this.closest('.look').remove()"></button>
+        </div>
+      </div>
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260727n" defer></script>
-  <script src="cal.js?v=20260727n" defer></script>
-  <script src="upload.js?v=20260727n" defer></script>
-  <script src="drawer.js?v=20260727n" defer></script>
-  <script src="rsvpform.js?v=20260727n" defer></script>
-  <script src="notes.js?v=20260727n" defer></script>
+  <script src="personalize.js?v=20260727o" defer></script>
+  <script src="cal.js?v=20260727o" defer></script>
+  <script src="upload.js?v=20260727o" defer></script>
+  <script src="drawer.js?v=20260727o" defer></script>
+  <script src="rsvpform.js?v=20260727o" defer></script>
+  <script src="notes.js?v=20260727o" defer></script>
+<script>
+(function(){
+  var wrap = document.querySelector('.lookbook'); if(!wrap) return;
+  var box  = wrap.querySelector('.looks');
+
+  // Images are dropped into img/dress/ — any slot with no file removes itself.
+  // Once the dust settles, show the section only if something actually loaded.
+  function settle(){
+    var looks = box.querySelectorAll('.look');
+    wrap.hidden = looks.length === 0;
+    return looks;
+  }
+  window.addEventListener('load', function(){
+    var looks = settle();
+    if (!looks.length) return;
+
+    var lb = document.createElement('div');
+    lb.className = 'lightbox'; lb.hidden = true;
+    lb.innerHTML = '<button class="lb-close" type="button" aria-label="Close">×</button>' +
+      '<button class="lb-btn lb-prev" type="button" aria-label="Previous">‹</button>' +
+      '<img alt="">' +
+      '<button class="lb-btn lb-next" type="button" aria-label="Next">›</button>' +
+      '<span class="lb-count"></span>';
+    document.body.appendChild(lb);
+    var img = lb.querySelector('img'), count = lb.querySelector('.lb-count'), at = 0;
+
+    function show(i){
+      at = (i + looks.length) % looks.length;
+      img.src = looks[at].querySelector('img').src;
+      count.textContent = (at + 1) + ' / ' + looks.length;
+    }
+    function open(i){ show(i); lb.hidden = false; document.body.style.overflow = 'hidden'; }
+    function close(){ lb.hidden = true; document.body.style.overflow = ''; }
+
+    looks.forEach(function(b, i){ b.addEventListener('click', function(){ open(i); }); });
+    lb.querySelector('.lb-close').addEventListener('click', close);
+    lb.querySelector('.lb-prev').addEventListener('click', function(e){ e.stopPropagation(); show(at-1); });
+    lb.querySelector('.lb-next').addEventListener('click', function(e){ e.stopPropagation(); show(at+1); });
+    lb.addEventListener('click', function(e){ if (e.target === lb || e.target === img) close(); });
+    document.addEventListener('keydown', function(e){
+      if (lb.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(at-1);
+      if (e.key === 'ArrowRight') show(at+1);
+    });
+  });
+})();
+</script>
 </body>
 </html>
