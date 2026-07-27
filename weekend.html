@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260727r">
+<link rel="stylesheet" href="site.css?v=20260727s">
 <style>
   /* Compact intro */
   .ev-intro{ text-align:center; padding-top:2px; }
@@ -69,13 +69,11 @@
 
   /* --- what to wear ------------------------------------------------------- */
   .subhead#wear{ margin-top:30px; }
-  .wear{ display:grid; gap:8px; }
-  .wearrow{ display:grid; grid-template-columns:120px 1fr; gap:14px; align-items:baseline;
-    background:#fff; border:1px solid var(--line); border-radius:var(--r-md); padding:12px 15px; }
-  .wearrow.is-main{ border-color:var(--red); }
-  .wday{ font-size:10px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--red); }
-  .wtext{ font-size:13.5px; line-height:1.55; color:#6b5a50; }
-  .wtext b{ color:var(--dark); font-weight:700; }
+  /* dress code, in the card */
+  .evcard .dress{ margin-top:10px; padding-top:9px; border-top:1px dashed var(--line);
+    font-size:12.5px; line-height:1.45; color:var(--dark); }
+  .evcard .dress span{ display:block; font-size:9px; font-weight:800; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--red); margin-bottom:3px; }
   .wearnote{ margin-top:10px; font-size:13px; font-style:italic; color:#a2907a; text-align:center; }
 
   /* --- inspiration lookbook ---------------------------------------------- */
@@ -109,7 +107,6 @@
     font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.7); }
 
   @media(max-width:700px){
-    .wearrow{ grid-template-columns:1fr; gap:4px; }
     .look{ flex-basis:138px; }
     .looks{ margin:0 -16px; padding-left:16px; padding-right:16px; }
     .lb-btn{ width:52px; height:52px; }
@@ -161,6 +158,7 @@
             <h3>Welcome dinner</h3>
             <div class="when">Thursday, March 18</div>
             <div class="where tbd">TBD — likely Lower Manhattan</div>
+            <div class="dress"><span>Dress</span>Whatever you want.</div>
           </div>
         </div>
 
@@ -173,6 +171,7 @@
             <h3>Rehearsal dinner</h3>
             <div class="when">Friday, March 19 · 6:00 pm</div>
             <div class="where"><b>Chinese Tuxedo</b><br>5 Doyers St, Chinatown</div>
+            <div class="dress"><span>Dress</span>Cocktail.</div>
             <span class="chip">Before the welcome party</span>
             <div class="links">
               <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+5+Doyers+St+New+York" target="_blank" rel="noopener">Map →</a>
@@ -190,6 +189,7 @@
             <h3>Welcome party</h3>
             <div class="when">Friday, March 19 · 8:00 pm</div>
             <div class="where"><b>Chinese Tuxedo</b><br>5 Doyers St, Chinatown</div>
+            <div class="dress"><span>Dress</span>Cocktail.</div>
             <div class="links">
               <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+5+Doyers+St+New+York" target="_blank" rel="noopener">Map →</a>
               <a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Welcome%20Party&amp;dates=20270320T000000Z/20270320T040000Z&amp;location=Chinese%20Tuxedo%2C%205%20Doyers%20St%2C%20New%20York%2C%20NY%2010013" target="_blank" rel="noopener">Add to calendar</a>
@@ -206,8 +206,8 @@
             <h3>The wedding</h3>
             <div class="when">Saturday, March 20 · 5:00 pm</div>
             <div class="where"><b>The Pierre</b><br>2 E 61st St, at Fifth Avenue</div>
+            <div class="dress"><span>Dress</span>Black tie. Colour is encouraged — an indoor whimsical garden party.</div>
             <span class="chip">Ceremony &amp; reception</span>
-            <span class="chip chip-dress">Black tie · colour encouraged</span>
             <div class="links">
               <a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pierre+Hotel+2+E+61st+St+New+York" target="_blank" rel="noopener">Map →</a>
               <a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding&amp;dates=20270320T210000Z/20270321T034500Z&amp;location=The%20Pierre%2C%202%20E%2061st%20St%2C%20New%20York%2C%20NY%2010065" target="_blank" rel="noopener">Add to calendar</a>
@@ -224,6 +224,7 @@
             <h3>Farewell brunch</h3>
             <div class="when">Sunday, March 21</div>
             <div class="where tbd">location TBD</div>
+            <div class="dress"><span>Dress</span>Whatever you want.</div>
           </div>
         </div>
 
@@ -231,28 +232,6 @@
 
 
       <h3 class="subhead" id="wear">What to wear</h3>
-      <div class="wear">
-        <div class="wearrow" data-event="thursday">
-          <div class="wday">Thursday</div>
-          <div class="wtext"><b>Whatever you want.</b></div>
-        </div>
-        <div class="wearrow" data-event="rehearsal">
-          <div class="wday">Friday, early</div>
-          <div class="wtext"><b>Cocktail.</b></div>
-        </div>
-        <div class="wearrow" data-event="friday">
-          <div class="wday">Friday, late</div>
-          <div class="wtext"><b>Cocktail.</b></div>
-        </div>
-        <div class="wearrow is-main" data-event="saturday">
-          <div class="wday">Saturday</div>
-          <div class="wtext"><b>Black tie.</b> Colour is encouraged — the wedding is an indoor whimsical garden party.</div>
-        </div>
-        <div class="wearrow" data-event="sunday">
-          <div class="wday">Sunday</div>
-          <div class="wtext"><b>Whatever you want.</b></div>
-        </div>
-      </div>
       <p class="wearnote">Nobody is matching and we are not checking — wear what you feel like yourself in.</p>
 
       <div class="lookbook" hidden>
@@ -279,12 +258,12 @@
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260727r" defer></script>
-  <script src="cal.js?v=20260727r" defer></script>
-  <script src="upload.js?v=20260727r" defer></script>
-  <script src="drawer.js?v=20260727r" defer></script>
-  <script src="rsvpform.js?v=20260727r" defer></script>
-  <script src="notes.js?v=20260727r" defer></script>
+  <script src="personalize.js?v=20260727s" defer></script>
+  <script src="cal.js?v=20260727s" defer></script>
+  <script src="upload.js?v=20260727s" defer></script>
+  <script src="drawer.js?v=20260727s" defer></script>
+  <script src="rsvpform.js?v=20260727s" defer></script>
+  <script src="notes.js?v=20260727s" defer></script>
 <script>
 (function(){
   var wrap = document.querySelector('.lookbook'); if(!wrap) return;
