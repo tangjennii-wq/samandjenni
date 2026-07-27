@@ -210,7 +210,7 @@ img,video{max-width:100%;height:auto}
 .photo-field{ margin-top:10px; }
 .photo-input{ position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
 .photo-drop{ display:flex; align-items:center; justify-content:center; gap:9px; cursor:pointer;
-  border:2px dashed var(--dark); border-radius:var(--r-md); background:#fbf7ef; padding:11px;
+  border:1.5px dashed var(--line-2); border-radius:var(--r-sm); background:#fbf7ef; padding:11px;
   font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#8a7863;
   transition:background .15s,color .15s,border-color .15s; }
 .photo-drop:hover{ background:var(--ivory); color:var(--red); border-color:var(--red); }
@@ -353,7 +353,7 @@ a.cta-btn{ text-decoration:none; display:inline-block; }
 .rsvp-extra{ display:flex; justify-content:center; }
 .rsvp-photo-btn.compact{ width:auto; align-self:center; padding:8px 18px; }
 .rsvp-photo-btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; cursor:pointer;
-  border:1.5px dashed var(--dark); border-radius:var(--r-pill); background:#fff; padding:9px 14px;
+  border:1.5px dashed var(--line-2); border-radius:var(--r-sm); background:#fff; padding:9px 14px;
   font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#8a7863;
   transition:background .15s,color .15s,border-color .15s; }
 .rsvp-photo-btn:hover{ background:var(--gold); color:var(--dark); border-color:var(--dark); }
@@ -1173,7 +1173,10 @@ body.map-full .map-caption{ display:none !important; }
   .photo-eg img{ display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:2px; }
   .photo-eg figcaption{ margin-top:5px; text-align:center; font-size:9.5px; font-style:italic;
     color:#a2907a; letter-spacing:.02em; }
-  .photo-pair .photo-drop{ flex:1 1 auto; }
+  .photo-pair .photo-drop{ flex:1 1 auto; align-self:stretch; min-height:132px;
+    border-radius:var(--r-sm); }
+  .rsvp-extra .rsvp-photo-btn.compact{ align-self:stretch; min-height:132px;
+    padding:0 22px; border-radius:var(--r-sm); }
   .rsvp-photo-note b{ color:var(--dark); }
 }
 
