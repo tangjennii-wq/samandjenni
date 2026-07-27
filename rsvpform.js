@@ -70,8 +70,8 @@
         '<div class="plusone">' +
           '<span class="plusone-q">Bringing a +1?</span>' +
           '<div class="plusone-yn">' +
-            '<button type="button" class="yn p1" data-p1="yes">Yes</button>' +
-            '<button type="button" class="yn p1" data-p1="no">No</button>' +
+            '<button type="button" class="yn yes p1" data-p1="yes">Yes</button>' +
+            '<button type="button" class="yn no p1" data-p1="no">No</button>' +
           '</div>' +
         '</div>' +
         '<input id="{p}Count" type="hidden" value="' + PRE.party + '">' +
