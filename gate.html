@@ -66,13 +66,21 @@
         <button type="submit">Enter</button>
       </form>
 
-      <div class="err" id="err">that's not it — try again ♡</div>
-      <div class="hint">your email (or last name), and the passphrase from our email.<br>lost it? just text us.</div>
+      <div class="err" id="err"></div>
+      <div class="hint">the email we sent this to (or your last name), and the passphrase.<br>lost it? just text us.</div>
     </div>
   </div>
 <script>
-  if (new URLSearchParams(location.search).get('e')) {
-    document.getElementById('err').classList.add('show');
+  var MSG = {
+    pass: "that's not the passphrase — try again ♡",
+    name: "we just need your name or email ♡",
+    list: "we can't find that one — try the email we sent this to, or your last name. still stuck? just text us ♡"
+  };
+  var e = new URLSearchParams(location.search).get('e');
+  if (e) {
+    var box = document.getElementById('err');
+    box.textContent = MSG[e] || MSG.pass;
+    box.classList.add('show');
   }
 </script>
 </body>
