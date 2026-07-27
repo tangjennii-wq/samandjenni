@@ -17,6 +17,16 @@
         '<label class="note-l" for="{p}Mem">a favorite memory with Sam and/or Jenni</label>' +
         '<textarea id="{p}Mem" class="note-f note-ta"></textarea>' +
       '</div>' +
+      '<div class="note-row2">' +
+        '<div class="note-field"><label class="note-l" for="{p}WordS">one word that defines Sam</label>' +
+          '<input id="{p}WordS" class="note-f" type="text"></div>' +
+        '<div class="note-field"><label class="note-l" for="{p}WordJ">one word that defines Jenni</label>' +
+          '<input id="{p}WordJ" class="note-f" type="text"></div>' +
+      '</div>' +
+      '<div class="note-field" style="margin-top:14px">' +
+        '<label class="note-l" for="{p}Song">a song you want to hear</label>' +
+        '<input id="{p}Song" class="note-f" type="text" placeholder="artist – title">' +
+      '</div>' +
       '<div class="note-field photo-field">' +
         '<label class="note-l" for="{p}Photo">a photo of you &amp; Sam, you &amp; Jenni, us, etc!</label>' +
         '<div class="photo-pair">' +
@@ -32,16 +42,6 @@
         '</div>' +
         '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
         '<div class="photo-preview" data-preview hidden></div>' +
-      '</div>' +
-      '<div class="note-row2">' +
-        '<div class="note-field"><label class="note-l" for="{p}WordS">one word that defines Sam</label>' +
-          '<input id="{p}WordS" class="note-f" type="text"></div>' +
-        '<div class="note-field"><label class="note-l" for="{p}WordJ">one word that defines Jenni</label>' +
-          '<input id="{p}WordJ" class="note-f" type="text"></div>' +
-      '</div>' +
-      '<div class="note-field" style="margin-top:14px">' +
-        '<label class="note-l" for="{p}Song">a song you want to hear</label>' +
-        '<input id="{p}Song" class="note-f" type="text" placeholder="artist – title">' +
       '</div>' +
       '<div class="note-row3">' +
         '<div class="note-field"><label class="note-l" for="{p}Name">your name (optional)</label>' +
