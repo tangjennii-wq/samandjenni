@@ -155,7 +155,7 @@
       if (cache[k]) n.value = cache[k];
       n.addEventListener('input', function(){ cache[k] = n.value; });
     });
-    root.querySelectorAll('.yn').forEach(function(b){
+    root.querySelectorAll('.yn:not(.p1)').forEach(function(b){
       if (answers[b.dataset.k] === b.dataset.v) b.classList.add('on');
       b.addEventListener('click', function(){
         var k = b.dataset.k;
