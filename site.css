@@ -1054,7 +1054,6 @@ body.map-full .map-caption{ display:none !important; }
 
 /* ---- Nav: home icon + two action pills pinned right (mobile) --------------- */
 .nav-home-ico{ display:none; width:17px; height:17px; }
-.nav-short{ display:none; }
 .nav-actions{ display:none; }
 
 @media(max-width:760px){
@@ -1062,27 +1061,26 @@ body.map-full .map-caption{ display:none !important; }
   .sitenav a[href="index.html"]{ display:inline-flex; align-items:center; }
   .nav-home-ico{ display:block; }
   .nav-word{ display:none; }
-  .nav-short{ display:inline; }
 
   .sitenav .nav-cta{ display:none !important; }
   .mobile-actions{ display:none !important; }
   body.has-mobile-actions{ padding-bottom:0; }
 
-  .sitenav{ gap:13px; }
-  .sitenav a{ font-size:10.5px; letter-spacing:.11em; }
+  .sitenav{ gap:10px; }
+  .sitenav a{ font-size:9.5px; letter-spacing:.06em; }
 
   /* The nav scrolls sideways; the pills stay pinned to the right edge so they
      are always reachable, with a white fade so links pass under them. */
-  .nav-actions{ display:inline-flex; align-items:center; gap:5px;
+  .nav-actions{ display:inline-flex; align-items:center; gap:4px;
     position:sticky; right:0; margin-left:auto; flex:0 0 auto;
-    padding:5px 0 5px 14px; background:#fff;
-    box-shadow:-16px 0 14px -6px #fff; }
+    padding:5px 0 5px 9px; background:#fff;
+    box-shadow:-12px 0 10px -6px #fff; }
   /* Short and soft: tinted rather than solid, so they sit quietly beside the
      nav links instead of shouting over them. */
   .nav-actions .nav-act{ -webkit-appearance:none; appearance:none; font-family:inherit;
     display:inline-flex; align-items:center; justify-content:center;
-    min-height:30px; height:30px; padding:0 12px; border-radius:var(--r-pill);
-    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase;
+    min-height:29px; height:29px; padding:0 10px; border-radius:var(--r-pill);
+    font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
     line-height:1; cursor:pointer; text-decoration:none; white-space:nowrap;
     transition:background .14s ease, color .14s ease; }
   .nav-actions .nav-act--rsvp{ background:rgba(229,60,45,.09); color:var(--red);
@@ -1215,4 +1213,10 @@ body.map-full .map-caption{ display:none !important; }
     background:var(--ivory); border-bottom:0; }
   body.has-bottom-actions .ma-btn{ flex:1 1 0; width:auto; max-width:220px;
     padding:0 16px; min-height:50px; font-size:12px; letter-spacing:.16em; }
+}
+
+
+/* Home has no action pills in the nav, so centre the links there. */
+@media(max-width:760px){
+  body.has-bottom-actions .sitenav{ justify-content:center; }
 }
