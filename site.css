@@ -1204,3 +1204,16 @@ body.map-full .map-caption{ display:none !important; }
   .rsvp-photo-note b{ display:inline; }
   .rsvp-photo-btn.compact{ min-height:38px; padding:0 13px; font-size:9.5px; }
 }
+
+
+/* ---- Home: RSVP / Leave a note sit at the bottom of the page -------------- */
+@media(max-width:760px){
+  /* the nav pills belong to the inner pages; home puts them under the film */
+  body.has-bottom-actions .nav-actions{ display:none !important; }
+  body.has-bottom-actions .mobile-actions{
+    display:flex !important; justify-content:center; gap:10px;
+    padding:18px 16px calc(22px + env(safe-area-inset-bottom));
+    background:var(--ivory); border-bottom:0; }
+  body.has-bottom-actions .ma-btn{ flex:1 1 0; width:auto; max-width:220px;
+    padding:0 16px; min-height:50px; font-size:12px; letter-spacing:.16em; }
+}
