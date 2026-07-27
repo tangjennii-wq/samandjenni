@@ -8,48 +8,61 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260727d">
+<link rel="stylesheet" href="site.css?v=20260727e">
 <style>
-  /* Compact intro — keeps the grid in the first viewport (~130px) */
+  /* Compact intro */
   .ev-intro{ text-align:center; padding-top:2px; }
   .ev-intro h2{ margin-top:4px; }
   .ev-intro .rule{ margin-top:9px; }
 
-  /* Event card grid — dense 3-up editorial grid */
-  .evgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
-  .evcard{ display:flex; flex-direction:column;
-    border:2px solid var(--dark); border-radius:var(--r-lg); background:#fff; overflow:hidden; }
-  .evcard .band{ padding:7px 16px; font-size:9.5px; font-weight:800; letter-spacing:.2em;
-    text-transform:uppercase; border-bottom:2px solid var(--dark); background:var(--gold); color:var(--dark); }
-  .evcard.is-wedding .band{ background:var(--red); color:#fff; }
-  .evcard .in{ padding:14px 16px 13px; display:flex; flex-direction:column; flex:1; }
-  .evcard .when{ font-size:10px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:var(--red); }
-  .evcard h3{ font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:.02em; line-height:1.05; margin-top:5px; }
-  .evcard .where{ font-size:12.5px; color:#6b5a50; line-height:1.45; margin-top:6px; }
-  .evcard .where b{ color:var(--dark); }
-  .evcard .tbd{ color:#a2907a; font-style:italic; }
-  .evcard .chip{ display:inline-block; align-self:flex-start; margin-top:9px; font-size:9px; font-weight:800;
-    letter-spacing:.14em; text-transform:uppercase; border:1.5px solid var(--dark); border-radius:var(--r-pill); padding:5px 12px; }
-  .evcard .links{ margin-top:auto; padding-top:10px; display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
-  .evcard .links a{ font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--red); text-decoration:none; border-bottom:1.5px solid transparent; }
-  .evcard .links a:hover{ border-bottom-color:var(--red); }
-  .evcard.is-wedding{ outline:3px solid var(--red); outline-offset:-3px; }
-  .evcard .chip-dress{ margin-top:6px; border-color:var(--red); color:var(--red); }
+  /* --- Event cards: photo on top, red eyebrow, title, body ------------------ */
+  .evgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:20px; }
+  .evcard{ display:flex; flex-direction:column; background:#fff; overflow:hidden;
+    border:1px solid var(--line); border-radius:18px; box-shadow:var(--lift);
+    transition:transform .16s ease, box-shadow .16s ease; }
+  .evcard:hover{ transform:translateY(-2px); box-shadow:0 3px 8px rgba(13,9,5,.06), 0 18px 40px rgba(13,9,5,.10); }
 
-  /* Tablet: snap rail showing ~2 cards */
+  /* photo (or a tinted placeholder until one is dropped in) */
+  .evcard .shot{ position:relative; aspect-ratio:4/3; overflow:hidden;
+    background:linear-gradient(150deg,#F6EFE2 0%,#EFE6D6 55%,#E9DFCB 100%); }
+  .evcard .shot img{ position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; display:block; }
+  .evcard .shot::after{ content:'S ♥ J'; position:absolute; inset:0; display:flex;
+    align-items:center; justify-content:center; font-size:19px; font-weight:800;
+    letter-spacing:.34em; color:rgba(13,9,5,.16); }
+  .evcard .shot:has(img)::after{ display:none; }
+  .evcard .badge{ position:absolute; top:11px; left:11px; z-index:2;
+    background:var(--gold); color:var(--dark); font-size:9px; font-weight:800;
+    letter-spacing:.16em; text-transform:uppercase; padding:6px 11px;
+    border-radius:var(--r-pill); }
+  .evcard.is-wedding .badge{ background:var(--red); color:#fff; }
+
+  .evcard .in{ padding:15px 17px 17px; display:flex; flex-direction:column; flex:1; }
+  .evcard .when{ font-size:10px; font-weight:800; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--red); }
+  .evcard h3{ font-size:21px; font-weight:700; letter-spacing:-.005em;
+    line-height:1.15; margin-top:6px; text-transform:none; }
+  .evcard .where{ font-size:13px; color:#6b5a50; line-height:1.5; margin-top:7px; }
+  .evcard .where b{ color:var(--dark); font-weight:700; }
+  .evcard .tbd{ color:#a2907a; font-style:italic; }
+  .evcard .chip{ display:inline-block; align-self:flex-start; margin-top:10px;
+    font-size:9px; font-weight:800; letter-spacing:.13em; text-transform:uppercase;
+    border:1px solid var(--line-2); border-radius:var(--r-pill); padding:5px 11px; color:#6b5a50; }
+  .evcard .chip-dress{ margin-top:6px; border-color:var(--red); color:var(--red); }
+  .evcard .links{ margin-top:auto; padding-top:13px; display:flex; gap:16px;
+    align-items:center; flex-wrap:wrap; }
+  .evcard .links a{ font-size:10px; font-weight:800; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--red); text-decoration:none;
+    border-bottom:1.5px solid transparent; }
+  .evcard .links a:hover{ border-bottom-color:var(--red); }
+
   @media(max-width:1000px) and (min-width:701px){
-    .evgrid{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory;
-      padding:0 16px 8px; margin:16px -16px 0; }
-    .evcard{ flex:0 0 46%; scroll-snap-align:start; }
+    .evgrid{ grid-template-columns:repeat(2,1fr); gap:14px; }
   }
-  /* Mobile: stacked */
   @media(max-width:700px){
-    .evgrid{ grid-template-columns:1fr; gap:10px; }
-    .evcard{ min-height:0; }
-    .evcard h3{ font-size:19px; }
-    .evcard .in{ padding:13px 15px 12px; }
-    .evcard .band{ padding:7px 15px; }
+    .evgrid{ grid-template-columns:1fr; gap:14px; }
+    .evcard .shot{ aspect-ratio:16/9; }
+    .evcard h3{ font-size:20px; }
     .evcard .links a{ min-height:44px; display:inline-flex; align-items:center; }
   }
 </style>
@@ -91,19 +104,25 @@
       <div class="evgrid">
 
         <div class="evcard" data-event="thursday">
-          <div class="band">Family &amp; friends</div>
+          <div class="shot">
+            <img src="img/events/thursday.jpg" alt="" loading="lazy" onerror="this.remove()">
+            <span class="badge">Family &amp; friends</span>
+          </div>
           <div class="in">
             <div class="when">Thu · Mar 18</div>
-            <h3>Welcome Dinner</h3>
+            <h3>Welcome dinner</h3>
             <div class="where tbd">TBD — likely Lower Manhattan</div>
           </div>
         </div>
 
         <div class="evcard" data-event="rehearsal">
-          <div class="band">Wedding party &amp; family</div>
+          <div class="shot">
+            <img src="img/events/rehearsal.jpg" alt="" loading="lazy" onerror="this.remove()">
+            <span class="badge">Wedding party &amp; family</span>
+          </div>
           <div class="in">
             <div class="when">Fri · Mar 19 · 6:00 pm</div>
-            <h3>Rehearsal Dinner</h3>
+            <h3>Rehearsal dinner</h3>
             <div class="where"><b>Chinese Tuxedo</b><br>5 Doyers St, Chinatown</div>
             <span class="chip">Before the welcome party</span>
             <div class="links">
@@ -114,10 +133,13 @@
         </div>
 
         <div class="evcard" data-event="friday">
-          <div class="band">Welcome party</div>
+          <div class="shot">
+            <img src="img/events/welcome-party.jpg" alt="" loading="lazy" onerror="this.remove()">
+            <span class="badge">Welcome party</span>
+          </div>
           <div class="in">
             <div class="when">Fri · Mar 19 · 8:00 pm</div>
-            <h3>Welcome Party</h3>
+            <h3>Welcome party</h3>
             <div class="where"><b>Chinese Tuxedo</b><br>5 Doyers St, Chinatown</div>
             <div class="links">
               <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinese+Tuxedo+5+Doyers+St+New+York" target="_blank" rel="noopener">Map →</a>
@@ -127,10 +149,13 @@
         </div>
 
         <div class="evcard is-wedding" data-event="saturday">
-          <div class="band">The main event</div>
+          <div class="shot">
+            <img src="img/events/wedding.jpg" alt="" loading="lazy" onerror="this.remove()">
+            <span class="badge">The main event</span>
+          </div>
           <div class="in">
             <div class="when">Sat · Mar 20</div>
-            <h3>The Wedding</h3>
+            <h3>The wedding</h3>
             <div class="where"><b>The Pierre</b><br>2 E 61st St, at Fifth Avenue</div>
             <span class="chip">Ceremony &amp; reception</span>
             <span class="chip chip-dress">Black tie · colour encouraged</span>
@@ -142,10 +167,13 @@
         </div>
 
         <div class="evcard is-wedding" data-event="sunday">
-          <div class="band">Family &amp; friends</div>
+          <div class="shot">
+            <img src="img/events/brunch.jpg" alt="" loading="lazy" onerror="this.remove()">
+            <span class="badge">Family &amp; friends</span>
+          </div>
           <div class="in">
             <div class="when">Sun · Mar 21</div>
-            <h3>Farewell Brunch</h3>
+            <h3>Farewell brunch</h3>
             <div class="where tbd">location TBD</div>
           </div>
         </div>
@@ -156,11 +184,11 @@
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260727d" defer></script>
-  <script src="cal.js?v=20260727d" defer></script>
-  <script src="upload.js?v=20260727d" defer></script>
-  <script src="drawer.js?v=20260727d" defer></script>
-  <script src="rsvpform.js?v=20260727d" defer></script>
-  <script src="notes.js?v=20260727d" defer></script>
+  <script src="personalize.js?v=20260727e" defer></script>
+  <script src="cal.js?v=20260727e" defer></script>
+  <script src="upload.js?v=20260727e" defer></script>
+  <script src="drawer.js?v=20260727e" defer></script>
+  <script src="rsvpform.js?v=20260727e" defer></script>
+  <script src="notes.js?v=20260727e" defer></script>
 </body>
 </html>
