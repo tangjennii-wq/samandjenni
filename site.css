@@ -910,7 +910,7 @@ body.map-full .sjmap-gmap-wrap{ display:none; }
 .gmap-link:hover{ background:var(--red); border-color:var(--red); color:#fff; }
 .gmap-link i{ width:9px; height:9px; border-radius:50%; background:var(--red); display:inline-block; }
 
-.sjmap.is-full{ position:fixed; inset:0; z-index:2000; width:100vw; height:100vh !important;
+.sjmap.is-full{ position:fixed; inset:0; z-index:2000; width:100vw; height:100dvh !important;
   max-height:none; border-radius:0; border:0; margin:0; box-shadow:none; }
 .sjmap.is-full .map-hint{ display:none; }
 
@@ -936,4 +936,85 @@ body.map-full .map-caption{ display:none !important; }
 
 @media(max-width:760px){
   .sjmap-expand{ padding:11px 16px; }
+}
+
+/* =========================================================
+   MOBILE BUGFIX PASS — appended last (this file is
+   append-ordered) so these rules win.
+   1. nav + action rows: one row each, page gutters
+   2. drawer: one scroll container, × always on screen
+   3. quieter RSVP / note buttons
+   ========================================================= */
+
+/* --- 1. Nav is a single scrolling row; the calendar icon rides inside it and
+       the action row sits flush underneath. Both use the same 16px gutter
+       as .sect so nothing looks inset differently. --- */
+@media (max-width:760px){
+  .sitenav{
+    display:flex; align-items:center; flex-wrap:nowrap;
+    overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch;
+    gap:14px; min-height:46px;
+    padding-top:0; padding-bottom:0;
+    padding-left:max(16px, env(safe-area-inset-left));
+    padding-right:max(16px, env(safe-area-inset-right));
+  }
+  .sitenav > *{ flex:0 0 auto; }
+  /* the icon parks at the right end of the row — never on a row of its own */
+  .sitenav .nav-cal{ margin-left:auto; margin-right:0; align-self:center; }
+
+  /* action row: flush under the nav, page gutters, no phantom safe-area
+     padding (this row lives at the TOP of the page, not the bottom) */
+  .mobile-actions{
+    margin:0; border-top:none;
+    padding-top:8px; padding-bottom:8px;
+    padding-left:max(16px, env(safe-area-inset-left));
+    padding-right:max(16px, env(safe-area-inset-right));
+  }
+}
+
+/* --- 3. RSVP / Leave a note: smaller and calmer, still a 44px target. --- */
+@media (max-width:760px){
+  .mobile-actions{
+    display:flex; justify-content:center; align-items:center; gap:8px;
+  }
+  .ma-btn{
+    flex:0 1 auto; width:auto; min-height:44px;
+    padding:0 18px; font-size:9.5px; letter-spacing:.1em; line-height:1;
+  }
+}
+
+/* --- 2. Drawer ------------------------------------------------------------
+   Root cause of "can't exit": .drawer-bar / .note-x are position:absolute
+   inside .note-drawer, and .note-drawer was itself the scroll container — so
+   an absolutely positioned child scrolls away with the content. Make the
+   BODY the only scroll container and the × stays pinned to the sheet.
+   This is a real bug at every width, so it is not media-scoped. --- */
+.note-drawer{
+  display:flex; flex-direction:column;
+  overflow:hidden;                 /* root no longer scrolls */
+}
+.note-drawer:focus, .note-drawer:focus-visible{ outline:none; }
+.drawer-body{
+  flex:1 1 auto; min-height:0; width:100%;
+  overflow-y:auto; overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;     /* no chaining to the page, no trapping */
+}
+
+@media (max-width:760px){
+  /* Sheet tracks the visual viewport so the × stays on screen when the iOS
+     keyboard opens. --sj-kb / --sj-vvh are set by drawer.js; both fall back. */
+  .note-drawer{
+    top:auto; bottom:var(--sj-kb, 0px); left:0; right:0;
+    width:100%; max-width:none;
+    height:min(92dvh, 92svh);
+    max-height:calc(var(--sj-vvh, 100dvh) - 10px);
+    overscroll-behavior:contain;
+  }
+  /* iOS zooms the whole page when a focused field is under 16px — that is the
+     "everything looks zoomed in / I can't reach the close button" report. */
+  .note-f, .note-ta,
+  .rsvp-fields .note-f, .rsvp-party .note-f, .guest-fields .note-f{
+    font-size:16px;
+  }
 }

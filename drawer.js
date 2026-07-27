@@ -4,6 +4,27 @@
 (function () {
   var backdrop = null;
 
+  // --- iOS keyboard: keep the sheet (and its × ) inside the visual viewport.
+  // Sets --sj-kb (space taken by the keyboard) and --sj-vvh (visible height).
+  // site.css consumes both with fallbacks, so this is purely additive.
+  var vv = window.visualViewport;
+  function syncViewport(){
+    if (!vv) return;
+    var root = document.documentElement;
+    if (!document.querySelector('.note-drawer.open')) {
+      root.style.removeProperty('--sj-kb');
+      root.style.removeProperty('--sj-vvh');
+      return;
+    }
+    var gap = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+    root.style.setProperty('--sj-kb', gap + 'px');
+    root.style.setProperty('--sj-vvh', Math.round(vv.height) + 'px');
+  }
+  if (vv) {
+    vv.addEventListener('resize', syncViewport);
+    vv.addEventListener('scroll', syncViewport);
+  }
+
   function ensureBackdrop(){
     if (backdrop) return backdrop;
     backdrop = document.createElement('div');
@@ -19,6 +40,8 @@
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
     el.setAttribute('aria-label', opts.label || 'Dialog');
+    // focus target on open — the dialog itself, never a form control
+    el.setAttribute('tabindex', '-1');
     el.innerHTML =
       '<div class="drawer-bar">' +
         '<span class="drawer-title">' + (opts.label || '') + '</span>' +
@@ -40,8 +63,13 @@
       el.classList.add('open');
       bd.classList.add('open');
       document.body.style.overflow = 'hidden';
-      var f = focusables();
-      if (f.length > 1) f[1].focus(); else if (f.length) f[0].focus();
+      // always start at the top of the form, with the × in view
+      var body = el.querySelector('.drawer-body');
+      if (body) body.scrollTop = 0;
+      // Land keyboard/screen-reader users inside the dialog WITHOUT painting a
+      // focus ring on a form control (this used to focus the first "Yes").
+      try { el.focus({ preventScroll: true }); } catch (err) { el.focus(); }
+      syncViewport();
     }
     function close(){
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
@@ -50,6 +78,7 @@
         bd.classList.remove('open');
         document.body.style.overflow = '';
       }
+      syncViewport();
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
 
