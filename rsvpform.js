@@ -78,7 +78,13 @@
         '<input id="{p}Count" type="hidden" value="' + PRE.party + '">' +
         '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
         '<div class="rsvp-photo-block">' +
-          '<p class="rsvp-photo-note">add a favorite photo with Sam and/or Jenni <span>(optional)</span></p>' +
+          '<figure class="photo-eg" aria-hidden="true">' +
+            '<img src="img/photo-example.jpg" alt="" loading="lazy" onerror="this.closest(\'.photo-eg\').remove()">' +
+            '<figcaption>yes, like this</figcaption>' +
+          '</figure>' +
+          '<p class="rsvp-photo-note"><b>Show us a photo of us you like.</b> ' +
+            'Blurry is fine, unflattering is better — we\'re collecting them for the weekend. ' +
+            '<span>(optional)</span></p>' +
           '<div class="rsvp-extra">' +
             '<label class="rsvp-photo-btn compact" for="{p}Photo">' +
               '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +

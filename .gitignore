@@ -1,1 +1,7 @@
+# raw camera files never belong in the deploy — keep them in ../photos-originals
+*.HEIC
+*.heic
 .DS_Store
+img/**/*.HEIC
+img/**/*.heic
+img/pictures/

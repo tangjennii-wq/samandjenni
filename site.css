@@ -1150,3 +1150,24 @@ body.map-full .map-caption{ display:none !important; }
 @media (min-width:561px){
   .guest-fields{ grid-template-columns:1fr 1.15fr 1.1fr; }
 }
+
+
+/* ---- "add a photo": a snapshot pinned to the form, desktop only ------------ */
+.photo-eg{ display:none; }
+@media(min-width:761px){
+  .rsvp-photo-block{ position:relative; }
+  .photo-eg{ display:block; position:absolute; right:6px; bottom:100%; margin:0 0 6px;
+    width:104px; padding:6px 6px 4px; background:#fff;
+    border:1px solid var(--line); border-radius:4px;
+    box-shadow:0 6px 18px rgba(13,9,5,.18);
+    transform:rotate(-4deg); transform-origin:bottom right;
+    transition:transform .2s ease; pointer-events:none; z-index:2; }
+  .rsvp-photo-block:hover .photo-eg{ transform:rotate(-1deg) scale(1.04); }
+  .photo-eg img{ display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:2px; }
+  .photo-eg figcaption{ margin-top:4px; text-align:center; font-size:9px; font-style:italic;
+    color:#a2907a; letter-spacing:.02em; }
+  /* the note form stacks, so let it sit inline rather than float */
+  .photo-field{ position:relative; }
+  .photo-field .photo-eg{ bottom:auto; top:0; right:0; margin:0; }
+  .rsvp-photo-note b{ color:var(--dark); }
+}
