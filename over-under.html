@@ -12,11 +12,12 @@
 <style>
 
   body{background:var(--paper)}
-  .hdr{text-align:center;padding:32px 20px 6px}
-  h1{margin-top:8px;font-size:36px;font-weight:900;letter-spacing:.03em;text-transform:uppercase;line-height:1}
+  #ou{padding-bottom:6px}
+  .ou-head{text-align:center}
+  .ou-head h2 .slash{color:var(--red)}
   h1 .slash{color:var(--red)}
 
-  .board{max-width:840px;margin:22px auto 0;padding:0 20px}
+  .board{max-width:960px;margin:4px auto 0;padding:0 20px}
   .scorebar{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--dark);
     background:var(--dark);color:var(--gold);padding:10px 16px;font-size:11px;font-weight:800;
     letter-spacing:.2em;text-transform:uppercase;border-radius:var(--r-md) var(--r-md) 0 0}
@@ -49,8 +50,6 @@
   .copied{margin-top:10px;font-size:12.5px;font-weight:700;color:var(--green);display:none}
   .copied.show{display:block}
   @media(max-width:760px){
-    .hdr{padding:24px 16px 4px}
-    h1{font-size:28px}
     .lede{font-size:13.5px}
     .board,.actions{padding:0 16px}
     .board{margin-top:18px}
@@ -64,10 +63,8 @@
     .btn{display:block;width:100%;margin-bottom:8px;min-height:46px}
   }
   @media(max-width:430px){
-    h1{font-size:24px}
     .num{padding:1px 7px}
     .lede{font-size:12.5px;line-height:1.5}
-    .hdr{padding:16px 16px 2px}
   }
   .ourow{ display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
     gap:9px; width:100%; }
@@ -126,12 +123,14 @@
 
 
 
-  <div class="hdr">
-    <div class="eyebrow">The Shlang Line · 3.20.27</div>
-    <h1>Over<span class="slash">/</span>Under</h1>
-    <div class="rule"></div>
-    <p class="lede">set your line, place your bets, hold us accountable. the closest card wins a <b>curated Sam &amp; Jenni gift</b> — no money changes hands, only reputations. picks lock when the ceremony starts.</p>
-  </div>
+  <section class="sect" id="ou">
+    <div class="wrap ou-head">
+      <div class="eyebrow">The Shlang Line · 3.20.27</div>
+      <h2>Over<span class="slash">/</span>Under</h2>
+      <div class="rule"></div>
+      <p class="lede">set your line, place your bets, hold us accountable. the closest card wins a <b>curated Sam &amp; Jenni gift</b> — no money changes hands, only reputations. picks lock when the ceremony starts.</p>
+    </div>
+  </section>
 
   <div class="board">
     <div class="scorebar"><span>Over / Under</span><span id="tally">0 of 10 picked</span></div>
