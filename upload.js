@@ -49,7 +49,14 @@
     // ---- drag & drop ------------------------------------------------------
     // The <label for="…"> that already fronts the file input doubles as the
     // drop zone, so the affordance and the target are the same thing.
-    var zone = input.id ? document.querySelector('label[for="' + input.id + '"]') : null;
+    // Two labels can point at the same input (a text label and the button).
+    // Bind to the button, not the caption.
+    var zone = null;
+    if (input.id) {
+      var esc = input.id.replace(/"/g, '\\"');
+      zone = document.querySelector('label.photo-drop[for="' + esc + '"], label.rsvp-photo-btn[for="' + esc + '"]');
+      if (!zone) zone = input.parentNode && input.parentNode.querySelector('label[for="' + esc + '"]');
+    }
     if (zone && window.FileReader) {
       var depth = 0;   // dragenter/leave fire for children too — count them
       var stop = function(e){ e.preventDefault(); e.stopPropagation(); };
