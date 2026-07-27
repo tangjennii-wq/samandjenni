@@ -37,23 +37,24 @@
   var CT  = 'https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+5+Doyers+St+New+York';
   var PIE = 'https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+2+E+61st+St+New+York';
 
+  // One line per event: name, then (day date, place). Keeps the whole form on
+  // a single phone screen.
   var EVENTS = [
-    { k:'thursday',  label:'Thursday · welcome dinner', when:'Mar 18', where:'TBD',            show: tier === 1 },
-    { k:'rehearsal', label:'Friday · rehearsal',        when:'Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 2 },
-    { k:'friday',    label:'Friday · welcome party',    when:'Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 3 },
-    { k:'saturday',  label:'Saturday · the wedding',    when:'Mar 20', where:'The Pierre',     url:PIE, show: true },
-    { k:'sunday',    label:'Sunday · farewell brunch',  when:'Mar 21', where:'TBD',            show: tier === 1 }
+    { k:'thursday',  name:'welcome dinner',   when:'Thu Mar 18', where:'TBD',            show: tier === 1 },
+    { k:'rehearsal', name:'rehearsal dinner', when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 2 },
+    { k:'friday',    name:'welcome party',    when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 3 },
+    { k:'saturday',  name:'the wedding',      when:'Sat Mar 20', where:'The Pierre',     url:PIE, show: true },
+    { k:'sunday',    name:'farewell brunch',  when:'Sun Mar 21', where:'TBD',            show: tier === 1 }
   ].filter(function(e){ return e.show; });
 
   function formHTML(p){
     var rows = EVENTS.map(function(e){
-      var parts = e.label.split(' · ');
       var loc = e.url
-        ? ' · <a href="' + e.url + '" target="_blank" rel="noopener" class="ev-loc">' + e.where + ' ↗</a>'
-        : ' · <span class="ev-tbd">' + e.where + '</span>';
+        ? '<a href="' + e.url + '" target="_blank" rel="noopener" class="ev-loc">' + e.where + ' ↗</a>'
+        : '<span class="ev-tbd">' + e.where + '</span>';
       return '<div class="rsvp-ev">' +
-        '<div class="rsvp-evname"><b>' + (parts[1] || parts[0]) + '</b>' +
-          '<span>' + parts[0] + ' · ' + e.when + loc + '</span></div>' +
+        '<div class="rsvp-evname"><b>' + e.name + '</b>' +
+          '<span class="ev-meta">(' + e.when + ', ' + loc + ')</span></div>' +
         '<div class="rsvp-yn">' +
           '<button type="button" class="yn yes" data-k="' + e.k + '" data-v="yes" aria-label="Accepts">Yes</button>' +
           '<button type="button" class="yn no"  data-k="' + e.k + '" data-v="no" aria-label="Declines">No</button>' +
