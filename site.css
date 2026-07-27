@@ -851,3 +851,13 @@ body{ background:var(--paper); }
   .split--mapfirst .split-map .map-caption{ margin-bottom:14px; }
 }
 
+/* Map: expand to full screen (recs + hotels) */
+/* full-screen map */
+  .sjmap-expand{ font:inherit; font-size:9.5px; font-weight:800; letter-spacing:.12em;
+    text-transform:uppercase; padding:7px 11px; border-radius:var(--r-pill);
+    border:1px solid var(--line-2); background:#fff; color:var(--dark); cursor:pointer;
+    box-shadow:0 1px 3px rgba(13,9,5,.14); }
+  .sjmap-expand:hover{ background:var(--dark); color:#fff; border-color:var(--dark); }
+  .sjmap.is-full{ position:fixed; inset:0; z-index:900; width:100vw; height:100vh !important;
+    max-height:none; border-radius:0; border:0; margin:0; }
+  body.map-full{ overflow:hidden; }
