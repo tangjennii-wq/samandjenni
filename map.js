@@ -450,10 +450,13 @@
         iconSize:[18,18], iconAnchor:[9,9]
       });
       var m = L.marker([p.lat, p.lng], {icon:icon}).addTo(group);
-      var body = '<div class="sjmap-pop"><b>'+p.n+'</b>';
-      if(p.note) body += '<span class="pop-note">'+p.note+'</span>';
-      if(p.url) body += '<a href="'+p.url+'" target="_blank" rel="noopener">open in maps →</a>';
-      body += '</div>';
+      // The name IS the link — no separate "open in maps" line to pad the bubble.
+      var title = p.url
+        ? '<a class="pop-name" href="'+p.url+'" target="_blank" rel="noopener">'+p.n+
+          '<span class="pop-ext" aria-hidden="true">↗</span></a>'
+        : '<b class="pop-name">'+p.n+'</b>';
+      var body = '<div class="sjmap-pop">' + title +
+        (p.note ? '<span class="pop-note">'+p.note+'</span>' : '') + '</div>';
       m.bindPopup(body);
       markerIndex[p.n] = m;
     });
