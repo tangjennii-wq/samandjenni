@@ -311,7 +311,7 @@ a.cta-btn{ text-decoration:none; display:inline-block; }
   color:#a2907a; padding:8px; }
 .thanks-skip:hover{ color:var(--red); }
 @media(max-width:700px){
-  .note-drawer{ top:auto; bottom:0; right:0; left:0; width:100%; max-width:none; height:88vh;
+  .note-drawer{ top:auto; bottom:0; right:0; left:0; width:100%; max-width:none; height:auto; max-height:88dvh;
     border-left:none; border-top:2px solid var(--dark); border-radius:20px 20px 0 0;
     transform:translateY(102%); }
   .note-drawer.open{ transform:translateY(0); }
@@ -459,7 +459,7 @@ textarea:focus-visible, label:focus-visible, [tabindex]:focus-visible{
 @media (max-width:760px){
   .note-drawer{
     top:auto; bottom:0; left:0; right:0; width:100%; max-width:none;
-    height:min(92dvh, 92svh); border-left:none; border-top:2px solid var(--dark);
+    height:auto; max-height:min(92dvh, 92svh); border-left:none; border-top:2px solid var(--dark);
     border-radius:20px 20px 0 0; transform:translateY(102%);
     padding-bottom:env(safe-area-inset-bottom);
   }
@@ -883,16 +883,19 @@ body{ background:var(--paper); }
   line-height:1; white-space:nowrap; box-shadow:0 2px 10px rgba(229,60,45,.35); }
 .sjmap-expand:hover{ background:var(--dark); border-color:var(--dark); }
 
-/* our Google Map, as a control under the layer box */
-.sjmap-gmap-wrap{ margin:0 !important; }
-.sjmap-gmap{ display:inline-flex; align-items:center; gap:7px; padding:8px 13px;
-  font-size:9.5px; font-weight:800; letter-spacing:.11em; text-transform:uppercase;
+/* our Google Map — a pill above the map's top-right corner, leaving the site */
+.maphead{ display:flex; justify-content:flex-end; margin-bottom:8px; }
+.sjmap-gmap{ display:inline-flex; align-items:center; gap:8px; padding:9px 15px;
+  font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
   text-decoration:none; color:var(--dark); background:#fff;
-  border:1px solid rgba(13,9,5,.2); border-radius:var(--r-pill); line-height:1;
-  box-shadow:0 1px 4px rgba(13,9,5,.16); white-space:nowrap; }
-.sjmap-gmap:hover{ background:var(--dark); color:#fff; border-color:var(--dark); }
-.sjmap-gmap i{ width:8px; height:8px; border-radius:50%; background:var(--red); flex:0 0 auto; }
-body.map-full .sjmap-gmap-wrap{ display:none; }
+  border:1.5px solid var(--dark); border-radius:var(--r-pill); line-height:1;
+  white-space:nowrap; }
+.sjmap-gmap:hover{ background:var(--red); border-color:var(--red); color:#fff; }
+.sjmap-gmap .ext{ font-size:12px; line-height:1; }
+@media(max-width:760px){
+  .maphead{ justify-content:stretch; }
+  .sjmap-gmap{ width:100%; justify-content:center; min-height:44px; }
+}
 
 /* pin popup: name + link, nothing else */
 .sjmap-pop{ text-align:center; }
@@ -1005,10 +1008,10 @@ body.map-full .map-caption{ display:none !important; }
   /* Sheet tracks the visual viewport so the × stays on screen when the iOS
      keyboard opens. --sj-kb / --sj-vvh are set by drawer.js; both fall back. */
   .note-drawer{
-    top:auto; bottom:var(--sj-kb, 0px); left:0; right:0;
+    top:auto; bottom:0; left:0; right:0;
     width:100%; max-width:none;
-    height:min(92dvh, 92svh);
-    max-height:calc(var(--sj-vvh, 100dvh) - 10px);
+    height:auto;                       /* hug the form — no dead white space */
+    max-height:min(92dvh, 92svh);      /* only long forms ever scroll */
     overscroll-behavior:contain;
   }
   /* iOS zooms the whole page when a focused field is under 16px — that is the

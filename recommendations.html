@@ -8,12 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260728c">
+<link rel="stylesheet" href="site.css?v=20260728d">
 <style>
   /* ---- recs: map on top, filters floating on it, cards underneath --------- */
   /* Manhattan is tall and narrow — a full-bleed letterbox map is mostly New
      Jersey. Constrain the frame so the pins fill it. */
-  .mapstage{ position:relative; margin:10px auto 0; max-width:760px; }
+  .maphead{ max-width:760px; margin:12px auto 0; }
+  .mapstage{ position:relative; margin:8px auto 0; max-width:760px; }
   .mapstage .sjmap{ height:min(52vh,470px); margin-top:0; }
   /* tighter page head so the list starts above the fold */
   #recs{ padding-top:14px; }
@@ -107,8 +108,12 @@
       <div class="rule"></div>
 
       <!-- map first, full width; filters float on it; the list lives underneath -->
+      <div class="maphead">
+        <a class="sjmap-gmap" href="https://maps.app.goo.gl/R9zahA3xfGoTRNCQA" target="_blank" rel="noopener">
+          Open our Google Map <span class="ext" aria-hidden="true">↗</span></a>
+      </div>
       <div class="mapstage">
-        <div id="sjmap" class="sjmap" data-mode="recs" data-gmap="https://maps.app.goo.gl/R9zahA3xfGoTRNCQA"></div>
+        <div id="sjmap" class="sjmap" data-mode="recs"></div>
       </div>
 
 
@@ -226,13 +231,13 @@
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260728c" defer></script>
-  <script src="map.js?v=20260728c" defer></script>
-  <script src="cal.js?v=20260728c" defer></script>
-  <script src="upload.js?v=20260728c" defer></script>
-  <script src="drawer.js?v=20260728c" defer></script>
-  <script src="rsvpform.js?v=20260728c" defer></script>
-  <script src="notes.js?v=20260728c" defer></script>
+  <script src="personalize.js?v=20260728d" defer></script>
+  <script src="map.js?v=20260728d" defer></script>
+  <script src="cal.js?v=20260728d" defer></script>
+  <script src="upload.js?v=20260728d" defer></script>
+  <script src="drawer.js?v=20260728d" defer></script>
+  <script src="rsvpform.js?v=20260728d" defer></script>
+  <script src="notes.js?v=20260728d" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;

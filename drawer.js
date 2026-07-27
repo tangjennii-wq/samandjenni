@@ -4,27 +4,6 @@
 (function () {
   var backdrop = null;
 
-  // --- iOS keyboard: keep the sheet (and its × ) inside the visual viewport.
-  // Sets --sj-kb (space taken by the keyboard) and --sj-vvh (visible height).
-  // site.css consumes both with fallbacks, so this is purely additive.
-  var vv = window.visualViewport;
-  function syncViewport(){
-    if (!vv) return;
-    var root = document.documentElement;
-    if (!document.querySelector('.note-drawer.open')) {
-      root.style.removeProperty('--sj-kb');
-      root.style.removeProperty('--sj-vvh');
-      return;
-    }
-    var gap = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
-    root.style.setProperty('--sj-kb', gap + 'px');
-    root.style.setProperty('--sj-vvh', Math.round(vv.height) + 'px');
-  }
-  if (vv) {
-    vv.addEventListener('resize', syncViewport);
-    vv.addEventListener('scroll', syncViewport);
-  }
-
   function ensureBackdrop(){
     if (backdrop) return backdrop;
     backdrop = document.createElement('div');

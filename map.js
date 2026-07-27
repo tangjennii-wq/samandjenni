@@ -301,62 +301,6 @@
     ctl.addOverlay(gStays,  N_STAY);
     ctl.addOverlay(gPlaces, N_PLACE);
 
-    // Our own Google Map, if the page supplies one — sits under the layer box.
-    var gmapUrl = el.getAttribute('data-gmap');
-    if (gmapUrl) {
-      var gmapCtl = L.control({ position:'topright' });
-      gmapCtl.onAdd = function(){
-        var d = L.DomUtil.create('div', 'sjmap-gmap-wrap');
-        var a = L.DomUtil.create('a', 'sjmap-gmap', d);
-        a.href = gmapUrl; a.target = '_blank'; a.rel = 'noopener';
-        a.innerHTML = '<i></i>Open our Google Map';
-        L.DomEvent.disableClickPropagation(d);
-        return d;
-      };
-      gmapCtl.addTo(map);
-    }
-
-    // ---- expand to full screen ---------------------------------------------
-    // Plain absolutely-positioned button rather than a Leaflet control, so it
-    // can't collide with the layers box and survives invalidateSize().
-    var expandBtn = null;
-    var expandCtl = L.control({ position:'topleft' });
-    expandCtl.onAdd = function(){
-      var d = L.DomUtil.create('div', 'sjmap-expand-wrap');
-      expandBtn = L.DomUtil.create('button', 'sjmap-expand', d);
-      expandBtn.type = 'button';
-      expandBtn.textContent = 'Expand map';
-      expandBtn.setAttribute('aria-label', 'Expand map to full screen');
-      L.DomEvent.disableClickPropagation(d);
-      L.DomEvent.on(expandBtn, 'click', function(e){ L.DomEvent.preventDefault(e); toggleFull(); });
-      return d;
-    };
-    expandCtl.addTo(map);
-
-    function toggleFull(force){
-      var on = (typeof force === 'boolean') ? force : !el.classList.contains('is-full');
-      el.classList.toggle('is-full', on);
-      document.body.classList.toggle('map-full', on);
-      if (!on) document.body.style.overflow = '';   // never strand the page
-      if (expandBtn) expandBtn.textContent = on ? 'Close map' : 'Expand map';
-      if (on) { map.dragging.enable(); map.scrollWheelZoom.enable(); el.classList.add('map-live'); }
-      else if (isTouch) { map.dragging.disable(); map.scrollWheelZoom.disable(); }
-      // Re-measure on the next frame, once the browser has laid out the new size.
-      requestAnimationFrame(function(){ map.invalidateSize({ animate:false }); });
-      setTimeout(function(){ map.invalidateSize({ animate:false }); }, 180);
-    }
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && el.classList.contains('is-full')) toggleFull(false);
-    });
-
-    // Hovering a card in the recs list nudges the map to that pin.
-    document.addEventListener('sj:focus', function (e) {
-      var d = e.detail || {}; if (typeof d.lat !== 'number') return;
-      map.panTo([d.lat, d.lng], { animate:true, duration:.4 });
-      var mk = markerIndex[d.name];
-      if (mk && mk.openPopup) mk.openPopup();
-    });
-
     function styleHoods(){
       if(!hoodGeo) return;
       hoodGeo.setStyle(function(f){
