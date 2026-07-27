@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260727s">
+<link rel="stylesheet" href="site.css?v=20260727t">
 <style>
 
   body{background:var(--paper)}
@@ -65,6 +65,12 @@
     h1{font-size:24px}
     .num{padding:1px 7px}
   }
+  .ouname{ font-family:inherit; font-size:16px; padding:12px 15px; border-radius:var(--r-pill);
+    border:1.5px solid rgba(13,9,5,.18); background:#fff; color:var(--dark); text-align:center;
+    max-width:180px; outline:none; }
+  .ouname:focus{ border-color:var(--red); }
+  .ousent{ margin-top:14px; font-size:13.5px; font-weight:700; color:var(--red); display:none; }
+  .ousent.show{ display:block; }
 </style>
 </head>
 <body class="has-mobile-actions">
@@ -107,9 +113,12 @@
   </div>
 
   <div class="actions">
-    <button class="btn" id="copyBtn">Copy my picks</button>
-    <a class="btn ghost" id="mailBtn" href="#">Email them to us</a>
+    <button class="btn" id="sendBtn">Submit my picks</button>
+    <button class="btn ghost" id="saveBtn">Save as image</button>
+    <button class="btn ghost" id="copyBtn">Copy as text</button>
+    <input class="ouname" id="ouName" type="text" placeholder="your name" autocomplete="name">
     <div class="copied" id="copied">copied — now go paste it and talk your talk ♡</div>
+    <div class="ousent">got it — no takebacks (there are takebacks).</div>
     <p class="fineprint">
       your picks save on this device, so you can come back and change your mind (we'll know).<br>
       the house always wins, and in this case the house is getting married.
@@ -162,9 +171,6 @@
     });
     const n = Object.keys(picks).length;
     document.getElementById('tally').textContent = n + ' of ' + LINES.length + ' picked';
-    document.getElementById('mailBtn').href =
-      'mailto:tangjennii@gmail.com?subject=' + encodeURIComponent('my over/under picks') +
-      '&body=' + encodeURIComponent(asText());
   }
 
   function asText(){
@@ -180,9 +186,6 @@
   }
 
   function syncMail(){
-    document.getElementById('mailBtn').href =
-      'mailto:tangjennii@gmail.com?subject=' + encodeURIComponent('my over/under picks') +
-      '&body=' + encodeURIComponent(asText());
   }
 
   document.getElementById('copyBtn').onclick = async () => {
@@ -196,13 +199,105 @@
     }
   };
 
+
+  // ---- save the card as a JPG ----------------------------------------------
+  // Drawn by hand on a canvas: no library, no CDN, and it looks like the site.
+  function drawCard(){
+    var W = 1000, PAD = 56, ROW = 88;
+    var H = 250 + LINES.length * ROW + 90;
+    var c = document.createElement('canvas');
+    c.width = W * 2; c.height = H * 2;
+    var x = c.getContext('2d'); x.scale(2, 2);
+    var strip = function(t){ return t.replace(/<[^>]+>/g, ''); };
+
+    x.fillStyle = '#FCFAF6'; x.fillRect(0, 0, W, H);
+    x.fillStyle = '#E53C2D'; x.fillRect(0, 0, W, 10);
+
+    x.textAlign = 'center';
+    x.fillStyle = '#E53C2D';
+    x.font = '800 17px Figtree, system-ui, sans-serif';
+    x.fillText('T H E   S H L A N G   L I N E   ·   3 . 2 0 . 2 7', W/2, 78);
+    x.fillStyle = '#0D0905';
+    x.font = '900 62px Figtree, system-ui, sans-serif';
+    x.fillText('OVER / UNDER', W/2, 148);
+
+    var who = (document.getElementById('ouName').value || '').trim();
+    x.fillStyle = '#8a7863';
+    x.font = '600 22px Figtree, system-ui, sans-serif';
+    x.fillText(who ? who + "'s card" : 'my card', W/2, 190);
+
+    x.textAlign = 'left';
+    var y = 250;
+    LINES.forEach(function(L, i){
+      var p = picks[i];
+      x.fillStyle = '#fff';
+      x.strokeStyle = 'rgba(13,9,5,.12)'; x.lineWidth = 1;
+      if (x.roundRect) { x.beginPath(); x.roundRect(PAD, y, W - PAD*2, ROW - 14, 14); x.fill(); x.stroke(); }
+      else { x.fillRect(PAD, y, W - PAD*2, ROW - 14); x.strokeRect(PAD, y, W - PAD*2, ROW - 14); }
+
+      x.fillStyle = '#E5C822';
+      if (x.roundRect) { x.beginPath(); x.roundRect(PAD + 18, y + 17, 66, 40, 10); x.fill(); }
+      else x.fillRect(PAD + 18, y + 17, 66, 40);
+      x.fillStyle = '#0D0905'; x.textAlign = 'center';
+      x.font = '900 22px Figtree, system-ui, sans-serif';
+      x.fillText(String(L.n), PAD + 51, y + 45);
+
+      x.textAlign = 'left';
+      x.fillStyle = '#0D0905';
+      x.font = '500 21px Figtree, system-ui, sans-serif';
+      var q = strip(L.q); if (q.length > 52) q = q.slice(0, 51) + '…';
+      x.fillText(q, PAD + 100, y + 45);
+
+      x.textAlign = 'right';
+      x.font = '900 19px Figtree, system-ui, sans-serif';
+      x.fillStyle = p ? '#E53C2D' : '#c9b8a2';
+      x.fillText(p ? p.toUpperCase() : '—', W - PAD - 20, y + 45);
+      x.textAlign = 'left';
+      y += ROW;
+    });
+
+    x.textAlign = 'center';
+    x.fillStyle = '#a2907a';
+    x.font = 'italic 19px Figtree, system-ui, sans-serif';
+    x.fillText('samandjenni.com  ·  the house always wins, and the house is getting married',
+               W/2, H - 44);
+    return c;
+  }
+
+  document.getElementById('saveBtn').onclick = function(){
+    var c = drawCard();
+    var a = document.createElement('a');
+    a.download = 'over-under-picks.jpg';
+    a.href = c.toDataURL('image/jpeg', 0.92);
+    a.click();
+  };
+
+  // ---- submit --------------------------------------------------------------
+  document.getElementById('sendBtn').onclick = function(){
+    var btn = this;
+    var payload = LINES.map(function(L, i){
+      return { line: L.n, q: L.q.replace(/<[^>]+>/g, ''), pick: picks[i] || null };
+    });
+    if (window.SJUpload) {
+      window.SJUpload.save('wedding_overunder', {
+        guest_key: window.SJUpload.guestKey(),
+        from_name: (document.getElementById('ouName').value || '').trim(),
+        picks: payload
+      }).catch(function(){});
+    }
+    btn.textContent = 'Locked in ♡';
+    btn.disabled = true;
+    var note = document.querySelector('.ousent');
+    if (note) note.classList.add('show');
+  };
+
   render();
 </script>
-  <script src="personalize.js?v=20260727s" defer></script>
-  <script src="cal.js?v=20260727s" defer></script>
-  <script src="upload.js?v=20260727s" defer></script>
-  <script src="drawer.js?v=20260727s" defer></script>
-  <script src="rsvpform.js?v=20260727s" defer></script>
-  <script src="notes.js?v=20260727s" defer></script>
+  <script src="personalize.js?v=20260727t" defer></script>
+  <script src="cal.js?v=20260727t" defer></script>
+  <script src="upload.js?v=20260727t" defer></script>
+  <script src="drawer.js?v=20260727t" defer></script>
+  <script src="rsvpform.js?v=20260727t" defer></script>
+  <script src="notes.js?v=20260727t" defer></script>
 </body>
 </html>
