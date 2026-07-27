@@ -8,22 +8,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260727g">
+<link rel="stylesheet" href="site.css?v=20260727h">
 <style>
   /* ---- recs: map on top, filters floating on it, cards underneath --------- */
   .mapstage{ position:relative; margin-top:14px; }
   .mapstage .sjmap{ height:min(60vh,540px); margin-top:0; }
 
-  /* filter panel, floating over the map's top-left */
-  .recbar{ position:absolute; top:12px; left:12px; z-index:600;
-    width:auto; max-width:min(640px, calc(100% - 230px));
-    display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px;
-    padding:10px 12px 11px; border:1px solid rgba(13,9,5,.10); border-radius:16px;
-    background:rgba(255,255,255,.80); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-    box-shadow:0 8px 26px rgba(13,9,5,.14); opacity:.86; transition:opacity .16s ease; }
-  .recbar:hover, .recbar:focus-within{ opacity:1; }
+  /* filter bar: sits under the map, directly above the list it filters */
+  .recbar{ margin-top:16px; display:flex; flex-wrap:wrap; align-items:center; gap:7px 9px;
+    padding-top:14px; border-top:1px solid var(--line); }
   .fgroup{ display:flex; flex-wrap:wrap; gap:5px; }
-  .fgroup--areas{ border-top:1px solid var(--line); padding-top:8px; width:100%; }
+  .fgroup--areas{ width:100%; }
   .fchip{ font:inherit; font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
     padding:5px 10px; border-radius:var(--r-pill); border:1px solid var(--line-2);
     background:#fff; color:#6b5a50; cursor:pointer; line-height:1.1; white-space:nowrap;
@@ -42,8 +37,8 @@
   .maplinks .map-caption{ margin:0; }
 
   /* the list, underneath, capped so the page stays a sane length */
-  .recpanel{ margin-top:16px; max-height:48vh; overflow-y:auto; overscroll-behavior:contain;
-    padding-right:6px; margin-right:-6px; border-top:1px solid var(--line); padding-top:14px; }
+  .recpanel{ margin-top:12px; max-height:48vh; overflow-y:auto; overscroll-behavior:contain;
+    padding-right:6px; margin-right:-6px; }
   .recpanel::-webkit-scrollbar{ width:7px; }
   .recpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
   .recgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr));
@@ -61,8 +56,7 @@
 
   @media(max-width:760px){
     .mapstage .sjmap{ height:56vh; }
-    .recbar{ position:static; max-width:none; margin-top:10px; opacity:1;
-      background:#fff; box-shadow:none; border-radius:14px; }
+    .recbar{ margin-top:14px; }
     .recpanel{ max-height:none; overflow:visible; padding-right:0; margin-right:0; }
     .recgrid{ grid-template-columns:1fr; }
     .fchip{ min-height:32px; display:inline-flex; align-items:center; }
@@ -105,22 +99,23 @@
       <!-- map first, full width; filters float on it; the list lives underneath -->
       <div class="mapstage">
         <div id="sjmap" class="sjmap" data-mode="recs"></div>
-        <div class="recbar">
-          <div class="fgroup">
-            <button class="fchip is-on" data-f="cat" data-v="all" type="button">everything</button>
-            <button class="fchip" data-f="cat" data-v="eat" type="button">eat &amp; drink</button>
-            <button class="fchip" data-f="cat" data-v="do" type="button">see &amp; do</button>
-            <span class="fcount"><b id="recCount">76</b> places</span>
-          </div>
-          <div class="fgroup fgroup--areas"><button class="fchip is-on" data-f="area" data-v="manhattan" type="button">all manhattan</button><button class="fchip" data-f="area" data-v="Downtown" type="button">downtown</button><button class="fchip" data-f="area" data-v="SoHo" type="button">soho</button><button class="fchip" data-f="area" data-v="Tribeca" type="button">tribeca</button><button class="fchip" data-f="area" data-v="East Village" type="button">east village</button><button class="fchip" data-f="area" data-v="Lower East Side" type="button">lower east side</button><button class="fchip" data-f="area" data-v="Gramercy" type="button">flatiron/gramercy</button><button class="fchip" data-f="area" data-v="Greenwich" type="button">greenwich</button><button class="fchip" data-f="area" data-v="West Village" type="button">west village</button><button class="fchip" data-f="area" data-v="Chelsea" type="button">chelsea</button><button class="fchip" data-f="area" data-v="NoMad" type="button">nomad</button><button class="fchip" data-f="area" data-v="Midtown" type="button">midtown</button><button class="fchip is-empty" data-f="area" data-v="Koreatown" type="button" disabled title="nothing here yet">koreatown</button><button class="fchip" data-f="area" data-v="UWS" type="button">uws</button><button class="fchip" data-f="area" data-v="UES" type="button">ues</button><button class="fchip" data-f="area" data-v="Brooklyn" type="button">brooklyn</button><button class="fchip" data-f="area" data-v="Upstate" type="button">upstate</button></div>
-        </div>
-
       </div>
 
       <div class="maplinks">
         <a class="gmap-link" href="https://maps.app.goo.gl/R9zahA3xfGoTRNCQA" target="_blank" rel="noopener"><i></i>Open our Google Map</a>
         <p class="map-caption">deeper dives: <a href="https://www.mta.info/maps/subway" target="_blank" rel="noopener">official subway map</a> · <a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html" target="_blank" rel="noopener">NYT neighborhood map</a> · <a href="https://www.nytimes.com/2025/04/02/nyregion/nyc-new-subway-map.html" target="_blank" rel="noopener">NYT subway map</a></p>
       </div>
+
+      <div class="recbar">
+        <div class="fgroup">
+          <button class="fchip is-on" data-f="cat" data-v="all" type="button">everything</button>
+          <button class="fchip" data-f="cat" data-v="eat" type="button">eat &amp; drink</button>
+          <button class="fchip" data-f="cat" data-v="do" type="button">see &amp; do</button>
+          <span class="fcount"><b id="recCount">76</b> places</span>
+        </div>
+        <div class="fgroup fgroup--areas"><button class="fchip is-on" data-f="area" data-v="manhattan" type="button">all manhattan</button><button class="fchip" data-f="area" data-v="Downtown" type="button">downtown</button><button class="fchip" data-f="area" data-v="SoHo" type="button">soho</button><button class="fchip" data-f="area" data-v="Tribeca" type="button">tribeca</button><button class="fchip" data-f="area" data-v="East Village" type="button">east village</button><button class="fchip" data-f="area" data-v="Lower East Side" type="button">lower east side</button><button class="fchip" data-f="area" data-v="Gramercy" type="button">flatiron/gramercy</button><button class="fchip" data-f="area" data-v="Greenwich" type="button">greenwich</button><button class="fchip" data-f="area" data-v="West Village" type="button">west village</button><button class="fchip" data-f="area" data-v="Chelsea" type="button">chelsea</button><button class="fchip" data-f="area" data-v="NoMad" type="button">nomad</button><button class="fchip" data-f="area" data-v="Midtown" type="button">midtown</button><button class="fchip is-empty" data-f="area" data-v="Koreatown" type="button" disabled title="nothing here yet">koreatown</button><button class="fchip" data-f="area" data-v="UWS" type="button">uws</button><button class="fchip" data-f="area" data-v="UES" type="button">ues</button><button class="fchip" data-f="area" data-v="Brooklyn" type="button">brooklyn</button><button class="fchip" data-f="area" data-v="Upstate" type="button">upstate</button></div>
+      </div>
+
 
       <div class="recpanel">
     <div class="recgrid">
@@ -223,13 +218,13 @@
     </div>
   </section>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260727g" defer></script>
-  <script src="map.js?v=20260727g" defer></script>
-  <script src="cal.js?v=20260727g" defer></script>
-  <script src="upload.js?v=20260727g" defer></script>
-  <script src="drawer.js?v=20260727g" defer></script>
-  <script src="rsvpform.js?v=20260727g" defer></script>
-  <script src="notes.js?v=20260727g" defer></script>
+  <script src="personalize.js?v=20260727h" defer></script>
+  <script src="map.js?v=20260727h" defer></script>
+  <script src="cal.js?v=20260727h" defer></script>
+  <script src="upload.js?v=20260727h" defer></script>
+  <script src="drawer.js?v=20260727h" defer></script>
+  <script src="rsvpform.js?v=20260727h" defer></script>
+  <script src="notes.js?v=20260727h" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;

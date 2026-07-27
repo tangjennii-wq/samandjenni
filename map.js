@@ -444,6 +444,7 @@
       });
       var m = L.marker([p.lat, p.lng], {icon:icon}).addTo(group);
       var body = '<div class="sjmap-pop"><b>'+p.n+'</b>';
+      if(p.note) body += '<span class="pop-note">'+p.note+'</span>';
       if(p.url) body += '<a href="'+p.url+'" target="_blank" rel="noopener">open in maps →</a>';
       body += '</div>';
       m.bindPopup(body);
