@@ -884,7 +884,7 @@ body{ background:var(--paper); }
 .sjmap-expand:hover{ background:var(--dark); border-color:var(--dark); }
 
 /* our Google Map — a pill above the map's top-right corner, leaving the site */
-.maphead{ display:flex; justify-content:flex-end; margin-bottom:8px; }
+
 .sjmap-gmap{ display:inline-flex; align-items:center; gap:8px; padding:9px 15px;
   font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
   text-decoration:none; color:var(--dark); background:#fff;
@@ -893,7 +893,6 @@ body{ background:var(--paper); }
 .sjmap-gmap:hover{ background:var(--red); border-color:var(--red); color:#fff; }
 .sjmap-gmap .ext{ font-size:12px; line-height:1; }
 @media(max-width:760px){
-  .maphead{ justify-content:stretch; }
   .sjmap-gmap{ width:100%; justify-content:center; min-height:44px; }
 }
 
