@@ -198,7 +198,7 @@
           guests: guestRows,
           photo_path: up ? up.getPath() : ''
         }).catch(function(){});
-      } catch (err) {}
+      } } catch (err) {}
 
       var card = root.querySelector('.note-card') || root;
       card.innerHTML = '<div class="note-thanks">' +

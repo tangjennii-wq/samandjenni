@@ -73,7 +73,7 @@
           from_name: val('Name'),
           photo_path: up ? up.getPath() : ''
         }).catch(function(){});
-      } catch (err) {}
+      } } catch (err) {}
 
       Object.keys(cache).forEach(function(k){ cache[k] = ''; });
       var card = root.querySelector('.note-card') || root;
