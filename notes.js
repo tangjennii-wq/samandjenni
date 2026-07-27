@@ -18,16 +18,18 @@
         '<textarea id="{p}Mem" class="note-f note-ta"></textarea>' +
       '</div>' +
       '<div class="note-field photo-field">' +
-        '<label class="note-l" for="{p}Photo">a favorite photo</label>' +
-        '<figure class="photo-eg" aria-hidden="true">' +
-          '<img src="img/photo-example.jpg" alt="" loading="lazy" onerror="this.closest(\'.photo-eg\').remove()">' +
-          '<figcaption>yes, like this</figcaption>' +
-        '</figure>' +
+        '<label class="note-l" for="{p}Photo">a photo of you &amp; Sam, you &amp; Jenni, us, etc!</label>' +
+        '<div class="photo-pair">' +
+          '<figure class="photo-eg" aria-hidden="true">' +
+            '<img src="img/photo-example.jpg" alt="" loading="lazy" onerror="this.closest(\'.photo-eg\').remove()">' +
+            '<figcaption>like this</figcaption>' +
+          '</figure>' +
         '<label class="photo-drop" for="{p}Photo">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
             '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
           '<span class="photo-txt">choose a photo</span>' +
         '</label>' +
+        '</div>' +
         '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
         '<div class="photo-preview" data-preview hidden></div>' +
       '</div>' +
