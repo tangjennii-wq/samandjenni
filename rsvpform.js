@@ -13,12 +13,12 @@
   //   count:'entry.4', diet:'entry.5', note:'entry.6' }
   var GFORM = null;
 
-  var tier = parseInt(document.documentElement.getAttribute('data-tier') || '1', 10) || 1;
+  var rawTier = (document.documentElement.getAttribute('data-tier') || '').trim();
+  var tier = /^[1-4]$/.test(rawTier) ? parseInt(rawTier, 10) : 3;
 
   // What the guest typed at the gate (email or last name) — used to prefill.
-  // GUEST_MAP can later map that key to a full household name + party size,
-  // generated from the guest spreadsheet alongside personalize.js's TIER_MAP.
-  var GUEST_MAP = {}; // e.g. "tangjennii@gmail.com": { name:"Jenni Tang", party:2 }
+  // No household lookup table here on purpose: this file is public.
+  var GUEST_MAP = {};
 
   function cookie(name){
     var m = document.cookie.split('; ').find(function(r){ return r.indexOf(name + '=') === 0; });

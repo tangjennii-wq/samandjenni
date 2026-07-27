@@ -9,13 +9,14 @@
 //   4  Wedding only : Saturday
 //   0  Not invited  : (excluded — shouldn't reach the site)
 //
-// TIER_MAP is generated from guest-tiers-TO-FILL.xlsx once Sam & Jenni finish
-// assigning tiers. Keys are lowercase EMAIL (precise) AND lowercase last name
-// (friendly fallback) — both point to the household's tier.
+// The tier comes from Supabase at sign-in (api/login.js sets the sj_tier
+// cookie). It is deliberately NOT a lookup table in this file: this script is
+// public, so a table of every household's names and emails would publish the
+// guest list.
 (function () {
-  var TIER_MAP = {
-    // "nancy@brcap.com": 1, "zimmerman": 1, "shleifer": 1, ...
-  };
+  // The tier is decided server-side at sign-in and handed over in a cookie.
+  // Deliberately NOT a lookup table here: this file is public, and a table of
+  // 124 households' names and emails would publish the guest list.
 
   function cookie(name) {
     var m = document.cookie.split('; ').find(function (r) { return r.indexOf(name + '=') === 0; });
@@ -23,10 +24,9 @@
   }
 
   var guest = cookie('sj_guest').trim().toLowerCase();
-  // Default to tier 3 (Friday + Saturday). Defaulting to 1 — as this did while
-  // TIER_MAP sits empty — showed Thursday, the rehearsal and the brunch to
-  // everyone who got through the gate.
-  var tier = TIER_MAP[guest] || 3;
+  // strict: only a bare 1-4 counts, so "1abc" can't slip through parseInt
+  var rawTier = cookie('sj_tier').trim();
+  var tier = /^[1-4]$/.test(rawTier) ? parseInt(rawTier, 10) : 3;
 
   var sees = {
     thursday:  tier === 1,

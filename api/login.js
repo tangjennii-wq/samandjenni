@@ -14,18 +14,34 @@ const SB_KEY = 'sb_publishable_RzS1uAPwarXf0b7S-uB-1w_4fHKWgIX';
 // key -> is this person on the list?
 // Returns true on an infrastructure failure: a Supabase outage should never
 // lock every guest out of the site. A clean "false" is still a hard no.
-async function onList(key) {
+async function rpc(fn, key) {
+  const r = await fetch(SB_URL + '/rest/v1/rpc/' + fn, {
+    method: 'POST',
+    headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY,
+               'Content-Type': 'application/json' },
+    body: JSON.stringify({ p_key: key }),
+  });
+  if (!r.ok) throw new Error(fn + ' ' + r.status);
+  return r.json();
+}
+
+// Is this a guest, and which tier are they?
+// Returns tier 3 when the lookup succeeds but the key has no tier (an
+// ambiguous shared surname) — they see Friday + Saturday and nothing private.
+async function lookUp(key) {
   try {
-    const r = await fetch(SB_URL + '/rest/v1/rpc/guest_allowed', {
-      method: 'POST',
-      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY,
-                 'Content-Type': 'application/json' },
-      body: JSON.stringify({ p_key: key }),
-    });
-    if (!r.ok) return { allowed: true, degraded: true };
-    return { allowed: (await r.json()) === true, degraded: false };
+    const [allowed, tier] = await Promise.all([rpc('guest_allowed', key), rpc('guest_tier', key)]);
+    return { allowed: allowed === true, tier: Number(tier) || 3, degraded: false };
   } catch (e) {
-    return { allowed: true, degraded: true };
+    // One retry — a single blip shouldn't lock a guest out.
+    try {
+      const [allowed, tier] = await Promise.all([rpc('guest_allowed', key), rpc('guest_tier', key)]);
+      return { allowed: allowed === true, tier: Number(tier) || 3, degraded: false };
+    } catch (e2) {
+      // Still down: let them in, but at the most restrictive useful tier, so an
+      // outage never exposes the private events.
+      return { allowed: true, tier: 3, degraded: true };
+    }
   }
 }
 
@@ -59,7 +75,7 @@ export default async function handler(req, res) {
 
   // An email may be typed as "First Last <a@b.com>" or with stray punctuation.
   const key = (ln.match(/[^\s<>,;]+@[^\s<>,;]+/) || [ln])[0].replace(/[.,;]+$/, '');
-  const { allowed } = await onList(key);
+  const { allowed, tier } = await lookUp(key);
   if (!allowed) {
     res.writeHead(302, { Location: '/gate?e=list' });
     return res.end();
@@ -69,6 +85,7 @@ export default async function handler(req, res) {
   res.setHeader('Set-Cookie', [
     `sj_pass=${expected}; Path=/; Max-Age=${maxAge}; SameSite=Lax; HttpOnly; Secure`,
     `sj_guest=${encodeURIComponent(key)}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
+    `sj_tier=${tier}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
   ]);
   res.writeHead(302, { Location: '/' });
   return res.end();
