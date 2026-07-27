@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260728x">
+<link rel="stylesheet" href="site.css?v=20260728y">
 <style>
 
   body{background:var(--paper)}
@@ -71,7 +71,10 @@
   }
   .ourow{ display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
     gap:9px; width:100%; }
-  .ouname{ flex:0 1 190px; min-width:0; font-family:inherit; font-size:16px;
+  .oufield{ display:flex; flex-direction:column; gap:3px; flex:0 1 190px; text-align:left; }
+  .oulabel{ font-size:9px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
+    color:#a2907a; padding-left:15px; }
+  .ouname{ width:100%; min-width:0; font-family:inherit; font-size:16px;
     padding:0 16px; height:50px; border-radius:var(--r-pill);
     border:1.5px solid rgba(13,9,5,.18); background:#fff; color:var(--dark);
     text-align:left; outline:none; }
@@ -85,7 +88,7 @@
   .iconbtn svg{ width:14px; height:14px; flex:0 0 auto; }
   .iconbtn:hover{ color:var(--dark); border-color:var(--dark); }
   @media(max-width:620px){
-    .ouname{ flex:1 1 100%; }
+    .oufield{ flex:1 1 100%; }
     .ourow .btn{ flex:1 1 100%; }
     .iconbtn{ flex:1 1 0; justify-content:center; }
   }
@@ -137,8 +140,10 @@
 
   <div class="actions">
     <div class="ourow">
-      <input class="ouname" id="ouName" type="text" placeholder="your name"
-             autocomplete="name" aria-label="Your name">
+      <span class="oufield">
+        <label class="oulabel" for="ouName">Name</label>
+        <input class="ouname" id="ouName" type="text" placeholder="your name" autocomplete="name">
+      </span>
       <button class="btn" id="sendBtn">Submit my picks</button>
       <button class="iconbtn" id="saveBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Save as image</button>
       <button class="iconbtn" id="copyBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy as text</button>
@@ -146,8 +151,7 @@
     <div class="copied" id="copied">copied — now go paste it and talk your talk ♡</div>
     <div class="ousent">got it — no takebacks (there are takebacks).</div>
     <p class="fineprint">
-      your picks save on this device, so you can come back and change your mind (we'll know).<br>
-      the house always wins, and in this case the house is getting married.
+      your picks save on this device, so you can come back and change your mind (we'll know).
     </p>
   </div>
 
@@ -328,11 +332,11 @@
 
   render();
 </script>
-  <script src="personalize.js?v=20260728x" defer></script>
-  <script src="cal.js?v=20260728x" defer></script>
-  <script src="upload.js?v=20260728x" defer></script>
-  <script src="drawer.js?v=20260728x" defer></script>
-  <script src="rsvpform.js?v=20260728x" defer></script>
-  <script src="notes.js?v=20260728x" defer></script>
+  <script src="personalize.js?v=20260728y" defer></script>
+  <script src="cal.js?v=20260728y" defer></script>
+  <script src="upload.js?v=20260728y" defer></script>
+  <script src="drawer.js?v=20260728y" defer></script>
+  <script src="rsvpform.js?v=20260728y" defer></script>
+  <script src="notes.js?v=20260728y" defer></script>
 </body>
 </html>
