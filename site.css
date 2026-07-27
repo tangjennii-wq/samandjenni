@@ -1055,7 +1055,7 @@ body.map-full .map-caption{ display:none !important; }
 .yn.p1{ min-width:62px; height:38px; border-radius:var(--r-pill); font-size:11px; }
 
 /* ---- Nav: home icon + two action pills pinned right (mobile) --------------- */
-.nav-home-ico{ display:none; width:17px; height:17px; }
+.nav-home-ico{ display:none; width:18px; height:18px; }
 .nav-actions{ display:none; }
 
 @media(max-width:760px){
@@ -1068,8 +1068,8 @@ body.map-full .map-caption{ display:none !important; }
   .mobile-actions{ display:none !important; }
   body.has-mobile-actions{ padding-bottom:0; }
 
-  .sitenav{ gap:10px; }
-  .sitenav a{ font-size:9.5px; letter-spacing:.06em; }
+  .sitenav{ gap:12px; padding-top:2px; padding-bottom:2px; }
+  .sitenav a{ font-size:10.5px; letter-spacing:.08em; }
 
   /* The nav scrolls sideways; the pills stay pinned to the right edge so they
      are always reachable, with a white fade so links pass under them. */
@@ -1081,8 +1081,8 @@ body.map-full .map-caption{ display:none !important; }
      nav links instead of shouting over them. */
   .nav-actions .nav-act{ -webkit-appearance:none; appearance:none; font-family:inherit;
     display:inline-flex; align-items:center; justify-content:center;
-    min-height:29px; height:29px; padding:0 10px; border-radius:var(--r-pill);
-    font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    min-height:31px; height:31px; padding:0 11px; border-radius:var(--r-pill);
+    font-size:9.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
     line-height:1; cursor:pointer; text-decoration:none; white-space:nowrap;
     transition:background .14s ease, color .14s ease; }
   .nav-actions .nav-act--rsvp{ background:rgba(229,60,45,.09); color:var(--red);
