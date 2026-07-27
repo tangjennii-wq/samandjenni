@@ -1054,6 +1054,7 @@ body.map-full .map-caption{ display:none !important; }
 
 /* ---- Nav: home icon + two action pills pinned right (mobile) --------------- */
 .nav-home-ico{ display:none; width:17px; height:17px; }
+.nav-short{ display:none; }
 .nav-actions{ display:none; }
 
 @media(max-width:760px){
@@ -1061,6 +1062,7 @@ body.map-full .map-caption{ display:none !important; }
   .sitenav a[href="index.html"]{ display:inline-flex; align-items:center; }
   .nav-home-ico{ display:block; }
   .nav-word{ display:none; }
+  .nav-short{ display:inline; }
 
   .sitenav .nav-cta{ display:none !important; }
   .mobile-actions{ display:none !important; }
