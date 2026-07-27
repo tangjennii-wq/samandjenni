@@ -63,7 +63,7 @@
     });
     root.querySelector('[data-send]').addEventListener('click', function () {
       var val = function(k){ var n = g(k); return n ? n.value.trim() : ''; };
-      if (window.SJUpload) {
+      try { if (window.SJUpload) {
         window.SJUpload.save('wedding_notes', {
           guest_key: window.SJUpload.guestKey(),
           memory: val('Mem'),
@@ -73,7 +73,7 @@
           from_name: val('Name'),
           photo_path: up ? up.getPath() : ''
         }).catch(function(){});
-      }
+      } catch (err) {}
 
       Object.keys(cache).forEach(function(k){ cache[k] = ''; });
       var card = root.querySelector('.note-card') || root;

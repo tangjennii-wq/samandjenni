@@ -189,7 +189,7 @@
       var evAnswers = {};
       EVENTS.forEach(function(e){ evAnswers[e.k] = answers[e.k] || null; });
 
-      if (window.SJUpload) {
+      try { if (window.SJUpload) {
         window.SJUpload.save('wedding_rsvps', {
           guest_key: window.SJUpload.guestKey(),
           tier: tier,
@@ -198,7 +198,7 @@
           guests: guestRows,
           photo_path: up ? up.getPath() : ''
         }).catch(function(){});
-      }
+      } catch (err) {}
 
       var card = root.querySelector('.note-card') || root;
       card.innerHTML = '<div class="note-thanks">' +
