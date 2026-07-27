@@ -226,6 +226,9 @@
       var missing = [];
       if (EVENTS.some(function(e){ return !answers[e.k]; })) missing.push('a yes or no for every event');
       if (!rows.length || !rows[0].querySelector('.gname').value.trim()) missing.push('your name');
+      var email = rows.length ? rows[0].querySelector('.gemail').value.trim() : '';
+      if (!email) missing.push('your email');
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) missing.push('a valid email');
       if (missing.length) { showErr(root, 'We still need ' + missing.join(' and ') + '.'); return; }
       clearErr(root);
 
