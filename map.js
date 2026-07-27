@@ -15,6 +15,7 @@
     { n: 'Lotte New York Palace', cat: 'hotel', lat: 40.75802, lng: -73.97573, note: 'Biggest rooms · ~15 min to the Pierre', url: 'https://www.lottenypalace.com/wedding-stories/tang--shleifer-wedding' },
     { n: 'Thompson Central Park', cat: 'hotel', lat: 40.76428, lng: -73.97869, note: 'Modern · steps from the park', url: 'https://www.hyatt.com/events/en-US/group-booking/LGATP/G-3TSW' },
     { n: 'Le Méridien Central Park', cat: 'hotel', lat: 40.76447, lng: -73.97815, note: 'Friendly price · ~12 min walk to the Pierre', url: 'https://www.marriott.com/event-reservations/reservation-link.mi?id=1780579014068&key=GRP&app=resvlink' },
+    { n: 'The Mercer Hotel', cat: 'stay', lat: 40.72469, lng: -74.00113, note: 'SoHo · $$$$ · discreet loft-style rooms above The Mercer Kitchen', url: 'https://www.google.com/maps/search/?api=1&query=The%20Mercer%20Hotel%20SoHo%20New%20York' },
     { n: 'citizenM Bowery', cat: 'stay', lat: 40.72180, lng: -73.99330, note: 'Bowery · $ · sleek and compact, walkable to the Friday party', url: 'https://www.google.com/maps/search/?api=1&query=citizenM%20Bowery%20Bowery%20New%20York' },
     { n: 'Walker Hotel Tribeca', cat: 'stay', lat: 40.71770, lng: -74.00230, note: 'Tribeca · $$ · cozy boutique on cobblestoned blocks', url: 'https://www.google.com/maps/search/?api=1&query=Walker%20Hotel%20Tribeca%20Tribeca%20New%20York' },
     { n: 'Warren Street Hotel', cat: 'stay', lat: 40.71550, lng: -74.00970, note: 'Tribeca · $$$ · Firmdale\'s Tribeca one, two Michelin Keys', url: 'https://www.google.com/maps/search/?api=1&query=Warren%20Street%20Hotel%20Tribeca%20New%20York' },
@@ -227,7 +228,7 @@
     var zoom   = mode === 'hotels' ? 13 : (mode === 'all' ? 13 : 12);
 
     var isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
-    var map = L.map(el, { scrollWheelZoom:false, zoomControl:true,
+    var map = L.map(el, { scrollWheelZoom:false, zoomControl:false,
                                dragging: !isTouch, tap:true }).setView(center, zoom);
 
     // Touch: the map stays inert until tapped, so a scrolling finger never gets
@@ -250,6 +251,8 @@
         }
       }, { passive:true });
     }
+    L.control.zoom({ position:'bottomleft' }).addTo(map);
+
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution:'&copy; OpenStreetMap &copy; CARTO', subdomains:'abcd', maxZoom:19
     }).addTo(map);
