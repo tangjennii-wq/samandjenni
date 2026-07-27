@@ -961,7 +961,6 @@ body.map-full .split-list .recgrid,
 body.map-full .map-caption{ display:none !important; }
 
 @media(max-width:760px){
-  .sjmap-expand{ padding:11px 16px; }
 }
 
 /* =========================================================
