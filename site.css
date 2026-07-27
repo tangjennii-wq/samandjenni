@@ -1056,3 +1056,15 @@ body.map-full .map-caption{ display:none !important; }
   .plusone{ padding:10px 12px; }
   .plusone-q{ font-size:12.5px; }
 }
+
+
+/* ---- photo drop zones ----------------------------------------------------- */
+.photo-drop, .rsvp-photo-btn{ transition:border-color .14s, background .14s, transform .14s; }
+.photo-drop.is-drop, .rsvp-photo-btn.is-drop{
+  border-color:var(--red) !important; background:#fff6f4 !important;
+  transform:scale(1.01); }
+.photo-drop.is-drop .photo-txt::after,
+.rsvp-photo-btn.is-drop .photo-txt::after{ content:' — drop it'; }
+@media(hover:hover){
+  .photo-drop .photo-txt::after{ content:' or drag one in'; font-weight:400; opacity:.6; }
+}

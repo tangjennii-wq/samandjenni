@@ -17,7 +17,14 @@
     input.addEventListener('change', function () {
       var f = input.files && input.files[0];
       if (!f) { hide(); return; }
+      send(f);
+    });
 
+    function send(f){
+      if (!f || !/^image\//.test(f.type || '')) {
+        if (f) render('', f.name || 'file', 'that is not an image — try a jpg or png');
+        return;
+      }
       state.name = f.name;
       var objUrl = window.URL.createObjectURL(f);
       render(objUrl, f.name, 'uploading…');
@@ -37,11 +44,34 @@
         render(objUrl, f.name, 'upload failed — please attach it to the email');
         if (onState) onState(state);
       });
-    });
+    }
+
+    // ---- drag & drop ------------------------------------------------------
+    // The <label for="…"> that already fronts the file input doubles as the
+    // drop zone, so the affordance and the target are the same thing.
+    var zone = input.id ? document.querySelector('label[for="' + input.id + '"]') : null;
+    if (zone && window.FileReader) {
+      var depth = 0;   // dragenter/leave fire for children too — count them
+      var stop = function(e){ e.preventDefault(); e.stopPropagation(); };
+      ['dragenter','dragover','dragleave','drop'].forEach(function(t){
+        zone.addEventListener(t, stop);
+      });
+      zone.addEventListener('dragenter', function(){ depth++; zone.classList.add('is-drop'); });
+      zone.addEventListener('dragleave', function(){ if(--depth <= 0){ depth = 0; zone.classList.remove('is-drop'); } });
+      zone.addEventListener('drop', function(e){
+        depth = 0; zone.classList.remove('is-drop');
+        var dt = e.dataTransfer; if (!dt) return;
+        var f = dt.files && dt.files[0];
+        if (f) send(f);
+      });
+      // stop a stray miss from navigating the page away to the image
+      window.addEventListener('dragover', function(e){ e.preventDefault(); });
+      window.addEventListener('drop', function(e){ e.preventDefault(); });
+    }
 
     function render(src, name, note){
       if (!preview) return;
-      preview.innerHTML = '<img src="' + src + '" alt=""><span>' + name +
+      preview.innerHTML = (src ? '<img src="' + src + '" alt="">' : '') + '<span>' + name +
         '<br><i>' + note + '</i></span>';
       preview.hidden = false;
     }
