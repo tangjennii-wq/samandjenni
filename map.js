@@ -104,6 +104,8 @@
     { n: 'Jongro BBQ', cat: 'eat', lat: 40.74736, lng: -73.98615, note: 'Koreatown · Tabletop grill, no reservations. The K-town anchor.', url: 'https://www.google.com/maps/search/?api=1&query=Jongro%20BBQ%20Koreatown%20New%20York' },
     { n: 'Karaoke City', cat: 'do', lat: 40.74736, lng: -73.98615, note: 'Koreatown · 22 W 32nd, 7th floor. Private rooms, open very late.', url: 'https://www.google.com/maps/search/?api=1&query=Karaoke%20City%20Koreatown%20New%20York' },
     { n: 'Karaoke Boho', cat: 'do', lat: 40.73180, lng: -74.00190, note: 'West Village · Cosier and less fluorescent than K-town. Book the room.', url: 'https://www.google.com/maps/search/?api=1&query=Karaoke%20Boho%20West%20Village%20New%20York' },
+    { n: 'Central Park', cat: 'do', lat: 40.78260, lng: -73.96540, note: 'Central Park · The whole thing. Enter at 72nd and wander.', url: 'https://www.google.com/maps/search/?api=1&query=Central%20Park%20Central%20Park%20New%20York' },
+    { n: 'Prospect Park', cat: 'do', lat: 40.66210, lng: -73.96900, note: 'Prospect Heights · Olmsted\'s other one. Bigger meadow, fewer tourists.', url: 'https://www.google.com/maps/search/?api=1&query=Prospect%20Park%20Prospect%20Heights%20Brooklyn' },
     { n: 'Guggenheim', cat: 'do', lat: 40.78278, lng: -73.95917, note: 'Upper East Side · Jenni\'s favorite museum — the Frank Lloyd Wright spiral is the point.', url: 'https://www.google.com/maps/search/?api=1&query=Guggenheim%20Upper%20East%20Side%20New%20York' },
     { n: 'Cooper Hewitt', cat: 'do', lat: 40.78556, lng: -73.95889, note: 'Upper East Side · Design museum in the Carnegie Mansion. Small and delightful.', url: 'https://www.google.com/maps/search/?api=1&query=Cooper%20Hewitt%20Upper%20East%20Side%20New%20York' },
     { n: 'MoMA', cat: 'do', lat: 40.76139, lng: -73.97750, note: 'Midtown · Ten minutes from the Pierre. Go early.', url: 'https://www.google.com/maps/search/?api=1&query=MoMA%20Midtown%20New%20York' },
@@ -125,6 +127,7 @@
     { n: 'Hudson Hills Golf Course', cat: 'do', lat: 41.20150, lng: -73.85230, note: 'Ossining · Public Westchester course, 45 min up. Rolling and scenic.', url: 'https://www.google.com/maps/search/?api=1&query=Hudson%20Hills%20Golf%20Course%20Ossining%20NY' },
     { n: 'Centennial Golf Club', cat: 'do', lat: 41.42417, lng: -73.65583, note: 'Carmel · 27 holes by Larry Nelson. The best public track in the Hudson Valley.', url: 'https://www.google.com/maps/search/?api=1&query=Centennial%20Golf%20Club%20Carmel%20NY' },
   ];
+
 
 
 
