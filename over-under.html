@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20260728o">
+<link rel="stylesheet" href="site.css?v=20260728p">
 <style>
 
   body{background:var(--paper)}
@@ -74,7 +74,6 @@
   .ouname::placeholder{ color:#c9b8a2; }
   .ouname:focus{ border-color:var(--red); }
   .ourow .btn{ flex:0 0 auto; height:50px; margin:0; }
-  .subactions{ display:inline-flex; align-items:center; gap:9px; }
   .iconbtn{ display:inline-flex; align-items:center; gap:7px; font-family:inherit;
     font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
     padding:9px 14px; border-radius:var(--r-md); cursor:pointer;
@@ -84,7 +83,6 @@
   @media(max-width:620px){
     .ouname{ flex:1 1 100%; }
     .ourow .btn{ flex:1 1 100%; }
-    .subactions{ display:flex; width:100%; }
     .iconbtn{ flex:1 1 0; justify-content:center; }
   }
   .ouname:focus{ border-color:var(--red); }
@@ -140,7 +138,6 @@
       <button class="btn" id="sendBtn">Submit my picks</button>
       <button class="iconbtn" id="saveBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Save as image</button>
       <button class="iconbtn" id="copyBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy as text</button>
-      </span>
     </div>
     <div class="copied" id="copied">copied — now go paste it and talk your talk ♡</div>
     <div class="ousent">got it — no takebacks (there are takebacks).</div>
@@ -327,11 +324,11 @@
 
   render();
 </script>
-  <script src="personalize.js?v=20260728o" defer></script>
-  <script src="cal.js?v=20260728o" defer></script>
-  <script src="upload.js?v=20260728o" defer></script>
-  <script src="drawer.js?v=20260728o" defer></script>
-  <script src="rsvpform.js?v=20260728o" defer></script>
-  <script src="notes.js?v=20260728o" defer></script>
+  <script src="personalize.js?v=20260728p" defer></script>
+  <script src="cal.js?v=20260728p" defer></script>
+  <script src="upload.js?v=20260728p" defer></script>
+  <script src="drawer.js?v=20260728p" defer></script>
+  <script src="rsvpform.js?v=20260728p" defer></script>
+  <script src="notes.js?v=20260728p" defer></script>
 </body>
 </html>
