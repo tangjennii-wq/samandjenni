@@ -1281,10 +1281,9 @@ body.map-full .map-caption{ display:none !important; }
 }
 
 
-/* Home on mobile: the film is tall, so drop "Book your room" from under it —
-   hotels is one tap away in the nav, and this keeps RSVP / Leave a note in view. */
+/* Home on mobile: the film is tall, so the whole utility row goes — hotels is
+   one tap away in the nav and the RSVP flow offers the calendar after you
+   submit. This keeps RSVP / Leave a note in view under the film. */
 @media(max-width:760px){
-  body.has-bottom-actions .util-book{ display:none !important; }
-  body.has-bottom-actions .hero-utils{ padding:10px 16px 0 !important; }
-  body.has-bottom-actions .hero-utils .cal-toggle{ width:100%; justify-content:center; }
+  body.has-bottom-actions .hero-utils{ display:none !important; }
 }
