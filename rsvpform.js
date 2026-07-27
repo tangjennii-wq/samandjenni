@@ -66,11 +66,15 @@
       '</div>' +
       '<div class="rsvp-body">' +
         '<div class="rsvp-list">' + rows + '</div>' +
-        '<div class="rsvp-party">' +
-          '<label class="note-l" for="{p}Count">how many in your party</label>' +
-          '<input id="{p}Count" class="note-f" type="number" min="1" max="2" value="' + PRE.party + '">' +
-        '</div>' +
         '<div class="rsvp-guests" data-guests></div>' +
+        '<div class="plusone">' +
+          '<span class="plusone-q">Bringing a +1?</span>' +
+          '<div class="plusone-yn">' +
+            '<button type="button" class="yn p1" data-p1="yes">Yes</button>' +
+            '<button type="button" class="yn p1" data-p1="no">No</button>' +
+          '</div>' +
+        '</div>' +
+        '<input id="{p}Count" type="hidden" value="' + PRE.party + '">' +
         '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
         '<div class="rsvp-photo-block">' +
           '<p class="rsvp-photo-note">add a favorite photo with Sam and/or Jenni <span>(optional)</span></p>' +
@@ -91,7 +95,7 @@
   var answers = {};
 
   function guestRow(p, i){
-    var who = i === 0 ? 'you' : 'guest ' + (i + 1);
+    var who = i === 0 ? 'you' : 'your +1';
     return '<div class="guest-row">' +
       '<div class="guest-n">' + who + '</div>' +
       '<div class="guest-fields">' +
@@ -128,8 +132,22 @@
       });
     }
     renderGuests();
-    g('Count').addEventListener('input', renderGuests);
-    g('Count').addEventListener('change', renderGuests);
+
+    // "+1?" replaces the old number field. Yes reveals a second block, No hides it.
+    var p1wrap = root.querySelector('.plusone');
+    function setPlusOne(v){
+      g('Count').value = (v === 'yes') ? '2' : '1';
+      root.querySelectorAll('.yn.p1').forEach(function(x){
+        x.classList.toggle('on', x.dataset.p1 === v);
+      });
+      renderGuests();
+    }
+    if (p1wrap) {
+      p1wrap.querySelectorAll('.yn.p1').forEach(function(b){
+        b.addEventListener('click', function(){ setPlusOne(b.dataset.p1); });
+      });
+      setPlusOne(PRE.party > 1 ? 'yes' : 'no');
+    }
 
     var up = (window.SJUpload ? window.SJUpload.wire(g('Photo'), root.querySelector('[data-preview]')) : null);
     Object.keys(cache).forEach(function(k){
