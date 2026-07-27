@@ -65,9 +65,17 @@
     h1{font-size:24px}
     .num{padding:1px 7px}
   }
-  .ouname{ font-family:inherit; font-size:16px; padding:12px 15px; border-radius:var(--r-pill);
+  .oulabel{ display:block; font-size:10px; font-weight:800; letter-spacing:.2em;
+    text-transform:uppercase; color:#a2907a; margin-bottom:-2px; }
+  .ouname{ font-family:inherit; font-size:16px; padding:12px 16px; border-radius:var(--r-md);
     border:1.5px solid rgba(13,9,5,.18); background:#fff; color:var(--dark); text-align:center;
-    max-width:180px; outline:none; }
+    width:100%; max-width:260px; outline:none; }
+  .subactions{ display:flex; align-items:center; gap:10px; }
+  .linkbtn{ font-family:inherit; font-size:12px; font-weight:700; letter-spacing:.02em;
+    background:none; border:0; padding:4px 2px; color:#6b5a50; cursor:pointer;
+    border-bottom:1.5px solid var(--line-2); }
+  .linkbtn:hover{ color:var(--red); border-bottom-color:var(--red); }
+  .subactions .sep{ color:#c9b8a2; }
   .ouname:focus{ border-color:var(--red); }
   .ousent{ margin-top:14px; font-size:13.5px; font-weight:700; color:var(--red); display:none; }
   .ousent.show{ display:block; }
@@ -113,10 +121,14 @@
   </div>
 
   <div class="actions">
-    <button class="btn" id="sendBtn">Submit my picks</button>
-    <button class="btn ghost" id="saveBtn">Save as image</button>
-    <button class="btn ghost" id="copyBtn">Copy as text</button>
+    <label class="oulabel" for="ouName">Your name</label>
     <input class="ouname" id="ouName" type="text" placeholder="your name" autocomplete="name">
+    <button class="btn" id="sendBtn">Submit my picks</button>
+    <div class="subactions">
+      <button class="linkbtn" id="saveBtn" type="button">Save as image</button>
+      <span class="sep">·</span>
+      <button class="linkbtn" id="copyBtn" type="button">Copy as text</button>
+    </div>
     <div class="copied" id="copied">copied — now go paste it and talk your talk ♡</div>
     <div class="ousent">got it — no takebacks (there are takebacks).</div>
     <p class="fineprint">
@@ -290,6 +302,15 @@
     var note = document.querySelector('.ousent');
     if (note) note.classList.add('show');
   };
+
+  // We know who they are from the gate — prefill, but let them fix it.
+  (function(){
+    var m = document.cookie.split('; ').find(function(r){ return r.indexOf('sj_guest=') === 0; });
+    var who = m ? decodeURIComponent(m.split('=').slice(1).join('=')).trim() : '';
+    if (!who || who.indexOf('@') > -1) return;
+    document.getElementById('ouName').value =
+      who.replace(/\b[a-z]/g, function(c){ return c.toUpperCase(); });
+  })();
 
   render();
 </script>
