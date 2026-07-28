@@ -1470,3 +1470,30 @@ body.map-full .map-caption{ display:none !important; }
   .hotel:has(.hshot) .bookbtn{ grid-column:1 / -1; justify-self:start; }
   .hshot{ width:56px; height:56px; }
 }
+
+
+/* ---- Leave a note on a phone: fit one screen, no scrolling ---------------- */
+@media(max-width:760px){
+  /* the two one-word fields sit side by side here too */
+  .note-card--drawer .note-row2{ grid-template-columns:1fr 1fr; gap:9px; }
+  .note-card--drawer .note-row2 .note-field{ margin-top:0; }
+  .note-row2, .note-row3{ grid-template-columns:1fr 1fr; gap:9px; }
+  .note-row2 .note-field, .note-row3 .note-field{ margin-top:0; }
+  .note-card--drawer .note-field + .note-field,
+  .note-card--drawer .note-row2, .note-card--drawer .note-row3,
+  .note-card--drawer .photo-field{ margin-top:11px; }
+
+  .note-card--drawer::before{ margin-bottom:14px; }
+  .note-ta{ min-height:58px; }
+  .note-l{ font-size:10.5px; margin-bottom:3px; }
+  .note-f{ padding:9px 12px; }
+
+  /* the example snapshot shrinks so the form still fits */
+  .photo-stack{ gap:8px; padding:2px 0 0; }
+  .photo-stack .photo-eg{ width:96px; padding:5px 5px 3px; }
+  .photo-stack .photo-eg figcaption{ font-size:8.5px; margin-top:3px; }
+  .photo-stack .photo-drop{ padding:11px 14px; }
+
+  .note-row3{ align-items:end; }
+  .note-btn{ min-height:44px; }
+}

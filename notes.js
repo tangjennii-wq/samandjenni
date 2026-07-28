@@ -11,7 +11,6 @@
 
   function formHTML(p, intro){
     return ('' +
-      '<p class="note-sub note-sub--top">totally optional — but we’d love these ♡</p>' +
       (intro ? '<p class="note-intro">' + intro + '</p>' : '') +
       '<div class="note-field">' +
         '<label class="note-l" for="{p}Mem">a favorite memory with Sam and/or Jenni</label>' +
