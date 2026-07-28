@@ -9,14 +9,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730r">
+<link rel="stylesheet" href="site.css?v=20260730s">
 <style>
   /* ---- recs: list scrolls on the left, map is the hero on the right -------- */
   /* Manhattan is tall and narrow — a portrait-ish frame suits it far better
      than a wide letterbox. Columns centred as a pair, like hotels. */
   /* the map takes whatever the list doesn't need, up to 860px */
-  .recsplit{ display:grid; grid-template-columns:250px minmax(0, 1fr); gap:18px;
+  /* a true 25 / 75 split, so the map is always three-quarters of the row */
+  .recsplit{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 3fr); gap:18px;
     align-items:start; margin-top:14px; }
+  #recs{ overflow-x:clip; }
   #recs{ padding-top:14px; }
   #recs .eyebrow{ margin-bottom:2px; }
   #recs h2{ margin-top:2px; }
@@ -25,7 +27,7 @@
 
   /* left column */
   .recside{ display:flex; flex-direction:column; min-width:0; }
-  .recbar{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; padding-bottom:10px;
+  .recbar{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:6px 8px; padding-bottom:10px;
     border-bottom:1px solid var(--line); }
   .fgroup{ display:flex; flex-wrap:wrap; gap:5px; }
   .fgroup--areas{ flex:1 1 auto; }
@@ -66,8 +68,9 @@
 
   /* right column — the map is the hero */
   .mapside{ position:sticky; top:64px; min-width:0; }
+  .mapside .sjmap-gmap{ position:absolute; top:-46px; right:0; z-index:3; }
   .recsplit > *{ min-width:0; }
-  .mapside .sjmap-gmap{ float:right; margin:0 0 8px; }
+
   .mapstage{ position:relative; clear:both; }
   .mapstage .sjmap{ height:min(900px, calc(100vh - 130px)); margin-top:0; }
   .map-caption{ margin-top:14px; }
@@ -79,7 +82,7 @@
     .rec .rwhy{ font-size:12px; }
     .mapside{ position:static; order:-1; }
     .mapstage .sjmap{ height:46vh; }
-    .mapside .sjmap-gmap{ float:none; display:flex; justify-content:center; }
+    .mapside .sjmap-gmap{ position:static; display:flex; justify-content:center; margin-bottom:10px; }
     .recpanel{ height:auto; max-height:none; overflow:visible; padding-right:0; margin-right:0; }
   }
   @media(max-width:760px){
@@ -137,7 +140,7 @@
 
         <div class="recside">
           <div class="recbar">
-            <div class="fgroup fgroup--areas"><button class="fchip is-on" data-f="area" data-v="fav" type="button">our favourites</button><button class="fchip" data-f="area" data-v="manhattan" type="button">all manhattan</button><button class="fchip" data-f="area" data-v="Downtown" type="button">downtown</button><button class="fchip" data-f="area" data-v="SoHo" type="button">soho</button><button class="fchip" data-f="area" data-v="Tribeca" type="button">tribeca</button><button class="fchip" data-f="area" data-v="East Village" type="button">east village</button><button class="fchip" data-f="area" data-v="Lower East Side" type="button">lower east side</button><button class="fchip" data-f="area" data-v="Gramercy" type="button">gramercy</button><button class="fchip" data-f="area" data-v="Greenwich" type="button">greenwich</button><button class="fchip" data-f="area" data-v="West Village" type="button">west village</button><button class="fchip" data-f="area" data-v="Chelsea" type="button">chelsea</button><button class="fchip" data-f="area" data-v="NoMad" type="button">nomad</button><button class="fchip" data-f="area" data-v="Midtown" type="button">midtown</button><button class="fchip" data-f="area" data-v="Koreatown" type="button">koreatown</button><button class="fchip" data-f="area" data-v="UWS" type="button">uws</button><button class="fchip" data-f="area" data-v="UES" type="button">ues</button><button class="fchip" data-f="area" data-v="Brooklyn" type="button">brooklyn</button><button class="fchip" data-f="area" data-v="Upstate" type="button">upstate</button></div>
+            <div class="fgroup fgroup--areas"><button class="fchip is-on" data-f="area" data-v="fav" type="button">Shlang Favorites</button><button class="fchip" data-f="area" data-v="manhattan" type="button">all manhattan</button><button class="fchip" data-f="area" data-v="Downtown" type="button">downtown</button><button class="fchip" data-f="area" data-v="SoHo" type="button">soho</button><button class="fchip" data-f="area" data-v="Tribeca" type="button">tribeca</button><button class="fchip" data-f="area" data-v="East Village" type="button">east village</button><button class="fchip" data-f="area" data-v="Lower East Side" type="button">lower east side</button><button class="fchip" data-f="area" data-v="Gramercy" type="button">gramercy</button><button class="fchip" data-f="area" data-v="Greenwich" type="button">greenwich</button><button class="fchip" data-f="area" data-v="West Village" type="button">west village</button><button class="fchip" data-f="area" data-v="Chelsea" type="button">chelsea</button><button class="fchip" data-f="area" data-v="NoMad" type="button">nomad</button><button class="fchip" data-f="area" data-v="Midtown" type="button">midtown</button><button class="fchip" data-f="area" data-v="Koreatown" type="button">koreatown</button><button class="fchip" data-f="area" data-v="UWS" type="button">uws</button><button class="fchip" data-f="area" data-v="UES" type="button">ues</button><button class="fchip" data-f="area" data-v="Brooklyn" type="button">brooklyn</button><button class="fchip" data-f="area" data-v="Upstate" type="button">upstate</button></div>
             <span class="fcount"><b id="recCount">21</b> places</span>
           </div>
           <div class="recpanel">
@@ -261,14 +264,14 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260730r" defer></script>
-  <script src="map.js?v=20260730r" defer></script>
-  <script src="account.js?v=20260730r" defer></script>
-  <script src="cal.js?v=20260730r" defer></script>
-  <script src="upload.js?v=20260730r" defer></script>
-  <script src="drawer.js?v=20260730r" defer></script>
-  <script src="rsvpform.js?v=20260730r" defer></script>
-  <script src="notes.js?v=20260730r" defer></script>
+  <script src="personalize.js?v=20260730s" defer></script>
+  <script src="map.js?v=20260730s" defer></script>
+  <script src="account.js?v=20260730s" defer></script>
+  <script src="cal.js?v=20260730s" defer></script>
+  <script src="upload.js?v=20260730s" defer></script>
+  <script src="drawer.js?v=20260730s" defer></script>
+  <script src="rsvpform.js?v=20260730s" defer></script>
+  <script src="notes.js?v=20260730s" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;

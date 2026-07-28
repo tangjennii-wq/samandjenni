@@ -63,7 +63,7 @@
     .hotelsplit .hshot{ aspect-ratio:16/9; }
   }
 </style>
-<link rel="stylesheet" href="site.css?v=20260730r">
+<link rel="stylesheet" href="site.css?v=20260730s">
 </head>
 <body class="has-mobile-actions">
 <header class="crest">
@@ -104,42 +104,176 @@
       <div class="rule"></div>
 
       <div class="hotelsplit">
+
         <div class="hotelside">
-          <div class="hotel">
-            <span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/lotte.jpg" alt="" loading="lazy" onerror="this.closest('.hshot').remove()"><span class="hbadge">Our block</span></span>
-            <div class="hin">
-              <h3 class="hname">Lotte New York Palace</h3>
-              <div class="hprice">$329 king · $379 two double beds</div>
-              <div class="hwhere">360 sq ft · ~15 min to the Pierre</div>
-              <div class="hnote"><span>Notes:</span> The biggest rooms of the three, and the two-bed sleeps four.</div>
-            </div>
-            <a class="bookbtn" href="https://www.lottenypalace.com/wedding-stories/tang--shleifer-wedding" target="_blank" rel="noopener">Book &rarr;</a>
+          <div class="recbar">
+            <div class="fgroup"><button class="fchip is-on" data-v="block" type="button">our block</button><button class="fchip" data-v="all" type="button">all hotels</button><button class="fchip" data-v="other" type="button">book your own</button><button class="fchip" data-v="Bowery" type="button">bowery</button><button class="fchip" data-v="Central Park South" type="button">central park south</button><button class="fchip" data-v="Downtown Brooklyn" type="button">downtown brooklyn</button><button class="fchip" data-v="Financial District" type="button">financial district</button><button class="fchip" data-v="Lower East Side" type="button">lower east side</button><button class="fchip" data-v="Meatpacking" type="button">meatpacking</button><button class="fchip" data-v="Midtown" type="button">midtown</button><button class="fchip" data-v="NoMad" type="button">nomad</button><button class="fchip" data-v="SoHo" type="button">soho</button><button class="fchip" data-v="Tribeca" type="button">tribeca</button><button class="fchip" data-v="Williamsburg" type="button">williamsburg</button></div>
+            <span class="fcount"><b id="hotelCount">3</b> stays</span>
           </div>
-          <div class="hotel">
-            <span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/thompson.jpg" alt="" loading="lazy" onerror="this.closest('.hshot').remove()"><span class="hbadge">Our block</span></span>
-            <div class="hin">
-              <h3 class="hname">Thompson Central Park</h3>
-              <div class="hprice">$369 / night</div>
-              <div class="hwhere">~300 sq ft · steps from the park</div>
-              <div class="hnote"><span>Notes:</span> Modern, and the shortest walk to the Pierre.</div>
+          <div class="hotelpanel">
+            <div class="hotelgrid">
+          <a class="hotel" data-kind="block" data-hood="Midtown" data-n="Lotte New York Palace" data-ll="40.75802,-73.97573" href="https://www.lottenypalace.com/wedding-stories/tang--shleifer-wedding" target="_blank" rel="noopener"><span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/lotte.jpg" alt="" loading="lazy" onerror="this.closest('.hshot').remove()"><span class="hbadge">Our block</span></span>
+            <span class="hin">
+              <span class="hname">Lotte New York Palace</span>
+              <span class="hprice">$329 king · $379 two doubles</span>
+              <span class="hwhere">360 sq ft · ~15 min to the Pierre</span>
+              <span class="hbook">Book &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="block" data-hood="Central Park South" data-n="Thompson Central Park" data-ll="40.76428,-73.97869" href="https://www.hyatt.com/events/en-US/group-booking/LGATP/G-3TSW" target="_blank" rel="noopener"><span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/thompson.jpg" alt="" loading="lazy" onerror="this.closest('.hshot').remove()"><span class="hbadge">Our block</span></span>
+            <span class="hin">
+              <span class="hname">Thompson Central Park</span>
+              <span class="hprice">$369 / night</span>
+              <span class="hwhere">~300 sq ft · steps from the park</span>
+              <span class="hbook">Book &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="block" data-hood="Midtown" data-n="Le Méridien, Central Park" data-ll="40.76447,-73.97815" href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1780579014068&amp;amp;key=GRP&amp;amp;app=resvlink" target="_blank" rel="noopener"><span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/meridien.jpg" alt="" loading="lazy" onerror="this.closest('.hshot').remove()"><span class="hbadge">Our block</span></span>
+            <span class="hin">
+              <span class="hname">Le Méridien, Central Park</span>
+              <span class="hprice">$279 / night</span>
+              <span class="hwhere">~250 sq ft · 120 W 57th St, ~12 min walk</span>
+              <span class="hbook">Book &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="SoHo" data-n="The Mercer Hotel" data-ll="40.72469,-74.00113" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Mercer%20Hotel%20SoHo%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">SoHo</span></span>
+            <span class="hin">
+              <span class="hname">The Mercer Hotel</span>
+              <span class="hprice">$$$$</span>
+              <span class="hwhere">discreet loft-style rooms above The Mercer Kitchen</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Bowery" data-n="citizenM Bowery" data-ll="40.72180,-73.99330" href="https://www.google.com/maps/search/?api=1&amp;query=citizenM%20Bowery%20Bowery%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Bowery</span></span>
+            <span class="hin">
+              <span class="hname">citizenM Bowery</span>
+              <span class="hprice">$</span>
+              <span class="hwhere">sleek and compact, walkable to the Friday party</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="Walker Hotel Tribeca" data-ll="40.71770,-74.00230" href="https://www.google.com/maps/search/?api=1&amp;query=Walker%20Hotel%20Tribeca%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Tribeca</span></span>
+            <span class="hin">
+              <span class="hname">Walker Hotel Tribeca</span>
+              <span class="hprice">$$</span>
+              <span class="hwhere">cozy boutique on cobblestoned blocks</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="Warren Street Hotel" data-ll="40.71550,-74.00970" href="https://www.google.com/maps/search/?api=1&amp;query=Warren%20Street%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Tribeca</span></span>
+            <span class="hin">
+              <span class="hname">Warren Street Hotel</span>
+              <span class="hprice">$$$</span>
+              <span class="hwhere">Firmdale&#x27;s Tribeca one, two Michelin Keys</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Financial District" data-n="The Beekman" data-ll="40.71120,-74.00640" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Beekman%20Financial%20District%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Financial District</span></span>
+            <span class="hin">
+              <span class="hname">The Beekman</span>
+              <span class="hprice">$$$</span>
+              <span class="hwhere">1883 landmark with a nine-story atrium</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Lower East Side" data-n="Nine Orchard" data-ll="40.71469,-73.99208" href="https://www.google.com/maps/search/?api=1&amp;query=Nine%20Orchard%20Lower%20East%20Side%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Lower East Side</span></span>
+            <span class="hin">
+              <span class="hname">Nine Orchard</span>
+              <span class="hprice">$$$</span>
+              <span class="hwhere">a 1912 bank turned arty-luxe. The design pick</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="NoMad" data-n="Ace Hotel New York" data-ll="40.74540,-73.98790" href="https://www.google.com/maps/search/?api=1&amp;query=Ace%20Hotel%20New%20York%20NoMad%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">NoMad</span></span>
+            <span class="hin">
+              <span class="hname">Ace Hotel New York</span>
+              <span class="hprice">$$</span>
+              <span class="hwhere">the original design-hotel lobby scene</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="The Greenwich Hotel" data-ll="40.71920,-74.01030" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Greenwich%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Tribeca</span></span>
+            <span class="hin">
+              <span class="hname">The Greenwich Hotel</span>
+              <span class="hprice">$$$$</span>
+              <span class="hwhere">De Niro&#x27;s. The Shibui Spa is unreal</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="The Roxy Hotel" data-ll="40.71800,-74.00440" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Roxy%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Tribeca</span></span>
+            <span class="hin">
+              <span class="hname">The Roxy Hotel</span>
+              <span class="hprice">$$$</span>
+              <span class="hwhere">jazz club, cinema and a great lobby bar</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Meatpacking" data-n="The Standard, High Line" data-ll="40.74060,-74.00890" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Standard%2C%20High%20Line%20Meatpacking%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Meatpacking</span></span>
+            <span class="hin">
+              <span class="hname">The Standard, High Line</span>
+              <span class="hprice">$$$</span>
+              <span class="hwhere">straddles the High Line. Iconic, a little wild</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Midtown" data-n="Park Central Hotel" data-ll="40.76499,-73.98357" href="https://www.google.com/maps/search/?api=1&amp;query=Park%20Central%20Hotel%20Midtown%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Midtown</span></span>
+            <span class="hin">
+              <span class="hname">Park Central Hotel</span>
+              <span class="hprice">$$</span>
+              <span class="hwhere">classic Midtown, a short hop to the Pierre</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Central Park South" data-n="JW Marriott Essex House" data-ll="40.76618,-73.97852" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Essex%20House%20Central%20Park%20South%20New%20York" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Central Park South</span></span>
+            <span class="hin">
+              <span class="hname">JW Marriott Essex House</span>
+              <span class="hprice">$$$</span>
+              <span class="hwhere">grand, and steps from the wedding</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="Wythe Hotel" data-ll="40.72110,-73.95750" href="https://www.google.com/maps/search/?api=1&amp;query=Wythe%20Hotel%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Williamsburg</span></span>
+            <span class="hin">
+              <span class="hname">Wythe Hotel</span>
+              <span class="hprice">$$$</span>
+              <span class="hwhere">factory conversion, best skyline views in the city</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="The William Vale" data-ll="40.72170,-73.95720" href="https://www.google.com/maps/search/?api=1&amp;query=The%20William%20Vale%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Williamsburg</span></span>
+            <span class="hin">
+              <span class="hname">The William Vale</span>
+              <span class="hprice">$$$</span>
+              <span class="hwhere">rooftop pool and huge views</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="The Hoxton, Williamsburg" data-ll="40.72050,-73.95790" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Hoxton%2C%20Williamsburg%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Williamsburg</span></span>
+            <span class="hin">
+              <span class="hname">The Hoxton, Williamsburg</span>
+              <span class="hprice">$$</span>
+              <span class="hwhere">hip lobby, good restaurants, easy Brooklyn cool</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
+          <a class="hotel" data-kind="other" data-hood="Downtown Brooklyn" data-n="Ace Hotel Brooklyn" data-ll="40.68850,-73.98270" href="https://www.google.com/maps/search/?api=1&amp;query=Ace%20Hotel%20Brooklyn%20Downtown%20Brooklyn%20Brooklyn" target="_blank" rel="noopener"><span class="hshot hshot--none"><span class="hbadge hbadge--alt">Downtown Brooklyn</span></span>
+            <span class="hin">
+              <span class="hname">Ace Hotel Brooklyn</span>
+              <span class="hprice">$$</span>
+              <span class="hwhere">sleek, and a quick ride back over the bridge</span>
+              <span class="hbook">Look it up &rarr;</span>
+            </span>
+          </a>
             </div>
-            <a class="bookbtn" href="https://www.hyatt.com/events/en-US/group-booking/LGATP/G-3TSW" target="_blank" rel="noopener">Book &rarr;</a>
-          </div>
-          <div class="hotel">
-            <span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/meridien.jpg" alt="" loading="lazy" onerror="this.closest('.hshot').remove()"><span class="hbadge">Our block</span></span>
-            <div class="hin">
-              <h3 class="hname">Le Méridien, Central Park</h3>
-              <div class="hprice">$279 / night</div>
-              <div class="hwhere">~250 sq ft · 120 W 57th St, ~12 min walk</div>
-              <div class="hnote"><span>Notes:</span> The friendly-price pick.</div>
-            </div>
-            <a class="bookbtn" href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1780579014068&amp;key=GRP&amp;app=resvlink" target="_blank" rel="noopener">Book &rarr;</a>
+            <p class="recempty" hidden>Nothing here — try another neighborhood.</p>
           </div>
         </div>
+
         <div class="hotelmap">
           <div id="sjmap" class="sjmap" data-mode="hotels"></div>
-      <p class="map-caption">deeper dives: <a href="https://www.mta.info/maps/subway" target="_blank" rel="noopener">official subway map</a> · <a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html" target="_blank" rel="noopener">NYT neighborhood map</a> · <a href="https://www.nytimes.com/2025/04/02/nyregion/nyc-new-subway-map.html" target="_blank" rel="noopener">NYT subway map</a></p>
+          <p class="map-caption">deeper dives: <a href="https://www.mta.info/maps/subway" target="_blank" rel="noopener">official subway map</a> · <a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html" target="_blank" rel="noopener">NYT neighborhood map</a></p>
         </div>
+
       </div>
 
       <h3 class="subhead">Prefer to book your own?</h3>
@@ -213,13 +347,13 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260730r" defer></script>
-  <script src="map.js?v=20260730r" defer></script>
-  <script src="account.js?v=20260730r" defer></script>
-  <script src="cal.js?v=20260730r" defer></script>
-  <script src="upload.js?v=20260730r" defer></script>
-  <script src="drawer.js?v=20260730r" defer></script>
-  <script src="rsvpform.js?v=20260730r" defer></script>
-  <script src="notes.js?v=20260730r" defer></script>
+  <script src="personalize.js?v=20260730s" defer></script>
+  <script src="map.js?v=20260730s" defer></script>
+  <script src="account.js?v=20260730s" defer></script>
+  <script src="cal.js?v=20260730s" defer></script>
+  <script src="upload.js?v=20260730s" defer></script>
+  <script src="drawer.js?v=20260730s" defer></script>
+  <script src="rsvpform.js?v=20260730s" defer></script>
+  <script src="notes.js?v=20260730s" defer></script>
 </body>
 </html>
