@@ -4,19 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>recs · sam + jenni</title>
+<title>shlang favorites · sam + jenni</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730v">
+<link rel="stylesheet" href="site.css?v=20260730w">
 <style>
   /* ---- recs: list scrolls on the left, map is the hero on the right -------- */
   /* Manhattan is tall and narrow — a portrait-ish frame suits it far better
      than a wide letterbox. Columns centred as a pair, like hotels. */
   /* the map takes whatever the list doesn't need, up to 860px */
   /* a true 25 / 75 split, so the map is always three-quarters of the row */
-  .recsplit{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:20px;
+  /* list one-third, map two-thirds */
+  .recsplit{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 2fr); gap:20px;
     align-items:start; margin-top:14px; }
   #recs{ overflow-x:clip; }
   #recs{ padding-top:14px; }
@@ -48,8 +49,7 @@
     overflow-y:auto; overscroll-behavior:contain; padding-right:7px; margin-right:-7px; }
   .recpanel::-webkit-scrollbar{ width:6px; }
   .recpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
-  .recgrid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;
-    align-items:start; }
+  .recgrid{ display:flex; flex-direction:column; gap:7px; }
   .recgrid > *{ flex:0 0 auto; }   /* never let cards shrink to fit */
   .rec{ position:relative; display:block; padding:0; overflow:hidden; text-decoration:none;
     color:inherit; border:1px solid var(--line); border-radius:var(--r-md); background:#fff;
@@ -133,7 +133,7 @@
 
   <section class="sect" id="recs">
     <div class="wrap">
-      <h2>Shlang Spots</h2>
+      <h2>Shlang Favorites</h2>
       <div class="rule"></div>
 
       <!-- map first, full width; filters float on it; the list lives underneath -->
@@ -141,7 +141,7 @@
 
         <div class="recside">
           <div class="recbar">
-            <div class="fgroup fgroup--areas"><button class="fchip is-on" data-f="area" data-v="fav" type="button">Shlang Favorites</button><button class="fchip" data-f="area" data-v="manhattan" type="button">all manhattan</button><button class="fchip" data-f="area" data-v="Downtown" type="button">downtown</button><button class="fchip" data-f="area" data-v="SoHo" type="button">soho</button><button class="fchip" data-f="area" data-v="Tribeca" type="button">tribeca</button><button class="fchip" data-f="area" data-v="East Village" type="button">east village</button><button class="fchip" data-f="area" data-v="Lower East Side" type="button">lower east side</button><button class="fchip" data-f="area" data-v="Gramercy" type="button">gramercy</button><button class="fchip" data-f="area" data-v="Greenwich" type="button">greenwich</button><button class="fchip" data-f="area" data-v="West Village" type="button">west village</button><button class="fchip" data-f="area" data-v="Chelsea" type="button">chelsea</button><button class="fchip" data-f="area" data-v="NoMad" type="button">nomad</button><button class="fchip" data-f="area" data-v="Midtown" type="button">midtown</button><button class="fchip" data-f="area" data-v="Koreatown" type="button">koreatown</button><button class="fchip" data-f="area" data-v="UWS" type="button">uws</button><button class="fchip" data-f="area" data-v="UES" type="button">ues</button><button class="fchip" data-f="area" data-v="Brooklyn" type="button">brooklyn</button><button class="fchip" data-f="area" data-v="Upstate" type="button">upstate</button></div>
+            <div class="fgroup fgroup--areas"><button class="fchip is-on" data-f="area" data-v="fav" type="button">our favorites</button><button class="fchip" data-f="area" data-v="manhattan" type="button">all manhattan</button><button class="fchip" data-f="area" data-v="Downtown" type="button">downtown</button><button class="fchip" data-f="area" data-v="SoHo" type="button">soho</button><button class="fchip" data-f="area" data-v="Tribeca" type="button">tribeca</button><button class="fchip" data-f="area" data-v="East Village" type="button">east village</button><button class="fchip" data-f="area" data-v="Lower East Side" type="button">lower east side</button><button class="fchip" data-f="area" data-v="Gramercy" type="button">gramercy</button><button class="fchip" data-f="area" data-v="Greenwich" type="button">greenwich</button><button class="fchip" data-f="area" data-v="West Village" type="button">west village</button><button class="fchip" data-f="area" data-v="Chelsea" type="button">chelsea</button><button class="fchip" data-f="area" data-v="NoMad" type="button">nomad</button><button class="fchip" data-f="area" data-v="Midtown" type="button">midtown</button><button class="fchip" data-f="area" data-v="Koreatown" type="button">koreatown</button><button class="fchip" data-f="area" data-v="UWS" type="button">uws</button><button class="fchip" data-f="area" data-v="UES" type="button">ues</button><button class="fchip" data-f="area" data-v="Brooklyn" type="button">brooklyn</button><button class="fchip" data-f="area" data-v="Upstate" type="button">upstate</button></div>
             <span class="fcount"><b id="recCount">21</b> places</span>
           </div>
           <div class="recpanel">
@@ -265,14 +265,14 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260730v" defer></script>
-  <script src="map.js?v=20260730v" defer></script>
-  <script src="account.js?v=20260730v" defer></script>
-  <script src="cal.js?v=20260730v" defer></script>
-  <script src="upload.js?v=20260730v" defer></script>
-  <script src="drawer.js?v=20260730v" defer></script>
-  <script src="rsvpform.js?v=20260730v" defer></script>
-  <script src="notes.js?v=20260730v" defer></script>
+  <script src="personalize.js?v=20260730w" defer></script>
+  <script src="map.js?v=20260730w" defer></script>
+  <script src="account.js?v=20260730w" defer></script>
+  <script src="cal.js?v=20260730w" defer></script>
+  <script src="upload.js?v=20260730w" defer></script>
+  <script src="drawer.js?v=20260730w" defer></script>
+  <script src="rsvpform.js?v=20260730w" defer></script>
+  <script src="notes.js?v=20260730w" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;
