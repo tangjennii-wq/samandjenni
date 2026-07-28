@@ -1,0 +1,86 @@
+// account.js — the little person in the nav.
+// Shows who you're signed in as, lets you correct your name/address, leave a
+// note (change of address, "we go by…", anything), or sign out.
+(function () {
+  var wrap = document.querySelector('.nav-acct');
+  if (!wrap) return;
+  var btn = wrap.querySelector('.acct-btn');
+  if (!btn) return;
+
+  function cookie(name){
+    var m = document.cookie.split('; ').find(function(r){ return r.indexOf(name + '=') === 0; });
+    return m ? decodeURIComponent(m.split('=').slice(1).join('=')) : '';
+  }
+  function titleCase(x){ return x.replace(/\b[a-z]/g, function(c){ return c.toUpperCase(); }); }
+
+  var who   = cookie('sj_guest').trim();
+  var isEmail = who.indexOf('@') > -1;
+  var tier  = (cookie('sj_tier') || '').trim();
+  var TIERNAME = { '1':'every event', '2':'rehearsal, Friday & Saturday',
+                   '3':'Friday & Saturday', '4':'the wedding' };
+
+  var pop = document.createElement('div');
+  pop.className = 'acct-pop';
+  pop.hidden = true;
+  pop.innerHTML =
+    '<div class="acct-head">' +
+      '<span class="acct-eyebrow">Signed in as</span>' +
+      '<b class="acct-who">' + (who ? (isEmail ? who : titleCase(who)) : 'a guest') + '</b>' +
+      (TIERNAME[tier] ? '<span class="acct-tier">You’re invited to ' + TIERNAME[tier] + '</span>' : '') +
+    '</div>' +
+    '<div class="acct-body">' +
+      '<p class="acct-intro">Anything we’ve got wrong? Tell us here.</p>' +
+      '<div class="note-field"><label class="note-l" for="acName">your name</label>' +
+        '<input id="acName" class="note-f" type="text" value="' +
+          (who && !isEmail ? titleCase(who).replace(/"/g,'&quot;') : '') + '"></div>' +
+      '<div class="note-field"><label class="note-l" for="acAddr">mailing address</label>' +
+        '<input id="acAddr" class="note-f" type="text" placeholder="where the invitation should go"></div>' +
+      '<div class="note-field"><label class="note-l" for="acNote">anything else</label>' +
+        '<textarea id="acNote" class="note-f note-ta" placeholder="new address, a name we spelled wrong, a question…"></textarea></div>' +
+      '<button class="note-btn acct-save" type="button">Send it over</button>' +
+      '<p class="acct-msg" hidden></p>' +
+      '<button class="acct-out" type="button">Sign out</button>' +
+    '</div>';
+  wrap.appendChild(pop);
+
+  function setOpen(on){
+    pop.hidden = !on;
+    btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); setOpen(pop.hidden); });
+  document.addEventListener('click', function(e){ if (!pop.hidden && !wrap.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !pop.hidden) { setOpen(false); btn.focus(); } });
+  pop.addEventListener('click', function(e){ e.stopPropagation(); });
+
+  var save = pop.querySelector('.acct-save');
+  var msg  = pop.querySelector('.acct-msg');
+  save.addEventListener('click', function(){
+    var v = function(id){ var el = pop.querySelector('#' + id); return el ? el.value.trim() : ''; };
+    if (!v('acName') && !v('acAddr') && !v('acNote')) {
+      msg.hidden = false; msg.className = 'acct-msg is-err';
+      msg.textContent = 'Fill in something first.'; return;
+    }
+    save.disabled = true; save.textContent = 'Sending…';
+    var saving = (window.SJUpload && window.SJUpload.save)
+      ? window.SJUpload.save('wedding_guest_details', {
+          guest_key: window.SJUpload.guestKey(),
+          name: v('acName'), address: v('acAddr'), note: v('acNote')
+        })
+      : Promise.reject(new Error('no uploader'));
+    saving.then(function(){
+      save.textContent = 'Sent ♡'; msg.hidden = false;
+      msg.className = 'acct-msg'; msg.textContent = 'Got it — thank you.';
+    }).catch(function(){
+      save.disabled = false; save.textContent = 'Send it over';
+      msg.hidden = false; msg.className = 'acct-msg is-err';
+      msg.textContent = 'That didn’t send — try again in a moment.';
+    });
+  });
+
+  pop.querySelector('.acct-out').addEventListener('click', function(){
+    ['sj_guest','sj_tier'].forEach(function(k){
+      document.cookie = k + '=; Path=/; Max-Age=0; SameSite=Lax';
+    });
+    location.href = '/gate';
+  });
+})();

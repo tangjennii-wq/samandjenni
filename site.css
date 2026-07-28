@@ -1507,3 +1507,43 @@ body.map-full .map-caption{ display:none !important; }
     border:0; background:none; color:var(--red); cursor:pointer; padding:0; }
   body.has-bottom-actions .nav-cal svg{ width:19px; height:19px; }
 }
+
+
+/* ---- the little person: who you are, and how to correct it ---------------- */
+.nav-acct{ position:relative; display:inline-flex; align-items:center; flex:0 0 auto; }
+.acct-btn{ -webkit-appearance:none; appearance:none; display:inline-flex; align-items:center;
+  justify-content:center; width:32px; height:32px; padding:0; border:0; border-radius:50%;
+  background:none; color:var(--dark); cursor:pointer; }
+.acct-btn svg{ width:19px; height:19px; }
+.acct-btn:hover{ color:var(--red); }
+.acct-btn[aria-expanded="true"]{ color:var(--red); }
+
+.acct-pop{ position:absolute; top:calc(100% + 10px); right:0; z-index:1400; width:300px;
+  background:#FDFAF3; border:1px solid var(--line); border-radius:var(--r-md);
+  box-shadow:0 14px 40px rgba(13,9,5,.22); overflow:hidden; text-align:left; }
+.acct-pop[hidden]{ display:none; }
+.acct-head{ padding:13px 15px 12px; background:var(--red); color:#fff; }
+.acct-eyebrow{ display:block; font-size:8.5px; font-weight:800; letter-spacing:.2em;
+  text-transform:uppercase; opacity:.85; }
+.acct-who{ display:block; margin-top:3px; font-size:15px; font-weight:700; word-break:break-word; }
+.acct-tier{ display:block; margin-top:4px; font-size:11px; opacity:.9; }
+.acct-body{ padding:13px 15px 15px; }
+.acct-intro{ margin:0 0 11px; font-size:12.5px; line-height:1.45; color:#8a7355; font-style:italic; }
+.acct-body .note-field + .note-field{ margin-top:10px; }
+.acct-body .note-ta{ min-height:56px; }
+.acct-save{ width:100%; margin-top:12px; min-height:42px; font-size:11px; }
+.acct-msg{ margin:9px 0 0; font-size:12px; font-weight:600; color:#5C8A52; }
+.acct-msg.is-err{ color:var(--red); }
+.acct-out{ display:block; width:100%; margin-top:11px; padding:8px; border:0; background:none;
+  font-family:inherit; font-size:11px; font-weight:700; letter-spacing:.06em;
+  color:#a2907a; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+.acct-out:hover{ color:var(--red); }
+
+@media(max-width:760px){
+  .acct-btn{ width:30px; height:30px; }
+  .acct-btn svg{ width:18px; height:18px; }
+  /* on a phone it becomes a sheet rather than a dropdown off a scrolling nav */
+  .acct-pop{ position:fixed; top:auto; bottom:0; left:0; right:0; width:auto;
+    border-radius:18px 18px 0 0; max-height:88dvh; overflow-y:auto;
+    padding-bottom:env(safe-area-inset-bottom); }
+}
