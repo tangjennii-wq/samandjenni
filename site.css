@@ -1391,3 +1391,21 @@ body.map-full .map-caption{ display:none !important; }
   .photo-stack .photo-eg{ display:block; width:140px; }
   .photo-stack .photo-drop{ width:100%; }
 }
+
+
+/* RSVP header: bigger and bolder again — it is the masthead of the form */
+.rsvp-head{ padding:20px 18px 17px; }
+.rsvp-title{ font-size:26px; font-weight:800; letter-spacing:.3em; }
+.rsvp-sub{ font-size:10px; font-weight:700; letter-spacing:.2em; margin-top:7px; opacity:1; }
+@media(max-width:760px){
+  .rsvp-head{ padding:14px 14px 12px; }
+  .rsvp-title{ font-size:20px; letter-spacing:.26em; }
+  .rsvp-sub{ font-size:9px; letter-spacing:.15em; margin-top:5px; }
+}
+
+/* a selected Yes turns into a little smiley */
+.yn.yes.on{ color:transparent; position:relative; }
+.yn.yes.on::after{ content:'\263A'; position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; line-height:1; color:var(--dark); }
+@media(max-width:760px){ .yn.yes.on::after{ font-size:17px; } }

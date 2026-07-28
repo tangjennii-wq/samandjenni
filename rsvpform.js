@@ -79,7 +79,7 @@
     return ('' +
       '<div class="rsvp-head">' +
         '<div class="rsvp-title">R S V P</div>' +
-        '<div class="rsvp-sub">kindly reply by February 26, 2027</div>' +
+        '<div class="rsvp-sub">kindly reply by January 2027</div>' +
       '</div>' +
       '<div class="rsvp-body">' +
         '<div class="rsvp-list">' + rows + '</div>' +
