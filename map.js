@@ -126,7 +126,10 @@
     { n: 'Minnewaska State Park Preserve', cat: 'do', lat: 41.73519, lng: -74.23914, note: 'New Paltz · Our hike. Clifftop carriage roads and the sky lakes, 90 min north.', url: 'https://www.google.com/maps/search/?api=1&query=Minnewaska%20State%20Park%20Preserve%20New%20Paltz%20NY' },
     { n: 'Hudson Hills Golf Course', cat: 'do', lat: 41.20150, lng: -73.85230, note: 'Ossining · Public Westchester course, 45 min up. Rolling and scenic.', url: 'https://www.google.com/maps/search/?api=1&query=Hudson%20Hills%20Golf%20Course%20Ossining%20NY' },
     { n: 'Centennial Golf Club', cat: 'do', lat: 41.42417, lng: -73.65583, note: 'Carmel · 27 holes by Larry Nelson. The best public track in the Hudson Valley.', url: 'https://www.google.com/maps/search/?api=1&query=Centennial%20Golf%20Club%20Carmel%20NY' },
+    { n: 'Balthazar', cat: 'eat', lat: 40.72266, lng: -73.99836, note: 'SoHo · The French brasserie. Go for breakfast, stay all morning.', url: 'https://www.google.com/maps/search/?api=1&query=Balthazar%20SoHo%20New%20York' },
+    { n: 'Le Bernardin', cat: 'eat', lat: 40.76175, lng: -73.98188, note: 'Midtown · Three stars, all seafood. The special-occasion one.', url: 'https://www.google.com/maps/search/?api=1&query=Le%20Bernardin%20Midtown%20New%20York' },
   ];
+
 
 
 
