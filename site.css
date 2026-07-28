@@ -1287,3 +1287,68 @@ body.map-full .map-caption{ display:none !important; }
 @media(max-width:760px){
   body.has-bottom-actions .hero-utils{ display:none !important; }
 }
+
+
+/* ============================================================
+   FORMS — lighter, airier pass
+   Keeps the red band and the gold CTA (the colour is the point) but takes the
+   weight out of everything around them: sentence-case labels instead of heavy
+   tracked-out caps, hairline borders, more breathing room.
+   ============================================================ */
+
+/* the red header: same colour, less shouting */
+.rsvp-head{ padding:16px 18px 14px; border-bottom:0; }
+.rsvp-title{ font-size:15px; font-weight:600; letter-spacing:.42em; }
+.rsvp-sub{ font-size:9.5px; font-weight:600; letter-spacing:.16em; opacity:.92; margin-top:5px; }
+
+/* labels: sentence case, light, quiet */
+.note-l{ font-size:11.5px; font-weight:600; letter-spacing:0; text-transform:none;
+  color:#9a8878; margin-bottom:5px; }
+.note-l .opt{ font-style:italic; }
+
+/* fields: hairline, roomier */
+.note-f{ border:1px solid rgba(13,9,5,.14); border-radius:10px; padding:12px 14px;
+  font-size:15px; font-weight:400; background:#fff; }
+.note-f:focus{ border-color:var(--red); box-shadow:none; }
+.note-f::placeholder{ color:#c9b8a2; font-weight:400; }
+
+/* event rows */
+.rsvp-list{ border:1px solid rgba(13,9,5,.12); border-radius:12px; }
+.rsvp-ev{ padding:14px 16px; border-bottom:1px solid rgba(13,9,5,.07); }
+.rsvp-ev:last-child{ border-bottom:0; }
+.rsvp-evname b{ font-size:14.5px; font-weight:600; letter-spacing:-.005em; }
+.rsvp-evname .ev-meta{ font-size:12px; color:#9a8878; }
+.rsvp-evname .ev-meta .ev-loc{ font-weight:600; }
+
+/* yes / no + the +1 toggle */
+.yn{ border:1px solid rgba(13,9,5,.16); border-radius:9px; font-size:10.5px;
+  font-weight:600; letter-spacing:.1em; color:#6b5a50; }
+.yn:hover{ background:#fff; border-color:var(--dark); }
+.plusone{ border:1px solid rgba(13,9,5,.12); border-radius:12px; padding:13px 16px; }
+.plusone-q{ font-size:13.5px; font-weight:600; }
+
+/* guest blocks */
+.guest-row{ border:1px solid rgba(13,9,5,.10); border-radius:12px; padding:14px 16px; }
+
+/* the send button keeps the gold, loses the shout */
+.rsvp-send, .note-btn{ font-size:11.5px; font-weight:700; letter-spacing:.16em;
+  border:0; border-radius:var(--r-pill); }
+
+/* the note form's intro */
+.note-sub--top{ font-size:13px; }
+.rsvp-photo-note{ font-size:12.5px; line-height:1.5; }
+.rsvp-photo-note b{ font-weight:600; }
+.photo-drop, .rsvp-photo-btn{ border-width:1px; border-style:dashed;
+  border-color:rgba(13,9,5,.22); font-weight:600; letter-spacing:.1em; }
+
+@media(max-width:760px){
+  .rsvp-head{ padding:12px 14px 11px; }
+  .rsvp-title{ font-size:13.5px; letter-spacing:.34em; }
+  .rsvp-sub{ font-size:8.5px; }
+  .rsvp-ev{ padding:11px 13px; }
+  .rsvp-evname b{ font-size:13.5px; }
+  .note-l{ font-size:10.5px; margin-bottom:3px; }
+  .note-f{ padding:10px 12px; font-size:16px; }   /* 16px: iOS must not zoom */
+  .guest-row{ padding:11px 13px; }
+  .plusone{ padding:10px 13px; }
+}
