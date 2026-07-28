@@ -31,104 +31,105 @@
     { n: 'The William Vale', cat: 'stay', lat: 40.72170, lng: -73.95720, note: 'Williamsburg · $$$ · rooftop pool and huge views', url: 'https://www.google.com/maps/search/?api=1&query=The%20William%20Vale%20Williamsburg%20Brooklyn' },
     { n: 'The Hoxton, Williamsburg', cat: 'stay', lat: 40.72050, lng: -73.95790, note: 'Williamsburg · $$ · hip lobby, good restaurants, easy Brooklyn cool', url: 'https://www.google.com/maps/search/?api=1&query=The%20Hoxton%2C%20Williamsburg%20Williamsburg%20Brooklyn' },
     { n: 'Ace Hotel Brooklyn', cat: 'stay', lat: 40.68850, lng: -73.98270, note: 'Downtown Brooklyn · $$ · sleek, and a quick ride back over the bridge', url: 'https://www.google.com/maps/search/?api=1&query=Ace%20Hotel%20Brooklyn%20Downtown%20Brooklyn%20Brooklyn' },
-    { n: 'Atomix', cat: 'eat', lat: 40.74440, lng: -73.98295, note: 'NoMad · Jenni\'s #1. Two-star Korean tasting counter — book the second reservations open.', url: 'https://www.google.com/maps/search/?api=1&query=Atomix%20NoMad%20New%20York' },
-    { n: 'Torrisi', cat: 'eat', lat: 40.72415, lng: -73.99540, note: 'Nolita · Sam\'s #1. Italian-American in the old Puck Building — if you can get a table, take it.', url: 'https://www.google.com/maps/search/?api=1&query=Torrisi%20Nolita%20New%20York' },
-    { n: 'Estela', cat: 'eat', lat: 40.72468, lng: -73.99476, note: 'Nolita · Our date-night place. Small, loud, perfect.', url: 'https://www.google.com/maps/search/?api=1&query=Estela%20Nolita%20New%20York' },
-    { n: 'Carbone', cat: 'eat', lat: 40.72791, lng: -74.00019, note: 'Greenwich Village · Sceney, old-school-ish. Get the Caesar.', url: 'https://www.google.com/maps/search/?api=1&query=Carbone%20Greenwich%20Village%20New%20York' },
-    { n: 'Semma', cat: 'eat', lat: 40.73603, lng: -74.00052, note: 'West Village · South Indian, fun area.', url: 'https://www.google.com/maps/search/?api=1&query=Semma%20West%20Village%20New%20York' },
-    { n: 'Cote', cat: 'eat', lat: 40.74129, lng: -73.99127, note: 'Flatiron · Sceney Korean steakhouse.', url: 'https://www.google.com/maps/search/?api=1&query=Cote%20Flatiron%20New%20York' },
-    { n: 'Shmoné', cat: 'eat', lat: 40.73328, lng: -73.99862, note: 'Greenwich Village · Israeli, big fun energy.', url: 'https://www.google.com/maps/search/?api=1&query=Shmon%C3%A9%20Greenwich%20Village%20New%20York' },
-    { n: 'Oiji Mi', cat: 'eat', lat: 40.73938, lng: -73.99191, note: 'Flatiron · LA-vibey modern Korean.', url: 'https://www.google.com/maps/search/?api=1&query=Oiji%20Mi%20Flatiron%20New%20York' },
-    { n: 'Claud', cat: 'eat', lat: 40.73087, lng: -73.98956, note: 'East Village · Sister to Penny. Small, seasonal, always good.', url: 'https://www.google.com/maps/search/?api=1&query=Claud%20East%20Village%20New%20York' },
-    { n: 'Rezdora', cat: 'eat', lat: 40.73910, lng: -73.98943, note: 'Flatiron · Great pasta, great vibe.', url: 'https://www.google.com/maps/search/?api=1&query=Rezdora%20Flatiron%20New%20York' },
-    { n: 'Chambers', cat: 'eat', lat: 40.71471, lng: -74.00761, note: 'Tribeca · Neighborhood-y — sit at the counter.', url: 'https://www.google.com/maps/search/?api=1&query=Chambers%20Tribeca%20New%20York' },
-    { n: 'Comal', cat: 'eat', lat: 40.71905, lng: -73.99244, note: 'Lower East Side · Good tacos, easy night.', url: 'https://www.google.com/maps/search/?api=1&query=Comal%20Lower%20East%20Side%20New%20York' },
-    { n: 'Tucci', cat: 'eat', lat: 40.72660, lng: -73.99587, note: 'NoHo · Vibey Italian — and an easier reservation than Carbone.', url: 'https://www.google.com/maps/search/?api=1&query=Tucci%20NoHo%20New%20York' },
-    { n: 'Gramercy Tavern', cat: 'eat', lat: 40.73899, lng: -73.98948, note: 'Flatiron · Always good.', url: 'https://www.google.com/maps/search/?api=1&query=Gramercy%20Tavern%20Flatiron%20New%20York' },
-    { n: 'Union Square Cafe', cat: 'eat', lat: 40.73776, lng: -73.98805, note: 'Union Square · One of Sam\'s favorites in Gramercy.', url: 'https://www.google.com/maps/search/?api=1&query=Union%20Square%20Cafe%20Union%20Square%20New%20York' },
-    { n: 'Casa Mono', cat: 'eat', lat: 40.73612, lng: -73.98712, note: 'Gramercy · Fun Spanish spot.', url: 'https://www.google.com/maps/search/?api=1&query=Casa%20Mono%20Gramercy%20New%20York' },
-    { n: 'Hawksmoor', cat: 'eat', lat: 40.73953, lng: -73.98645, note: 'Gramercy · Good steak, British vibes.', url: 'https://www.google.com/maps/search/?api=1&query=Hawksmoor%20Gramercy%20New%20York' },
-    { n: 'Jeju Noodle Bar', cat: 'eat', lat: 40.73319, lng: -74.00737, note: 'West Village · Ramen.', url: 'https://www.google.com/maps/search/?api=1&query=Jeju%20Noodle%20Bar%20West%20Village%20New%20York' },
-    { n: 'Raku', cat: 'eat', lat: 40.72692, lng: -73.98755, note: 'East Village · Great udon.', url: 'https://www.google.com/maps/search/?api=1&query=Raku%20East%20Village%20New%20York' },
-    { n: 'Fish Cheeks', cat: 'eat', lat: 40.72614, lng: -73.99323, note: 'NoHo · Thai, fun.', url: 'https://www.google.com/maps/search/?api=1&query=Fish%20Cheeks%20NoHo%20New%20York' },
-    { n: 'Freemans', cat: 'eat', lat: 40.72265, lng: -73.99247, note: 'Lower East Side · Down a graffiti alley, taxidermy on the walls. A New York classic.', url: 'https://www.google.com/maps/search/?api=1&query=Freemans%20Lower%20East%20Side%20New%20York' },
-    { n: 'Banzarbar', cat: 'eat', lat: 40.72268, lng: -73.99244, note: 'Lower East Side · The 14-seat speakeasy upstairs at Freemans. Go for a nightcap.', url: 'https://www.google.com/maps/search/?api=1&query=Banzarbar%20Lower%20East%20Side%20New%20York' },
-    { n: 'Anita La Mamma del Gelato', cat: 'eat', lat: 40.77473, lng: -73.95412, note: 'Multiple · Gelato worth the line.', url: 'https://www.google.com/maps/search/?api=1&query=Anita%20La%20Mamma%20del%20Gelato%20New%20York' },
-    { n: 'Caffè Panna', cat: 'eat', lat: 40.73699, lng: -73.98679, note: 'Gramercy · Ice cream that people queue around the block for.', url: 'https://www.google.com/maps/search/?api=1&query=Caff%C3%A8%20Panna%20Gramercy%20New%20York' },
-    { n: 'Venchi', cat: 'eat', lat: 40.73736, lng: -73.99034, note: 'Multiple · Italian chocolate + gelato. The wall of chocolate.', url: 'https://www.google.com/maps/search/?api=1&query=Venchi%20New%20York' },
-    { n: 'Hani\'s Bakery & Cafe', cat: 'eat', lat: 40.72914, lng: -73.98994, note: 'East Village · Korean-ish pastry. The croissants.', url: 'https://www.google.com/maps/search/?api=1&query=Hani%27s%20Bakery%20%26%20Cafe%20East%20Village%20New%20York' },
-    { n: 'Kith Treats', cat: 'eat', lat: 40.72595, lng: -73.99454, note: 'Multiple · Cereal soft-serve inside the streetwear store. Very New York.', url: 'https://www.google.com/maps/search/?api=1&query=Kith%20Treats%20New%20York' },
-    { n: 'Daily Provisions', cat: 'eat', lat: 40.73764, lng: -73.98767, note: 'Multiple · Crullers, egg sandwiches, the everyday one.', url: 'https://www.google.com/maps/search/?api=1&query=Daily%20Provisions%20New%20York' },
-    { n: 'Los Tacos No. 1', cat: 'eat', lat: 40.74073, lng: -74.00561, note: 'Multiple · The adobada. Standing room only, always.', url: 'https://www.google.com/maps/search/?api=1&query=Los%20Tacos%20No.%201%20New%20York' },
-    { n: 'Santo Taco', cat: 'eat', lat: 40.72120, lng: -73.99685, note: 'Nolita · Good tacos.', url: 'https://www.google.com/maps/search/?api=1&query=Santo%20Taco%20Nolita%20New%20York' },
-    { n: 'Huso', cat: 'eat', lat: 40.71740, lng: -74.01063, note: 'Tribeca · Caviar tasting counter — a small, ridiculous treat.', url: 'https://www.google.com/maps/search/?api=1&query=Huso%20Tribeca%20New%20York' },
-    { n: 'Sorate', cat: 'eat', lat: 40.73798, lng: -73.98932, note: 'Union Square · Matcha.', url: 'https://www.google.com/maps/search/?api=1&query=Sorate%20Union%20Square%20New%20York' },
-    { n: 'Penny', cat: 'eat', lat: 40.73082, lng: -73.98971, note: 'East Village · Our go-to seafood. The shrimp is fire.', url: 'https://www.google.com/maps/search/?api=1&query=Penny%20East%20Village%20New%20York' },
-    { n: 'Saint Tuesday', cat: 'eat', lat: 40.71820, lng: -74.00175, note: 'Tribeca · Cozy basement jazz bar.', url: 'https://www.google.com/maps/search/?api=1&query=Saint%20Tuesday%20Tribeca%20New%20York' },
-    { n: 'Elvis', cat: 'eat', lat: 40.72694, lng: -73.99278, note: 'NoHo · Fun, girly.', url: 'https://www.google.com/maps/search/?api=1&query=Elvis%20NoHo%20New%20York' },
-    { n: 'Tokyo Record Bar', cat: 'eat', lat: 40.73060, lng: -74.00022, note: 'Greenwich Village · Omakase where every course comes with a record side. Tiny, reservation-only.', url: 'https://www.google.com/maps/search/?api=1&query=Tokyo%20Record%20Bar%20Greenwich%20Village%20New%20York' },
-    { n: 'Bar Miller', cat: 'eat', lat: 40.72396, lng: -73.98083, note: 'East Village · Homey hipster omakase.', url: 'https://www.google.com/maps/search/?api=1&query=Bar%20Miller%20East%20Village%20New%20York' },
-    { n: 'Office of Mr. Moto', cat: 'eat', lat: 40.72682, lng: -73.98403, note: 'East Village · Low-key but cool omakase.', url: 'https://www.google.com/maps/search/?api=1&query=Office%20of%20Mr.%20Moto%20East%20Village%20New%20York' },
-    { n: 'Crevette', cat: 'eat', lat: 40.72962, lng: -74.00259, note: 'West Village · LA-ish seafood — bright, breezy, raw bar.', url: 'https://www.google.com/maps/search/?api=1&query=Crevette%20West%20Village%20New%20York' },
-    { n: 'Coqodaq', cat: 'eat', lat: 40.74008, lng: -73.98875, note: 'Flatiron · Korean fried chicken in a gilded room. Overhyped, still fun.', url: 'https://www.google.com/maps/search/?api=1&query=Coqodaq%20Flatiron%20New%20York' },
-    { n: 'Cervo\'s', cat: 'eat', lat: 40.71480, lng: -73.99135, note: 'Lower East Side · Portuguese-Spanish seafood, small and lively.', url: 'https://www.google.com/maps/search/?api=1&query=Cervo%27s%20Lower%20East%20Side%20New%20York' },
-    { n: 'Sunn\'s', cat: 'eat', lat: 40.71438, lng: -73.99185, note: 'Lower East Side · Jenni loves this spot. OpenTable, so it\'s gettable.', url: 'https://www.google.com/maps/search/?api=1&query=Sunn%27s%20Lower%20East%20Side%20New%20York' },
-    { n: 'Café Zaffri', cat: 'eat', lat: 40.73682, lng: -73.99183, note: 'Union Square · Overpriced, but a beautiful space.', url: 'https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Zaffri%20Union%20Square%20New%20York' },
-    { n: 'Fedora', cat: 'eat', lat: 40.73450, lng: -74.00296, note: 'West Village · Cozy and intimate.', url: 'https://www.google.com/maps/search/?api=1&query=Fedora%20West%20Village%20New%20York' },
-    { n: 'The Portrait Bar', cat: 'eat', lat: 40.74476, lng: -73.98733, note: 'NoMad · Plush hotel bar in the Fifth Avenue Hotel. Dressy, in a good way.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Portrait%20Bar%20NoMad%20New%20York' },
-    { n: 'Parcelle', cat: 'eat', lat: 40.71438, lng: -73.99189, note: 'Chinatown · Wine bar.', url: 'https://www.google.com/maps/search/?api=1&query=Parcelle%20Chinatown%20New%20York' },
-    { n: 'Smithereens', cat: 'eat', lat: 40.72776, lng: -73.98422, note: 'East Village · Hipsters and seafood.', url: 'https://www.google.com/maps/search/?api=1&query=Smithereens%20East%20Village%20New%20York' },
-    { n: 'Dame', cat: 'eat', lat: 40.72891, lng: -74.00168, note: 'Greenwich Village · British fish and chips, done properly. Tiny.', url: 'https://www.google.com/maps/search/?api=1&query=Dame%20Greenwich%20Village%20New%20York' },
-    { n: 'Bridges', cat: 'eat', lat: 40.71390, lng: -73.99745, note: 'Chinatown · Amazing food — classy but chill.', url: 'https://www.google.com/maps/search/?api=1&query=Bridges%20Chinatown%20New%20York' },
-    { n: 'Cosme', cat: 'eat', lat: 40.73951, lng: -73.98840, note: 'Flatiron · Enrique Olvera. The husk meringue is fire.', url: 'https://www.google.com/maps/search/?api=1&query=Cosme%20Flatiron%20New%20York' },
-    { n: 'Family Meal at Blue Hill', cat: 'eat', lat: 40.73090, lng: -73.99860, note: 'Greenwich Village · Farm-to-table, minus the ceremony.', url: 'https://www.google.com/maps/search/?api=1&query=Family%20Meal%20at%20Blue%20Hill%20Greenwich%20Village%20New%20York' },
-    { n: 'Sip & Guzzle', cat: 'eat', lat: 40.73109, lng: -74.00220, note: 'West Village · Two bars in one — cocktails downstairs, serious ones up.', url: 'https://www.google.com/maps/search/?api=1&query=Sip%20%26%20Guzzle%20West%20Village%20New%20York' },
-    { n: 'One White Street', cat: 'eat', lat: 40.71850, lng: -74.00470, note: 'Tribeca · Really good food, a little fancy.', url: 'https://www.google.com/maps/search/?api=1&query=One%20White%20Street%20Tribeca%20New%20York' },
-    { n: 'Malaparte', cat: 'eat', lat: 40.73790, lng: -74.00760, note: 'West Village · Walk-in Italian. Go early, put your name down.', url: 'https://www.google.com/maps/search/?api=1&query=Malaparte%20West%20Village%20New%20York' },
-    { n: 'Ci Siamo', cat: 'eat', lat: 40.75260, lng: -73.99500, note: 'Hudson Yards · Live-fire Italian. Big room, big night.', url: 'https://www.google.com/maps/search/?api=1&query=Ci%20Siamo%20Hudson%20Yards%20New%20York' },
-    { n: 'Lilia', cat: 'eat', lat: 40.71620, lng: -73.95440, note: 'Williamsburg · Pasta, yum.', url: 'https://www.google.com/maps/search/?api=1&query=Lilia%20Williamsburg%20Brooklyn' },
-    { n: 'Misi', cat: 'eat', lat: 40.71050, lng: -73.96700, note: 'Williamsburg · Good pasta.', url: 'https://www.google.com/maps/search/?api=1&query=Misi%20Williamsburg%20Brooklyn' },
-    { n: 'Public Records', cat: 'eat', lat: 40.68390, lng: -73.98800, note: 'Gowanus · Hipster sound system.', url: 'https://www.google.com/maps/search/?api=1&query=Public%20Records%20Gowanus%20Brooklyn' },
-    { n: 'Eavesdrop', cat: 'eat', lat: 40.72440, lng: -73.95090, note: 'Greenpoint · Records, drinks, no attitude.', url: 'https://www.google.com/maps/search/?api=1&query=Eavesdrop%20Greenpoint%20Brooklyn' },
-    { n: 'Saint Julivert Fisherie', cat: 'eat', lat: 40.68796, lng: -73.99554, note: 'Cobble Hill · Seafood from the La Vara team. Small and very good.', url: 'https://www.google.com/maps/search/?api=1&query=Saint%20Julivert%20Fisherie%20Cobble%20Hill%20Brooklyn' },
-    { n: 'La Vara', cat: 'eat', lat: 40.68779, lng: -73.99562, note: 'Cobble Hill · Spanish tapas, one star. Worth the trip.', url: 'https://www.google.com/maps/search/?api=1&query=La%20Vara%20Cobble%20Hill%20Brooklyn' },
-    { n: 'Lucali', cat: 'eat', lat: 40.68191, lng: -74.00040, note: 'Carroll Gardens · BYOB pizza, 30 seats, no reservations. Put your name down early.', url: 'https://www.google.com/maps/search/?api=1&query=Lucali%20Carroll%20Gardens%20Brooklyn' },
-    { n: 'L\'Appartement 4F', cat: 'eat', lat: 40.69499, lng: -73.99479, note: 'Brooklyn Heights · French bakery. The croissant cereal.', url: 'https://www.google.com/maps/search/?api=1&query=L%27Appartement%204F%20Brooklyn%20Heights%20Brooklyn' },
-    { n: 'Radio Bakery', cat: 'eat', lat: 40.73236, lng: -73.95485, note: 'Greenpoint · Pastries and sandwiches all day. Go in the morning.', url: 'https://www.google.com/maps/search/?api=1&query=Radio%20Bakery%20Greenpoint%20Brooklyn' },
-    { n: 'Le Coucou', cat: 'eat', lat: 40.71917, lng: -74.00014, note: 'SoHo · French, in the 11 Howard hotel. The pretty special-occasion one downtown.', url: 'https://www.google.com/maps/search/?api=1&query=Le%20Coucou%20SoHo%20New%20York' },
-    { n: 'Happier Grocery', cat: 'eat', lat: 40.71980, lng: -74.00430, note: 'SoHo · The photogenic wellness grocery. Smoothies, hot bar, very green.', url: 'https://www.google.com/maps/search/?api=1&query=Happier%20Grocery%20SoHo%20New%20York' },
-    { n: 'Grandaisy Bakery', cat: 'eat', lat: 40.71963, lng: -74.00614, note: 'Tribeca · Roman-style pizza bianca and good bread.', url: 'https://www.google.com/maps/search/?api=1&query=Grandaisy%20Bakery%20Tribeca%20New%20York' },
-    { n: 'Rigor Hill Market', cat: 'eat', lat: 40.71927, lng: -74.00604, note: 'Tribeca · Prepared foods from their own Hudson Valley farm.', url: 'https://www.google.com/maps/search/?api=1&query=Rigor%20Hill%20Market%20Tribeca%20New%20York' },
-    { n: 'Dagon', cat: 'eat', lat: 40.79098, lng: -73.97455, note: 'Upper West Side · Modern Israeli. Worth going uptown for.', url: 'https://www.google.com/maps/search/?api=1&query=Dagon%20Upper%20West%20Side%20New%20York' },
-    { n: 'Blue Hill at Stone Barns', cat: 'eat', lat: 41.10409, lng: -73.82852, note: 'Pocantico Hills · Dan Barber\'s farm. A tasting menu and a whole afternoon, 45 min north.', url: 'https://www.google.com/maps/search/?api=1&query=Blue%20Hill%20at%20Stone%20Barns%20Pocantico%20Hills%20NY' },
-    { n: 'Jongro BBQ', cat: 'eat', lat: 40.74736, lng: -73.98615, note: 'Koreatown · Tabletop grill, no reservations. The K-town anchor.', url: 'https://www.google.com/maps/search/?api=1&query=Jongro%20BBQ%20Koreatown%20New%20York' },
-    { n: 'Karaoke City', cat: 'do', lat: 40.74736, lng: -73.98615, note: 'Koreatown · 22 W 32nd, 7th floor. Private rooms, open very late.', url: 'https://www.google.com/maps/search/?api=1&query=Karaoke%20City%20Koreatown%20New%20York' },
-    { n: 'Karaoke Boho', cat: 'do', lat: 40.73180, lng: -74.00190, note: 'West Village · Cosier and less fluorescent than K-town. Book the room.', url: 'https://www.google.com/maps/search/?api=1&query=Karaoke%20Boho%20West%20Village%20New%20York' },
-    { n: 'Central Park', cat: 'do', lat: 40.78260, lng: -73.96540, note: 'Central Park · The whole thing. Enter at 72nd and wander.', url: 'https://www.google.com/maps/search/?api=1&query=Central%20Park%20Central%20Park%20New%20York' },
-    { n: 'Prospect Park', cat: 'do', lat: 40.66210, lng: -73.96900, note: 'Prospect Heights · Olmsted\'s other one. Bigger meadow, fewer tourists.', url: 'https://www.google.com/maps/search/?api=1&query=Prospect%20Park%20Prospect%20Heights%20Brooklyn' },
-    { n: 'Guggenheim', cat: 'do', lat: 40.78278, lng: -73.95917, note: 'Upper East Side · Jenni\'s favorite museum — the Frank Lloyd Wright spiral is the point.', url: 'https://www.google.com/maps/search/?api=1&query=Guggenheim%20Upper%20East%20Side%20New%20York' },
-    { n: 'Cooper Hewitt', cat: 'do', lat: 40.78556, lng: -73.95889, note: 'Upper East Side · Design museum in the Carnegie Mansion. Small and delightful.', url: 'https://www.google.com/maps/search/?api=1&query=Cooper%20Hewitt%20Upper%20East%20Side%20New%20York' },
-    { n: 'MoMA', cat: 'do', lat: 40.76139, lng: -73.97750, note: 'Midtown · Ten minutes from the Pierre. Go early.', url: 'https://www.google.com/maps/search/?api=1&query=MoMA%20Midtown%20New%20York' },
-    { n: 'Storm King Art Center', cat: 'do', lat: 41.39944, lng: -74.05472, note: 'Hudson Valley · 500 acres of monumental sculpture upstate. A whole day, and worth it.', url: 'https://www.google.com/maps/search/?api=1&query=Storm%20King%20Art%20Center%20Hudson%20Valley%20NY' },
-    { n: 'David Zwirner', cat: 'do', lat: 40.74620, lng: -74.00580, note: 'Chelsea · Anchor of the Chelsea gallery walk. Free.', url: 'https://www.google.com/maps/search/?api=1&query=David%20Zwirner%20Chelsea%20New%20York' },
-    { n: 'Gagosian', cat: 'do', lat: 40.74830, lng: -74.00430, note: 'Chelsea · Blue-chip, always a show worth seeing.', url: 'https://www.google.com/maps/search/?api=1&query=Gagosian%20Chelsea%20New%20York' },
-    { n: 'Hauser & Wirth', cat: 'do', lat: 40.74690, lng: -74.00500, note: 'Chelsea · Big, ambitious shows in a former warehouse.', url: 'https://www.google.com/maps/search/?api=1&query=Hauser%20%26%20Wirth%20Chelsea%20New%20York' },
-    { n: 'kurimanzutto', cat: 'do', lat: 40.74640, lng: -74.00570, note: 'Chelsea · Mexico City gallery\'s New York space.', url: 'https://www.google.com/maps/search/?api=1&query=kurimanzutto%20Chelsea%20New%20York' },
-    { n: 'The High Line', cat: 'do', lat: 40.73990, lng: -74.00650, note: 'Meatpacking · Walk it into the galleries — they\'re all right there.', url: 'https://www.google.com/maps/search/?api=1&query=The%20High%20Line%20Meatpacking%20New%20York' },
-    { n: 'Little Island', cat: 'do', lat: 40.73806, lng: -74.01083, note: 'Meatpacking · The park on tulips in the Hudson. Free, strange, lovely.', url: 'https://www.google.com/maps/search/?api=1&query=Little%20Island%20Meatpacking%20New%20York' },
-    { n: 'The Edge', cat: 'do', lat: 40.75380, lng: -74.00210, note: 'Hudson Yards · Glass floor, 100 storeys up. Do it at sunset.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Edge%20Hudson%20Yards%20New%20York' },
-    { n: 'Chelsea Piers Golf Club', cat: 'do', lat: 40.74610, lng: -74.00790, note: 'Chelsea · Four-tier driving range over the Hudson. Absurd and great.', url: 'https://www.google.com/maps/search/?api=1&query=Chelsea%20Piers%20Golf%20Club%20Chelsea%20New%20York' },
-    { n: 'The Ramble', cat: 'do', lat: 40.77842, lng: -73.97137, note: 'Central Park · The wild wooded part of the park. Get lost on purpose.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Ramble%20Central%20Park%20New%20York' },
-    { n: 'Madison Square Park', cat: 'do', lat: 40.74167, lng: -73.98806, note: 'Flatiron · Shake Shack\'s original, plus whatever sculpture is up.', url: 'https://www.google.com/maps/search/?api=1&query=Madison%20Square%20Park%20Flatiron%20New%20York' },
-    { n: 'Union Square Greenmarket', cat: 'do', lat: 40.73620, lng: -73.99060, note: 'Union Square · Mon/Wed/Fri/Sat. The best browsing in the city.', url: 'https://www.google.com/maps/search/?api=1&query=Union%20Square%20Greenmarket%20Union%20Square%20New%20York' },
-    { n: 'New York Public Library', cat: 'do', lat: 40.75318, lng: -73.98225, note: 'Midtown · The Beaux-Arts main branch. Walk past the lions into the Rose Reading Room.', url: 'https://www.google.com/maps/search/?api=1&query=New%20York%20Public%20Library%20Midtown%20New%20York' },
-    { n: 'Moynihan Train Hall', cat: 'do', lat: 40.75111, lng: -73.99528, note: 'Midtown · The good half of Penn Station — a glass-roofed hall in the old post office.', url: 'https://www.google.com/maps/search/?api=1&query=Moynihan%20Train%20Hall%20Midtown%20New%20York' },
-    { n: 'Minnewaska State Park Preserve', cat: 'do', lat: 41.73519, lng: -74.23914, note: 'New Paltz · Our hike. Clifftop carriage roads and the sky lakes, 90 min north.', url: 'https://www.google.com/maps/search/?api=1&query=Minnewaska%20State%20Park%20Preserve%20New%20Paltz%20NY' },
-    { n: 'Hudson Hills Golf Course', cat: 'do', lat: 41.20150, lng: -73.85230, note: 'Ossining · Public Westchester course, 45 min up. Rolling and scenic.', url: 'https://www.google.com/maps/search/?api=1&query=Hudson%20Hills%20Golf%20Course%20Ossining%20NY' },
-    { n: 'Centennial Golf Club', cat: 'do', lat: 41.42417, lng: -73.65583, note: 'Carmel · 27 holes by Larry Nelson. The best public track in the Hudson Valley.', url: 'https://www.google.com/maps/search/?api=1&query=Centennial%20Golf%20Club%20Carmel%20NY' },
-    { n: 'Balthazar', cat: 'eat', lat: 40.72266, lng: -73.99836, note: 'SoHo · The French brasserie. Go for breakfast, stay all morning.', url: 'https://www.google.com/maps/search/?api=1&query=Balthazar%20SoHo%20New%20York' },
-    { n: 'Le Bernardin', cat: 'eat', lat: 40.76175, lng: -73.98188, note: 'Midtown · Three stars, all seafood. The special-occasion one.', url: 'https://www.google.com/maps/search/?api=1&query=Le%20Bernardin%20Midtown%20New%20York' },
+    { n: 'Atomix', cat: 'eat', area: 'NoMad', boro: 'manhattan', fav: true, lat: 40.74440, lng: -73.98295, note: 'NoMad · Jenni\'s #1. Two-star Korean tasting counter — book the second reservations open.', url: 'https://www.google.com/maps/search/?api=1&query=Atomix%20NoMad%20New%20York' },
+    { n: 'Torrisi', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: true, lat: 40.72415, lng: -73.99540, note: 'Nolita · Sam\'s #1. Italian-American in the old Puck Building — if you can get a table, take it.', url: 'https://www.google.com/maps/search/?api=1&query=Torrisi%20Nolita%20New%20York' },
+    { n: 'Estela', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: true, lat: 40.72468, lng: -73.99476, note: 'Nolita · Our date-night place. Small, loud, perfect.', url: 'https://www.google.com/maps/search/?api=1&query=Estela%20Nolita%20New%20York' },
+    { n: 'Carbone', cat: 'eat', area: 'Greenwich', boro: 'manhattan', fav: true, lat: 40.72791, lng: -74.00019, note: 'Greenwich Village · Sceney, old-school-ish. Get the Caesar.', url: 'https://www.google.com/maps/search/?api=1&query=Carbone%20Greenwich%20Village%20New%20York' },
+    { n: 'Semma', cat: 'eat', area: 'West Village', boro: 'manhattan', fav: false, lat: 40.73603, lng: -74.00052, note: 'West Village · South Indian, fun area.', url: 'https://www.google.com/maps/search/?api=1&query=Semma%20West%20Village%20New%20York' },
+    { n: 'Cote', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.74129, lng: -73.99127, note: 'Flatiron · Sceney Korean steakhouse.', url: 'https://www.google.com/maps/search/?api=1&query=Cote%20Flatiron%20New%20York' },
+    { n: 'Shmoné', cat: 'eat', area: 'Greenwich', boro: 'manhattan', fav: false, lat: 40.73328, lng: -73.99862, note: 'Greenwich Village · Israeli, big fun energy.', url: 'https://www.google.com/maps/search/?api=1&query=Shmon%C3%A9%20Greenwich%20Village%20New%20York' },
+    { n: 'Oiji Mi', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: true, lat: 40.73938, lng: -73.99191, note: 'Flatiron · LA-vibey modern Korean.', url: 'https://www.google.com/maps/search/?api=1&query=Oiji%20Mi%20Flatiron%20New%20York' },
+    { n: 'Claud', cat: 'eat', area: 'East Village', boro: 'manhattan', fav: false, lat: 40.73087, lng: -73.98956, note: 'East Village · Sister to Penny. Small, seasonal, always good.', url: 'https://www.google.com/maps/search/?api=1&query=Claud%20East%20Village%20New%20York' },
+    { n: 'Rezdora', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73910, lng: -73.98943, note: 'Flatiron · Great pasta, great vibe.', url: 'https://www.google.com/maps/search/?api=1&query=Rezdora%20Flatiron%20New%20York' },
+    { n: 'Chambers', cat: 'eat', area: 'Tribeca', boro: 'manhattan', fav: true, lat: 40.71471, lng: -74.00761, note: 'Tribeca · Neighborhood-y — sit at the counter.', url: 'https://www.google.com/maps/search/?api=1&query=Chambers%20Tribeca%20New%20York' },
+    { n: 'Comal', cat: 'eat', area: 'Lower East Side', boro: 'manhattan', fav: false, lat: 40.71905, lng: -73.99244, note: 'Lower East Side · Good tacos, easy night.', url: 'https://www.google.com/maps/search/?api=1&query=Comal%20Lower%20East%20Side%20New%20York' },
+    { n: 'Tucci', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: false, lat: 40.72660, lng: -73.99587, note: 'NoHo · Vibey Italian — and an easier reservation than Carbone.', url: 'https://www.google.com/maps/search/?api=1&query=Tucci%20NoHo%20New%20York' },
+    { n: 'Gramercy Tavern', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73899, lng: -73.98948, note: 'Flatiron · Always good.', url: 'https://www.google.com/maps/search/?api=1&query=Gramercy%20Tavern%20Flatiron%20New%20York' },
+    { n: 'Union Square Cafe', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73776, lng: -73.98805, note: 'Union Square · One of Sam\'s favorites in Gramercy.', url: 'https://www.google.com/maps/search/?api=1&query=Union%20Square%20Cafe%20Union%20Square%20New%20York' },
+    { n: 'Casa Mono', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: true, lat: 40.73612, lng: -73.98712, note: 'Gramercy · Fun Spanish spot.', url: 'https://www.google.com/maps/search/?api=1&query=Casa%20Mono%20Gramercy%20New%20York' },
+    { n: 'Hawksmoor', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73953, lng: -73.98645, note: 'Gramercy · Good steak, British vibes.', url: 'https://www.google.com/maps/search/?api=1&query=Hawksmoor%20Gramercy%20New%20York' },
+    { n: 'Jeju Noodle Bar', cat: 'eat', area: 'West Village', boro: 'manhattan', fav: false, lat: 40.73319, lng: -74.00737, note: 'West Village · Ramen.', url: 'https://www.google.com/maps/search/?api=1&query=Jeju%20Noodle%20Bar%20West%20Village%20New%20York' },
+    { n: 'Raku', cat: 'eat', area: 'East Village', boro: 'manhattan', fav: true, lat: 40.72692, lng: -73.98755, note: 'East Village · Great udon.', url: 'https://www.google.com/maps/search/?api=1&query=Raku%20East%20Village%20New%20York' },
+    { n: 'Fish Cheeks', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: false, lat: 40.72614, lng: -73.99323, note: 'NoHo · Thai, fun.', url: 'https://www.google.com/maps/search/?api=1&query=Fish%20Cheeks%20NoHo%20New%20York' },
+    { n: 'Freemans', cat: 'eat', area: 'Lower East Side', boro: 'manhattan', fav: false, lat: 40.72265, lng: -73.99247, note: 'Lower East Side · Down a graffiti alley, taxidermy on the walls. A New York classic.', url: 'https://www.google.com/maps/search/?api=1&query=Freemans%20Lower%20East%20Side%20New%20York' },
+    { n: 'Banzarbar', cat: 'eat', area: 'Lower East Side', boro: 'manhattan', fav: false, lat: 40.72268, lng: -73.99244, note: 'Lower East Side · The 14-seat speakeasy upstairs at Freemans. Go for a nightcap.', url: 'https://www.google.com/maps/search/?api=1&query=Banzarbar%20Lower%20East%20Side%20New%20York' },
+    { n: 'Anita La Mamma del Gelato', cat: 'eat', area: 'UES', boro: 'manhattan', fav: false, lat: 40.77473, lng: -73.95412, note: 'Multiple · Gelato worth the line.', url: 'https://www.google.com/maps/search/?api=1&query=Anita%20La%20Mamma%20del%20Gelato%20New%20York' },
+    { n: 'Caffè Panna', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: true, lat: 40.73699, lng: -73.98679, note: 'Gramercy · Ice cream that people queue around the block for.', url: 'https://www.google.com/maps/search/?api=1&query=Caff%C3%A8%20Panna%20Gramercy%20New%20York' },
+    { n: 'Venchi', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73736, lng: -73.99034, note: 'Multiple · Italian chocolate + gelato. The wall of chocolate.', url: 'https://www.google.com/maps/search/?api=1&query=Venchi%20New%20York' },
+    { n: 'Hani\'s Bakery & Cafe', cat: 'eat', area: 'East Village', boro: 'manhattan', fav: false, lat: 40.72914, lng: -73.98994, note: 'East Village · Korean-ish pastry. The croissants.', url: 'https://www.google.com/maps/search/?api=1&query=Hani%27s%20Bakery%20%26%20Cafe%20East%20Village%20New%20York' },
+    { n: 'Kith Treats', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: false, lat: 40.72595, lng: -73.99454, note: 'Multiple · Cereal soft-serve inside the streetwear store. Very New York.', url: 'https://www.google.com/maps/search/?api=1&query=Kith%20Treats%20New%20York' },
+    { n: 'Daily Provisions', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73764, lng: -73.98767, note: 'Multiple · Crullers, egg sandwiches, the everyday one.', url: 'https://www.google.com/maps/search/?api=1&query=Daily%20Provisions%20New%20York' },
+    { n: 'Los Tacos No. 1', cat: 'eat', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.74073, lng: -74.00561, note: 'Multiple · The adobada. Standing room only, always.', url: 'https://www.google.com/maps/search/?api=1&query=Los%20Tacos%20No.%201%20New%20York' },
+    { n: 'Santo Taco', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: true, lat: 40.72120, lng: -73.99685, note: 'Nolita · Good tacos.', url: 'https://www.google.com/maps/search/?api=1&query=Santo%20Taco%20Nolita%20New%20York' },
+    { n: 'Huso', cat: 'eat', area: 'Tribeca', boro: 'manhattan', fav: false, lat: 40.71740, lng: -74.01063, note: 'Tribeca · Caviar tasting counter — a small, ridiculous treat.', url: 'https://www.google.com/maps/search/?api=1&query=Huso%20Tribeca%20New%20York' },
+    { n: 'Sorate', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73798, lng: -73.98932, note: 'Union Square · Matcha.', url: 'https://www.google.com/maps/search/?api=1&query=Sorate%20Union%20Square%20New%20York' },
+    { n: 'Penny', cat: 'eat', area: 'East Village', boro: 'manhattan', fav: true, lat: 40.73082, lng: -73.98971, note: 'East Village · Our go-to seafood. The shrimp is fire.', url: 'https://www.google.com/maps/search/?api=1&query=Penny%20East%20Village%20New%20York' },
+    { n: 'Saint Tuesday', cat: 'eat', area: 'Tribeca', boro: 'manhattan', fav: false, lat: 40.71820, lng: -74.00175, note: 'Tribeca · Cozy basement jazz bar.', url: 'https://www.google.com/maps/search/?api=1&query=Saint%20Tuesday%20Tribeca%20New%20York' },
+    { n: 'Elvis', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: false, lat: 40.72694, lng: -73.99278, note: 'NoHo · Fun, girly.', url: 'https://www.google.com/maps/search/?api=1&query=Elvis%20NoHo%20New%20York' },
+    { n: 'Tokyo Record Bar', cat: 'eat', area: 'Greenwich', boro: 'manhattan', fav: false, lat: 40.73060, lng: -74.00022, note: 'Greenwich Village · Omakase where every course comes with a record side. Tiny, reservation-only.', url: 'https://www.google.com/maps/search/?api=1&query=Tokyo%20Record%20Bar%20Greenwich%20Village%20New%20York' },
+    { n: 'Bar Miller', cat: 'eat', area: 'East Village', boro: 'manhattan', fav: false, lat: 40.72396, lng: -73.98083, note: 'East Village · Homey hipster omakase.', url: 'https://www.google.com/maps/search/?api=1&query=Bar%20Miller%20East%20Village%20New%20York' },
+    { n: 'Office of Mr. Moto', cat: 'eat', area: 'East Village', boro: 'manhattan', fav: false, lat: 40.72682, lng: -73.98403, note: 'East Village · Low-key but cool omakase.', url: 'https://www.google.com/maps/search/?api=1&query=Office%20of%20Mr.%20Moto%20East%20Village%20New%20York' },
+    { n: 'Crevette', cat: 'eat', area: 'West Village', boro: 'manhattan', fav: false, lat: 40.72962, lng: -74.00259, note: 'West Village · LA-ish seafood — bright, breezy, raw bar.', url: 'https://www.google.com/maps/search/?api=1&query=Crevette%20West%20Village%20New%20York' },
+    { n: 'Coqodaq', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.74008, lng: -73.98875, note: 'Flatiron · Korean fried chicken in a gilded room. Overhyped, still fun.', url: 'https://www.google.com/maps/search/?api=1&query=Coqodaq%20Flatiron%20New%20York' },
+    { n: 'Cervo\'s', cat: 'eat', area: 'Lower East Side', boro: 'manhattan', fav: true, lat: 40.71480, lng: -73.99135, note: 'Lower East Side · Portuguese-Spanish seafood, small and lively.', url: 'https://www.google.com/maps/search/?api=1&query=Cervo%27s%20Lower%20East%20Side%20New%20York' },
+    { n: 'Sunn\'s', cat: 'eat', area: 'Lower East Side', boro: 'manhattan', fav: true, lat: 40.71438, lng: -73.99185, note: 'Lower East Side · Jenni loves this spot. OpenTable, so it\'s gettable.', url: 'https://www.google.com/maps/search/?api=1&query=Sunn%27s%20Lower%20East%20Side%20New%20York' },
+    { n: 'Café Zaffri', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73682, lng: -73.99183, note: 'Union Square · Overpriced, but a beautiful space.', url: 'https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Zaffri%20Union%20Square%20New%20York' },
+    { n: 'Fedora', cat: 'eat', area: 'West Village', boro: 'manhattan', fav: false, lat: 40.73450, lng: -74.00296, note: 'West Village · Cozy and intimate.', url: 'https://www.google.com/maps/search/?api=1&query=Fedora%20West%20Village%20New%20York' },
+    { n: 'The Portrait Bar', cat: 'eat', area: 'NoMad', boro: 'manhattan', fav: false, lat: 40.74476, lng: -73.98733, note: 'NoMad · Plush hotel bar in the Fifth Avenue Hotel. Dressy, in a good way.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Portrait%20Bar%20NoMad%20New%20York' },
+    { n: 'Parcelle', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: false, lat: 40.71438, lng: -73.99189, note: 'Chinatown · Wine bar.', url: 'https://www.google.com/maps/search/?api=1&query=Parcelle%20Chinatown%20New%20York' },
+    { n: 'Smithereens', cat: 'eat', area: 'East Village', boro: 'manhattan', fav: false, lat: 40.72776, lng: -73.98422, note: 'East Village · Hipsters and seafood.', url: 'https://www.google.com/maps/search/?api=1&query=Smithereens%20East%20Village%20New%20York' },
+    { n: 'Dame', cat: 'eat', area: 'Greenwich', boro: 'manhattan', fav: true, lat: 40.72891, lng: -74.00168, note: 'Greenwich Village · British fish and chips, done properly. Tiny.', url: 'https://www.google.com/maps/search/?api=1&query=Dame%20Greenwich%20Village%20New%20York' },
+    { n: 'Bridges', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: true, lat: 40.71390, lng: -73.99745, note: 'Chinatown · Amazing food — classy but chill.', url: 'https://www.google.com/maps/search/?api=1&query=Bridges%20Chinatown%20New%20York' },
+    { n: 'Cosme', cat: 'eat', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73951, lng: -73.98840, note: 'Flatiron · Enrique Olvera. The husk meringue is fire.', url: 'https://www.google.com/maps/search/?api=1&query=Cosme%20Flatiron%20New%20York' },
+    { n: 'Family Meal at Blue Hill', cat: 'eat', area: 'Greenwich', boro: 'manhattan', fav: false, lat: 40.73090, lng: -73.99860, note: 'Greenwich Village · Farm-to-table, minus the ceremony.', url: 'https://www.google.com/maps/search/?api=1&query=Family%20Meal%20at%20Blue%20Hill%20Greenwich%20Village%20New%20York' },
+    { n: 'Sip & Guzzle', cat: 'eat', area: 'West Village', boro: 'manhattan', fav: false, lat: 40.73109, lng: -74.00220, note: 'West Village · Two bars in one — cocktails downstairs, serious ones up.', url: 'https://www.google.com/maps/search/?api=1&query=Sip%20%26%20Guzzle%20West%20Village%20New%20York' },
+    { n: 'One White Street', cat: 'eat', area: 'Tribeca', boro: 'manhattan', fav: false, lat: 40.71850, lng: -74.00470, note: 'Tribeca · Really good food, a little fancy.', url: 'https://www.google.com/maps/search/?api=1&query=One%20White%20Street%20Tribeca%20New%20York' },
+    { n: 'Malaparte', cat: 'eat', area: 'West Village', boro: 'manhattan', fav: false, lat: 40.73790, lng: -74.00760, note: 'West Village · Walk-in Italian. Go early, put your name down.', url: 'https://www.google.com/maps/search/?api=1&query=Malaparte%20West%20Village%20New%20York' },
+    { n: 'Ci Siamo', cat: 'eat', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.75260, lng: -73.99500, note: 'Hudson Yards · Live-fire Italian. Big room, big night.', url: 'https://www.google.com/maps/search/?api=1&query=Ci%20Siamo%20Hudson%20Yards%20New%20York' },
+    { n: 'Lilia', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.71620, lng: -73.95440, note: 'Williamsburg · Pasta, yum.', url: 'https://www.google.com/maps/search/?api=1&query=Lilia%20Williamsburg%20Brooklyn' },
+    { n: 'Misi', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.71050, lng: -73.96700, note: 'Williamsburg · Good pasta.', url: 'https://www.google.com/maps/search/?api=1&query=Misi%20Williamsburg%20Brooklyn' },
+    { n: 'Public Records', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.68390, lng: -73.98800, note: 'Gowanus · Hipster sound system.', url: 'https://www.google.com/maps/search/?api=1&query=Public%20Records%20Gowanus%20Brooklyn' },
+    { n: 'Eavesdrop', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.72440, lng: -73.95090, note: 'Greenpoint · Records, drinks, no attitude.', url: 'https://www.google.com/maps/search/?api=1&query=Eavesdrop%20Greenpoint%20Brooklyn' },
+    { n: 'Saint Julivert Fisherie', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.68796, lng: -73.99554, note: 'Cobble Hill · Seafood from the La Vara team. Small and very good.', url: 'https://www.google.com/maps/search/?api=1&query=Saint%20Julivert%20Fisherie%20Cobble%20Hill%20Brooklyn' },
+    { n: 'La Vara', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.68779, lng: -73.99562, note: 'Cobble Hill · Spanish tapas, one star. Worth the trip.', url: 'https://www.google.com/maps/search/?api=1&query=La%20Vara%20Cobble%20Hill%20Brooklyn' },
+    { n: 'Lucali', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.68191, lng: -74.00040, note: 'Carroll Gardens · BYOB pizza, 30 seats, no reservations. Put your name down early.', url: 'https://www.google.com/maps/search/?api=1&query=Lucali%20Carroll%20Gardens%20Brooklyn' },
+    { n: 'L\'Appartement 4F', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.69499, lng: -73.99479, note: 'Brooklyn Heights · French bakery. The croissant cereal.', url: 'https://www.google.com/maps/search/?api=1&query=L%27Appartement%204F%20Brooklyn%20Heights%20Brooklyn' },
+    { n: 'Radio Bakery', cat: 'eat', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.73236, lng: -73.95485, note: 'Greenpoint · Pastries and sandwiches all day. Go in the morning.', url: 'https://www.google.com/maps/search/?api=1&query=Radio%20Bakery%20Greenpoint%20Brooklyn' },
+    { n: 'Le Coucou', cat: 'eat', area: 'SoHo', boro: 'manhattan', fav: false, lat: 40.71917, lng: -74.00014, note: 'SoHo · French, in the 11 Howard hotel. The pretty special-occasion one downtown.', url: 'https://www.google.com/maps/search/?api=1&query=Le%20Coucou%20SoHo%20New%20York' },
+    { n: 'Happier Grocery', cat: 'eat', area: 'SoHo', boro: 'manhattan', fav: false, lat: 40.71980, lng: -74.00430, note: 'SoHo · The photogenic wellness grocery. Smoothies, hot bar, very green.', url: 'https://www.google.com/maps/search/?api=1&query=Happier%20Grocery%20SoHo%20New%20York' },
+    { n: 'Grandaisy Bakery', cat: 'eat', area: 'Tribeca', boro: 'manhattan', fav: false, lat: 40.71963, lng: -74.00614, note: 'Tribeca · Roman-style pizza bianca and good bread.', url: 'https://www.google.com/maps/search/?api=1&query=Grandaisy%20Bakery%20Tribeca%20New%20York' },
+    { n: 'Rigor Hill Market', cat: 'eat', area: 'Tribeca', boro: 'manhattan', fav: false, lat: 40.71927, lng: -74.00604, note: 'Tribeca · Prepared foods from their own Hudson Valley farm.', url: 'https://www.google.com/maps/search/?api=1&query=Rigor%20Hill%20Market%20Tribeca%20New%20York' },
+    { n: 'Dagon', cat: 'eat', area: 'UWS', boro: 'manhattan', fav: false, lat: 40.79098, lng: -73.97455, note: 'Upper West Side · Modern Israeli. Worth going uptown for.', url: 'https://www.google.com/maps/search/?api=1&query=Dagon%20Upper%20West%20Side%20New%20York' },
+    { n: 'Blue Hill at Stone Barns', cat: 'eat', area: 'Upstate', boro: 'upstate', fav: false, lat: 41.10409, lng: -73.82852, note: 'Pocantico Hills · Dan Barber\'s farm. A tasting menu and a whole afternoon, 45 min north.', url: 'https://www.google.com/maps/search/?api=1&query=Blue%20Hill%20at%20Stone%20Barns%20Pocantico%20Hills%20NY' },
+    { n: 'Jongro BBQ', cat: 'eat', area: 'Koreatown', boro: 'manhattan', fav: false, lat: 40.74736, lng: -73.98615, note: 'Koreatown · Tabletop grill, no reservations. The K-town anchor.', url: 'https://www.google.com/maps/search/?api=1&query=Jongro%20BBQ%20Koreatown%20New%20York' },
+    { n: 'Karaoke City', cat: 'do', area: 'Koreatown', boro: 'manhattan', fav: false, lat: 40.74736, lng: -73.98615, note: 'Koreatown · 22 W 32nd, 7th floor. Private rooms, open very late.', url: 'https://www.google.com/maps/search/?api=1&query=Karaoke%20City%20Koreatown%20New%20York' },
+    { n: 'Karaoke Boho', cat: 'do', area: 'West Village', boro: 'manhattan', fav: false, lat: 40.73180, lng: -74.00190, note: 'West Village · Cosier and less fluorescent than K-town. Book the room.', url: 'https://www.google.com/maps/search/?api=1&query=Karaoke%20Boho%20West%20Village%20New%20York' },
+    { n: 'Central Park', cat: 'do', area: 'UES', boro: 'manhattan', fav: false, lat: 40.78260, lng: -73.96540, note: 'Central Park · The whole thing. Enter at 72nd and wander.', url: 'https://www.google.com/maps/search/?api=1&query=Central%20Park%20Central%20Park%20New%20York' },
+    { n: 'Prospect Park', cat: 'do', area: 'Brooklyn', boro: 'brooklyn', fav: false, lat: 40.66210, lng: -73.96900, note: 'Prospect Heights · Olmsted\'s other one. Bigger meadow, fewer tourists.', url: 'https://www.google.com/maps/search/?api=1&query=Prospect%20Park%20Prospect%20Heights%20Brooklyn' },
+    { n: 'Guggenheim', cat: 'do', area: 'UES', boro: 'manhattan', fav: true, lat: 40.78278, lng: -73.95917, note: 'Upper East Side · Jenni\'s favorite museum — the Frank Lloyd Wright spiral is the point.', url: 'https://www.google.com/maps/search/?api=1&query=Guggenheim%20Upper%20East%20Side%20New%20York' },
+    { n: 'Cooper Hewitt', cat: 'do', area: 'UES', boro: 'manhattan', fav: true, lat: 40.78556, lng: -73.95889, note: 'Upper East Side · Design museum in the Carnegie Mansion. Small and delightful.', url: 'https://www.google.com/maps/search/?api=1&query=Cooper%20Hewitt%20Upper%20East%20Side%20New%20York' },
+    { n: 'MoMA', cat: 'do', area: 'Midtown', boro: 'manhattan', fav: false, lat: 40.76139, lng: -73.97750, note: 'Midtown · Ten minutes from the Pierre. Go early.', url: 'https://www.google.com/maps/search/?api=1&query=MoMA%20Midtown%20New%20York' },
+    { n: 'Storm King Art Center', cat: 'do', area: 'Upstate', boro: 'upstate', fav: false, lat: 41.39944, lng: -74.05472, note: 'Hudson Valley · 500 acres of monumental sculpture upstate. A whole day, and worth it.', url: 'https://www.google.com/maps/search/?api=1&query=Storm%20King%20Art%20Center%20Hudson%20Valley%20NY' },
+    { n: 'David Zwirner', cat: 'do', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.74620, lng: -74.00580, note: 'Chelsea · Anchor of the Chelsea gallery walk. Free.', url: 'https://www.google.com/maps/search/?api=1&query=David%20Zwirner%20Chelsea%20New%20York' },
+    { n: 'Gagosian', cat: 'do', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.74830, lng: -74.00430, note: 'Chelsea · Blue-chip, always a show worth seeing.', url: 'https://www.google.com/maps/search/?api=1&query=Gagosian%20Chelsea%20New%20York' },
+    { n: 'Hauser & Wirth', cat: 'do', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.74690, lng: -74.00500, note: 'Chelsea · Big, ambitious shows in a former warehouse.', url: 'https://www.google.com/maps/search/?api=1&query=Hauser%20%26%20Wirth%20Chelsea%20New%20York' },
+    { n: 'kurimanzutto', cat: 'do', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.74640, lng: -74.00570, note: 'Chelsea · Mexico City gallery\'s New York space.', url: 'https://www.google.com/maps/search/?api=1&query=kurimanzutto%20Chelsea%20New%20York' },
+    { n: 'The High Line', cat: 'do', area: 'West Village', boro: 'manhattan', fav: true, lat: 40.73990, lng: -74.00650, note: 'Meatpacking · Walk it into the galleries — they\'re all right there.', url: 'https://www.google.com/maps/search/?api=1&query=The%20High%20Line%20Meatpacking%20New%20York' },
+    { n: 'Little Island', cat: 'do', area: 'West Village', boro: 'manhattan', fav: false, lat: 40.73806, lng: -74.01083, note: 'Meatpacking · The park on tulips in the Hudson. Free, strange, lovely.', url: 'https://www.google.com/maps/search/?api=1&query=Little%20Island%20Meatpacking%20New%20York' },
+    { n: 'The Edge', cat: 'do', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.75380, lng: -74.00210, note: 'Hudson Yards · Glass floor, 100 storeys up. Do it at sunset.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Edge%20Hudson%20Yards%20New%20York' },
+    { n: 'Chelsea Piers Golf Club', cat: 'do', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.74610, lng: -74.00790, note: 'Chelsea · Four-tier driving range over the Hudson. Absurd and great.', url: 'https://www.google.com/maps/search/?api=1&query=Chelsea%20Piers%20Golf%20Club%20Chelsea%20New%20York' },
+    { n: 'The Ramble', cat: 'do', area: 'UES', boro: 'manhattan', fav: true, lat: 40.77842, lng: -73.97137, note: 'Central Park · The wild wooded part of the park. Get lost on purpose.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Ramble%20Central%20Park%20New%20York' },
+    { n: 'Madison Square Park', cat: 'do', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.74167, lng: -73.98806, note: 'Flatiron · Shake Shack\'s original, plus whatever sculpture is up.', url: 'https://www.google.com/maps/search/?api=1&query=Madison%20Square%20Park%20Flatiron%20New%20York' },
+    { n: 'Union Square Greenmarket', cat: 'do', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73620, lng: -73.99060, note: 'Union Square · Mon/Wed/Fri/Sat. The best browsing in the city.', url: 'https://www.google.com/maps/search/?api=1&query=Union%20Square%20Greenmarket%20Union%20Square%20New%20York' },
+    { n: 'New York Public Library', cat: 'do', area: 'Midtown', boro: 'manhattan', fav: false, lat: 40.75318, lng: -73.98225, note: 'Midtown · The Beaux-Arts main branch. Walk past the lions into the Rose Reading Room.', url: 'https://www.google.com/maps/search/?api=1&query=New%20York%20Public%20Library%20Midtown%20New%20York' },
+    { n: 'Moynihan Train Hall', cat: 'do', area: 'Midtown', boro: 'manhattan', fav: false, lat: 40.75111, lng: -73.99528, note: 'Midtown · The good half of Penn Station — a glass-roofed hall in the old post office.', url: 'https://www.google.com/maps/search/?api=1&query=Moynihan%20Train%20Hall%20Midtown%20New%20York' },
+    { n: 'Minnewaska State Park Preserve', cat: 'do', area: 'Upstate', boro: 'upstate', fav: false, lat: 41.73519, lng: -74.23914, note: 'New Paltz · Our hike. Clifftop carriage roads and the sky lakes, 90 min north.', url: 'https://www.google.com/maps/search/?api=1&query=Minnewaska%20State%20Park%20Preserve%20New%20Paltz%20NY' },
+    { n: 'Hudson Hills Golf Course', cat: 'do', area: 'Upstate', boro: 'upstate', fav: false, lat: 41.20150, lng: -73.85230, note: 'Ossining · Public Westchester course, 45 min up. Rolling and scenic.', url: 'https://www.google.com/maps/search/?api=1&query=Hudson%20Hills%20Golf%20Course%20Ossining%20NY' },
+    { n: 'Centennial Golf Club', cat: 'do', area: 'Upstate', boro: 'upstate', fav: false, lat: 41.42417, lng: -73.65583, note: 'Carmel · 27 holes by Larry Nelson. The best public track in the Hudson Valley.', url: 'https://www.google.com/maps/search/?api=1&query=Centennial%20Golf%20Club%20Carmel%20NY' },
+    { n: 'Balthazar', cat: 'eat', area: 'SoHo', boro: 'manhattan', fav: true, lat: 40.72266, lng: -73.99836, note: 'SoHo · The French brasserie. Go for breakfast, stay all morning.', url: 'https://www.google.com/maps/search/?api=1&query=Balthazar%20SoHo%20New%20York' },
+    { n: 'Le Bernardin', cat: 'eat', area: 'Midtown', boro: 'manhattan', fav: true, lat: 40.76175, lng: -73.98188, note: 'Midtown · Three stars, all seafood. The special-occasion one.', url: 'https://www.google.com/maps/search/?api=1&query=Le%20Bernardin%20Midtown%20New%20York' },
   ];
+
 
 
 
@@ -287,7 +288,9 @@
     var subwayOn = false;
     var STATION_ZOOM = 15;      // stations only appear once zoomed in
 
-    drawPins({ venue:gVenues, hotel:gHotels, stay:gStays, eat:gPlaces, do:gPlaces });
+    drawPins(mode === 'recs'
+      ? { venue:gVenues, hotel:gVenues, stay:null, eat:gPlaces, do:gPlaces }
+      : { venue:gVenues, hotel:gHotels, stay:gStays, eat:gPlaces, do:gPlaces });
     // Defaults: travel map focuses on hotels; recs map focuses on places. Venues on both.
     gVenues.addTo(map);
     if (mode === 'all') { gHotels.addTo(map); gStays.addTo(map); gPlaces.addTo(map); }
@@ -307,10 +310,17 @@
     var N_SUB   = '<i class="lgd lgd-sub"></i>Subway lines';
 
     var ctl = L.control.layers(null, {}, { collapsed:false, position:'bottomright' }).addTo(map);
-    ctl.addOverlay(gVenues, N_VENUE);
-    ctl.addOverlay(gHotels, N_HOTEL);
-    ctl.addOverlay(gStays,  N_STAY);
-    ctl.addOverlay(gPlaces, N_PLACE);
+    if (mode === 'recs') {
+      // One combined pin group here: the Pierre, Chinese Tuxedo (tier-gated) and
+      // the room-block hotels. "Other hotels" belongs on the hotels page only.
+      ctl.addOverlay(gVenues, '<i class="lgd" style="background:' + CAT.venue.color + '"></i>Wedding &amp; hotels');
+      ctl.addOverlay(gPlaces, N_PLACE);
+    } else {
+      ctl.addOverlay(gVenues, N_VENUE);
+      ctl.addOverlay(gHotels, N_HOTEL);
+      ctl.addOverlay(gStays,  N_STAY);
+      ctl.addOverlay(gPlaces, N_PLACE);
+    }
 
     // ---- expand to full screen ---------------------------------------------
     var expandBtn = null;
@@ -347,12 +357,31 @@
       if (e.key === 'Escape' && el.classList.contains('is-full')) toggleFull(false);
     });
 
+    // The chip filter drives the map: show only the matching pins and zoom to them.
+    document.addEventListener('sj:filter', function (e) {
+      var v = (e.detail || {}).area || 'manhattan';
+      var shown = [];
+      Object.keys(markerIndex).forEach(function (name) {
+        var rec = markerIndex[name];
+        if (!rec || !rec.place || (rec.place.cat !== 'eat' && rec.place.cat !== 'do')) return;
+        var p = rec.place;
+        var ok = v === 'fav'       ? p.fav === true
+               : v === 'manhattan' ? p.boro === 'manhattan'
+                                   : p.area === v;
+        if (ok) { if (!gPlaces.hasLayer(rec.marker)) gPlaces.addLayer(rec.marker); shown.push([p.lat, p.lng]); }
+        else if (gPlaces.hasLayer(rec.marker)) gPlaces.removeLayer(rec.marker);
+      });
+      if (shown.length) {
+        map.fitBounds(L.latLngBounds(shown).pad(0.18), { animate:true, maxZoom:15 });
+      }
+    });
+
     // Hovering a card in the recs list nudges the map to that pin.
     document.addEventListener('sj:focus', function (e) {
       var d = e.detail || {}; if (typeof d.lat !== 'number') return;
       map.panTo([d.lat, d.lng], { animate:true, duration:.4 });
-      var mk = markerIndex[d.name];
-      if (mk && mk.openPopup) mk.openPopup();
+      var rec = markerIndex[d.name];
+      if (rec && rec.marker && rec.marker.openPopup) rec.marker.openPopup();
     });
 
     function styleHoods(){
@@ -449,7 +478,9 @@
       // Friday-only venues (Chinese Tuxedo) hidden from Saturday-only guests (tier 4).
       if (p.ev === 'friday' && tier >= 4) return;
       var color = (CAT[p.cat]||CAT.do).color;
-      var group = groups[p.cat] || groups.do;
+      var group = groups[p.cat];
+      if (group === null) return;            // this map doesn't show that category
+      if (!group) group = groups.do;
       var icon = L.divIcon({
         className:'sjmap-pin',
         html:'<span class="dot" style="background:'+color+'"></span>',
@@ -464,7 +495,7 @@
       var body = '<div class="sjmap-pop">' + title +
         (p.note ? '<span class="pop-note">'+p.note+'</span>' : '') + '</div>';
       m.bindPopup(body);
-      markerIndex[p.n] = m;
+      markerIndex[p.n] = { marker: m, place: p };
     });
   }
 

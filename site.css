@@ -1497,3 +1497,13 @@ body.map-full .map-caption{ display:none !important; }
   .note-row3{ align-items:end; }
   .note-btn{ min-height:44px; }
 }
+
+
+/* Home has no action pills on mobile, so the calendar icon takes the right end */
+@media(max-width:760px){
+  body.has-bottom-actions .sitenav{ justify-content:flex-start; }
+  body.has-bottom-actions .nav-cal{ margin-left:auto; flex:0 0 auto;
+    width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center;
+    border:0; background:none; color:var(--red); cursor:pointer; padding:0; }
+  body.has-bottom-actions .nav-cal svg{ width:19px; height:19px; }
+}
