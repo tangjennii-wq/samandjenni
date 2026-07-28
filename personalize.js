@@ -38,6 +38,12 @@
 
   document.documentElement.setAttribute('data-tier', String(tier));
 
+  // The date line matches what you're actually invited to.
+  var DATES = { 1:'March 18–21, 2027', 2:'March 19–20, 2027',
+                3:'March 19–20, 2027', 4:'March 20, 2027' };
+  var dateEl = document.querySelector('[data-dates]');
+  if (dateEl && DATES[tier]) dateEl.textContent = DATES[tier];
+
   // Hide any event the guest isn't invited to.
   // Event elements are tagged data-event="thursday|rehearsal|friday|saturday|sunday".
   document.querySelectorAll('[data-event]').forEach(function (el) {
