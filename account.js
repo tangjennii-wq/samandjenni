@@ -33,6 +33,9 @@
       '<div class="note-field"><label class="note-l" for="acName">your name</label>' +
         '<input id="acName" class="note-f" type="text" value="' +
           (who && !isEmail ? titleCase(who).replace(/"/g,'&quot;') : '') + '"></div>' +
+      '<div class="note-field"><label class="note-l" for="acEmail">email</label>' +
+        '<input id="acEmail" class="note-f" type="email" value="' +
+          (isEmail ? who.replace(/"/g,'&quot;') : '') + '" placeholder="so we can reach you"></div>' +
       '<div class="note-field"><label class="note-l" for="acAddr">mailing address</label>' +
         '<input id="acAddr" class="note-f" type="text" placeholder="where the invitation should go"></div>' +
       '<div class="note-field"><label class="note-l" for="acNote">anything else</label>' +
@@ -56,7 +59,7 @@
   var msg  = pop.querySelector('.acct-msg');
   save.addEventListener('click', function(){
     var v = function(id){ var el = pop.querySelector('#' + id); return el ? el.value.trim() : ''; };
-    if (!v('acName') && !v('acAddr') && !v('acNote')) {
+    if (!v('acName') && !v('acEmail') && !v('acAddr') && !v('acNote')) {
       msg.hidden = false; msg.className = 'acct-msg is-err';
       msg.textContent = 'Fill in something first.'; return;
     }
@@ -64,7 +67,8 @@
     var saving = (window.SJUpload && window.SJUpload.save)
       ? window.SJUpload.save('wedding_guest_details', {
           guest_key: window.SJUpload.guestKey(),
-          name: v('acName'), address: v('acAddr'), note: v('acNote')
+          name: v('acName'), email: v('acEmail'),
+          address: v('acAddr'), note: v('acNote')
         })
       : Promise.reject(new Error('no uploader'));
     saving.then(function(){
