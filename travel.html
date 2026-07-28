@@ -9,7 +9,38 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730d">
+<style>
+  /* ---- Hotels: vertical photo-led cards on the left, map hero on the right --- */
+  .wrap{ max-width:1260px; }
+  .hotelsplit{ display:grid; grid-template-columns:300px 1fr; gap:18px;
+    align-items:start; margin-top:14px; }
+  .hotelsplit > *{ min-width:0; }
+
+  .hotelside{ display:flex; flex-direction:column; gap:12px; }
+  .hotelsplit .hotel{ display:flex; flex-direction:column; gap:0; padding:0;
+    margin:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--r-lg);
+    background:#fff; box-shadow:var(--lift); }
+  .hotelsplit .hshot{ width:100%; height:auto; aspect-ratio:4/3; border-radius:0; }
+  .hotelsplit .hshot img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hotelsplit .hotel > div{ padding:13px 15px 0; }
+  .hotelsplit .hname{ font-size:15px; letter-spacing:.02em; line-height:1.2; }
+  .hotelsplit .hmeta{ font-size:12.5px; line-height:1.5; margin-top:6px; }
+  .hotelsplit .bookbtn{ margin:11px 15px 15px; align-self:flex-start;
+    padding:9px 18px; font-size:10px; }
+  .hotelsplit .hotel.star{ outline:2px solid var(--red); outline-offset:-2px; }
+
+  .hotelmap{ position:sticky; top:64px; }
+  .hotelmap .sjmap{ height:min(880px, calc(100vh - 150px)); margin-top:0; }
+  .hotelmap .map-caption{ margin-top:12px; }
+
+  @media(max-width:960px){
+    .hotelsplit{ grid-template-columns:1fr; }
+    .hotelmap{ position:static; order:-1; }
+    .hotelmap .sjmap{ height:46vh; }
+    .hotelsplit .hshot{ aspect-ratio:16/9; }
+  }
+</style>
+<link rel="stylesheet" href="site.css?v=20260730e">
 </head>
 <body class="has-mobile-actions">
 <header class="crest">
@@ -45,8 +76,8 @@
       <h2>Hotels</h2>
       <div class="rule"></div>
 
-      <div class="split split-tight">
-        <div class="split-list">
+      <div class="hotelsplit">
+        <div class="hotelside">
                 <div class="hotel">
         <span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/lotte.jpg" alt="" loading="lazy" onerror="this.closest('.hshot').remove()"></span>
           <div>
@@ -76,7 +107,7 @@
 
       
         </div>
-        <div class="split-map">
+        <div class="hotelmap">
           <div id="sjmap" class="sjmap" data-mode="hotels"></div>
       <p class="map-caption">deeper dives: <a href="https://www.mta.info/maps/subway" target="_blank" rel="noopener">official subway map</a> · <a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html" target="_blank" rel="noopener">NYT neighborhood map</a> · <a href="https://www.nytimes.com/2025/04/02/nyregion/nyc-new-subway-map.html" target="_blank" rel="noopener">NYT subway map</a></p>
         </div>
@@ -153,12 +184,12 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260730d" defer></script>
-  <script src="map.js?v=20260730d" defer></script>
-  <script src="cal.js?v=20260730d" defer></script>
-  <script src="upload.js?v=20260730d" defer></script>
-  <script src="drawer.js?v=20260730d" defer></script>
-  <script src="rsvpform.js?v=20260730d" defer></script>
-  <script src="notes.js?v=20260730d" defer></script>
+  <script src="personalize.js?v=20260730e" defer></script>
+  <script src="map.js?v=20260730e" defer></script>
+  <script src="cal.js?v=20260730e" defer></script>
+  <script src="upload.js?v=20260730e" defer></script>
+  <script src="drawer.js?v=20260730e" defer></script>
+  <script src="rsvpform.js?v=20260730e" defer></script>
+  <script src="notes.js?v=20260730e" defer></script>
 </body>
 </html>
