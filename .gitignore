@@ -4,4 +4,6 @@
 .DS_Store
 img/**/*.HEIC
 img/**/*.heic
+img/hotels-raw/
+img/photos/
 img/pictures/
