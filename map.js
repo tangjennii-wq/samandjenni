@@ -12,25 +12,25 @@
   var PLACES = [
     { n: 'The Pierre',            cat: 'venue', lat: 40.76476, lng: -73.97197, note: 'Saturday · the wedding (and a place to stay)', url: 'https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+2+E+61st+St+New+York' },
     { n: 'Chinese Tuxedo',        cat: 'venue', ev: 'friday', lat: 40.71467, lng: -73.99772, note: 'Friday · the welcome party', url: 'https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+5+Doyers+St+New+York' },
-    { n: 'Lotte New York Palace', cat: 'hotel', lat: 40.75802, lng: -73.97573, note: 'Biggest rooms · ~15 min to the Pierre', url: 'https://www.lottenypalace.com/wedding-stories/tang--shleifer-wedding' },
-    { n: 'Thompson Central Park', cat: 'hotel', lat: 40.76428, lng: -73.97869, note: 'Modern · steps from the park', url: 'https://www.hyatt.com/events/en-US/group-booking/LGATP/G-3TSW' },
-    { n: 'Le Méridien Central Park', cat: 'hotel', lat: 40.76447, lng: -73.97815, note: 'Friendly price · ~12 min walk to the Pierre', url: 'https://www.marriott.com/event-reservations/reservation-link.mi?id=1780579014068&key=GRP&app=resvlink' },
-    { n: 'The Mercer Hotel', cat: 'stay', lat: 40.72469, lng: -74.00113, note: 'SoHo · $$$$ · discreet loft-style rooms above The Mercer Kitchen', url: 'https://www.google.com/maps/search/?api=1&query=The%20Mercer%20Hotel%20SoHo%20New%20York' },
-    { n: 'citizenM Bowery', cat: 'stay', lat: 40.72180, lng: -73.99330, note: 'Bowery · $ · sleek and compact, walkable to the Friday party', url: 'https://www.google.com/maps/search/?api=1&query=citizenM%20Bowery%20Bowery%20New%20York' },
-    { n: 'Walker Hotel Tribeca', cat: 'stay', lat: 40.71770, lng: -74.00230, note: 'Tribeca · $$ · cozy boutique on cobblestoned blocks', url: 'https://www.google.com/maps/search/?api=1&query=Walker%20Hotel%20Tribeca%20Tribeca%20New%20York' },
-    { n: 'Warren Street Hotel', cat: 'stay', lat: 40.71550, lng: -74.00970, note: 'Tribeca · $$$ · Firmdale\'s Tribeca one, two Michelin Keys', url: 'https://www.google.com/maps/search/?api=1&query=Warren%20Street%20Hotel%20Tribeca%20New%20York' },
-    { n: 'The Beekman', cat: 'stay', lat: 40.71120, lng: -74.00640, note: 'Financial District · $$$ · 1883 landmark with a nine-story atrium', url: 'https://www.google.com/maps/search/?api=1&query=The%20Beekman%20Financial%20District%20New%20York' },
-    { n: 'Nine Orchard', cat: 'stay', lat: 40.71469, lng: -73.99208, note: 'Lower East Side · $$$ · a 1912 bank turned arty-luxe. The design pick', url: 'https://www.google.com/maps/search/?api=1&query=Nine%20Orchard%20Lower%20East%20Side%20New%20York' },
-    { n: 'Ace Hotel New York', cat: 'stay', lat: 40.74540, lng: -73.98790, note: 'NoMad · $$ · the original design-hotel lobby scene', url: 'https://www.google.com/maps/search/?api=1&query=Ace%20Hotel%20New%20York%20NoMad%20New%20York' },
-    { n: 'The Greenwich Hotel', cat: 'stay', lat: 40.71920, lng: -74.01030, note: 'Tribeca · $$$$ · De Niro\'s. The Shibui Spa is unreal', url: 'https://www.google.com/maps/search/?api=1&query=The%20Greenwich%20Hotel%20Tribeca%20New%20York' },
-    { n: 'The Roxy Hotel', cat: 'stay', lat: 40.71800, lng: -74.00440, note: 'Tribeca · $$$ · jazz club, cinema and a great lobby bar', url: 'https://www.google.com/maps/search/?api=1&query=The%20Roxy%20Hotel%20Tribeca%20New%20York' },
-    { n: 'The Standard, High Line', cat: 'stay', lat: 40.74060, lng: -74.00890, note: 'Meatpacking · $$$ · straddles the High Line. Iconic, a little wild', url: 'https://www.google.com/maps/search/?api=1&query=The%20Standard%2C%20High%20Line%20Meatpacking%20New%20York' },
-    { n: 'Park Central Hotel', cat: 'stay', lat: 40.76499, lng: -73.98357, note: 'Midtown · $$ · classic Midtown, a short hop to the Pierre', url: 'https://www.google.com/maps/search/?api=1&query=Park%20Central%20Hotel%20Midtown%20New%20York' },
-    { n: 'JW Marriott Essex House', cat: 'stay', lat: 40.76618, lng: -73.97852, note: 'Central Park South · $$$ · grand, and steps from the wedding', url: 'https://www.google.com/maps/search/?api=1&query=JW%20Marriott%20Essex%20House%20Central%20Park%20South%20New%20York' },
-    { n: 'Wythe Hotel', cat: 'stay', lat: 40.72110, lng: -73.95750, note: 'Williamsburg · $$$ · factory conversion, best skyline views in the city', url: 'https://www.google.com/maps/search/?api=1&query=Wythe%20Hotel%20Williamsburg%20Brooklyn' },
-    { n: 'The William Vale', cat: 'stay', lat: 40.72170, lng: -73.95720, note: 'Williamsburg · $$$ · rooftop pool and huge views', url: 'https://www.google.com/maps/search/?api=1&query=The%20William%20Vale%20Williamsburg%20Brooklyn' },
-    { n: 'The Hoxton, Williamsburg', cat: 'stay', lat: 40.72050, lng: -73.95790, note: 'Williamsburg · $$ · hip lobby, good restaurants, easy Brooklyn cool', url: 'https://www.google.com/maps/search/?api=1&query=The%20Hoxton%2C%20Williamsburg%20Williamsburg%20Brooklyn' },
-    { n: 'Ace Hotel Brooklyn', cat: 'stay', lat: 40.68850, lng: -73.98270, note: 'Downtown Brooklyn · $$ · sleek, and a quick ride back over the bridge', url: 'https://www.google.com/maps/search/?api=1&query=Ace%20Hotel%20Brooklyn%20Downtown%20Brooklyn%20Brooklyn' },
+    { n: 'Lotte New York Palace', cat: 'hotel', hood: 'Midtown', lat: 40.75802, lng: -73.97573, note: 'Biggest rooms · ~15 min to the Pierre', url: 'https://www.lottenypalace.com/wedding-stories/tang--shleifer-wedding' },
+    { n: 'Thompson Central Park', cat: 'hotel', hood: 'Central Park South', lat: 40.76428, lng: -73.97869, note: 'Modern · steps from the park', url: 'https://www.hyatt.com/events/en-US/group-booking/LGATP/G-3TSW' },
+    { n: 'Le Méridien Central Park', cat: 'hotel', hood: 'Midtown', lat: 40.76447, lng: -73.97815, note: 'Friendly price · ~12 min walk to the Pierre', url: 'https://www.marriott.com/event-reservations/reservation-link.mi?id=1780579014068&key=GRP&app=resvlink' },
+    { n: 'The Mercer Hotel', cat: 'stay', hood: 'SoHo', lat: 40.72469, lng: -74.00113, note: 'SoHo · $$$$ · discreet loft-style rooms above The Mercer Kitchen', url: 'https://www.google.com/maps/search/?api=1&query=The%20Mercer%20Hotel%20SoHo%20New%20York' },
+    { n: 'citizenM Bowery', cat: 'stay', hood: 'Bowery', lat: 40.72180, lng: -73.99330, note: 'Bowery · $ · sleek and compact, walkable to the Friday party', url: 'https://www.google.com/maps/search/?api=1&query=citizenM%20Bowery%20Bowery%20New%20York' },
+    { n: 'Walker Hotel Tribeca', cat: 'stay', hood: 'Tribeca', lat: 40.71770, lng: -74.00230, note: 'Tribeca · $$ · cozy boutique on cobblestoned blocks', url: 'https://www.google.com/maps/search/?api=1&query=Walker%20Hotel%20Tribeca%20Tribeca%20New%20York' },
+    { n: 'Warren Street Hotel', cat: 'stay', hood: 'Tribeca', lat: 40.71550, lng: -74.00970, note: 'Tribeca · $$$ · Firmdale\'s Tribeca one, two Michelin Keys', url: 'https://www.google.com/maps/search/?api=1&query=Warren%20Street%20Hotel%20Tribeca%20New%20York' },
+    { n: 'The Beekman', cat: 'stay', hood: 'Financial District', lat: 40.71120, lng: -74.00640, note: 'Financial District · $$$ · 1883 landmark with a nine-story atrium', url: 'https://www.google.com/maps/search/?api=1&query=The%20Beekman%20Financial%20District%20New%20York' },
+    { n: 'Nine Orchard', cat: 'stay', hood: 'Lower East Side', lat: 40.71469, lng: -73.99208, note: 'Lower East Side · $$$ · a 1912 bank turned arty-luxe. The design pick', url: 'https://www.google.com/maps/search/?api=1&query=Nine%20Orchard%20Lower%20East%20Side%20New%20York' },
+    { n: 'Ace Hotel New York', cat: 'stay', hood: 'NoMad', lat: 40.74540, lng: -73.98790, note: 'NoMad · $$ · the original design-hotel lobby scene', url: 'https://www.google.com/maps/search/?api=1&query=Ace%20Hotel%20New%20York%20NoMad%20New%20York' },
+    { n: 'The Greenwich Hotel', cat: 'stay', hood: 'Tribeca', lat: 40.71920, lng: -74.01030, note: 'Tribeca · $$$$ · De Niro\'s. The Shibui Spa is unreal', url: 'https://www.google.com/maps/search/?api=1&query=The%20Greenwich%20Hotel%20Tribeca%20New%20York' },
+    { n: 'The Roxy Hotel', cat: 'stay', hood: 'Tribeca', lat: 40.71800, lng: -74.00440, note: 'Tribeca · $$$ · jazz club, cinema and a great lobby bar', url: 'https://www.google.com/maps/search/?api=1&query=The%20Roxy%20Hotel%20Tribeca%20New%20York' },
+    { n: 'The Standard, High Line', cat: 'stay', hood: 'Meatpacking', lat: 40.74060, lng: -74.00890, note: 'Meatpacking · $$$ · straddles the High Line. Iconic, a little wild', url: 'https://www.google.com/maps/search/?api=1&query=The%20Standard%2C%20High%20Line%20Meatpacking%20New%20York' },
+    { n: 'Park Central Hotel', cat: 'stay', hood: 'Midtown', lat: 40.76499, lng: -73.98357, note: 'Midtown · $$ · classic Midtown, a short hop to the Pierre', url: 'https://www.google.com/maps/search/?api=1&query=Park%20Central%20Hotel%20Midtown%20New%20York' },
+    { n: 'JW Marriott Essex House', cat: 'stay', hood: 'Central Park South', lat: 40.76618, lng: -73.97852, note: 'Central Park South · $$$ · grand, and steps from the wedding', url: 'https://www.google.com/maps/search/?api=1&query=JW%20Marriott%20Essex%20House%20Central%20Park%20South%20New%20York' },
+    { n: 'Wythe Hotel', cat: 'stay', hood: 'Williamsburg', lat: 40.72110, lng: -73.95750, note: 'Williamsburg · $$$ · factory conversion, best skyline views in the city', url: 'https://www.google.com/maps/search/?api=1&query=Wythe%20Hotel%20Williamsburg%20Brooklyn' },
+    { n: 'The William Vale', cat: 'stay', hood: 'Williamsburg', lat: 40.72170, lng: -73.95720, note: 'Williamsburg · $$$ · rooftop pool and huge views', url: 'https://www.google.com/maps/search/?api=1&query=The%20William%20Vale%20Williamsburg%20Brooklyn' },
+    { n: 'The Hoxton, Williamsburg', cat: 'stay', hood: 'Williamsburg', lat: 40.72050, lng: -73.95790, note: 'Williamsburg · $$ · hip lobby, good restaurants, easy Brooklyn cool', url: 'https://www.google.com/maps/search/?api=1&query=The%20Hoxton%2C%20Williamsburg%20Williamsburg%20Brooklyn' },
+    { n: 'Ace Hotel Brooklyn', cat: 'stay', hood: 'Downtown Brooklyn', lat: 40.68850, lng: -73.98270, note: 'Downtown Brooklyn · $$ · sleek, and a quick ride back over the bridge', url: 'https://www.google.com/maps/search/?api=1&query=Ace%20Hotel%20Brooklyn%20Downtown%20Brooklyn%20Brooklyn' },
     { n: 'Atomix', cat: 'eat', area: 'NoMad', boro: 'manhattan', fav: true, lat: 40.74440, lng: -73.98295, note: 'NoMad · Jenni\'s #1. Two-star Korean tasting counter — book the second reservations open.', url: 'https://www.google.com/maps/search/?api=1&query=Atomix%20NoMad%20New%20York' },
     { n: 'Torrisi', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: true, lat: 40.72415, lng: -73.99540, note: 'Nolita · Sam\'s #1. Italian-American in the old Puck Building — if you can get a table, take it.', url: 'https://www.google.com/maps/search/?api=1&query=Torrisi%20Nolita%20New%20York' },
     { n: 'Estela', cat: 'eat', area: 'Downtown', boro: 'manhattan', fav: true, lat: 40.72468, lng: -73.99476, note: 'Nolita · Our date-night place. Small, loud, perfect.', url: 'https://www.google.com/maps/search/?api=1&query=Estela%20Nolita%20New%20York' },
@@ -359,17 +359,31 @@
 
     // The chip filter drives the map: show only the matching pins and zoom to them.
     document.addEventListener('sj:filter', function (e) {
-      var v = (e.detail || {}).area || 'manhattan';
+      var d = e.detail || {};
+      var v = d.area || 'manhattan';
+      var hotels = d.kind === 'hotels';
       var shown = [];
       Object.keys(markerIndex).forEach(function (name) {
         var rec = markerIndex[name];
-        if (!rec || !rec.place || (rec.place.cat !== 'eat' && rec.place.cat !== 'do')) return;
+        if (!rec || !rec.place) return;
         var p = rec.place;
-        var ok = v === 'fav'       ? p.fav === true
-               : v === 'manhattan' ? p.boro === 'manhattan'
-                                   : p.area === v;
-        if (ok) { if (!gPlaces.hasLayer(rec.marker)) gPlaces.addLayer(rec.marker); shown.push([p.lat, p.lng]); }
-        else if (gPlaces.hasLayer(rec.marker)) gPlaces.removeLayer(rec.marker);
+        var mine = hotels ? (p.cat === 'hotel' || p.cat === 'stay')
+                          : (p.cat === 'eat'   || p.cat === 'do');
+        if (!mine) return;
+        var grp = hotels ? (p.cat === 'hotel' ? gHotels : gStays) : gPlaces;
+        var ok;
+        if (hotels) {
+          ok = v === 'all'   ? true
+             : v === 'block' ? p.cat === 'hotel'
+             : v === 'other' ? p.cat === 'stay'
+                             : p.hood === v;
+        } else {
+          ok = v === 'fav'       ? p.fav === true
+             : v === 'manhattan' ? p.boro === 'manhattan'
+                                 : p.area === v;
+        }
+        if (ok) { if (!grp.hasLayer(rec.marker)) grp.addLayer(rec.marker); shown.push([p.lat, p.lng]); }
+        else if (grp.hasLayer(rec.marker)) grp.removeLayer(rec.marker);
       });
       if (shown.length) {
         map.fitBounds(L.latLngBounds(shown).pad(0.18), { animate:true, maxZoom:15 });

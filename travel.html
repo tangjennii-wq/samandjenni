@@ -10,60 +10,71 @@
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
 <style>
-  /* ---- Hotels, in the same language as the event cards ------------------- */
-  .wrap{ max-width:1240px; }
-  .hotelsplit{ display:grid; grid-template-columns:minmax(0, 1fr) 400px; gap:20px;
+  /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
+  .wrap{ max-width:1280px; }
+  #travel{ overflow-x:clip; }
+  .hotelsplit{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 3fr); gap:18px;
     align-items:start; margin-top:14px; }
   .hotelsplit > *{ min-width:0; }
 
-  .hotelside{ display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; align-items:stretch; }
-  .hotelsplit .hotel{ display:flex; flex-direction:column; padding:0; margin:0;
-    overflow:hidden; border:1px solid var(--line); border-radius:18px;
-    background:#fff; box-shadow:var(--lift);
-    transition:transform .16s ease, box-shadow .16s ease; }
-  .hotelsplit .hotel:hover{ transform:translateY(-2px);
-    box-shadow:0 3px 8px rgba(13,9,5,.06), 0 18px 40px rgba(13,9,5,.10); }
+  .recbar{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:6px 8px;
+    padding-bottom:10px; border-bottom:1px solid var(--line); }
+  .fgroup{ display:flex; flex-wrap:wrap; gap:5px; }
+  .fchip{ font:inherit; font-size:8.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    padding:4px 8px; border-radius:var(--r-pill); border:1px solid var(--line-2);
+    background:#fff; color:#6b5a50; cursor:pointer; line-height:1.1; white-space:nowrap; }
+  .fchip:hover{ border-color:var(--dark); color:var(--dark); }
+  .fchip.is-on{ background:var(--red); border-color:var(--red); color:#fff; }
+  .fchip[data-v="block"]{ border-color:rgba(196,168,20,.7); color:#8a6d00; }
+  .fchip[data-v="block"].is-on{ background:var(--gold); border-color:var(--gold); color:var(--dark); }
+  .fcount{ margin-left:auto; font-size:9.5px; font-weight:700; letter-spacing:.11em;
+    text-transform:uppercase; color:#a2907a; white-space:nowrap; }
+  .fcount b{ color:var(--dark); }
 
-  .hotelsplit .hshot{ position:relative; display:block; width:100%; height:auto;
-    aspect-ratio:4/3; border-radius:0; flex:0 0 auto; overflow:hidden; }
-  .hotelsplit .hshot img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .hbadge{ position:absolute; top:10px; left:10px; z-index:2; background:var(--gold);
-    color:var(--dark); font-size:8.5px; font-weight:800; letter-spacing:.16em;
-    text-transform:uppercase; padding:5px 10px; border-radius:var(--r-pill); }
+  .hotelpanel{ margin-top:10px; height:min(760px, calc(100vh - 190px));
+    overflow-y:auto; overscroll-behavior:contain; padding-right:7px; margin-right:-7px; }
+  .hotelpanel::-webkit-scrollbar{ width:6px; }
+  .hotelpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
+  .hotelgrid{ display:flex; flex-direction:column; gap:8px; }
+  .hotelgrid > *{ flex:0 0 auto; }
 
-  .hin{ padding:14px 15px 0; display:flex; flex-direction:column; flex:1 1 auto; }
-  .hotelsplit .hname{ font-size:17px; font-weight:700; letter-spacing:-.01em;
-    line-height:1.15; text-transform:none; }
-  .hprice{ display:inline-block; align-self:flex-start; margin-top:8px; font-size:12.5px;
-    font-weight:800; color:var(--red); border-bottom:2px solid var(--gold); padding-bottom:2px; }
-  .hwhere{ font-size:12.5px; color:#6b5a50; line-height:1.5; margin-top:9px; }
-  .hnote{ margin-top:9px; padding-top:8px; border-top:1px dashed var(--line);
-    font-size:12px; line-height:1.45; color:#6b5a50; }
-  .hnote span{ font-weight:800; color:var(--dark); }
-
-  .hotelsplit .bookbtn{ margin:auto 15px 15px; align-self:flex-start; border:0;
-    background:none; color:var(--red); padding:12px 0 0; font-size:10px;
-    font-weight:800; letter-spacing:.12em; text-transform:uppercase;
-    border-bottom:1.5px solid transparent; border-radius:0; }
-  .hotelsplit .bookbtn:hover{ background:none; color:var(--red);
-    border-bottom-color:var(--red); }
-  .hotelsplit .hotel.star{ outline:2px solid var(--red); outline-offset:-2px; }
+  .hotel{ display:block; padding:0; margin:0; overflow:hidden; text-decoration:none; color:inherit;
+    border:1px solid var(--line); border-radius:var(--r-md); background:#fff;
+    transition:border-color .12s, transform .12s; }
+  .hotel[hidden]{ display:none !important; }
+  .hotel:hover{ border-color:var(--red); transform:translateY(-1px); }
+  .hshot{ position:relative; display:block; width:100%; aspect-ratio:16/9; overflow:hidden;
+    background:#F1EADD; }
+  .hshot img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hshot--none{ aspect-ratio:auto; height:0; padding-top:0; background:none; }
+  .hbadge{ position:absolute; top:9px; left:9px; z-index:2; background:var(--gold);
+    color:var(--dark); font-size:8px; font-weight:800; letter-spacing:.15em;
+    text-transform:uppercase; padding:4px 9px; border-radius:var(--r-pill); }
+  .hbadge--alt{ position:static; display:inline-block; background:none; color:var(--red);
+    padding:0; letter-spacing:.14em; }
+  .hin{ display:block; padding:10px 12px 11px; }
+  .hname{ display:block; font-size:14px; font-weight:700; letter-spacing:0;
+    text-transform:none; line-height:1.2; margin-top:2px; }
+  .hprice{ display:inline-block; margin-top:4px; font-size:11.5px; font-weight:800;
+    color:var(--red); border-bottom:2px solid var(--gold); padding-bottom:1px; }
+  .hwhere{ display:block; font-size:11.5px; color:#6b5a50; line-height:1.4; margin-top:6px; }
+  .hbook{ display:inline-block; margin-top:8px; font-size:9px; font-weight:800;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--red); }
+  .hotel:hover .hbook{ border-bottom:1.5px solid var(--red); }
 
   .hotelmap{ position:sticky; top:64px; }
-  .hotelmap .sjmap{ height:520px; margin-top:0; }
+  .hotelmap .sjmap{ height:min(760px, calc(100vh - 190px)); margin-top:0; }
   .hotelmap .map-caption{ margin-top:12px; }
 
-  @media(max-width:1000px){
+  @media(max-width:960px){
     .hotelsplit{ grid-template-columns:1fr; }
     .hotelmap{ position:static; order:-1; }
     .hotelmap .sjmap{ height:44vh; }
-  }
-  @media(max-width:640px){
-    .hotelside{ grid-template-columns:1fr; }
-    .hotelsplit .hshot{ aspect-ratio:16/9; }
+    .hotelpanel{ height:auto; overflow:visible; padding-right:0; margin-right:0; }
+    .hotelgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px; }
   }
 </style>
-<link rel="stylesheet" href="site.css?v=20260730s">
+<link rel="stylesheet" href="site.css?v=20260730t">
 </head>
 <body class="has-mobile-actions">
 <header class="crest">
@@ -347,13 +358,54 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260730s" defer></script>
-  <script src="map.js?v=20260730s" defer></script>
-  <script src="account.js?v=20260730s" defer></script>
-  <script src="cal.js?v=20260730s" defer></script>
-  <script src="upload.js?v=20260730s" defer></script>
-  <script src="drawer.js?v=20260730s" defer></script>
-  <script src="rsvpform.js?v=20260730s" defer></script>
-  <script src="notes.js?v=20260730s" defer></script>
+  <script src="personalize.js?v=20260730t" defer></script>
+  <script src="map.js?v=20260730t" defer></script>
+  <script src="account.js?v=20260730t" defer></script>
+  <script src="cal.js?v=20260730t" defer></script>
+  <script src="upload.js?v=20260730t" defer></script>
+  <script src="drawer.js?v=20260730t" defer></script>
+  <script src="rsvpform.js?v=20260730t" defer></script>
+  <script src="notes.js?v=20260730t" defer></script>
+<script>
+(function(){
+  var bar = document.querySelector('#travel .recbar'); if(!bar) return;
+  var cards = [].slice.call(document.querySelectorAll('.hotelgrid .hotel'));
+  var count = document.getElementById('hotelCount');
+  var empty = document.querySelector('#travel .recempty');
+  var f = 'block';
+
+  function apply(){
+    var n = 0;
+    cards.forEach(function(c){
+      var ok = f === 'all' ? true
+             : (f === 'block' || f === 'other') ? c.dataset.kind === f
+             : c.dataset.hood === f;
+      c.hidden = !ok; if (ok) n++;
+    });
+    count.textContent = n;
+    empty.hidden = n > 0;
+    document.dispatchEvent(new CustomEvent('sj:filter', { detail:{ area:f, kind:'hotels' } }));
+  }
+
+  bar.addEventListener('click', function(e){
+    var b = e.target.closest('.fchip'); if(!b) return;
+    f = b.dataset.v;
+    bar.querySelectorAll('.fchip').forEach(function(x){ x.classList.toggle('is-on', x === b); });
+    apply();
+  });
+
+  // hovering a card nudges the map to that hotel
+  cards.forEach(function(c){
+    c.addEventListener('mouseenter', function(){
+      var ll = (c.dataset.ll || '').split(',');
+      if (ll.length === 2) document.dispatchEvent(new CustomEvent('sj:focus',
+        { detail:{ lat:+ll[0], lng:+ll[1], name:c.dataset.n } }));
+    });
+  });
+
+  apply();
+  window.addEventListener('load', apply);
+})();
+</script>
 </body>
 </html>
