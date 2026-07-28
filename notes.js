@@ -29,7 +29,7 @@
       '</div>' +
       '<div class="note-field photo-field">' +
         '<label class="note-l" for="{p}Photo">a photo of you &amp; Sam, you &amp; Jenni, us, etc!</label>' +
-        '<div class="photo-pair">' +
+        '<div class="photo-stack">' +
           '<figure class="photo-eg" aria-hidden="true">' +
             '<img src="img/photo-example.jpg" alt="" loading="lazy" onerror="this.closest(\'.photo-eg\').remove()">' +
             '<figcaption>like this</figcaption>' +

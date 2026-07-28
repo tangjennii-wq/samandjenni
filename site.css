@@ -1352,3 +1352,42 @@ body.map-full .map-caption{ display:none !important; }
   .guest-row{ padding:11px 13px; }
   .plusone{ padding:10px 13px; }
 }
+
+
+/* ============================================================
+   WARMTH — the light pass went a bit cold. Put the paper back:
+   cream fields, warm-brown hairlines, a gold thread at the top.
+   ============================================================ */
+.note-card--drawer{ background:#FDFAF3; }
+.note-drawer{ background:#FDFAF3; }
+.note-card--drawer:not(:has(.rsvp-head))::before{
+  content:''; display:block; height:3px; margin:0 0 20px;
+  background:linear-gradient(90deg, var(--red) 0 34%, var(--gold) 34% 100%);
+  border-radius:2px; }
+
+.note-f{ background:#FFFDF7; border-color:rgba(139,110,74,.28); }
+.note-f:hover{ border-color:rgba(139,110,74,.45); }
+.note-f:focus{ background:#fff; border-color:var(--red); }
+.note-l{ color:#8a7355; font-weight:600; }
+
+.note-sub--top{ font-size:14px; font-style:italic; color:#8a7355; margin-bottom:18px; }
+
+.rsvp-list, .guest-row, .plusone{ background:#FFFDF7; border-color:rgba(139,110,74,.24); }
+.rsvp-ev{ border-bottom-color:rgba(139,110,74,.16); }
+.rsvp-ev:nth-child(odd){ background:rgba(229,200,34,.045); }
+.yn{ background:#fff; border-color:rgba(139,110,74,.30); color:#7a6650; }
+
+.photo-drop, .rsvp-photo-btn{ border-color:rgba(139,110,74,.38); background:#FFFBF0;
+  color:#8a7355; }
+.photo-drop:hover, .rsvp-photo-btn:hover{ background:var(--gold); color:var(--dark);
+  border-color:var(--dark); }
+
+/* leave-a-note photo: snapshot centred, upload button underneath */
+.photo-stack{ display:flex; flex-direction:column; align-items:center; gap:12px;
+  padding:6px 0 2px; }
+.photo-stack .photo-eg{ display:block; width:172px; margin:0; transform:rotate(-3deg); }
+.photo-stack .photo-drop{ width:min(280px, 100%); }
+@media(max-width:760px){
+  .photo-stack .photo-eg{ display:block; width:140px; }
+  .photo-stack .photo-drop{ width:100%; }
+}
