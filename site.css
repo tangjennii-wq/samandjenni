@@ -1540,6 +1540,6 @@ body.map-full .map-caption{ display:none !important; }
 
 
 /* the note form opens with a line, above the red/gold thread */
-.note-top{ margin:0 0 11px; font-size:13px; font-style:italic; line-height:1.45; color:#8a7355; }
+.note-top{ margin:0 0 11px; font-size:13.5px; font-style:italic; line-height:1.45; color:var(--dark); }
 
 @media(max-width:760px){ .note-top{ font-size:12px; margin-bottom:9px; } }
