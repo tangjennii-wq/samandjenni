@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260731d">
+<link rel="stylesheet" href="site.css?v=20260731e">
 <style>
   /* ---- recs: list scrolls on the left, map is the hero on the right -------- */
   /* Manhattan is tall and narrow — a portrait-ish frame suits it far better
@@ -53,20 +53,19 @@
     overflow-y:auto; overscroll-behavior:contain; padding-right:7px; margin-right:-7px; }
   .recpanel::-webkit-scrollbar{ width:6px; }
   .recpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
-  .recgrid{ display:flex; flex-direction:column; gap:6px; }
-  .recgrid > *{ flex:0 0 auto; }   /* never let cards shrink to fit */
-  .rec{ position:relative; display:block; padding:0; overflow:hidden; text-decoration:none;
+  .recgrid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:7px;
+    align-items:start; }
+
+  .rec{ position:relative; display:block; padding:9px 11px 10px; overflow:hidden; text-decoration:none;
     color:inherit; border:1px solid var(--line); border-radius:var(--r-md); background:#fff;
     transition:border-color .12s, transform .12s; }
   .rec[hidden]{ display:none !important; }
   /* the photo runs the full width of the card and leads it */
-  .rec .rshot{ display:block; width:100%; aspect-ratio:16/10; overflow:hidden; background:#F1EADD; }
-  .rec .rshot img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .rec .rtag{ display:block; margin:7px 9px 0; font-size:7.5px; font-weight:800; letter-spacing:.12em;
+  .rec .rtag{ display:block; margin:0; font-size:7.5px; font-weight:800; letter-spacing:.12em;
     text-transform:uppercase; color:var(--red); }
-  .rec .rname{ display:inline-block; margin:1px 9px 0; font-size:12px; font-weight:700;
+  .rec .rname{ display:inline-block; margin:2px 0 0; font-size:12px; font-weight:700;
     line-height:1.15; border-bottom:1.5px solid var(--gold); }
-  .rec .rwhy{ display:block; margin:3px 9px 8px; font-size:10px; line-height:1.35; color:#6b5a50; }
+  .rec .rwhy{ display:block; margin:4px 0 0; font-size:10px; line-height:1.35; color:#6b5a50; }
   .rec:hover{ border-color:var(--red); transform:translateY(-1px); }
   .rec:hover .rname{ color:var(--red); border-bottom-color:var(--red); }
   .recempty{ padding:24px 0; text-align:center; font-size:13px; color:#a2907a; font-style:italic; }
@@ -82,7 +81,6 @@
 
   @media(max-width:960px){
     .recsplit{ grid-template-columns:1fr; justify-content:stretch; }
-    .rec .rshot{ aspect-ratio:16/9; }
     .rec .rname{ font-size:15px; }
     .rec .rwhy{ font-size:12px; }
     .mapside{ position:static; order:-1; }
@@ -93,7 +91,6 @@
   @media(max-width:760px){
     .maprow .sjmap-gmap{ align-self:stretch; }
   }
-  .mapstage .sjmap{ height:min(52vh,470px); margin-top:0; }
   /* tighter page head so the list starts above the fold */
   #recs{ padding-top:14px; }
   #recs .eyebrow{ margin-bottom:2px; }
@@ -153,7 +150,7 @@
               <a class="rec" data-cat="eat" data-area="NoMad" data-boro="manhattan" data-fav="1" data-n="Atomix" data-ll="40.74440,-73.98295" href="https://www.google.com/maps/search/?api=1&amp;query=Atomix%20NoMad%20New%20York" target="_blank" rel="noopener"><span class="rtag">NoMad</span><span class="rname">Atomix</span><span class="rwhy">Jenni&#x27;s #1. Two-star Korean tasting counter — book the second reservations open.</span></a>
               <a class="rec" data-cat="eat" data-area="Downtown" data-boro="manhattan" data-fav="1" data-n="Torrisi" data-ll="40.72415,-73.99540" href="https://www.google.com/maps/search/?api=1&amp;query=Torrisi%20Nolita%20New%20York" target="_blank" rel="noopener"><span class="rtag">Nolita</span><span class="rname">Torrisi</span><span class="rwhy">Sam&#x27;s #1. Italian-American in the old Puck Building — if you can get a table, take it.</span></a>
               <a class="rec" data-cat="eat" data-area="Downtown" data-boro="manhattan" data-fav="1" data-n="Estela" data-ll="40.72468,-73.99476" href="https://www.google.com/maps/search/?api=1&amp;query=Estela%20Nolita%20New%20York" target="_blank" rel="noopener"><span class="rtag">Nolita</span><span class="rname">Estela</span><span class="rwhy">Our date-night place. Small, loud, perfect.</span></a>
-              <a class="rec" data-cat="eat" data-area="Greenwich" data-boro="manhattan" data-fav="1" data-n="Carbone" data-ll="40.72791,-74.00019" href="https://www.google.com/maps/search/?api=1&amp;query=Carbone%20Greenwich%20Village%20New%20York" target="_blank" rel="noopener"><span class="rshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/recs/carbone.jpg" alt="" loading="lazy" onerror="this.closest('.rshot').remove()"></span><span class="rtag">Greenwich Village</span><span class="rname">Carbone</span><span class="rwhy">Sceney, old-school-ish. Get the Caesar.</span></a>
+              <a class="rec" data-cat="eat" data-area="Greenwich" data-boro="manhattan" data-fav="1" data-n="Carbone" data-ll="40.72791,-74.00019" href="https://www.google.com/maps/search/?api=1&amp;query=Carbone%20Greenwich%20Village%20New%20York" target="_blank" rel="noopener"><span class="rtag">Greenwich Village</span><span class="rname">Carbone</span><span class="rwhy">Sceney, old-school-ish. Get the Caesar.</span></a>
               <a class="rec" data-cat="eat" data-area="West Village" data-boro="manhattan" data-fav="0" data-n="Semma" data-ll="40.73603,-74.00052" href="https://www.google.com/maps/search/?api=1&amp;query=Semma%20West%20Village%20New%20York" target="_blank" rel="noopener"><span class="rtag">West Village</span><span class="rname">Semma</span><span class="rwhy">South Indian, fun area.</span></a>
               <a class="rec" data-cat="eat" data-area="Gramercy" data-boro="manhattan" data-fav="0" data-n="Cote" data-ll="40.74129,-73.99127" href="https://www.google.com/maps/search/?api=1&amp;query=Cote%20Flatiron%20New%20York" target="_blank" rel="noopener"><span class="rtag">Flatiron</span><span class="rname">Cote</span><span class="rwhy">Sceney Korean steakhouse.</span></a>
               <a class="rec" data-cat="eat" data-area="Greenwich" data-boro="manhattan" data-fav="0" data-n="Shmoné" data-ll="40.73328,-73.99862" href="https://www.google.com/maps/search/?api=1&amp;query=Shmon%C3%A9%20Greenwich%20Village%20New%20York" target="_blank" rel="noopener"><span class="rtag">Greenwich Village</span><span class="rname">Shmoné</span><span class="rwhy">Israeli, big fun energy.</span></a>
@@ -234,13 +231,13 @@
               <a class="rec" data-cat="do" data-area="Chelsea" data-boro="manhattan" data-fav="0" data-n="Hauser &amp; Wirth" data-ll="40.74690,-74.00500" href="https://www.google.com/maps/search/?api=1&amp;query=Hauser%20%26%20Wirth%20Chelsea%20New%20York" target="_blank" rel="noopener"><span class="rtag">Chelsea</span><span class="rname">Hauser &amp; Wirth</span><span class="rwhy">Big, ambitious shows in a former warehouse.</span></a>
               <a class="rec" data-cat="do" data-area="Chelsea" data-boro="manhattan" data-fav="0" data-n="kurimanzutto" data-ll="40.74640,-74.00570" href="https://www.google.com/maps/search/?api=1&amp;query=kurimanzutto%20Chelsea%20New%20York" target="_blank" rel="noopener"><span class="rtag">Chelsea</span><span class="rname">kurimanzutto</span><span class="rwhy">Mexico City gallery&#x27;s New York space.</span></a>
               <a class="rec" data-cat="do" data-area="West Village" data-boro="manhattan" data-fav="1" data-n="The High Line" data-ll="40.73990,-74.00650" href="https://www.google.com/maps/search/?api=1&amp;query=The%20High%20Line%20Meatpacking%20New%20York" target="_blank" rel="noopener"><span class="rtag">Meatpacking</span><span class="rname">The High Line</span><span class="rwhy">Walk it into the galleries — they&#x27;re all right there.</span></a>
-              <a class="rec" data-cat="do" data-area="West Village" data-boro="manhattan" data-fav="0" data-n="Little Island" data-ll="40.73806,-74.01083" href="https://www.google.com/maps/search/?api=1&amp;query=Little%20Island%20Meatpacking%20New%20York" target="_blank" rel="noopener"><span class="rshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/recs/little-island.jpg" alt="" loading="lazy" onerror="this.closest('.rshot').remove()"></span><span class="rtag">Meatpacking</span><span class="rname">Little Island</span><span class="rwhy">The park on tulips in the Hudson. Free, strange, lovely.</span></a>
+              <a class="rec" data-cat="do" data-area="West Village" data-boro="manhattan" data-fav="0" data-n="Little Island" data-ll="40.73806,-74.01083" href="https://www.google.com/maps/search/?api=1&amp;query=Little%20Island%20Meatpacking%20New%20York" target="_blank" rel="noopener"><span class="rtag">Meatpacking</span><span class="rname">Little Island</span><span class="rwhy">The park on tulips in the Hudson. Free, strange, lovely.</span></a>
               <a class="rec" data-cat="do" data-area="Chelsea" data-boro="manhattan" data-fav="0" data-n="The Edge" data-ll="40.75380,-74.00210" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Edge%20Hudson%20Yards%20New%20York" target="_blank" rel="noopener"><span class="rtag">Hudson Yards</span><span class="rname">The Edge</span><span class="rwhy">Glass floor, 100 storeys up. Do it at sunset.</span></a>
               <a class="rec" data-cat="do" data-area="Chelsea" data-boro="manhattan" data-fav="0" data-n="Chelsea Piers Golf Club" data-ll="40.74610,-74.00790" href="https://www.google.com/maps/search/?api=1&amp;query=Chelsea%20Piers%20Golf%20Club%20Chelsea%20New%20York" target="_blank" rel="noopener"><span class="rtag">Chelsea</span><span class="rname">Chelsea Piers Golf Club</span><span class="rwhy">Four-tier driving range over the Hudson. Absurd and great.</span></a>
               <a class="rec" data-cat="do" data-area="UES" data-boro="manhattan" data-fav="1" data-n="The Ramble" data-ll="40.77842,-73.97137" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Ramble%20Central%20Park%20New%20York" target="_blank" rel="noopener"><span class="rtag">Central Park</span><span class="rname">The Ramble</span><span class="rwhy">The wild wooded part of the park. Get lost on purpose.</span></a>
               <a class="rec" data-cat="do" data-area="Gramercy" data-boro="manhattan" data-fav="0" data-n="Madison Square Park" data-ll="40.74167,-73.98806" href="https://www.google.com/maps/search/?api=1&amp;query=Madison%20Square%20Park%20Flatiron%20New%20York" target="_blank" rel="noopener"><span class="rtag">Flatiron</span><span class="rname">Madison Square Park</span><span class="rwhy">Shake Shack&#x27;s original, plus whatever sculpture is up.</span></a>
               <a class="rec" data-cat="do" data-area="Gramercy" data-boro="manhattan" data-fav="0" data-n="Union Square Greenmarket" data-ll="40.73620,-73.99060" href="https://www.google.com/maps/search/?api=1&amp;query=Union%20Square%20Greenmarket%20Union%20Square%20New%20York" target="_blank" rel="noopener"><span class="rtag">Union Square</span><span class="rname">Union Square Greenmarket</span><span class="rwhy">Mon/Wed/Fri/Sat. The best browsing in the city.</span></a>
-              <a class="rec" data-cat="do" data-area="Midtown" data-boro="manhattan" data-fav="0" data-n="New York Public Library" data-ll="40.75318,-73.98225" href="https://www.google.com/maps/search/?api=1&amp;query=New%20York%20Public%20Library%20Midtown%20New%20York" target="_blank" rel="noopener"><span class="rshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/recs/nypl.jpg" alt="" loading="lazy" onerror="this.closest('.rshot').remove()"></span><span class="rtag">Midtown</span><span class="rname">New York Public Library</span><span class="rwhy">The Beaux-Arts main branch. Walk past the lions into the Rose Reading Room.</span></a>
+              <a class="rec" data-cat="do" data-area="Midtown" data-boro="manhattan" data-fav="0" data-n="New York Public Library" data-ll="40.75318,-73.98225" href="https://www.google.com/maps/search/?api=1&amp;query=New%20York%20Public%20Library%20Midtown%20New%20York" target="_blank" rel="noopener"><span class="rtag">Midtown</span><span class="rname">New York Public Library</span><span class="rwhy">The Beaux-Arts main branch. Walk past the lions into the Rose Reading Room.</span></a>
               <a class="rec" data-cat="do" data-area="Midtown" data-boro="manhattan" data-fav="0" data-n="Moynihan Train Hall" data-ll="40.75111,-73.99528" href="https://www.google.com/maps/search/?api=1&amp;query=Moynihan%20Train%20Hall%20Midtown%20New%20York" target="_blank" rel="noopener"><span class="rtag">Midtown</span><span class="rname">Moynihan Train Hall</span><span class="rwhy">The good half of Penn Station — a glass-roofed hall in the old post office.</span></a>
               <a class="rec" data-cat="do" data-area="Upstate" data-boro="upstate" data-fav="0" data-n="Minnewaska State Park Preserve" data-ll="41.73519,-74.23914" href="https://www.google.com/maps/search/?api=1&amp;query=Minnewaska%20State%20Park%20Preserve%20New%20Paltz%20NY" target="_blank" rel="noopener"><span class="rtag">New Paltz</span><span class="rname">Minnewaska State Park Preserve</span><span class="rwhy">Our hike. Clifftop carriage roads and the sky lakes, 90 min north.</span></a>
               <a class="rec" data-cat="do" data-area="Upstate" data-boro="upstate" data-fav="0" data-n="Hudson Hills Golf Course" data-ll="41.20150,-73.85230" href="https://www.google.com/maps/search/?api=1&amp;query=Hudson%20Hills%20Golf%20Course%20Ossining%20NY" target="_blank" rel="noopener"><span class="rtag">Ossining</span><span class="rname">Hudson Hills Golf Course</span><span class="rwhy">Public Westchester course, 45 min up. Rolling and scenic.</span></a>
@@ -269,14 +266,14 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260731d" defer></script>
-  <script src="map.js?v=20260731d" defer></script>
-  <script src="account.js?v=20260731d" defer></script>
-  <script src="cal.js?v=20260731d" defer></script>
-  <script src="upload.js?v=20260731d" defer></script>
-  <script src="drawer.js?v=20260731d" defer></script>
-  <script src="rsvpform.js?v=20260731d" defer></script>
-  <script src="notes.js?v=20260731d" defer></script>
+  <script src="personalize.js?v=20260731e" defer></script>
+  <script src="map.js?v=20260731e" defer></script>
+  <script src="account.js?v=20260731e" defer></script>
+  <script src="cal.js?v=20260731e" defer></script>
+  <script src="upload.js?v=20260731e" defer></script>
+  <script src="drawer.js?v=20260731e" defer></script>
+  <script src="rsvpform.js?v=20260731e" defer></script>
+  <script src="notes.js?v=20260731e" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;
