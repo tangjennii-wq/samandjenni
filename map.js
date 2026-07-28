@@ -237,7 +237,7 @@
   function init(){
     var mode = el.getAttribute('data-mode') || 'recs';
     var center = mode === 'hotels' ? [40.7620, -73.9740] : [40.7440, -73.9790];
-    var zoom   = mode === 'hotels' ? 13.1 : (mode === 'all' ? 13 : 12.75);
+    var zoom   = mode === 'hotels' ? 13.3 : (mode === 'all' ? 13 : 12.5);
 
     var isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
     var map = L.map(el, { scrollWheelZoom:false, zoomControl:false,

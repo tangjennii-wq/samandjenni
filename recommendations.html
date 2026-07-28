@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730y">
+<link rel="stylesheet" href="site.css?v=20260730z">
 <style>
   /* ---- recs: list scrolls on the left, map is the hero on the right -------- */
   /* Manhattan is tall and narrow — a portrait-ish frame suits it far better
@@ -45,24 +45,24 @@
     text-transform:uppercase; color:#a2907a; white-space:nowrap; }
   .fcount b{ color:var(--dark); }
 
-  .recpanel{ margin-top:10px; height:min(680px, calc(100vh - 190px));
+  .recpanel{ margin-top:10px; height:min(1020px, calc(100vh - 145px));
     overflow-y:auto; overscroll-behavior:contain; padding-right:7px; margin-right:-7px; }
   .recpanel::-webkit-scrollbar{ width:6px; }
   .recpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
-  .recgrid{ display:flex; flex-direction:column; gap:7px; }
+  .recgrid{ display:flex; flex-direction:column; gap:6px; }
   .recgrid > *{ flex:0 0 auto; }   /* never let cards shrink to fit */
   .rec{ position:relative; display:block; padding:0; overflow:hidden; text-decoration:none;
     color:inherit; border:1px solid var(--line); border-radius:var(--r-md); background:#fff;
     transition:border-color .12s, transform .12s; }
   .rec[hidden]{ display:none !important; }
   /* the photo runs the full width of the card and leads it */
-  .rec .rshot{ display:block; width:100%; aspect-ratio:1/1; overflow:hidden; background:#F1EADD; }
+  .rec .rshot{ display:block; width:100%; aspect-ratio:16/10; overflow:hidden; background:#F1EADD; }
   .rec .rshot img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .rec .rtag{ display:block; margin:9px 11px 0; font-size:8px; font-weight:800; letter-spacing:.13em;
+  .rec .rtag{ display:block; margin:7px 9px 0; font-size:7.5px; font-weight:800; letter-spacing:.12em;
     text-transform:uppercase; color:var(--red); }
-  .rec .rname{ display:inline-block; margin:2px 11px 0; font-size:13.5px; font-weight:700;
-    line-height:1.15; border-bottom:2px solid var(--gold); }
-  .rec .rwhy{ display:block; margin:3px 11px 10px; font-size:11px; line-height:1.35; color:#6b5a50; }
+  .rec .rname{ display:inline-block; margin:1px 9px 0; font-size:12px; font-weight:700;
+    line-height:1.15; border-bottom:1.5px solid var(--gold); }
+  .rec .rwhy{ display:block; margin:3px 9px 8px; font-size:10px; line-height:1.35; color:#6b5a50; }
   .rec:hover{ border-color:var(--red); transform:translateY(-1px); }
   .rec:hover .rname{ color:var(--red); border-bottom-color:var(--red); }
   .recempty{ padding:24px 0; text-align:center; font-size:13px; color:#a2907a; font-style:italic; }
@@ -73,7 +73,7 @@
   .recsplit > *{ min-width:0; }
 
   .mapstage{ position:relative; clear:both; }
-  .mapstage .sjmap{ height:min(680px, calc(100vh - 190px)); margin-top:0; }
+  .mapstage .sjmap{ height:min(1020px, calc(100vh - 145px)); margin-top:0; }
   .map-caption{ margin-top:14px; }
 
   @media(max-width:960px){
@@ -265,14 +265,14 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260730y" defer></script>
-  <script src="map.js?v=20260730y" defer></script>
-  <script src="account.js?v=20260730y" defer></script>
-  <script src="cal.js?v=20260730y" defer></script>
-  <script src="upload.js?v=20260730y" defer></script>
-  <script src="drawer.js?v=20260730y" defer></script>
-  <script src="rsvpform.js?v=20260730y" defer></script>
-  <script src="notes.js?v=20260730y" defer></script>
+  <script src="personalize.js?v=20260730z" defer></script>
+  <script src="map.js?v=20260730z" defer></script>
+  <script src="account.js?v=20260730z" defer></script>
+  <script src="cal.js?v=20260730z" defer></script>
+  <script src="upload.js?v=20260730z" defer></script>
+  <script src="drawer.js?v=20260730z" defer></script>
+  <script src="rsvpform.js?v=20260730z" defer></script>
+  <script src="notes.js?v=20260730z" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;

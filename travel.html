@@ -61,6 +61,14 @@
   .hkind{ display:block; font-size:8px; font-weight:800; letter-spacing:.16em;
     text-transform:uppercase; color:#8a6d00; }
   .hkind--alt{ color:var(--red); }
+  .fcaret{ font-size:11px; line-height:1; margin-left:2px; }
+  .fchip.is-on .fcaret{ transform:rotate(180deg); display:inline-block; }
+  .fhoodlabel{ align-self:center; margin-right:4px; font-size:8px; font-weight:800;
+    letter-spacing:.16em; text-transform:uppercase; color:#a2907a; }
+  .howto{ max-width:760px; margin:26px auto 0; text-align:center; }
+  .howto p{ margin:0; font-size:13.5px; line-height:1.6; color:#6b5a50; }
+  .howto p b{ color:var(--dark); }
+  .howto-fine{ margin-top:9px !important; font-size:12px !important; font-style:italic; }
   .hname{ display:block; font-size:13.5px; font-weight:700; letter-spacing:0;
     text-transform:none; line-height:1.2; margin-top:3px; }
   .hprice{ display:inline-block; margin-top:5px; font-size:11.5px; font-weight:800;
@@ -83,7 +91,7 @@
     .hotelgrid .hshot{ aspect-ratio:16/9; }
   }
 </style>
-<link rel="stylesheet" href="site.css?v=20260730y">
+<link rel="stylesheet" href="site.css?v=20260730z">
 </head>
 <body class="has-mobile-actions">
 <header class="crest">
@@ -129,14 +137,23 @@
           <div class="recbar">
             <div class="fgroup fgroup--top">
               <button class="fchip is-on" data-v="block" type="button">our room blocks</button>
-              <button class="fchip" data-v="other" type="button">other hotels</button>
+              <button class="fchip" data-v="other" type="button">other hotels <span class="fcaret" aria-hidden="true">⌄</span></button>
             </div>
             <span class="fcount"><b id="hotelCount">3</b> stays</span>
-            <div class="fgroup fgroup--hoods" hidden>
+            <div class="fgroup fgroup--hoods" hidden><span class="fhoodlabel">by neighborhood</span>
               <button class="fchip fchip--hood is-on" data-v="other" type="button">all</button><button class="fchip fchip--hood" data-v="Bowery" type="button">bowery</button><button class="fchip fchip--hood" data-v="Central Park South" type="button">central park south</button><button class="fchip fchip--hood" data-v="Downtown Brooklyn" type="button">downtown brooklyn</button><button class="fchip fchip--hood" data-v="Financial District" type="button">financial district</button><button class="fchip fchip--hood" data-v="Lower East Side" type="button">lower east side</button><button class="fchip fchip--hood" data-v="Meatpacking" type="button">meatpacking</button><button class="fchip fchip--hood" data-v="Midtown" type="button">midtown</button><button class="fchip fchip--hood" data-v="NoMad" type="button">nomad</button><button class="fchip fchip--hood" data-v="SoHo" type="button">soho</button><button class="fchip fchip--hood" data-v="Tribeca" type="button">tribeca</button><button class="fchip fchip--hood" data-v="Williamsburg" type="button">williamsburg</button></div>
           </div>
           <div class="hotelpanel">
             <div class="hotelgrid">
+          <a class="hotel" data-kind="block" data-hood="Central Park South" data-n="The Pierre" data-ll="40.76476,-73.97197" href="https://be.synxis.com/?Hotel=75757&amp;Chain=21305&amp;arrive=2027-03-19&amp;depart=2027-03-21&amp;adult=1&amp;child=0&amp;group=JENN031927" target="_blank" rel="noopener"><span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/pierre.jpg" alt="" loading="lazy" onerror="this.closest('.hshot').remove()"></span>
+            <span class="hin">
+              <span class="hkind">Our block · very limited</span>
+              <span class="hname">The Pierre</span>
+              <span class="hprice">$535 / night</span>
+              <span class="hwhere">Where the wedding is. Only a handful of rooms left — group code JENN031927.</span>
+              <span class="hbook">Book &rarr;</span>
+            </span>
+          </a>
           <a class="hotel" data-kind="block" data-hood="Midtown" data-n="Lotte New York Palace" data-ll="40.75802,-73.97573" href="https://www.lottenypalace.com/wedding-stories/tang--shleifer-wedding" target="_blank" rel="noopener"><span class="hshot"><img src="https://aybkcrmbdvuxenljqkab.supabase.co/storage/v1/object/public/site/hotels/lotte.jpg" alt="" loading="lazy" onerror="this.closest(\'.hshot\').remove()"></span>
             <span class="hin">
               <span class="hkind">Our block</span>
@@ -164,128 +181,128 @@
               <span class="hbook">Book &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="SoHo" data-n="The Mercer Hotel" data-ll="40.72469,-74.00113" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Mercer%20Hotel%20SoHo%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">SoHo</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="SoHo" data-n="The Mercer Hotel" data-ll="40.72469,-74.00113" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Mercer%20Hotel%20SoHo%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">SoHo</span>
               <span class="hname">The Mercer Hotel</span>
               <span class="hprice">$$$$</span>
               <span class="hwhere">discreet loft-style rooms above The Mercer Kitchen</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Bowery" data-n="citizenM Bowery" data-ll="40.72180,-73.99330" href="https://www.google.com/maps/search/?api=1&amp;query=citizenM%20Bowery%20Bowery%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Bowery</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Bowery" data-n="citizenM Bowery" data-ll="40.72180,-73.99330" href="https://www.google.com/maps/search/?api=1&amp;query=citizenM%20Bowery%20Bowery%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Bowery</span>
               <span class="hname">citizenM Bowery</span>
               <span class="hprice">$</span>
               <span class="hwhere">sleek and compact, walkable to the Friday party</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="Walker Hotel Tribeca" data-ll="40.71770,-74.00230" href="https://www.google.com/maps/search/?api=1&amp;query=Walker%20Hotel%20Tribeca%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Tribeca</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="Walker Hotel Tribeca" data-ll="40.71770,-74.00230" href="https://www.google.com/maps/search/?api=1&amp;query=Walker%20Hotel%20Tribeca%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Tribeca</span>
               <span class="hname">Walker Hotel Tribeca</span>
               <span class="hprice">$$</span>
               <span class="hwhere">cozy boutique on cobblestoned blocks</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="Warren Street Hotel" data-ll="40.71550,-74.00970" href="https://www.google.com/maps/search/?api=1&amp;query=Warren%20Street%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Tribeca</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="Warren Street Hotel" data-ll="40.71550,-74.00970" href="https://www.google.com/maps/search/?api=1&amp;query=Warren%20Street%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Tribeca</span>
               <span class="hname">Warren Street Hotel</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">Firmdale&#x27;s Tribeca one, two Michelin Keys</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Financial District" data-n="The Beekman" data-ll="40.71120,-74.00640" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Beekman%20Financial%20District%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Financial District</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Financial District" data-n="The Beekman" data-ll="40.71120,-74.00640" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Beekman%20Financial%20District%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Financial District</span>
               <span class="hname">The Beekman</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">1883 landmark with a nine-story atrium</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Lower East Side" data-n="Nine Orchard" data-ll="40.71469,-73.99208" href="https://www.google.com/maps/search/?api=1&amp;query=Nine%20Orchard%20Lower%20East%20Side%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Lower East Side</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Lower East Side" data-n="Nine Orchard" data-ll="40.71469,-73.99208" href="https://www.google.com/maps/search/?api=1&amp;query=Nine%20Orchard%20Lower%20East%20Side%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Lower East Side</span>
               <span class="hname">Nine Orchard</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">a 1912 bank turned arty-luxe. The design pick</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="NoMad" data-n="Ace Hotel New York" data-ll="40.74540,-73.98790" href="https://www.google.com/maps/search/?api=1&amp;query=Ace%20Hotel%20New%20York%20NoMad%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">NoMad</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="NoMad" data-n="Ace Hotel New York" data-ll="40.74540,-73.98790" href="https://www.google.com/maps/search/?api=1&amp;query=Ace%20Hotel%20New%20York%20NoMad%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">NoMad</span>
               <span class="hname">Ace Hotel New York</span>
               <span class="hprice">$$</span>
               <span class="hwhere">the original design-hotel lobby scene</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="The Greenwich Hotel" data-ll="40.71920,-74.01030" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Greenwich%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Tribeca</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="The Greenwich Hotel" data-ll="40.71920,-74.01030" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Greenwich%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Tribeca</span>
               <span class="hname">The Greenwich Hotel</span>
               <span class="hprice">$$$$</span>
               <span class="hwhere">De Niro&#x27;s. The Shibui Spa is unreal</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="The Roxy Hotel" data-ll="40.71800,-74.00440" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Roxy%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Tribeca</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="The Roxy Hotel" data-ll="40.71800,-74.00440" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Roxy%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Tribeca</span>
               <span class="hname">The Roxy Hotel</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">jazz club, cinema and a great lobby bar</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Meatpacking" data-n="The Standard, High Line" data-ll="40.74060,-74.00890" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Standard%2C%20High%20Line%20Meatpacking%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Meatpacking</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Meatpacking" data-n="The Standard, High Line" data-ll="40.74060,-74.00890" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Standard%2C%20High%20Line%20Meatpacking%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Meatpacking</span>
               <span class="hname">The Standard, High Line</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">straddles the High Line. Iconic, a little wild</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Midtown" data-n="Park Central Hotel" data-ll="40.76499,-73.98357" href="https://www.google.com/maps/search/?api=1&amp;query=Park%20Central%20Hotel%20Midtown%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Midtown</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Midtown" data-n="Park Central Hotel" data-ll="40.76499,-73.98357" href="https://www.google.com/maps/search/?api=1&amp;query=Park%20Central%20Hotel%20Midtown%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Midtown</span>
               <span class="hname">Park Central Hotel</span>
               <span class="hprice">$$</span>
               <span class="hwhere">classic Midtown, a short hop to the Pierre</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Central Park South" data-n="JW Marriott Essex House" data-ll="40.76618,-73.97852" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Essex%20House%20Central%20Park%20South%20New%20York" target="_blank" rel="noopener"><span class="hkind hkind--alt">Central Park South</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Central Park South" data-n="JW Marriott Essex House" data-ll="40.76618,-73.97852" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Essex%20House%20Central%20Park%20South%20New%20York" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Central Park South</span>
               <span class="hname">JW Marriott Essex House</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">grand, and steps from the wedding</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="Wythe Hotel" data-ll="40.72110,-73.95750" href="https://www.google.com/maps/search/?api=1&amp;query=Wythe%20Hotel%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hkind hkind--alt">Williamsburg</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="Wythe Hotel" data-ll="40.72110,-73.95750" href="https://www.google.com/maps/search/?api=1&amp;query=Wythe%20Hotel%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Williamsburg</span>
               <span class="hname">Wythe Hotel</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">factory conversion, best skyline views in the city</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="The William Vale" data-ll="40.72170,-73.95720" href="https://www.google.com/maps/search/?api=1&amp;query=The%20William%20Vale%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hkind hkind--alt">Williamsburg</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="The William Vale" data-ll="40.72170,-73.95720" href="https://www.google.com/maps/search/?api=1&amp;query=The%20William%20Vale%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Williamsburg</span>
               <span class="hname">The William Vale</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">rooftop pool and huge views</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="The Hoxton, Williamsburg" data-ll="40.72050,-73.95790" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Hoxton%2C%20Williamsburg%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hkind hkind--alt">Williamsburg</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="The Hoxton, Williamsburg" data-ll="40.72050,-73.95790" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Hoxton%2C%20Williamsburg%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Williamsburg</span>
               <span class="hname">The Hoxton, Williamsburg</span>
               <span class="hprice">$$</span>
               <span class="hwhere">hip lobby, good restaurants, easy Brooklyn cool</span>
               <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
-          <a class="hotel" data-kind="other" data-hood="Downtown Brooklyn" data-n="Ace Hotel Brooklyn" data-ll="40.68850,-73.98270" href="https://www.google.com/maps/search/?api=1&amp;query=Ace%20Hotel%20Brooklyn%20Downtown%20Brooklyn%20Brooklyn" target="_blank" rel="noopener"><span class="hkind hkind--alt">Downtown Brooklyn</span>
-            <span class="hin">
+          <a class="hotel" data-kind="other" data-hood="Downtown Brooklyn" data-n="Ace Hotel Brooklyn" data-ll="40.68850,-73.98270" href="https://www.google.com/maps/search/?api=1&amp;query=Ace%20Hotel%20Brooklyn%20Downtown%20Brooklyn%20Brooklyn" target="_blank" rel="noopener"><span class="hin">
+              <span class="hkind hkind--alt">Downtown Brooklyn</span>
               <span class="hname">Ace Hotel Brooklyn</span>
               <span class="hprice">$$</span>
               <span class="hwhere">sleek, and a quick ride back over the bridge</span>
@@ -304,43 +321,13 @@
 
       </div>
 
-      <h3 class="subhead">Prefer to book your own?</h3>
-      <p class="lede">not on our blocks? here are places we'd happily send you — downtown near the Friday party, or up by the park near the wedding. price tiers are typical nightly rates and will move with the date: <b>$</b> ≈ $200–300 · <b>$$</b> ≈ $300–450 · <b>$$$</b> ≈ $450–700 · <b>$$$$</b> ≈ $700+.</p>
-
-      <h4 class="areahead">Downtown · Lower Manhattan</h4>
-      <div class="recgrid">
-        <div class="rec"><div class="rtag">Bowery · $</div><div class="rname"><a href="https://www.google.com/search?q=citizenM+New+York+Bowery+hotel" target="_blank" rel="noopener">citizenM Bowery</a></div><div class="rwhy">Sleek and compact, walkable to Chinatown and the Friday welcome. Best value downtown.</div></div>
-        <div class="rec"><div class="rtag">Tribeca · $$</div><div class="rname"><a href="https://www.google.com/search?q=Walker+Hotel+Tribeca" target="_blank" rel="noopener">Walker Hotel Tribeca</a></div><div class="rwhy">Cozy boutique on quiet cobblestoned blocks — old-New-York charm, mid price.</div></div>
-        <div class="rec"><div class="rtag">Tribeca · $$$</div><div class="rname"><a href="https://www.google.com/search?q=Warren+Street+Hotel+Tribeca" target="_blank" rel="noopener">Warren Street Hotel</a></div><div class="rwhy">Firmdale's Tribeca one — Kit Kemp colour and pattern everywhere. Two Michelin Keys.</div></div>
-        <div class="rec"><div class="rtag">FiDi · $$$</div><div class="rname"><a href="https://www.google.com/search?q=The+Beekman+a+Thompson+Hotel+New+York" target="_blank" rel="noopener">The Beekman</a></div><div class="rwhy">A stunning 1883 landmark with a nine-story atrium. A destination in itself.</div></div>
+      <div class="howto">
+        <p><b>Our room blocks</b> are the four above — we've held rooms at each, so the rate is set and
+        you just book through the link. <b>Other hotels</b> are places we'd happily send you if the blocks
+        fill up or you'd rather be somewhere else; filter those by neighborhood.</p>
+        <p class="howto-fine">Price tiers on the others are typical nightly rates and move with the date:
+        <b>$</b> ≈ $200–300 · <b>$$</b> ≈ $300–450 · <b>$$$</b> ≈ $450–700 · <b>$$$$</b> ≈ $700+.</p>
       </div>
-
-      <h4 class="areahead">By the park · near the wedding</h4>
-      <div class="recgrid">
-        <div class="rec"><div class="rtag">Midtown · $$</div><div class="rname"><a href="https://www.google.com/search?q=Park+Central+Hotel+New+York" target="_blank" rel="noopener">Park Central Hotel</a></div><div class="rwhy">Classic Midtown on 7th Ave, a short hop to the Pierre. Reliable mid-range.</div></div>
-        <div class="rec"><div class="rtag">Central Park S · $$$</div><div class="rname"><a href="https://www.google.com/search?q=JW+Marriott+Essex+House+New+York" target="_blank" rel="noopener">JW Marriott Essex House</a></div><div class="rwhy">Grand and right on Central Park South — steps from the wedding, without Pierre pricing.</div></div>
-        <div class="rec"><div class="rtag">Upper East Side · $$$$</div><div class="rname"><a href="https://www.google.com/search?q=The+Pierre+A+Taj+Hotel+New+York" target="_blank" rel="noopener">The Pierre</a></div><div class="rwhy">The wedding itself. Wake up where the party is — book direct.</div></div>
-      </div>
-
-      <h4 class="areahead">Boutique &amp; artsy · downtown</h4>
-      <div class="recgrid">
-        <div class="rec"><div class="rtag">Lower East Side · $$$</div><div class="rname"><a href="https://www.google.com/search?q=Nine+Orchard+Hotel+New+York" target="_blank" rel="noopener">Nine Orchard</a></div><div class="rwhy">A landmark 1912 bank turned dreamy, arty-luxe hotel. The design-lover's pick.</div></div>
-        <div class="rec"><div class="rtag">NoMad · $$</div><div class="rname"><a href="https://www.google.com/search?q=Ace+Hotel+New+York+NoMad" target="_blank" rel="noopener">Ace Hotel New York</a></div><div class="rwhy">The original design-hotel lobby scene. Buzzy, creative, always full of laptops and cool people.</div></div>
-        <div class="rec"><div class="rtag">SoHo · $$$$</div><div class="rname"><a href="https://www.google.com/search?q=The+Mercer+Hotel+SoHo+New+York" target="_blank" rel="noopener">The Mercer</a></div><div class="rwhy">Discreet loft-style rooms in a cast-iron landmark, over The Mercer Kitchen. Quietly the coolest address downtown.</div></div>
-        <div class="rec"><div class="rtag">East Village · $$$</div><div class="rname"><a href="https://www.google.com/search?q=The+Bowery+Hotel+New+York" target="_blank" rel="noopener">The Bowery Hotel</a></div><div class="rwhy">Dark wood, fireplaces and a lobby that never empties. Downtown’s grown-up classic.</div></div>
-        <div class="rec"><div class="rtag">Tribeca · $$$</div><div class="rname"><a href="https://www.google.com/search?q=The+Roxy+Hotel+Tribeca+New+York" target="_blank" rel="noopener">The Roxy Hotel</a></div><div class="rwhy">A jazz club, a cinema and a great lobby bar under one roof. Our kind of night.</div></div>
-        <div class="rec"><div class="rtag">Meatpacking · $$$</div><div class="rname"><a href="https://www.google.com/search?q=The+Standard+High+Line+New+York" target="_blank" rel="noopener">The Standard, High Line</a></div><div class="rwhy">Straddles the High Line with floor-to-ceiling views. Iconic, a little wild.</div></div>
-      </div>
-
-      <h4 class="areahead">Brooklyn · if you want to cross the river</h4>
-      <div class="recgrid">
-        <div class="rec"><div class="rtag">Williamsburg · $$$</div><div class="rname"><a href="https://www.google.com/search?q=Wythe+Hotel+Brooklyn" target="_blank" rel="noopener">Wythe Hotel</a></div><div class="rwhy">A 1901 factory conversion with the best Manhattan-skyline views in the city. The artsy classic.</div></div>
-        <div class="rec"><div class="rtag">Downtown Bklyn · $$</div><div class="rname"><a href="https://www.google.com/search?q=Ace+Hotel+Brooklyn" target="_blank" rel="noopener">Ace Hotel Brooklyn</a></div><div class="rwhy">Sleek, design-forward, and a quick ride back over the bridge to everything.</div></div>
-        <div class="rec"><div class="rtag">Williamsburg · $$$</div><div class="rname"><a href="https://www.google.com/search?q=The+William+Vale+Hotel+Brooklyn" target="_blank" rel="noopener">The William Vale</a></div><div class="rwhy">Rooftop pool and huge views — a splashy, fun base in north Brooklyn.</div></div>
-        <div class="rec"><div class="rtag">Williamsburg · $$</div><div class="rname"><a href="https://www.google.com/search?q=The+Hoxton+Williamsburg" target="_blank" rel="noopener">The Hoxton, Williamsburg</a></div><div class="rwhy">Hip lobby, good restaurants, that easy Brooklyn cool. Great mid-price boutique.</div></div>
-      </div>
-
-      
 
       <h3 class="subhead">Getting here</h3>
       <div class="travelnote">
@@ -375,14 +362,14 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260730y" defer></script>
-  <script src="map.js?v=20260730y" defer></script>
-  <script src="account.js?v=20260730y" defer></script>
-  <script src="cal.js?v=20260730y" defer></script>
-  <script src="upload.js?v=20260730y" defer></script>
-  <script src="drawer.js?v=20260730y" defer></script>
-  <script src="rsvpform.js?v=20260730y" defer></script>
-  <script src="notes.js?v=20260730y" defer></script>
+  <script src="personalize.js?v=20260730z" defer></script>
+  <script src="map.js?v=20260730z" defer></script>
+  <script src="account.js?v=20260730z" defer></script>
+  <script src="cal.js?v=20260730z" defer></script>
+  <script src="upload.js?v=20260730z" defer></script>
+  <script src="drawer.js?v=20260730z" defer></script>
+  <script src="rsvpform.js?v=20260730z" defer></script>
+  <script src="notes.js?v=20260730z" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('#travel .recbar'); if(!bar) return;
