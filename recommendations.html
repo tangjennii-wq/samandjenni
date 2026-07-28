@@ -9,16 +9,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730a">
+<link rel="stylesheet" href="site.css?v=20260730b">
 <style>
   /* ---- recs: list scrolls on the left, map is the hero on the right -------- */
-  .recsplit{ display:grid; grid-template-columns:360px 1fr; gap:18px;
+  .recsplit{ display:grid; grid-template-columns:236px 1fr; gap:16px;
     align-items:start; margin-top:14px; }
   #recs{ padding-top:14px; }
   #recs .eyebrow{ margin-bottom:2px; }
   #recs h2{ margin-top:2px; }
   #recs .rule{ margin-top:7px; }
-  .wrap{ max-width:1180px; }
+  .wrap{ max-width:1260px; }
 
   /* left column */
   .recside{ display:flex; flex-direction:column; min-width:0; }
@@ -26,8 +26,8 @@
     border-bottom:1px solid var(--line); }
   .fgroup{ display:flex; flex-wrap:wrap; gap:5px; }
   .fgroup--areas{ flex:1 1 auto; }
-  .fchip{ font:inherit; font-size:9.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
-    padding:5px 9px; border-radius:var(--r-pill); border:1px solid var(--line-2);
+  .fchip{ font:inherit; font-size:8.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    padding:4px 8px; border-radius:var(--r-pill); border:1px solid var(--line-2);
     background:#fff; color:#6b5a50; cursor:pointer; line-height:1.1; white-space:nowrap; }
   .fchip:hover{ border-color:var(--dark); color:var(--dark); }
   .fchip.is-on{ background:var(--red); border-color:var(--red); color:#fff; }
@@ -38,23 +38,23 @@
     text-transform:uppercase; color:#a2907a; white-space:nowrap; }
   .fcount b{ color:var(--dark); }
 
-  .recpanel{ margin-top:10px; height:640px; overflow-y:auto; overscroll-behavior:contain;
-    padding-right:8px; margin-right:-8px; }
+  .recpanel{ margin-top:10px; height:min(850px, calc(100vh - 150px));
+    overflow-y:auto; overscroll-behavior:contain; padding-right:7px; margin-right:-7px; }
   .recpanel::-webkit-scrollbar{ width:6px; }
   .recpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
-  .recgrid{ display:flex; flex-direction:column; gap:7px; }
-  .rec{ position:relative; display:block; padding:11px 13px; text-decoration:none; color:inherit;
-    border:1px solid var(--line); border-radius:var(--r-md); background:#fff;
+  .recgrid{ display:flex; flex-direction:column; gap:6px; }
+  .rec{ position:relative; display:block; padding:0; overflow:hidden; text-decoration:none;
+    color:inherit; border:1px solid var(--line); border-radius:var(--r-md); background:#fff;
     transition:border-color .12s, transform .12s; }
   .rec[hidden]{ display:none !important; }
-  .rec .rshot{ float:right; width:52px; height:52px; margin:0 0 6px 10px;
-    border-radius:8px; overflow:hidden; background:#F1EADD; }
+  /* the photo runs the full width of the card and leads it */
+  .rec .rshot{ display:block; width:100%; aspect-ratio:4/3; overflow:hidden; background:#F1EADD; }
   .rec .rshot img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .rec .rtag{ display:block; font-size:8.5px; font-weight:800; letter-spacing:.14em;
+  .rec .rtag{ display:block; margin:9px 11px 0; font-size:8px; font-weight:800; letter-spacing:.13em;
     text-transform:uppercase; color:var(--red); }
-  .rec .rname{ display:block; font-size:15px; font-weight:700; margin-top:2px; line-height:1.2;
-    border-bottom:2px solid var(--gold); align-self:flex-start; }
-  .rec .rwhy{ display:block; font-size:12px; line-height:1.4; margin-top:4px; color:#6b5a50; }
+  .rec .rname{ display:inline-block; margin:2px 11px 0; font-size:13.5px; font-weight:700;
+    line-height:1.15; border-bottom:2px solid var(--gold); }
+  .rec .rwhy{ display:block; margin:3px 11px 10px; font-size:11px; line-height:1.35; color:#6b5a50; }
   .rec:hover{ border-color:var(--red); transform:translateY(-1px); }
   .rec:hover .rname{ color:var(--red); border-bottom-color:var(--red); }
   .recempty{ padding:24px 0; text-align:center; font-size:13px; color:#a2907a; font-style:italic; }
@@ -63,11 +63,14 @@
   .mapside{ position:sticky; top:64px; }
   .mapside .sjmap-gmap{ float:right; margin:0 0 8px; }
   .mapstage{ position:relative; clear:both; }
-  .mapstage .sjmap{ height:640px; margin-top:0; }
+  .mapstage .sjmap{ height:min(850px, calc(100vh - 150px)); margin-top:0; }
   .map-caption{ margin-top:14px; }
 
   @media(max-width:960px){
     .recsplit{ grid-template-columns:1fr; }
+    .rec .rshot{ aspect-ratio:16/9; }
+    .rec .rname{ font-size:15px; }
+    .rec .rwhy{ font-size:12px; }
     .mapside{ position:static; order:-1; }
     .mapstage .sjmap{ height:46vh; }
     .mapside .sjmap-gmap{ float:none; display:flex; justify-content:center; }
@@ -297,13 +300,13 @@
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="personalize.js?v=20260730a" defer></script>
-  <script src="map.js?v=20260730a" defer></script>
-  <script src="cal.js?v=20260730a" defer></script>
-  <script src="upload.js?v=20260730a" defer></script>
-  <script src="drawer.js?v=20260730a" defer></script>
-  <script src="rsvpform.js?v=20260730a" defer></script>
-  <script src="notes.js?v=20260730a" defer></script>
+  <script src="personalize.js?v=20260730b" defer></script>
+  <script src="map.js?v=20260730b" defer></script>
+  <script src="cal.js?v=20260730b" defer></script>
+  <script src="upload.js?v=20260730b" defer></script>
+  <script src="drawer.js?v=20260730b" defer></script>
+  <script src="rsvpform.js?v=20260730b" defer></script>
+  <script src="notes.js?v=20260730b" defer></script>
 <script>
 (function(){
   var bar = document.querySelector('.recbar'); if(!bar) return;
