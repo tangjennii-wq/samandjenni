@@ -12,6 +12,7 @@
   function formHTML(p, intro){
     return ('' +
       '<p class="note-top">Share some wild memories, feels, etc. with us \u2661</p>' +
+      '<div class="note-thread" aria-hidden="true"></div>' +
       (intro ? '<p class="note-intro">' + intro + '</p>' : '') +
       '<div class="note-field">' +
         '<label class="note-l" for="{p}Mem">a favorite memory with Sam and/or Jenni</label>' +

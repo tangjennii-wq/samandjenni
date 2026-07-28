@@ -1360,8 +1360,7 @@ body.map-full .map-caption{ display:none !important; }
    ============================================================ */
 .note-card--drawer{ background:#FDFAF3; }
 .note-drawer{ background:#FDFAF3; }
-.note-card--drawer:not(:has(.rsvp-head))::before{
-  content:''; display:block; height:3px; margin:0 0 20px;
+.note-thread{ display:block; height:3px; margin:0 0 18px;
   background:linear-gradient(90deg, var(--red) 0 34%, var(--gold) 34% 100%);
   border-radius:2px; }
 
@@ -1474,7 +1473,7 @@ body.map-full .map-caption{ display:none !important; }
   .note-card--drawer .note-row2, .note-card--drawer .note-row3,
   .note-card--drawer .photo-field{ margin-top:11px; }
 
-  .note-card--drawer::before{ margin-bottom:14px; }
+  .note-thread{ margin-bottom:13px; }
   .note-ta{ min-height:58px; }
   .note-l{ font-size:10.5px; margin-bottom:3px; }
   .note-f{ padding:9px 12px; }
@@ -1541,6 +1540,6 @@ body.map-full .map-caption{ display:none !important; }
 
 
 /* the note form opens with a line, above the red/gold thread */
-.note-top{ margin:0 0 12px; font-size:13px; font-style:italic; line-height:1.45; color:#8a7355; }
-.note-card--drawer:not(:has(.rsvp-head))::before{ margin-top:0; }
+.note-top{ margin:0 0 11px; font-size:13px; font-style:italic; line-height:1.45; color:#8a7355; }
+
 @media(max-width:760px){ .note-top{ font-size:12px; margin-bottom:9px; } }
