@@ -58,6 +58,9 @@
   .err{margin-top:16px;font-size:12.5px;color:var(--red);font-weight:600;display:none}
   .err.show{display:block}
   .hint{margin-top:26px;font-size:11.5px;color:#a2907a;font-style:italic;line-height:1.7}
+  .skip{ display:inline-block; margin-top:16px; font-size:12px; letter-spacing:.02em;
+    color:#a2907a; text-decoration:none; border-bottom:1px solid transparent; }
+  .skip:hover{ color:var(--dark); border-bottom-color:#a2907a; }
 </style>
 </head>
 <body>
@@ -74,21 +77,20 @@
       <div class="date">3.20.27</div>
 
       <form method="POST" action="/api/login">
-        <label for="lastname">Your full name or email</label>
-        <input id="lastname" name="lastname" type="text" autocomplete="off" autofocus
-               placeholder="full name or email" spellcheck="false" autocapitalize="none" />
-        <label for="password">Passphrase</label>
-        <input id="password" name="password" type="password" autocomplete="off" placeholder="••••••••••••" />
-        <button type="submit">Enter</button>
+        <label for="lastname">Find my invitation</label>
+        <input id="lastname" name="lastname" type="text" autocomplete="name" autofocus
+               placeholder="your full name or email" spellcheck="false" autocapitalize="words" />
+        <button type="submit">Find it</button>
       </form>
 
       <div class="err" id="err"></div>
-      <div class="hint">your full name, or the email we sent this to — plus the passphrase.<br>lost it? just text us.</div>
+      <div class="hint">your name as we'd have written it, or the email we sent this to.<br>can't find yourself? just text us.</div>
+      <a class="skip" href="/">or have a look around first &rarr;</a>
     </div>
   </div>
 <script>
   var MSG = {
-    pass: "that's not the passphrase — try again ♡",
+    pass: "we can't find that one — try your full name, or the email we sent this to ♡",
     name: "we just need your name or email ♡",
     list: "we can't find that one — try your full name, or the email we sent this to. still stuck? just text us ♡"
   };
