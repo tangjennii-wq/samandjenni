@@ -1700,12 +1700,12 @@ body.map-full .map-caption{ display:none !important; }
    separate bands and cannot overlap however far the nav scrolls. */
 @media(max-width:760px){
   .sitenav .nav-actions{ display:inline-flex !important; gap:5px;
-    position:sticky; right:34px; margin-left:auto; flex:0 0 auto;
-    padding:5px 6px 5px 9px; background:#fff; z-index:2;
+    position:sticky; right:32px; margin-left:auto; flex:0 0 auto;
+    padding:5px 1px 5px 9px; background:#fff; z-index:2;
     box-shadow:-12px 0 10px -6px #fff; }
   /* margin-left:auto now belongs to the pills (they come first in the DOM), so
      the account icon must give it up or the two both claim the free space. */
-  .nav-acct{ margin-left:0; right:0; z-index:3; padding-left:2px; box-shadow:none; }
+  .nav-acct{ margin-left:0; right:0; z-index:3; padding-left:0; box-shadow:none; }
 
   .sitenav .nav-actions .nav-act{ min-height:28px; height:28px; padding:0 9px; font-size:8.5px;
     letter-spacing:.08em; }
@@ -1797,10 +1797,15 @@ body.map-full .map-caption{ display:none !important; }
      as well, at bottom-LEFT: the map owns bottom-right on phones (layer key)
      and top-left (zoom, expand), so the left corner is the only one free. */
   .ou-tab{ top:auto; bottom:14px; left:12px; right:auto; transform:none;
-    border-radius:var(--r-pill); padding:8px 13px;
+    width:40px; height:40px; padding:0; border-radius:50%;
+    display:grid; place-items:center;
     box-shadow:0 4px 14px rgba(13,9,5,.20); }
-  .ou-tab-in{ writing-mode:horizontal-tb; font-size:9px; letter-spacing:.14em; }
-  .ou-tab:hover{ padding-left:13px; }
+  /* the words are too much furniture over a photo card at this size — the
+     button reads as +/− and keeps its aria-label for anyone not looking */
+  .ou-tab .ou-tab-in{ display:none; }
+  .ou-tab::after{ content:'+/\2212'; font-size:14px; font-weight:800;
+    letter-spacing:0; line-height:1; }
+  .ou-tab:hover{ padding:0; }
   body.has-bottom-actions .ou-tab{ bottom:74px; }
   .ou-card{ display:flex; flex-direction:column; align-items:center; text-align:center;
     gap:4px; margin:0 16px 22px; padding:20px 18px 18px;
