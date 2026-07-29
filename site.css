@@ -1560,7 +1560,7 @@ body.map-full .map-caption{ display:none !important; }
   /* pills out of the nav */
   .sitenav .nav-actions{ display:none !important; }
   /* calendar off the home nav — the RSVP flow offers it after you submit */
-  body.has-bottom-actions .nav-cal{ display:none !important; }
+  .nav-cal{ display:none !important; }   /* no calendar in the phone nav, any page */
 
   /* the account icon takes the right end and is actually reachable */
   .nav-acct{ margin-left:auto; flex:0 0 auto; position:sticky; right:0;
