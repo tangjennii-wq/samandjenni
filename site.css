@@ -1232,11 +1232,14 @@ body.map-full .map-caption{ display:none !important; }
   /* the nav pills belong to the inner pages; home puts them under the film */
   body.has-bottom-actions .nav-actions{ display:none !important; }
   body.has-bottom-actions .mobile-actions{
-    display:flex !important; justify-content:center; gap:10px;
-    padding:18px 16px calc(22px + env(safe-area-inset-bottom));
+    display:flex !important; justify-content:center; gap:8px;
+    padding:11px 16px calc(13px + env(safe-area-inset-bottom));
     background:var(--ivory); border-bottom:0; }
-  body.has-bottom-actions .ma-btn{ flex:1 1 0; width:auto; max-width:220px;
-    padding:0 16px; min-height:50px; font-size:12px; letter-spacing:.16em; }
+  /* Half the previous weight — these are hero actions, but at 50px tall and
+     220px wide they were competing with the film above them rather than
+     following it. Still clears the 44px touch minimum. */
+  body.has-bottom-actions .ma-btn{ flex:0 1 auto; width:auto; max-width:150px;
+    padding:0 18px; min-height:44px; font-size:10px; letter-spacing:.14em; }
 }
 
 

@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260729a">
+<link rel="stylesheet" href="site.css?v=20260729b">
 <style>
   :root {
     --red: #E53C2D;
@@ -1015,7 +1015,7 @@
   .sfoot{ padding:24px 18px; border-radius:var(--r-lg) var(--r-lg) 0 0; }
 </style>
 </head>
-<body class="has-mobile-actions">
+<body class="has-mobile-actions has-bottom-actions">
   <span id="top"></span>
 <!-- White crest band -->
   <header class="crest">
@@ -1033,13 +1033,6 @@
     <a href="recommendations.html"><span class="nav-long">NYC recs</span><span class="nav-brief">recs</span></a>
     <a href="travel.html"><span class="nav-long">hotels/FAQ</span><span class="nav-brief">hotels</span></a>
     <button type="button" class="nav-ou" data-ou-open aria-label="Over/under"><span class="nav-long">over/under</span><span class="nav-brief">+/−</span></button>
-      <button type="button" class="nav-cal" id="navCal" aria-label="Add to calendar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </button>
-      <span class="nav-actions">
-        <a class="nav-act nav-act--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
-        <button type="button" class="nav-act nav-act--note" data-note-open>Note</button>
-      </span>
       <span class="nav-cta">
       <a class="cta-btn cta-primary" href="rsvp.html" data-rsvp-open>RSVP</a>
       <button type="button" class="cta-btn" data-note-open>Leave a note</button>
@@ -1110,21 +1103,6 @@
 
       
     </div>
-    <div class="hero-utils">
-      <div class="cal-wrap">
-        <button class="util-pill cal-toggle" type="button" id="calToggle" aria-expanded="false" aria-haspopup="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span>add to calendar</span><span class="caret">▾</span>
-        </button>
-        <div class="cal-pop" id="calPop" role="menu" hidden>
-          <a role="menuitem" href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding%20Weekend&amp;dates=20270319/20270321&amp;details=Save%20the%20weekend!%0A%0AFriday%203.19%20%E2%80%94%20Welcome%20party%20at%20Chinese%20Tuxedo%20(5%20Doyers%20St%2C%20New%20York%2C%20NY%2010013)%0ASaturday%203.20%20%E2%80%94%20Wedding%20at%20The%20Pierre%20Hotel%20(2%20E%2061st%20St%2C%20New%20York%2C%20NY%2010065)%0A%0Ahttps%3A%2F%2Fsamandjenni.com&amp;location=Chinese%20Tuxedo%20(Fri)%20%26%20The%20Pierre%20Hotel%20(Sat)%2C%20New%20York%2C%20NY" target="_blank" rel="noopener noreferrer">Google Calendar</a>
-          <a role="menuitem" href="save-the-date.ics" type="text/calendar">Apple Calendar</a>
-          <a role="menuitem" href="save-the-date.ics" download="sam-and-jenni.ics">Outlook / download .ics</a>
-          <div class="cal-pop-sep"></div>
-          <button role="menuitem" type="button" id="shareBtn">Share this page</button>
-          <a role="menuitem" href="hero-mobile.mp4" download="Sam-and-Jenni-Save-the-Date.mp4">Download the film</a>
-        </div>
-      </div>
       <a class="util-pill util-book" href="stay.html#hotels">Book your room <span aria-hidden="true">→</span></a>
     </div>
 
@@ -1135,6 +1113,11 @@
   
 
 
+
+  <div class="mobile-actions">
+    <a class="ma-btn ma-rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
+    <button type="button" class="ma-btn ma-note" data-note-open>Leave a note</button>
+  </div>
 
   <!-- Full-screen reel overlay — the whole film, easy to exit -->
   <div class="reel-modal" id="reelModal" aria-hidden="true">
