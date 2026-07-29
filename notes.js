@@ -88,7 +88,8 @@
         '<p class="thanks-ask">two more things, if you have a minute —</p>' +
         '<div class="thanks-pills">' +
           '<button class="thanks-pill pill-rsvp" type="button" data-go-rsvp>RSVP</button>' +
-          '<a class="thanks-pill pill-ou" href="over-under.html">Over/Under</a>' +
+          // opens the drawer now that over/under isn't its own page
+          '<button class="thanks-pill pill-ou" type="button" data-ou-open>Over/Under</button>' +
         '</div>' +
         '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
         '</div>';
