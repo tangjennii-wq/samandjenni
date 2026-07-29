@@ -1757,24 +1757,23 @@ body.map-full .map-caption{ display:none !important; }
    It was taking a top-level nav slot beside events/recs/hotels, which
    overweighted a side game and crowded the phone nav.
 
-   Desktop: a vertical tab on the LEFT edge. The right edge is the busy side —
-   recs and hotels both put the map in the right-hand column, and that's also
-   where the scrollbar lives. The left gutter is empty on every page.
+   Desktop: a vertical tab on the right edge — Jenni's call, and it reads as a
+   tab there in a way the left edge doesn't.
 
    Phones: no floating tab at all. The map already owns three corners (zoom and
    expand top-left, layer key bottom-right, attribution along the bottom), so a
    pill had nowhere to sit without covering one. It becomes a card above the
    footer instead — see .ou-card. */
 .ou-tab{ -webkit-appearance:none; appearance:none; font-family:inherit;
-  position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:1200;
-  border:0; border-radius:0 var(--r-md) var(--r-md) 0;
+  position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:1200;
+  border:0; border-radius:var(--r-md) 0 0 var(--r-md);
   background:var(--gold); color:var(--dark); cursor:pointer;
-  padding:14px 7px; box-shadow:3px 0 14px rgba(13,9,5,.16);
-  transition:padding-left .14s ease, background .14s ease; }
+  padding:14px 7px; box-shadow:-3px 0 14px rgba(13,9,5,.16);
+  transition:padding-right .14s ease, background .14s ease; }
 .ou-tab-in{ display:block; writing-mode:vertical-rl; text-orientation:mixed;
   font-size:10px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
 .ou-slash{ color:var(--red); }
-.ou-tab:hover{ padding-left:11px; background:#F0D64A; }
+.ou-tab:hover{ padding-right:11px; background:#F0D64A; }
 .ou-tab:focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
 
 .ou-frame{ display:block; width:100%; height:100%; min-height:60vh; border:0; background:transparent; }
