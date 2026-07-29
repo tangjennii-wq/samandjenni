@@ -74,23 +74,23 @@
       <div class="date">3.20.27</div>
 
       <form method="POST" action="/api/login">
-        <label for="lastname">Your email or last name</label>
+        <label for="lastname">Your full name or email</label>
         <input id="lastname" name="lastname" type="text" autocomplete="off" autofocus
-               placeholder="email or last name" spellcheck="false" autocapitalize="none" />
+               placeholder="full name or email" spellcheck="false" autocapitalize="none" />
         <label for="password">Passphrase</label>
         <input id="password" name="password" type="password" autocomplete="off" placeholder="••••••••••••" />
         <button type="submit">Enter</button>
       </form>
 
       <div class="err" id="err"></div>
-      <div class="hint">the email we sent this to (or your last name), and the passphrase.<br>lost it? just text us.</div>
+      <div class="hint">your full name, or the email we sent this to — plus the passphrase.<br>lost it? just text us.</div>
     </div>
   </div>
 <script>
   var MSG = {
     pass: "that's not the passphrase — try again ♡",
     name: "we just need your name or email ♡",
-    list: "we can't find that one — try the email we sent this to, or your last name. still stuck? just text us ♡"
+    list: "we can't find that one — try your full name, or the email we sent this to. still stuck? just text us ♡"
   };
   var e = new URLSearchParams(location.search).get('e');
   if (e) {

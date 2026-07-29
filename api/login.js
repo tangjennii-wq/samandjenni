@@ -73,9 +73,34 @@ export default async function handler(req, res) {
     return res.end();
   }
 
+  // Two shapes of key, normalised the same way they were written to Supabase.
+  // Emails keep their @ and dots; names are stripped to plain lowercase letters
+  // so "Dr. Eric Tang", "eric  tang" and "ERIC TANG" all land on "eric tang".
+  const asName = (v) => v
+    .normalize('NFKD').replace(/[\u0300-\u036f]/g, '')   // é -> e
+    .toLowerCase()
+    .replace(/\b(dr|mr|mrs|ms|prof|rev)\.?\s+/g, ' ')   // drop titles
+    .replace(/[^a-z' ]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
   // An email may be typed as "First Last <a@b.com>" or with stray punctuation.
-  const key = (ln.match(/[^\s<>,;]+@[^\s<>,;]+/) || [ln])[0].replace(/[.,;]+$/, '');
-  const { allowed, tier } = await lookUp(key);
+  const email = (ln.match(/[^\s<>,;]+@[^\s<>,;]+/) || [])[0];
+  const key = email ? email.replace(/[.,;]+$/, '') : asName(ln);
+  if (!key) {
+    res.writeHead(302, { Location: '/gate?e=name' });
+    return res.end();
+  }
+
+  // Try the name as typed, then fall back to the last word alone — someone who
+  // types a full name we only hold a surname for still gets in.
+  let { allowed, tier, degraded } = await lookUp(key);
+  let matched = key;
+  if (!allowed && !email && key.includes(' ')) {
+    const surname = key.split(' ').pop();
+    const alt = await lookUp(surname);
+    if (alt.allowed) { allowed = true; tier = alt.tier; degraded = alt.degraded; matched = surname; }
+  }
   if (!allowed) {
     res.writeHead(302, { Location: '/gate?e=list' });
     return res.end();
@@ -84,7 +109,7 @@ export default async function handler(req, res) {
   const maxAge = 60 * 60 * 24 * 400;
   res.setHeader('Set-Cookie', [
     `sj_pass=${expected}; Path=/; Max-Age=${maxAge}; SameSite=Lax; HttpOnly; Secure`,
-    `sj_guest=${encodeURIComponent(key)}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
+    `sj_guest=${encodeURIComponent(matched)}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
     `sj_tier=${tier}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
   ]);
   res.writeHead(302, { Location: '/' });
