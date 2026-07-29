@@ -48,6 +48,17 @@
   var TIERNAME = { '1':'every event', '2':'rehearsal, Friday & Saturday',
                    '3':'Friday & Saturday', '4':'the wedding' };
 
+  // The icon alone was ambiguous — it doesn't say whose account it is, or that
+  // there is one. On desktop it now carries the guest's first name; phones keep
+  // the glyph alone because the nav has no room to spare.
+  if (who) {
+    var label = document.createElement('span');
+    label.className = 'acct-name';
+    label.textContent = isEmail ? who.split('@')[0].split(/[._]/)[0] : who.split(/\s+/)[0];
+    label.textContent = label.textContent.replace(/^[a-z]/, function(c){ return c.toUpperCase(); });
+    btn.appendChild(label);
+  }
+
   var pop = document.createElement('div');
   pop.className = 'acct-pop';
   pop.hidden = true;
