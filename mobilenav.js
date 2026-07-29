@@ -61,7 +61,6 @@
   var panel = document.createElement('div');
   panel.className = 'mnav';
   panel.id = 'mobile-wedding-menu';
-  panel.setAttribute('role', 'menu');
   panel.setAttribute('aria-label', 'More wedding actions');
   panel.hidden = true;
 
@@ -71,18 +70,18 @@
     '<nav class="mnav-list">';
   links.forEach(function (l) {
     var label = /^faq$/i.test(l.label) ? 'FAQs' : l.label;
-    html += '<a role="menuitem" href="' + l.href + '"' + (l.active ? ' class="is-here" aria-current="page"' : '') + '>' + label + '</a>';
+    html += '<a href="' + l.href + '"' + (l.active ? ' class="is-here" aria-current="page"' : '') + '>' + label + '</a>';
   });
   if (who) {
-    html += '<a class="mnav-action mnav-action--rsvp" role="menuitem" href="rsvp.html" data-rsvp-open>RSVP</a>';
+    html += '<a class="mnav-action mnav-action--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>';
   } else {
-    html += '<a class="mnav-action mnav-action--rsvp" role="menuitem" href="/gate?next=rsvp">Find my invitation</a>';
+    html += '<a class="mnav-action mnav-action--rsvp" href="/gate?next=rsvp">Find my invitation</a>';
   }
-  html += '<button type="button" class="mnav-action mnav-action--note" role="menuitem" data-note-open>Leave us a note &#9825;</button>';
+  html += '<button type="button" class="mnav-action mnav-action--note" data-note-open>Leave us a note &#9825;</button>';
   html += '</nav>';
   html += '<div class="mnav-foot">';
   if (who) {
-    html += '<button type="button" class="mnav-acct" role="menuitem">' +
+    html += '<button type="button" class="mnav-acct">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" ' +
             'stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/>' +
             '<path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>' + (first || 'your details') + '</button>';
@@ -107,13 +106,19 @@
   }
 
   function setOpen(on) {
+    var wasOpen = !panel.hidden;
     if (on) place();
     panel.hidden = !on;
     veil.hidden = !on;
     toggle.classList.toggle('is-open', on);
     toggle.setAttribute('aria-expanded', on ? 'true' : 'false');
     document.body.classList.toggle('mnav-open', on);
-    if (on) { try { panel.querySelector('[role="menuitem"]').focus({ preventScroll: true }); } catch (e) {} }
+    if (on) {
+      try { panel.querySelector('a, button:not(.mnav-close)').focus({ preventScroll: true }); } catch (e) {}
+    } else if (wasOpen && panel.contains(document.activeElement)) {
+      // never leave focus orphaned inside a panel that's gone
+      try { toggle.focus({ preventScroll: true }); } catch (e) { toggle.focus(); }
+    }
   }
   window.addEventListener('resize', function () { if (!panel.hidden) place(); });
   window.addEventListener('orientationchange', function () { if (!panel.hidden) place(); });
@@ -122,12 +127,9 @@
   // so taps on the page behind the sheet went nowhere and the menu felt stuck.
   // pointerdown fires for touch, pen and mouse alike, and fires before any
   // scroll or focus handling, so an outside tap always registers.
-  var justToggled = 0;
-
   toggle.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-    justToggled = Date.now();
     setOpen(panel.hidden);
   });
 
@@ -139,7 +141,6 @@
 
   function outside(e) {
     if (panel.hidden) return;
-    if (Date.now() - justToggled < 350) return;      // the tap that opened it
     if (panel.contains(e.target) || toggle.contains(e.target)) return;
     setOpen(false);
   }

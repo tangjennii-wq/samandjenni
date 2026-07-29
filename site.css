@@ -1940,11 +1940,17 @@ body.map-full .map-caption{ display:none !important; }
    Built from .sitenav by mobilenav.js, so the HTML stays the single source. */
 .mnav-toggle{ display:none; }
 .crest-mobile-nav{ display:none; }
+/* MUST come with any author `display` on these two. [hidden]{display:none} lives
+   in the UA stylesheet, so a normal author declaration outranks it regardless of
+   specificity — .mnav{display:flex} silently defeated panel.hidden and left the
+   menu permanently on screen. Every other popover in this file already has this
+   guard (.acct-pop, .cal-pop, .photo-preview); .mnav was the one that didn't. */
+.mnav[hidden], .mnav-veil[hidden]{ display:none !important; }
 @media(max-width:760px){
   /* The separate navigation band disappears. Home and More sit in the crest. */
   .crest{ position:relative; }
   .sitenav{ display:none !important; }
-  .crest-mobile-nav{ position:absolute; z-index:2600; top:7px; left:13px; right:13px;
+  .crest-mobile-nav{ position:absolute; z-index:900; top:7px; left:13px; right:13px;
     height:44px; display:flex; align-items:center; justify-content:space-between;
     pointer-events:none; }
   .crest-mobile-nav > *{ pointer-events:auto; }
@@ -1968,22 +1974,23 @@ body.map-full .map-caption{ display:none !important; }
   .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
   .mnav-toggle:active, .mnav-toggle[aria-expanded="true"]{ background:rgba(229,60,45,.08); }
 
-  /* The crest controls stay above the popover/veil. */
-  .crest{ z-index:2600; }
+  /* Above the popover, below every real overlay: the film modal (1000), the
+     note/RSVP drawer (1001), the account sheet (3000). At 2600 the crest was
+     painting over the fullscreen video and its close button. */
+  .crest{ z-index:900; }
   /* iOS ignores taps on a bare transparent div — cursor:pointer plus a hair of
      colour makes it a real hit target, which is half of why exiting failed. */
-  .mnav-veil{ position:fixed; inset:0; z-index:2400; cursor:pointer;
+  .mnav-veil{ position:fixed; inset:0; z-index:880; cursor:pointer;
     background:rgba(13,9,5,.06); -webkit-tap-highlight-color:transparent; }
   .mnav, .mnav-toggle, .mnav-close, .mnav-home{ touch-action:manipulation;
     -webkit-tap-highlight-color:transparent; }
-  .mnav{ position:fixed; z-index:2500; width:min(280px, calc(100vw - 24px));
+  .mnav{ position:fixed; z-index:890; width:min(280px, calc(100vw - 24px));
     max-height:calc(100dvh - 92px); background:#fff;
     border:1px solid var(--line); box-shadow:0 16px 42px rgba(13,9,5,.18);
-    display:flex; flex-direction:column; padding:8px;
-    overflow-y:auto; -webkit-overflow-scrolling:touch;
+    display:flex; flex-direction:column; padding:8px; overflow:hidden;
     border-radius:18px; animation:mnavIn .14s ease-out; }
   @keyframes mnavIn{ from{ transform:translateY(-5px); opacity:.5 } to{ transform:none; opacity:1 } }
-  body.mnav-open{ overflow:auto; }
+  body.mnav-open{ overflow:hidden; }
 
   /* No "Menu" label and no header band — the ✕ sits on the first item's line,
      absolutely placed so the list starts at the top of the sheet. */
@@ -1995,7 +2002,7 @@ body.map-full .map-caption{ display:none !important; }
   .mnav-close:active{ background:var(--ivory); color:var(--dark); }
   .mnav-list a:first-child, .mnav-list button:first-child{ padding-right:52px; }
 
-  .mnav-list{ display:flex; flex-direction:column; }
+  .mnav-list{ display:flex; flex-direction:column; overflow-y:auto; -webkit-overflow-scrolling:touch; }
   .mnav-list a, .mnav-list button{ -webkit-appearance:none; appearance:none; font-family:inherit;
     text-align:left; background:none; border:0; cursor:pointer;
     min-height:48px; padding:0 14px; border-radius:11px;
@@ -2012,6 +2019,7 @@ body.map-full .map-caption{ display:none !important; }
   .mnav-list > *:has(+ *){ border-bottom-left-radius:0; border-bottom-right-radius:0; }
 
   .mnav-foot{ margin-top:6px; padding:6px 0 0; border-top:1px solid var(--line); }
+  .mnav-foot:empty{ display:none; }
   .mnav-acct{ -webkit-appearance:none; appearance:none; font-family:inherit;
     width:100%; min-height:48px; background:none; border:0; border-radius:11px;
     padding:0 14px; cursor:pointer; text-align:left;
