@@ -1,14 +1,9 @@
-// mobilenav.js — phones get a home icon, an RSVP pill and a kebab.
+// mobilenav.js — phones get a home icon and a compact actions popover.
 //
 // The nav had six links plus three pills plus an account icon competing for
 // 390px, and every addition this week made something else worse. A drawer ends
-// that: the bar keeps only what you need without thinking (home, RSVP), and
-// everything else lives one tap away.
-//
-// RSVP, the note pill and the account icon live in BOTH places: in the bar,
-// because they're the actions the site exists for and shouldn't need a tap to
-// reach; and again at the foot of the drawer, because someone who opened the
-// menu looking for "how do I reply" shouldn't have to close it again.
+// that: the bar keeps only Home and More, and every destination/action lives
+// in one predictable, compact popover.
 //
 // The panel is built FROM the existing nav, so adding a link to .sitenav in the
 // HTML automatically puts it in the drawer too — no second list to keep in step.
@@ -31,8 +26,8 @@
   nav.querySelectorAll('a[href]').forEach(function (a) {
     var href = a.getAttribute('href') || '';
     if (/^index\.html$|^\/$/.test(href)) return;          // home lives in the bar
-    if (a.hasAttribute('data-rsvp-open')) return;          // RSVP lives in the bar
-    if (a.closest('.nav-cta')) return;                     // desktop-only duplicates
+    if (a.hasAttribute('data-rsvp-open')) return;          // added once below
+    if (a.closest('.nav-actions, .nav-cta')) return;       // desktop-only duplicates
     var label = (a.querySelector('.nav-long') || a).textContent.trim();
     if (!label) return;
     links.push({ href: href, label: label, active: a.classList.contains('active') });
@@ -42,34 +37,36 @@
   var toggle = document.createElement('button');
   toggle.type = 'button';
   toggle.className = 'mnav-toggle';
-  toggle.setAttribute('aria-label', 'Menu');
+  toggle.setAttribute('aria-label', 'More wedding actions');
   toggle.setAttribute('aria-expanded', 'false');
-  toggle.innerHTML = '<span></span><span></span><span></span>';
+  toggle.setAttribute('aria-controls', 'mobile-wedding-menu');
+  toggle.innerHTML = '<span aria-hidden="true">⋮</span>';
   nav.appendChild(toggle);
 
   // ---- the panel ------------------------------------------------------------
   var panel = document.createElement('div');
   panel.className = 'mnav';
-  panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-modal', 'true');
-  panel.setAttribute('aria-label', 'Menu');
+  panel.id = 'mobile-wedding-menu';
+  panel.setAttribute('role', 'menu');
+  panel.setAttribute('aria-label', 'More wedding actions');
   panel.hidden = true;
 
   var html = '<nav class="mnav-list">';
+  if (who) {
+    html += '<a class="mnav-action" role="menuitem" href="rsvp.html" data-rsvp-open>RSVP</a>';
+  } else {
+    html += '<a class="mnav-action" role="menuitem" href="/gate?next=rsvp">Find my invitation</a>';
+  }
+  html += '<button type="button" class="mnav-action" role="menuitem" data-note-open>Leave us a note &#9825;</button>';
   links.forEach(function (l) {
-    html += '<a href="' + l.href + '"' + (l.active ? ' class="is-here" aria-current="page"' : '') + '>' + l.label + '</a>';
+    html += '<a role="menuitem" href="' + l.href + '"' + (l.active ? ' class="is-here" aria-current="page"' : '') + '>' + l.label + '</a>';
   });
-  html += '<button type="button" class="mnav-ou" data-ou-open>over<span class="ou-slash">/</span>under</button>';
+  html += '<button type="button" class="mnav-ou" role="menuitem" data-ou-open>over<span class="ou-slash">/</span>under</button>';
+  html += '<button type="button" class="mnav-cal" role="menuitem" aria-label="Add to calendar">add to calendar</button>';
   html += '</nav>';
   html += '<div class="mnav-foot">';
   if (who) {
-    html += '<a class="mnav-cta mnav-cta--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>';
-  } else {
-    html += '<a class="mnav-cta mnav-cta--rsvp" href="/gate?next=rsvp">find my invitation</a>';
-  }
-  html += '<button type="button" class="mnav-cta mnav-cta--note" data-note-open>leave us a note &#9825;</button>';
-  if (who) {
-    html += '<button type="button" class="mnav-acct">' +
+    html += '<button type="button" class="mnav-acct" role="menuitem">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" ' +
             'stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/>' +
             '<path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>' + (first || 'your details') + '</button>';
@@ -83,14 +80,13 @@
   veil.hidden = true;
   document.body.appendChild(veil);
 
-  // The panel opens BELOW the nav bar, not over it. Covering the bar hid the
-  // kebab — which is the ✕ — so there was nothing left to tap and the menu felt
-  // stuck. The bar stays visible and on top; the sheet hangs off its bottom edge.
+  // Anchor the popover below the More button and keep it inside the viewport.
   function place() {
-    var b = Math.round(nav.getBoundingClientRect().bottom);
-    if (b < 0) b = 0;
-    panel.style.top = b + 'px';
-    veil.style.top  = b + 'px';
+    var r = toggle.getBoundingClientRect();
+    var top = Math.max(8, Math.round(r.bottom + 8));
+    panel.style.top = top + 'px';
+    panel.style.right = Math.max(12, Math.round(window.innerWidth - r.right)) + 'px';
+    veil.style.top = Math.max(0, Math.round(nav.getBoundingClientRect().bottom)) + 'px';
   }
 
   function setOpen(on) {
@@ -100,7 +96,7 @@
     toggle.classList.toggle('is-open', on);
     toggle.setAttribute('aria-expanded', on ? 'true' : 'false');
     document.body.classList.toggle('mnav-open', on);
-    if (on) { try { panel.querySelector('a,button').focus({ preventScroll: true }); } catch (e) {} }
+    if (on) { try { panel.querySelector('[role="menuitem"]').focus({ preventScroll: true }); } catch (e) {} }
   }
   window.addEventListener('resize', function () { if (!panel.hidden) place(); });
   window.addEventListener('orientationchange', function () { if (!panel.hidden) place(); });
@@ -109,7 +105,7 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !panel.hidden) { setOpen(false); toggle.focus(); }
   });
-  // anything that opens a drawer of its own should close this one first
+  // Anything that opens a drawer or navigates should close this popover first.
   panel.addEventListener('click', function (e) {
     if (e.target.closest('[data-ou-open],[data-note-open],[data-rsvp-open],.mnav-acct,.mnav-list a')) setOpen(false);
   });
@@ -121,6 +117,12 @@
   var acct = panel.querySelector('.mnav-acct');
   if (acct) acct.addEventListener('click', function () {
     var real = document.querySelector('.acct-btn');
+    if (real) setTimeout(function () { real.click(); }, 60);
+  });
+
+  var cal = panel.querySelector('.mnav-cal');
+  if (cal) cal.addEventListener('click', function () {
+    var real = document.querySelector('.nav-cal');
     if (real) setTimeout(function () { real.click(); }, 60);
   });
 })();
