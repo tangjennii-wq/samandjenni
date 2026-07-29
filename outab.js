@@ -37,6 +37,22 @@
   tab.addEventListener('click', function(){ build().open(); });
   document.body.appendChild(tab);
 
+  // Phones get a card at the foot of the page instead of the floating tab.
+  // Three of the four screen corners are already spoken for on the map pages
+  // (zoom, expand, layer key, attribution), so a persistent pill had nowhere to
+  // sit without covering one of them. Both are injected and CSS picks one by
+  // width — no resize listener to get wrong.
+  var card = document.createElement('div');
+  card.className = 'ou-card';
+  card.innerHTML =
+    '<span class="ou-card-eyebrow">one last thing</span>' +
+    '<span class="ou-card-title">over<span class="ou-slash">/</span>under</span>' +
+    '<span class="ou-card-note">set your lines on the weekend — closest card wins a gift.</span>' +
+    '<button class="ou-card-btn" type="button" data-ou-open>place your bets</button>';
+  var foot = document.querySelector('.sfoot');
+  if (foot && foot.parentNode) foot.parentNode.insertBefore(card, foot);
+  else document.body.appendChild(card);
+
   // let anything else on the page open it too, e.g. a link in the footer
   document.addEventListener('click', function(e){
     var t = e.target.closest('[data-ou-open]');

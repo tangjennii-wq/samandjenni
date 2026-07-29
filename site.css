@@ -1755,30 +1755,46 @@ body.map-full .map-caption{ display:none !important; }
 
 /* ---------- over/under, as a pull-out tab --------------------------------
    It was taking a top-level nav slot beside events/recs/hotels, which
-   overweighted a side game and crowded the phone nav. Now it rides on a tab at
-   the edge of the screen and opens in the shared drawer. */
+   overweighted a side game and crowded the phone nav.
+
+   Desktop: a vertical tab on the LEFT edge. The right edge is the busy side —
+   recs and hotels both put the map in the right-hand column, and that's also
+   where the scrollbar lives. The left gutter is empty on every page.
+
+   Phones: no floating tab at all. The map already owns three corners (zoom and
+   expand top-left, layer key bottom-right, attribution along the bottom), so a
+   pill had nowhere to sit without covering one. It becomes a card above the
+   footer instead — see .ou-card. */
 .ou-tab{ -webkit-appearance:none; appearance:none; font-family:inherit;
-  position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:1200;
-  border:0; border-right:0; border-radius:var(--r-md) 0 0 var(--r-md);
+  position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:1200;
+  border:0; border-radius:0 var(--r-md) var(--r-md) 0;
   background:var(--gold); color:var(--dark); cursor:pointer;
-  padding:14px 7px; box-shadow:-3px 0 14px rgba(13,9,5,.16);
-  transition:padding-right .14s ease, background .14s ease; }
+  padding:14px 7px; box-shadow:3px 0 14px rgba(13,9,5,.16);
+  transition:padding-left .14s ease, background .14s ease; }
 .ou-tab-in{ display:block; writing-mode:vertical-rl; text-orientation:mixed;
   font-size:10px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
 .ou-slash{ color:var(--red); }
-.ou-tab:hover{ padding-right:11px; background:#F0D64A; }
+.ou-tab:hover{ padding-left:11px; background:#F0D64A; }
 .ou-tab:focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
 
 .ou-frame{ display:block; width:100%; height:100%; min-height:60vh; border:0; background:transparent; }
 .note-drawer .drawer-body:has(.ou-frame){ padding:0 14px 10px; display:flex; }
 
+/* the end-of-page card — phones only */
+.ou-card{ display:none; }
 @media(max-width:760px){
-  /* a vertical tab on a phone edge is a thumb trap next to the browser's own
-     back-swipe zone, so it becomes a small horizontal pill above the corner */
-  .ou-tab{ top:auto; bottom:14px; right:12px; transform:none;
-    border-radius:var(--r-pill); padding:8px 13px; box-shadow:0 4px 14px rgba(13,9,5,.20); }
-  .ou-tab-in{ writing-mode:horizontal-tb; font-size:9px; letter-spacing:.14em; }
-  .ou-tab:hover{ padding-right:13px; }
-  /* the home page already has RSVP/note pinned to the bottom — sit above them */
-  body.has-bottom-actions .ou-tab{ bottom:74px; }
+  .ou-tab{ display:none; }
+  .ou-card{ display:flex; flex-direction:column; align-items:center; text-align:center;
+    gap:4px; margin:0 16px 22px; padding:20px 18px 18px;
+    background:var(--gold); border-radius:var(--r-lg); }
+  .ou-card-eyebrow{ font-size:8.5px; font-weight:800; letter-spacing:.22em;
+    text-transform:uppercase; color:#6b5a50; }
+  .ou-card-title{ font-size:21px; font-weight:800; letter-spacing:.03em;
+    text-transform:uppercase; color:var(--dark); line-height:1.1; }
+  .ou-card-note{ font-size:12px; color:#5c4f42; line-height:1.4; max-width:26ch; margin-top:2px; }
+  .ou-card-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    margin-top:10px; padding:10px 18px; border:0; border-radius:var(--r-pill);
+    background:var(--dark); color:var(--gold); cursor:pointer;
+    font-size:9.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+  .ou-card-btn:active{ background:var(--red); color:#fff; }
 }
