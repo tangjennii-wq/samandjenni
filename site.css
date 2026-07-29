@@ -1792,7 +1792,16 @@ body.map-full .map-caption{ display:none !important; }
 /* the end-of-page card — phones only */
 .ou-card{ display:none; }
 @media(max-width:760px){
-  .ou-tab{ display:none; }
+  /* The end-of-page card alone wasn't findable — it sits below every event on
+     the page, so you only meet it if you scroll the whole way. The pill is back
+     as well, at bottom-LEFT: the map owns bottom-right on phones (layer key)
+     and top-left (zoom, expand), so the left corner is the only one free. */
+  .ou-tab{ top:auto; bottom:14px; left:12px; right:auto; transform:none;
+    border-radius:var(--r-pill); padding:8px 13px;
+    box-shadow:0 4px 14px rgba(13,9,5,.20); }
+  .ou-tab-in{ writing-mode:horizontal-tb; font-size:9px; letter-spacing:.14em; }
+  .ou-tab:hover{ padding-left:13px; }
+  body.has-bottom-actions .ou-tab{ bottom:74px; }
   .ou-card{ display:flex; flex-direction:column; align-items:center; text-align:center;
     gap:4px; margin:0 16px 22px; padding:20px 18px 18px;
     background:var(--gold); border-radius:var(--r-lg); }
