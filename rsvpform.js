@@ -256,6 +256,8 @@
 
       // Only claim success once it has actually saved.
       saving.then(function () {
+        try { localStorage.setItem('sj-rsvp-done', '1'); } catch (e) {}
+        document.dispatchEvent(new CustomEvent('sj:rsvped'));
         var card = root.querySelector('.note-card') || root;
         card.innerHTML = '<div class="note-thanks">' +
           '<div class="note-h">Thank you \u2661</div>' +

@@ -1643,3 +1643,12 @@ body.map-full .map-caption{ display:none !important; }
   .acct-pop .note-f,
   input, select, textarea{ font-size:16px; }
 }
+
+
+/* One action beside the title: RSVP first, then Note once they've replied,
+   with a small "RSVP ✓" to go back and edit. */
+.titlestack .ts-done{ background:none; color:#a2907a; border:1px solid var(--line-2);
+  font-size:8.5px; min-height:26px; }
+.titlestack .ts-done span{ color:#5C8A52; margin-left:3px; font-size:11px; }
+.titlestack .ts-done:hover{ color:var(--dark); border-color:var(--dark); }
+.titlestack [hidden]{ display:none !important; }

@@ -1,6 +1,25 @@
 // account.js — the little person in the nav.
 // Shows who you're signed in as, lets you correct your name/address, leave a
 // note (change of address, "we go by…", anything), or sign out.
+// Once the RSVP is in, the title-side action becomes "Leave a note" and a
+// small "RSVP ✓" appears so they can go back and change their answers.
+(function () {
+  function syncStack(){
+    var done = false;
+    try { done = localStorage.getItem('sj-rsvp-done') === '1'; } catch (e) {}
+    document.querySelectorAll('.titlestack').forEach(function (st) {
+      var rsvp = st.querySelector('.ts-rsvp'),
+          note = st.querySelector('.ts-note'),
+          chip = st.querySelector('.ts-done');
+      if (rsvp) rsvp.hidden = done;
+      if (note) note.hidden = !done;
+      if (chip) chip.hidden = !done;
+    });
+  }
+  syncStack();
+  document.addEventListener('sj:rsvped', syncStack);
+})();
+
 (function () {
   var wrap = document.querySelector('.nav-acct');
   if (!wrap) return;
