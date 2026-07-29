@@ -1233,8 +1233,11 @@ body.map-full .map-caption{ display:none !important; }
   body.has-bottom-actions .nav-actions{ display:none !important; }
   body.has-bottom-actions .mobile-actions{
     display:flex !important; justify-content:center; gap:8px;
-    padding:11px 16px calc(13px + env(safe-area-inset-bottom));
-    background:var(--ivory); border-bottom:0; }
+    padding:0 16px calc(16px + env(safe-area-inset-bottom));
+    /* dark, not ivory: this now sits directly under the film where "book your
+       room" used to, so it should read as the end of the hero rather than a
+       separate ivory strip below it */
+    background:var(--dark); border-bottom:0; margin-top:-1px; }
   /* Half the previous weight — these are hero actions, but at 50px tall and
      220px wide they were competing with the film above them rather than
      following it. Still clears the 44px touch minimum. */
@@ -1826,4 +1829,8 @@ body.map-full .map-caption{ display:none !important; }
 .nav-ou .nav-brief{ font-weight:800; letter-spacing:.02em; }
 .nav-ou:hover{ color:var(--red); }
 /* desktop already has the right-edge tab, so the nav item is phones-only */
+/* Desktop shows the right-edge tab, phones show neither for now — Jenni wants
+   to see the phone nav without it while the +/- reads as clunky. Over/under is
+   still reachable on phones from the RSVP and note thank-you screens. */
 @media(min-width:761px){ .nav-ou{ display:none; } }
+@media(max-width:760px){ .nav-ou{ display:none; } }
