@@ -121,6 +121,18 @@
   .infoicon svg{ width:17px; height:17px; }
   .infobody{ margin:0; font-size:15px; line-height:1.65; color:#6b5a50; text-align:left; }
   .infobody b{ color:var(--dark); }
+  .infosub{ margin:16px 0 7px; font-size:10px; font-weight:800; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--red); text-align:left; }
+  .infolist{ margin:0; padding:0 0 0 17px; text-align:left; }
+  .infolist li{ font-size:14px; line-height:1.6; color:#6b5a50; margin-bottom:8px; }
+  .infolist li:last-child{ margin-bottom:0; }
+  .infolist b{ color:var(--dark); }
+  .infolist li::marker{ color:var(--line-2); }
+  /* subway bullets — round like the real signage, not squares */
+  .ln{ display:inline-flex; align-items:center; justify-content:center;
+    width:17px; height:17px; margin-right:2px; border-radius:50%;
+    background:var(--dark); color:#fff; font-size:10px; font-weight:800;
+    vertical-align:-3px; }
   .infocard .faq{ border:0; box-shadow:none; background:none; border-radius:0; }
   /* the questions themselves, up to match the card body beside them */
   .infocard .faq summary{ font-size:15px; }
@@ -438,6 +450,20 @@
         <section class="infocard">
           <h3 class="infohead"><span class="infoicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.2 13.8 3 11.4V9.6l2 .5 1.6-1.6L3 6.9V5.1l4.6.8L11 2.5a1.4 1.4 0 0 1 2 2l-3.4 3.4.8 4.6h-1.8l-1.6-3.6L5.4 10.4l.5 2H4.1"/><path d="M13.8 10.2 21 12.6v1.8l-2-.5-1.6 1.6 3.6 1.6v1.8l-4.6-.8L13 21.5a1.4 1.4 0 0 1-2-2l3.4-3.4-.8-4.6h1.8l1.6 3.6 1.6-1.6-.5-2H20"/></svg></span>Getting here</h3>
           <p class="infobody">Fly into <b>JFK</b>, <b>LGA</b> (closest — ~30 min) or <b>EWR</b>. From any of them, a taxi or Uber to Midtown runs roughly 30–60 minutes depending on traffic. Once you're here, the wedding, the welcome party and every hotel above are reachable by a short cab ride or the subway — you will not need a car.</p>
+
+          <h4 class="infosub">The subway, briefly</h4>
+          <ul class="infolist">
+            <li><b>Just tap your phone or card</b> at the turnstile — that's OMNY, no MetroCard needed. $2.90 a ride, and it stops charging you after 12 rides in a week.</li>
+            <li><b>Express skips stops, local makes them all.</b> Same colour, different letter or number — the 4 and 5 are express where the 6 is local. If your stop isn't on the express, take the local or you'll sail straight past it.</li>
+            <li><b>Check uptown vs downtown before you go down the stairs.</b> At a lot of stations the two directions have separate entrances on opposite sides of the street, and there's no way to switch once you've tapped in.</li>
+            <li><b>Get Citymapper.</b> It's better than Google Maps here — it knows which end of the train to stand at, and tells you when a line is a mess.</li>
+          </ul>
+
+          <h4 class="infosub">Getting to us</h4>
+          <ul class="infolist">
+            <li><b>The Pierre</b> (Saturday) — <span class="ln">N</span><span class="ln">R</span><span class="ln">W</span> to Fifth Av/59 St, or <span class="ln">4</span><span class="ln">5</span><span class="ln">6</span> to Lexington Av/59 St. Both about two minutes' walk.</li>
+            <li><b>Chinese Tuxedo</b> (Friday) — <span class="ln">J</span><span class="ln">N</span><span class="ln">Q</span><span class="ln">R</span><span class="ln">W</span><span class="ln">Z</span><span class="ln">6</span> to Canal St, then a five-minute walk into Doyers Street.</li>
+          </ul>
         </section>
         <section class="infocard">
           <h3 class="infohead"><span class="infoicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M9.4 9.2a2.7 2.7 0 1 1 3.6 2.6c-.7.3-1 .9-1 1.6v.4"/><circle cx="12" cy="17.2" r=".9" fill="currentColor" stroke="none"/></svg></span>Questions</h3>
