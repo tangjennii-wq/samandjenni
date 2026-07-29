@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260729r">
+<link rel="stylesheet" href="site.css?v=20260729s">
 <style>
   /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
   .wrap{ max-width:1280px; }
@@ -78,9 +78,9 @@
   .fchip.is-on .fcaret{ transform:rotate(180deg); display:inline-block; }
   .fhoodlabel{ align-self:center; margin-right:4px; font-size:8px; font-weight:800;
     letter-spacing:.16em; text-transform:uppercase; color:#a2907a; }
-  .howto{ max-width:760px; margin:26px auto 0; text-align:center; }
-  .howto p{ margin:0; font-size:15px; line-height:1.6; color:#6b5a50; }
-  .howto-lead{ margin-bottom:10px !important; font-size:16.5px !important; font-weight:700;
+  .howto{ max-width:720px; margin:16px auto 4px; text-align:center; }
+  .howto p{ margin:0; font-size:13px; line-height:1.55; color:#8a7967; }
+  .howto-lead{ margin-bottom:5px !important; font-size:13.5px !important; font-weight:700;
     color:var(--dark) !important; }
   .howto p b{ color:var(--dark); }
   .howto-cut{ margin-top:9px !important; font-size:13px !important; }
@@ -186,6 +186,12 @@
       <h2>Where to Stay</h2>
       <div class="rule"></div>
 
+      <div class="howto">
+        <p class="howto-lead">We have room blocks at <b>Lotte New York Palace</b>, <b>Thompson</b>
+        and <b>Le Méridien</b> — book by mid-February 2027. Our block at The Pierre is full already.</p>
+        <p>We’ve also listed other hotels in case you want to stay elsewhere — feel free to text us for help!</p>
+      </div>
+
       <div class="hotelsplit">
 
         <div class="hotelside">
@@ -219,6 +225,7 @@
             <span class="hin">
               <span class="hkind">Our block · 25 rooms a night</span>
               <span class="hname">Thompson Central Park</span>
+            <span class="hpts hpts--hyatt">World of Hyatt</span>
               <span class="hprice">$369 king · $449 two doubles</span>
               <span class="hbook">Book &rarr;</span>
             </span>
@@ -227,6 +234,7 @@
             <span class="hin">
               <span class="hkind">Our block · 10 rooms a night</span>
               <span class="hname">Le Méridien, Central Park</span>
+            <span class="hpts hpts--marriott">Marriott Bonvoy</span>
               <span class="hprice">$279 + $45 / night fee</span>
               <span class="hbook">Book &rarr;</span>
             </span>
@@ -298,6 +306,7 @@
           <a class="hotel" data-kind="other" data-hood="Central Park South" data-n="JW Marriott Essex House" data-ll="40.76618,-73.97852" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Essex%20House%20Central%20Park%20South%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Central Park South</span>
               <span class="hname">JW Marriott Essex House</span>
+            <span class="hpts hpts--marriott">Marriott Bonvoy</span>
               <span class="hprice">$$$</span>
               <span class="hwhere">grand, and steps from the wedding</span>
               <span class="hbook">Look it up &rarr;</span>
@@ -353,6 +362,7 @@
           <a class="hotel" data-kind="other" data-hood="Gramercy" data-n="Hyatt Union Square" data-ll="40.73340,-73.98950" href="https://www.google.com/maps/search/?api=1&amp;query=Hyatt%20Union%20Square%20Gramercy%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Gramercy</span>
             <span class="hname">Hyatt Union Square</span>
+            <span class="hpts hpts--hyatt">World of Hyatt</span>
             <span class="hwhere">straightforward and well placed for downtown dinners</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="NoMad" data-n="Made Hotel" data-ll="40.74606,-73.98800" href="https://www.google.com/maps/search/?api=1&amp;query=Made%20Hotel%20NoMad%20New%20York" target="_blank" rel="noopener"><span class="hin">
@@ -368,11 +378,13 @@
           <a class="hotel" data-kind="other" data-hood="SoHo" data-n="The Manner" data-ll="40.72520,-74.00390" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Manner%20SoHo%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">SoHo</span>
             <span class="hname">The Manner</span>
+            <span class="hpts hpts--hyatt">World of Hyatt</span>
             <span class="hwhere">new SoHo townhouse-y one, on a quiet block</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Midtown" data-n="W New York" data-ll="40.73659,-73.98899" href="https://www.google.com/maps/search/?api=1&amp;query=W%20Hotels%20Manhattan%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Midtown</span>
             <span class="hname">W New York</span>
+            <span class="hpts hpts--marriott">Marriott Bonvoy</span>
             <span class="hwhere">three of them &mdash; Union Square, Times Square or Downtown</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Chelsea" data-n="Hotel Chelsea" data-ll="40.74423,-73.99671" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Chelsea%20222%20W%2023rd%20St%20New%20York" target="_blank" rel="noopener"><span class="hin">
@@ -413,6 +425,7 @@
           <a class="hotel" data-kind="other" data-hood="Chelsea" data-n="Moxy Chelsea" data-ll="40.74620,-73.99094" href="https://www.google.com/maps/search/?api=1&amp;query=Moxy%20Chelsea%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Chelsea</span>
             <span class="hname">Moxy Chelsea</span>
+            <span class="hpts hpts--marriott">Marriott Bonvoy</span>
             <span class="hwhere">small rooms, good rooftop, sensible rate</span>
           </span></a>
             </div>
@@ -427,11 +440,6 @@
 
       </div>
 
-      <div class="howto">
-        <p class="howto-lead">We have room blocks at <b>Lotte New York Palace</b>, <b>Thompson</b>
-        and <b>Le Méridien</b> — book by mid-February 2027. Our block at The Pierre is full already.</p>
-        <p>We’ve also listed other hotels in case you want to stay elsewhere — feel free to text us for help!</p>
-      </div>
 
       <div class="infopair infopair--one">
         <section class="infocard">

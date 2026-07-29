@@ -1914,3 +1914,12 @@ body.map-full .map-caption{ display:none !important; }
 .faq-door-s{ font-size:14px; color:#6b5a50; }
 .faq-door-go{ margin-top:8px; font-size:10px; font-weight:800; letter-spacing:.14em;
   text-transform:uppercase; color:var(--red); }
+
+/* Loyalty tags. Only two programmes appear on this list often enough to be
+   worth naming, and both matter because a block rate at a chain hotel is the
+   one case where a guest gets the negotiated price AND earns on their own
+   account — Thompson for Hyatt, Le Méridien for Bonvoy. */
+.hpts{ display:inline-block; margin-top:4px; padding:2px 7px; border-radius:var(--r-pill);
+  font-size:8px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
+.hpts--hyatt{ background:rgba(47,109,181,.12); color:#245186; }
+.hpts--marriott{ background:rgba(229,60,45,.10); color:#a3352a; }
