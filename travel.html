@@ -9,14 +9,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260731j">
+<link rel="stylesheet" href="site.css?v=20260728m">
 <style>
   /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
   .wrap{ max-width:1280px; }
   #travel{ overflow-x:clip; }
   /* half the page each — the map was swallowing the room */
   /* half and half — six pins don't need more than that */
-  .hotelsplit{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:20px;
+  .hotelsplit{ display:grid; grid-template-columns:minmax(0, 1.22fr) minmax(0, 1fr); gap:20px;
     align-items:start; margin-top:14px; }
   .hotelsplit > *{ min-width:0; }
 
@@ -163,10 +163,10 @@
           <div class="recbar">
             <div class="fgroup fgroup--top">
               <button class="fchip is-on" data-v="block" type="button">our room blocks</button>
-              <button class="fchip" data-v="other" type="button">other hotels <span class="fcaret" aria-hidden="true">⌄</span></button>
+              <button class="fchip fchip--more" data-v="other" type="button" aria-expanded="false">other hotels by neighborhood <span class="fnum">16</span><span class="fcaret" aria-hidden="true">⌄</span></button>
             </div>
             <span class="fcount"><b id="hotelCount">3</b> stays</span>
-            <div class="fgroup fgroup--hoods" hidden><span class="fhoodlabel">by neighborhood</span>
+            <div class="fgroup fgroup--hoods" hidden><span class="fhoodlabel">jump to</span>
               <button class="fchip fchip--hood is-on" data-v="other" type="button">all</button><button class="fchip fchip--hood" data-v="Bowery" type="button">bowery</button><button class="fchip fchip--hood" data-v="Central Park South" type="button">central park south</button><button class="fchip fchip--hood" data-v="Downtown Brooklyn" type="button">downtown brooklyn</button><button class="fchip fchip--hood" data-v="Financial District" type="button">financial district</button><button class="fchip fchip--hood" data-v="Lower East Side" type="button">lower east side</button><button class="fchip fchip--hood" data-v="Meatpacking" type="button">meatpacking</button><button class="fchip fchip--hood" data-v="Midtown" type="button">midtown</button><button class="fchip fchip--hood" data-v="NoMad" type="button">nomad</button><button class="fchip fchip--hood" data-v="SoHo" type="button">soho</button><button class="fchip fchip--hood" data-v="Tribeca" type="button">tribeca</button><button class="fchip fchip--hood" data-v="Williamsburg" type="button">williamsburg</button></div>
           </div>
           <div class="hotelpanel">
@@ -395,7 +395,7 @@
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
   <script src="personalize.js?v=20260731j" defer></script>
   <script src="map.js?v=20260731j" defer></script>
-  <script src="account.js?v=20260731j" defer></script>
+  <script src="account.js?v=20260728m" defer></script>
   <script src="cal.js?v=20260731j" defer></script>
   <script src="upload.js?v=20260731j" defer></script>
   <script src="drawer.js?v=20260731j" defer></script>
@@ -431,6 +431,8 @@
     // "other hotels" opens the neighbourhood row; "our room blocks" closes it
     if (!isHood) {
       hoods.hidden = (f !== 'other');
+      var more = top.querySelector('.fchip--more');
+      if (more) more.setAttribute('aria-expanded', String(f === 'other'));
       top.querySelectorAll('.fchip').forEach(function(x){ x.classList.toggle('is-on', x === b); });
       hoods.querySelectorAll('.fchip').forEach(function(x){
         x.classList.toggle('is-on', x.dataset.v === 'other');

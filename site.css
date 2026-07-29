@@ -1664,3 +1664,73 @@ body.map-full .map-caption{ display:none !important; }
     width:auto; max-height:88dvh; overflow-y:auto; border-radius:18px 18px 0 0; }
   body.acct-open{ overflow:hidden; }
 }
+
+/* ---------- mobile: map controls, sized down + key out of the way ---------
+   At 390px the layer key was covering the whole top-right quadrant of the map
+   (i.e. most of midtown) and the zoom/expand buttons were desktop-sized. Two
+   fixes: shrink everything, and re-anchor Leaflet's top-right corner to the
+   bottom. That corner holds ONLY the key, so moving the container moves the
+   key alone — Leaflet gives each corner its own DOM node, so CSS can't move a
+   single control between them, but it can move a whole corner. Sat 18px up
+   from the bottom so it clears the attribution strip. */
+@media(max-width:760px){
+  .sjmap .leaflet-top.leaflet-right{ top:auto; bottom:18px; }
+
+  .sjmap .leaflet-control-layers{
+    font-size:9.5px !important; padding:5px 7px 6px !important;
+    line-height:1.2; border-width:1.2px !important; }
+  .sjmap .leaflet-control-layers-overlays label{ gap:4px; margin:0 0 2px !important; }
+  .sjmap .leaflet-control-layers input[type="checkbox"]{
+    width:11px; height:11px; margin:0 1px 0 0; flex:0 0 auto; }
+  .sjmap .lgd{ width:8px; height:8px; }
+
+  /* zoom + expand: 44px was a thumb target on a 340px-tall map, which is most
+     of the left edge. 30px still clears the 24px minimum for a control. */
+  .sjmap .leaflet-bar a, .sjmap .leaflet-bar a:hover{
+    width:30px; height:30px; line-height:30px; font-size:17px; }
+  .sjmap .sjmap-expand{ width:30px; height:30px; }
+  .sjmap .sjmap-expand svg{ width:15px; height:15px; }
+}
+
+/* ---------- mobile: RSVP back in the nav, ahead of the account icon -------
+   These pills were pulled out of the nav because both they and .nav-acct were
+   position:sticky right:0, so they stacked on top of the little person and ate
+   its taps. Fixed properly this time: the account icon holds right:0 and the
+   pill group is pinned at right:34px — its exact width — so the two occupy
+   separate bands and cannot overlap however far the nav scrolls. */
+@media(max-width:760px){
+  .sitenav .nav-actions{ display:inline-flex !important;
+    position:sticky; right:34px; margin-left:auto; flex:0 0 auto;
+    padding:5px 6px 5px 9px; background:#fff; z-index:2;
+    box-shadow:-12px 0 10px -6px #fff; }
+  /* margin-left:auto now belongs to the pills (they come first in the DOM), so
+     the account icon must give it up or the two both claim the free space. */
+  .nav-acct{ margin-left:0; right:0; z-index:3; padding-left:2px; box-shadow:none; }
+
+  .sitenav .nav-actions .nav-act{ min-height:28px; height:28px; padding:0 10px; font-size:9px; }
+  .sitenav .nav-actions .nav-act[hidden]{ display:none !important; }
+
+  /* the pills are in the nav now, so the title no longer reserves room */
+  .titlestack{ display:none !important; }
+  #recs .eyebrow, #travel .eyebrow, .ev-intro, .ou-head,
+  #recs h2, #travel h2{ padding-right:0; }
+  #recs .rule, #travel .rule{ transform:none; }
+}
+
+/* ---------- "other hotels" reads as a drawer, not a plain chip -------------
+   A bare ⌄ next to two same-looking chips gave no clue that one of them opens
+   16 more places. The chip now says what's behind it and how many, and the
+   caret turns over once it's open — the count is the preview. */
+.fchip--more{ display:inline-flex; align-items:center; gap:6px; }
+.fchip--more .fnum{ display:inline-grid; place-items:center; min-width:17px; height:17px;
+  padding:0 5px; border-radius:9px; background:rgba(13,9,5,.10); color:inherit;
+  font-size:9px; font-weight:800; letter-spacing:0; line-height:1; }
+.fchip--more.is-on .fnum{ background:rgba(255,255,255,.30); }
+.fchip--more .fcaret{ display:inline-block; font-size:11px; line-height:1;
+  transition:transform .16s ease; }
+.fchip--more[aria-expanded="true"] .fcaret{ transform:rotate(180deg); }
+.fhoodlabel{ opacity:.72; }
+@media(max-width:760px){
+  .fchip--more{ gap:4px; }
+  .fchip--more .fnum{ min-width:15px; height:15px; font-size:8.5px; }
+}

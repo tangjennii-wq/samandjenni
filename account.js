@@ -15,6 +15,13 @@
       if (note) note.hidden = !done;
       if (chip) chip.hidden = !done;
     });
+    // the mobile nav carries the same pair — RSVP until you've replied, then Note
+    document.querySelectorAll('.nav-actions').forEach(function (st) {
+      var rsvp = st.querySelector('.nav-act--rsvp'),
+          note = st.querySelector('.nav-act--note');
+      if (rsvp) rsvp.hidden = done;
+      if (note) note.hidden = !done;
+    });
   }
   syncStack();
   document.addEventListener('sj:rsvped', syncStack);
