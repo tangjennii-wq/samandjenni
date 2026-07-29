@@ -147,6 +147,9 @@
     { n: 'The Marlton', cat: 'hotel', area: 'Greenwich', boro: 'manhattan', fav: false, lat: 40.73273, lng: -73.99674, note: 'Greenwich Village · Tiny Parisian rooms off Washington Square.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Marlton%20New%20York' },
     { n: 'The Manner', cat: 'hotel', area: 'SoHo', boro: 'manhattan', fav: false, lat: 40.72520, lng: -74.00390, note: 'SoHo · New townhouse-y one on a quiet block.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Manner%20New%20York' },
     { n: 'The Twenty Two', cat: 'hotel', area: 'Gramercy', boro: 'manhattan', fav: false, lat: 40.73676, lng: -73.99135, note: 'Union Square · Bougie design. Hotel and members\' club.', url: 'https://www.google.com/maps/search/?api=1&query=The%20Twenty%20Two%20New%20York' },
+    { n: 'Arlo SoHo', cat: 'hotel', area: 'SoHo', boro: 'manhattan', fav: false, lat: 40.72488, lng: -74.00863, note: 'SoHo · Small rooms, good price, great roof', url: 'https://www.google.com/maps/search/?api=1&query=Arlo%20SoHo%20New%20York' },
+    { n: 'Arlo NoMad', cat: 'hotel', area: 'NoMad', boro: 'manhattan', fav: false, lat: 40.74627, lng: -73.98455, note: 'NoMad · Small rooms, well placed for downtown and midtown', url: 'https://www.google.com/maps/search/?api=1&query=Arlo%20NoMad%20New%20York' },
+    { n: 'Arlo Midtown', cat: 'hotel', area: 'Midtown', boro: 'manhattan', fav: false, lat: 40.75592, lng: -73.99340, note: 'Midtown · Small rooms, the cheapest way to be near the wedding', url: 'https://www.google.com/maps/search/?api=1&query=Arlo%20Midtown%20New%20York' },
   ];
 
 
