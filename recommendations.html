@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260728w">
+<link rel="stylesheet" href="site.css?v=20260729a">
 <style>
   /* ---- recs: list scrolls on the left, map is the hero on the right -------- */
   /* Manhattan is tall and narrow — a portrait-ish frame suits it far better
@@ -104,6 +104,7 @@
     <a href="weekend.html">events</a>
     <a class="active" href="recommendations.html"><span class="nav-long">NYC recs</span><span class="nav-brief">recs</span></a>
     <a href="travel.html"><span class="nav-long">hotels/FAQ</span><span class="nav-brief">hotels</span></a>
+    <button type="button" class="nav-ou" data-ou-open aria-label="Over/under"><span class="nav-long">over/under</span><span class="nav-brief">+/−</span></button>
       <span class="nav-actions">
         <a class="nav-act nav-act--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
         <button type="button" class="nav-act nav-act--note" data-note-open>Note</button>
@@ -217,7 +218,7 @@
               <a class="rec" data-cat="eat" data-area="Upstate" data-boro="upstate" data-fav="0" data-n="Blue Hill at Stone Barns" data-ll="41.10409,-73.82852" href="https://www.google.com/maps/search/?api=1&amp;query=Blue%20Hill%20at%20Stone%20Barns%20Pocantico%20Hills%20NY" target="_blank" rel="noopener"><span class="rtag">Pocantico Hills</span><span class="rname">Blue Hill at Stone Barns</span><span class="rwhy">Dan Barber&#x27;s farm. A tasting menu and a whole afternoon, 45 min north.</span></a>
               <a class="rec" data-cat="eat" data-area="Midtown" data-boro="manhattan" data-fav="0" data-n="Jongro BBQ" data-ll="40.74736,-73.98615" href="https://www.google.com/maps/search/?api=1&amp;query=Jongro%20BBQ%20Koreatown%20New%20York" target="_blank" rel="noopener"><span class="rtag">Koreatown</span><span class="rname">Jongro BBQ</span><span class="rwhy">Tabletop grill, no reservations. The K-town anchor.</span></a>
               <a class="rec" data-cat="do" data-area="Midtown" data-boro="manhattan" data-fav="0" data-n="Karaoke City" data-ll="40.74736,-73.98615" href="https://www.google.com/maps/search/?api=1&amp;query=Karaoke%20City%20Koreatown%20New%20York" target="_blank" rel="noopener"><span class="rtag">Koreatown</span><span class="rname">Karaoke City</span><span class="rwhy">22 W 32nd, 7th floor. Private rooms, open very late.</span></a>
-              <a class="rec" data-cat="do" data-area="West Village" data-boro="manhattan" data-fav="0" data-n="Karaoke Boho" data-ll="40.73180,-74.00190" href="https://www.google.com/maps/search/?api=1&amp;query=Karaoke%20Boho%20West%20Village%20New%20York" target="_blank" rel="noopener"><span class="rtag">West Village</span><span class="rname">Karaoke Boho</span><span class="rwhy">Cosier and less fluorescent than K-town. Book the room.</span></a>
+              <a class="rec" data-cat="do" data-area="Lower East Side" data-boro="manhattan" data-fav="0" data-n="Karaoke Boho" data-ll="40.72128,-73.98836" href="https://www.google.com/maps/search/?api=1&amp;query=Karaoke%20Boho%20Orchard%20152%20Orchard%20St%20New%20York" target="_blank" rel="noopener"><span class="rtag">Lower East Side</span><span class="rname">Karaoke Boho</span><span class="rwhy">The Orchard St one. Cosier and less fluorescent than K-town. Book the room.</span></a>
               <a class="rec" data-cat="do" data-area="UES" data-boro="manhattan" data-fav="0" data-n="Central Park" data-ll="40.78260,-73.96540" href="https://www.google.com/maps/search/?api=1&amp;query=Central%20Park%20Central%20Park%20New%20York" target="_blank" rel="noopener"><span class="rtag">Central Park</span><span class="rname">Central Park</span><span class="rwhy">The whole thing. Enter at 72nd and wander.</span></a>
               <a class="rec" data-cat="do" data-area="Brooklyn" data-boro="brooklyn" data-fav="0" data-n="Prospect Park" data-ll="40.66210,-73.96900" href="https://www.google.com/maps/search/?api=1&amp;query=Prospect%20Park%20Prospect%20Heights%20Brooklyn" target="_blank" rel="noopener"><span class="rtag">Prospect Heights</span><span class="rname">Prospect Park</span><span class="rwhy">Olmsted&#x27;s other one. Bigger meadow, fewer tourists.</span></a>
               <a class="rec" data-cat="do" data-area="UES" data-boro="manhattan" data-fav="1" data-n="Guggenheim" data-ll="40.78278,-73.95917" href="https://www.google.com/maps/search/?api=1&amp;query=Guggenheim%20Upper%20East%20Side%20New%20York" target="_blank" rel="noopener"><span class="rtag">Upper East Side</span><span class="rname">Guggenheim</span><span class="rwhy">Jenni&#x27;s favorite museum — the Frank Lloyd Wright spiral is the point.</span></a>
@@ -276,7 +277,7 @@
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
   <script src="personalize.js?v=20260731j" defer></script>
-  <script src="map.js?v=20260731j" defer></script>
+  <script src="map.js?v=20260729a" defer></script>
   <script src="account.js?v=20260728s" defer></script>
   <script src="cal.js?v=20260731j" defer></script>
   <script src="upload.js?v=20260731j" defer></script>

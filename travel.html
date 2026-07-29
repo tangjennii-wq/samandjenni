@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260728w">
+<link rel="stylesheet" href="site.css?v=20260729a">
 <style>
   /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
   .wrap{ max-width:1280px; }
@@ -90,9 +90,10 @@
   .hprice{ display:inline-block; margin-top:5px; font-size:12.5px; font-weight:800;
     color:var(--red); border-bottom:2px solid var(--gold); padding-bottom:1px; }
   .hwhere{ display:block; font-size:11px; color:#6b5a50; line-height:1.4; margin-top:6px; }
-  .hbook{ display:inline-block; margin-top:8px; font-size:9px; font-weight:800;
-    letter-spacing:.12em; text-transform:uppercase; color:var(--red); }
-  .hotelgrid .hotel:hover .hbook{ border-bottom:1.5px solid var(--red); }
+  .hbook{ display:block; width:fit-content; margin-top:9px; font-size:9.5px; font-weight:800;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--dark);
+    border-bottom:1.5px solid var(--line-2); padding-bottom:2px; }
+  .hotelgrid .hotel:hover .hbook{ color:var(--red); border-bottom-color:var(--red); }
 
   .hotelmap{ position:sticky; top:64px; }
   .hotelmap .sjmap{ height:min(560px, calc(100vh - 230px)); margin-top:0; }
@@ -139,6 +140,7 @@
     <a href="weekend.html">events</a>
     <a href="recommendations.html"><span class="nav-long">NYC recs</span><span class="nav-brief">recs</span></a>
     <a class="active" href="travel.html"><span class="nav-long">hotels/FAQ</span><span class="nav-brief">hotels</span></a>
+    <button type="button" class="nav-ou" data-ou-open aria-label="Over/under"><span class="nav-long">over/under</span><span class="nav-brief">+/−</span></button>
       <span class="nav-actions">
         <a class="nav-act nav-act--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
         <button type="button" class="nav-act nav-act--note" data-note-open>Note</button>
@@ -361,8 +363,6 @@
         <p class="howto-lead">We have room blocks at <b>Lotte New York Palace</b>, <b>Thompson</b>
         and <b>Le Méridien</b> — book by mid-February 2027. Our block at The Pierre is full already.</p>
         <p>We’ve also listed other hotels in case you want to stay elsewhere — feel free to text us for help!</p>
-        <p class="howto-fine">Price tiers on the others are typical nightly rates and move with the date:
-        <b>$</b> ≈ $200–300 · <b>$$</b> ≈ $300–450 · <b>$$$</b> ≈ $450–700 · <b>$$$$</b> ≈ $700+.</p>
       </div>
 
       <div class="infopair">
@@ -401,7 +401,7 @@
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
   <script src="personalize.js?v=20260731j" defer></script>
-  <script src="map.js?v=20260731j" defer></script>
+  <script src="map.js?v=20260729a" defer></script>
   <script src="account.js?v=20260728s" defer></script>
   <script src="cal.js?v=20260731j" defer></script>
   <script src="upload.js?v=20260731j" defer></script>
