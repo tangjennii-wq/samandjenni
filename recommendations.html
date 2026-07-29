@@ -24,10 +24,6 @@
   .recsplit{ display:grid; grid-template-columns:minmax(0, 2fr) minmax(0, 3fr); gap:30px;
     align-items:start; margin-top:14px; }
   #recs{ overflow-x:clip; }
-  #recs{ padding-top:14px; }
-  #recs .eyebrow{ margin-bottom:2px; }
-  #recs h2{ margin-top:2px; }
-  #recs .rule{ margin-top:7px; }
   .wrap{ max-width:1280px; }
 
   /* left column */
@@ -91,11 +87,10 @@
   @media(max-width:760px){
     .maprow .sjmap-gmap{ align-self:stretch; }
   }
-  /* tighter page head so the list starts above the fold */
-  #recs{ padding-top:14px; }
-  #recs .eyebrow{ margin-bottom:2px; }
-  #recs h2{ margin-top:2px; }
-  #recs .rule{ margin-top:7px; }
+  /* The page head deliberately matches hotels — this used to carry
+     padding-top:14px plus tightened h2/rule margins to pull the list above the
+     fold, which left "SHLANG FAVORITES" sitting visibly higher than "WHERE TO
+     STAY" when you moved between the two. Both now use the .sect defaults. */
 
 </style>
 </head>
