@@ -83,7 +83,18 @@
   veil.hidden = true;
   document.body.appendChild(veil);
 
+  // The panel opens BELOW the nav bar, not over it. Covering the bar hid the
+  // kebab — which is the ✕ — so there was nothing left to tap and the menu felt
+  // stuck. The bar stays visible and on top; the sheet hangs off its bottom edge.
+  function place() {
+    var b = Math.round(nav.getBoundingClientRect().bottom);
+    if (b < 0) b = 0;
+    panel.style.top = b + 'px';
+    veil.style.top  = b + 'px';
+  }
+
   function setOpen(on) {
+    if (on) place();
     panel.hidden = !on;
     veil.hidden = !on;
     toggle.classList.toggle('is-open', on);
@@ -91,6 +102,8 @@
     document.body.classList.toggle('mnav-open', on);
     if (on) { try { panel.querySelector('a,button').focus({ preventScroll: true }); } catch (e) {} }
   }
+  window.addEventListener('resize', function () { if (!panel.hidden) place(); });
+  window.addEventListener('orientationchange', function () { if (!panel.hidden) place(); });
   toggle.addEventListener('click', function () { setOpen(panel.hidden); });
   veil.addEventListener('click', function () { setOpen(false); });
   document.addEventListener('keydown', function (e) {
@@ -98,8 +111,10 @@
   });
   // anything that opens a drawer of its own should close this one first
   panel.addEventListener('click', function (e) {
-    if (e.target.closest('[data-ou-open],[data-note-open],[data-rsvp-open],.mnav-acct')) setOpen(false);
+    if (e.target.closest('[data-ou-open],[data-note-open],[data-rsvp-open],.mnav-acct,.mnav-list a')) setOpen(false);
   });
+  // a back gesture or hardware back shouldn't leave it hanging open
+  window.addEventListener('pagehide', function () { setOpen(false); });
 
   // the account row drives the real icon rather than duplicating its sheet, so
   // there's only ever one implementation of the account popover

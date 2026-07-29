@@ -1956,12 +1956,16 @@ body.map-full .map-caption{ display:none !important; }
   .mnav-toggle.is-open span:nth-child(2){ opacity:0; }
   .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
 
-  .mnav-veil{ position:fixed; inset:0; z-index:2400; background:rgba(13,9,5,.35); }
-  .mnav{ position:fixed; z-index:2500; top:0; right:0; bottom:0; width:min(78vw, 320px);
+  /* the nav bar has to sit ABOVE the sheet so the kebab stays tappable as the ✕ */
+  .sitenav{ z-index:2600; }
+  /* top is set by JS to the bar's bottom edge, so the bar is never covered */
+  .mnav-veil{ position:fixed; inset:0 0 0 0; z-index:2400; background:rgba(13,9,5,.35); }
+  .mnav{ position:fixed; z-index:2500; right:0; bottom:0; width:min(78vw, 320px);
     background:#fff; border-left:1px solid var(--line);
     box-shadow:-18px 0 40px rgba(13,9,5,.18);
-    display:flex; flex-direction:column; padding:22px 0 calc(20px + env(safe-area-inset-bottom));
-    overflow-y:auto; animation:mnavIn .2s ease; }
+    display:flex; flex-direction:column; padding:14px 0 calc(20px + env(safe-area-inset-bottom));
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
+    border-radius:0 0 0 var(--r-lg); animation:mnavIn .18s ease; }
   @keyframes mnavIn{ from{ transform:translateX(14px); opacity:.6 } to{ transform:none; opacity:1 } }
   body.mnav-open{ overflow:hidden; }
 
