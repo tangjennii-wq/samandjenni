@@ -1581,6 +1581,15 @@ body.map-full .map-caption{ display:none !important; }
      to the h2. Listing the h2 as well inset it 176px and pushed "OVER/UNDER"
      visibly off-centre from its own eyebrow, rule and lede. */
   #recs h2, #travel h2{ padding-right:88px; }
+  /* …and the rule under the title has to move with it. weekend/over-under get
+     this free because the 88px sits on the whole head block (.ev-intro/.ou-head),
+     so eyebrow + h2 + rule + lede all shift together. On recs and hotels the
+     inset is on the h2 alone, while .rule is `margin:10px auto 0` on the FULL
+     width — so the title centred at (W-88)/2 and its own underline centred at
+     W/2, i.e. 44px apart. Shift the rule by half the reserved 88px to match.
+     (The inset itself has to stay: "SHLANG FAVORITES" is 219px wide and does
+     collide with the RSVP pill at 360 and 390 without it.) */
+  #recs .rule, #travel .rule{ transform:translateX(-44px); }
 }
 @media(min-width:761px){ .titlestack{ display:none; } }
 
@@ -1612,4 +1621,25 @@ body.map-full .map-caption{ display:none !important; }
   /* 60, not 52: this margin collapses with .eyebrow's 8px bottom margin rather
      than adding to it, so the eyebrow contributes nothing to the gap. */
   #rsvp #sjrsvp{ margin-top:60px; }
+}
+
+
+/* ============================================================
+   iOS ZOOM — the landscape hole in the 760px breakpoint
+   Every phone rule in this file is scoped to (max-width:760px), but an iPhone
+   turned sideways is 812–932 CSS px WIDE. So in landscape none of them apply
+   and .note-f falls back to its 15px desktop size (`FORMS — lighter, airier
+   pass`, and .rsvp-fields .note-f is 14px). Safari zooms the page whenever a
+   focused field is under 16px, which is the "everything went huge / I can't
+   reach the close button" report — the same bug the max-width:760px block
+   already fixes in portrait.
+   Gated on (pointer:coarse) AND a short viewport: no desktop display is under
+   520 CSS px tall and no mouse-driven browser reports a coarse pointer, so
+   desktop rendering at >=761px is byte-for-byte unchanged.
+   ============================================================ */
+@media (pointer:coarse) and (max-height:520px){
+  .note-f, .note-ta,
+  .rsvp-fields .note-f, .rsvp-party .note-f, .guest-fields .note-f,
+  .acct-pop .note-f,
+  input, select, textarea{ font-size:16px; }
 }
