@@ -1981,3 +1981,20 @@ body.map-full .map-caption{ display:none !important; }
   .mnav-acct svg{ width:17px; height:17px; }
   .mnav-find{ color:var(--red); font-weight:700; }
 }
+
+/* the drawer's action row — same three things as the bar, spelled out */
+@media(max-width:760px){
+  .mnav-foot{ margin-top:auto; padding:18px 24px 0; border-top:1px solid var(--line);
+    display:flex; flex-direction:column; align-items:stretch; gap:9px; }
+  .mnav-cta{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    display:inline-flex; align-items:center; justify-content:center; min-height:42px;
+    border:0; border-radius:var(--r-pill); cursor:pointer; text-decoration:none;
+    font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+  .mnav-cta--rsvp{ background:var(--red); color:#fff; }
+  .mnav-cta--note{ background:var(--gold); color:var(--dark); }
+  .mnav-acct{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    background:none; border:0; padding:8px 0 2px; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center; gap:7px;
+    font-size:13.5px; color:#6b5a50; }
+  .mnav-acct svg{ width:17px; height:17px; }
+}
