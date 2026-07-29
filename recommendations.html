@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260729f">
+<link rel="stylesheet" href="site.css?v=20260729g">
 <style>
   /* ---- recs: list scrolls on the left, map is the hero on the right -------- */
   /* Manhattan is tall and narrow — a portrait-ish frame suits it far better
@@ -45,8 +45,15 @@
     text-transform:uppercase; color:#a2907a; white-space:nowrap; }
   .fcount b{ color:var(--dark); }
 
-  .recpanel{ margin-top:10px; height:950px;
-    overflow-y:auto; overscroll-behavior:contain; padding-right:7px; margin-right:-7px; }
+  /* Two things made the page bottom hard to reach:
+     - overscroll-behavior:contain stopped the wheel from chaining out of the
+       list, so once you hit the end of the recs the page just froze until you
+       moved the pointer off the panel. Back to auto.
+     - a flat 950px is taller than most laptop viewports, so the foot of the
+       list sat below the fold with no way to see it but scrolling the page
+       that the panel was busy swallowing. Cap it to the viewport. */
+  .recpanel{ margin-top:10px; height:min(950px, calc(100vh - 190px));
+    overflow-y:auto; overscroll-behavior:auto; padding-right:7px; margin-right:-7px; }
   .recpanel::-webkit-scrollbar{ width:6px; }
   .recpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
   .recgrid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:7px;
@@ -72,7 +79,7 @@
   .recsplit > *{ min-width:0; }
 
   .mapstage{ position:relative; clear:both; }
-  .mapstage .sjmap{ height:950px; margin-top:0; }
+  .mapstage .sjmap{ height:min(950px, calc(100vh - 190px)); margin-top:0; }
   .map-caption{ margin-top:14px; }
 
   @media(max-width:960px){
