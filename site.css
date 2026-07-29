@@ -1845,8 +1845,12 @@ body.map-full .map-caption{ display:none !important; }
    than a second call to action competing with the one above it. */
 .hero-note{ display:flex; justify-content:center; align-items:center; gap:26px;
   background:var(--dark); padding:0 16px calc(22px + env(safe-area-inset-bottom)); }
+/* All three are the same shape: the RSVP one is an <a> and the other two are
+   <button>, which sit on different baselines by default — that's why RSVP rode
+   high. inline-flex + a shared min-height lines them up regardless of tag. */
 .hero-note-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
-  min-height:44px; padding:0 8px; border:0; background:none; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:44px; line-height:1; padding:0 8px; border:0; background:none; cursor:pointer;
   color:rgba(250,243,224,.78); font-size:12px; font-weight:500; letter-spacing:.04em;
   text-transform:none; border-bottom:1px solid transparent;
   transition:color .14s ease, border-color .14s ease; }
