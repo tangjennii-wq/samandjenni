@@ -17,19 +17,31 @@
   .ev-intro .rule{ margin-top:9px; }
 
   /* --- Event cards: photo on top, red eyebrow, title, body ------------------ */
-  .evgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:20px; }
+  .evgrid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:20px; }
   /* One row, whatever the tier shows. personalize.js hides events with
      display:none, so the count can't be derived in CSS — evrow.js counts the
      visible cards and sets data-count, and these rules follow it. */
-  .evgrid[data-count="1"]{ grid-template-columns:minmax(0,420px); justify-content:center; }
-  .evgrid[data-count="2"]{ grid-template-columns:repeat(2,1fr); }
-  .evgrid[data-count="3"]{ grid-template-columns:repeat(3,1fr); }
-  .evgrid[data-count="4"]{ grid-template-columns:repeat(4,1fr); gap:14px; }
-  .evgrid[data-count="5"]{ grid-template-columns:repeat(5,1fr); gap:12px; }
+  /* One row, whatever the tier shows. Two things matter here:
+     - minmax(0,1fr), not 1fr. A bare 1fr is minmax(auto,1fr), which refuses to
+       shrink below the card's min-content width, so five cards overflowed the
+       page instead of getting narrower.
+     - counts 1-3 don't stretch. They use the width a 4-up card would have —
+       calc((100% - 3*gap)/4) — and centre, so a tier-4 guest with one event
+       doesn't get one enormous card. */
+  .evgrid > *{ min-width:0; }
+  .evgrid[data-count="1"], .evgrid[data-count="2"], .evgrid[data-count="3"]{
+    gap:14px; justify-content:center;
+    grid-template-columns:repeat(var(--n), minmax(0, calc((100% - 42px) / 4))); }
+  .evgrid[data-count="1"]{ --n:1; }
+  .evgrid[data-count="2"]{ --n:2; }
+  .evgrid[data-count="3"]{ --n:3; }
+  .evgrid[data-count="4"]{ grid-template-columns:repeat(4, minmax(0,1fr)); gap:14px; }
+  .evgrid[data-count="5"]{ grid-template-columns:repeat(5, minmax(0,1fr)); gap:12px; }
   /* narrower columns need smaller type or the cards get very tall */
   .evgrid[data-count="4"] .evcard h3, .evgrid[data-count="5"] .evcard h3{ font-size:17px; }
   .evgrid[data-count="5"] .evcard .in{ padding:12px 13px 14px; }
   .evgrid[data-count="5"] .evcard .when{ font-size:12.5px; }
+  .evgrid[data-count="5"] .evcard .where{ font-size:12.5px; }
   .evcard{ display:flex; flex-direction:column; background:#fff; overflow:hidden;
     border:1px solid var(--line); border-radius:18px; box-shadow:var(--lift);
     transition:transform .16s ease, box-shadow .16s ease; }
@@ -73,13 +85,18 @@
     border-bottom:1.5px solid transparent; }
   .evcard .links a:hover{ border-bottom-color:var(--red); }
 
+  /* Below 1000px five across stops being legible — step down to two, then one.
+     Every count is listed so the calc() columns for 1-3 are overridden too. */
   @media(max-width:1000px) and (min-width:701px){
-    .evgrid, .evgrid[data-count="3"], .evgrid[data-count="4"], .evgrid[data-count="5"]{
-      grid-template-columns:repeat(2,1fr); gap:14px; }
+    .evgrid, .evgrid[data-count="1"], .evgrid[data-count="2"], .evgrid[data-count="3"],
+    .evgrid[data-count="4"], .evgrid[data-count="5"]{
+      grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; justify-content:stretch; }
+    .evgrid[data-count="1"]{ grid-template-columns:minmax(0,1fr); }
   }
   @media(max-width:700px){
-    .evgrid, .evgrid[data-count="2"], .evgrid[data-count="3"],
-    .evgrid[data-count="4"], .evgrid[data-count="5"]{ grid-template-columns:1fr; gap:14px; }
+    .evgrid, .evgrid[data-count="1"], .evgrid[data-count="2"], .evgrid[data-count="3"],
+    .evgrid[data-count="4"], .evgrid[data-count="5"]{
+      grid-template-columns:minmax(0,1fr); gap:14px; justify-content:stretch; }
     .evcard .shot{ aspect-ratio:16/9; }
     .evcard h3{ font-size:20px; }
     .evcard .links a{ min-height:44px; display:inline-flex; align-items:center; }

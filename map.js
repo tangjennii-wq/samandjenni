@@ -150,6 +150,7 @@
     { n: 'Arlo SoHo', cat: 'hotel', area: 'SoHo', boro: 'manhattan', fav: false, lat: 40.72488, lng: -74.00863, note: 'SoHo · Small rooms, good price, great roof', url: 'https://www.google.com/maps/search/?api=1&query=Arlo%20SoHo%20New%20York' },
     { n: 'Arlo NoMad', cat: 'hotel', area: 'NoMad', boro: 'manhattan', fav: false, lat: 40.74627, lng: -73.98455, note: 'NoMad · Small rooms, well placed for downtown and midtown', url: 'https://www.google.com/maps/search/?api=1&query=Arlo%20NoMad%20New%20York' },
     { n: 'Arlo Midtown', cat: 'hotel', area: 'Midtown', boro: 'manhattan', fav: false, lat: 40.75592, lng: -73.99340, note: 'Midtown · Small rooms, the cheapest way to be near the wedding', url: 'https://www.google.com/maps/search/?api=1&query=Arlo%20Midtown%20New%20York' },
+    { n: 'Hotel Chelsea', cat: 'hotel', area: 'Chelsea', boro: 'manhattan', fav: false, lat: 40.74423, lng: -73.99671, note: 'Chelsea · The legendary one, restored.', url: 'https://www.google.com/maps/search/?api=1&query=Hotel%20Chelsea%20222%20W%2023rd%20St%20New%20York' },
   ];
 
 
