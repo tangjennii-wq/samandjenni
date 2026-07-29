@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260729n">
+<link rel="stylesheet" href="site.css?v=20260729p">
 <style>
   :root {
     --red: #E53C2D;
@@ -919,7 +919,11 @@
 
 <style>
   /* ===== One-viewport homepage: header <=140px, hero fills the rest ===== */
-  :root{ --sj-header: 140px; }
+  /* --sj-links is the RSVP / note / over-under row under the film. The hero
+     used to claim the whole viewport below the header, which pushed that row
+     just past the fold — you had to scroll a few pixels to learn the links
+     existed. Subtracting its height means film + links land together. */
+  :root{ --sj-header: 140px; --sj-links: 60px; }
 
   /* Crest ~92px tall */
   .crest{ padding:13px 16px 15px !important; }
@@ -944,7 +948,7 @@
 
   /* Hero owns the remaining height */
   .hero{
-    height: calc(100svh - var(--sj-header)) !important;
+    height: calc(100svh - var(--sj-header) - var(--sj-links)) !important;
     min-height: 0 !important;
     overflow: hidden !important;
     padding: 8px 16px !important;

@@ -1844,7 +1844,7 @@ body.map-full .map-caption{ display:none !important; }
    RSVP is permanently in the nav, so this row is a quiet set of doors rather
    than a second call to action competing with the one above it. */
 .hero-note{ display:flex; justify-content:center; align-items:center; gap:26px;
-  background:var(--dark); padding:0 16px calc(22px + env(safe-area-inset-bottom)); }
+  background:var(--dark); padding:0 16px calc(14px + env(safe-area-inset-bottom)); }
 /* All three are the same shape: the RSVP one is an <a> and the other two are
    <button>, which sit on different baselines by default — that's why RSVP rode
    high. inline-flex + a shared min-height lines them up regardless of tag. */
