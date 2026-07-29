@@ -1834,3 +1834,30 @@ body.map-full .map-caption{ display:none !important; }
    still reachable on phones from the RSVP and note thank-you screens. */
 @media(min-width:761px){ .nav-ou{ display:none; } }
 @media(max-width:760px){ .nav-ou{ display:none; } }
+
+/* ---------- over/under, as a home-page card ------------------------------
+   Five placements were tried before this one: a nav page, an end-of-page card,
+   a floating word pill, a floating +/- dot and a compact nav item. Each felt
+   wrong for the same reason — the nav answers "where do I go", and this is a
+   thing you do once, for fun. So it stops being furniture and becomes content,
+   on the page everybody lands on. */
+.ou-home{ display:flex; flex-direction:column; align-items:center; text-align:center;
+  gap:5px; padding:34px 22px 36px; background:var(--ivory); }
+.ou-home-eyebrow{ font-size:9.5px; font-weight:800; letter-spacing:.24em;
+  text-transform:uppercase; color:#a2907a; }
+.ou-home-title{ margin:2px 0 0; font-size:30px; font-weight:800; letter-spacing:.04em;
+  text-transform:uppercase; color:var(--dark); line-height:1; }
+.ou-home-note{ margin:6px 0 0; max-width:46ch; font-size:14px; line-height:1.6; color:#6b5a50; }
+.ou-home-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
+  margin-top:16px; min-height:46px; padding:0 26px; border:0; border-radius:var(--r-pill);
+  background:var(--gold); color:var(--dark); cursor:pointer;
+  font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  transition:background .14s ease, color .14s ease; }
+.ou-home-btn:hover{ background:var(--dark); color:var(--gold); }
+.ou-home-btn:active{ transform:scale(.985); }
+@media(max-width:760px){
+  .ou-home{ padding:26px 20px 28px; }
+  .ou-home-title{ font-size:24px; }
+  .ou-home-note{ font-size:12.5px; max-width:34ch; }
+  .ou-home-btn{ min-height:44px; font-size:10px; padding:0 22px; }
+}
