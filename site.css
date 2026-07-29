@@ -1923,3 +1923,57 @@ body.map-full .map-caption{ display:none !important; }
   font-size:8px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
 .hpts--hyatt{ background:rgba(47,109,181,.12); color:#245186; }
 .hpts--marriott{ background:rgba(229,60,45,.10); color:#a3352a; }
+
+/* ---------- phones: home icon, RSVP, kebab -------------------------------
+   Six links, three pills and an account icon were competing for 390px. The bar
+   now holds only what you'd tap without thinking; the rest is one tap away.
+   Built from .sitenav by mobilenav.js, so the HTML stays the single source. */
+.mnav-toggle{ display:none; }
+@media(max-width:760px){
+  /* everything except home leaves the bar */
+  .sitenav a:not([href="index.html"]):not([data-rsvp-open]),
+  .sitenav .nav-act--note,
+  .sitenav .nav-ou,
+  .sitenav .nav-acct{ display:none !important; }
+  .sitenav{ justify-content:flex-start; gap:0; overflow:visible; padding:9px 14px; }
+  .sitenav a[href="index.html"]{ flex:0 0 auto; }
+  .sitenav a[href="index.html"] .nav-word{ display:none; }   /* icon only */
+  .sitenav .nav-actions{ position:static; right:auto; margin-left:auto;
+    padding:0; box-shadow:none; background:none; }
+  .sitenav .nav-actions .nav-act{ height:30px; min-height:30px; font-size:9px; padding:0 13px;
+    background:var(--red); color:#fff; border-color:var(--red); }
+
+  .mnav-toggle{ display:inline-flex; flex-direction:column; justify-content:center;
+    gap:4px; width:40px; height:40px; margin-left:10px; padding:0 9px;
+    background:none; border:0; cursor:pointer; flex:0 0 auto; }
+  .mnav-toggle span{ display:block; height:2px; border-radius:2px; background:var(--dark);
+    transition:transform .18s ease, opacity .18s ease; }
+  .mnav-toggle.is-open span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
+  .mnav-toggle.is-open span:nth-child(2){ opacity:0; }
+  .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
+
+  .mnav-veil{ position:fixed; inset:0; z-index:2400; background:rgba(13,9,5,.35); }
+  .mnav{ position:fixed; z-index:2500; top:0; right:0; bottom:0; width:min(78vw, 320px);
+    background:#fff; border-left:1px solid var(--line);
+    box-shadow:-18px 0 40px rgba(13,9,5,.18);
+    display:flex; flex-direction:column; padding:22px 0 calc(20px + env(safe-area-inset-bottom));
+    overflow-y:auto; animation:mnavIn .2s ease; }
+  @keyframes mnavIn{ from{ transform:translateX(14px); opacity:.6 } to{ transform:none; opacity:1 } }
+  body.mnav-open{ overflow:hidden; }
+
+  .mnav-list{ display:flex; flex-direction:column; }
+  .mnav-list a, .mnav-ou{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    text-align:left; background:none; border:0; cursor:pointer;
+    padding:13px 24px; font-size:19px; font-weight:500; letter-spacing:.01em;
+    color:var(--dark); text-decoration:none; text-transform:lowercase; }
+  .mnav-list a.is-here{ color:var(--red); }
+  .mnav-list a:active, .mnav-ou:active{ background:var(--ivory); }
+
+  .mnav-foot{ margin-top:auto; padding:16px 24px 0; border-top:1px solid var(--line);
+    display:flex; flex-direction:column; align-items:flex-start; gap:12px; }
+  .mnav-note, .mnav-acct, .mnav-find{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    background:none; border:0; padding:6px 0; cursor:pointer; text-decoration:none;
+    font-size:14px; color:#6b5a50; display:inline-flex; align-items:center; gap:7px; }
+  .mnav-acct svg{ width:17px; height:17px; }
+  .mnav-find{ color:var(--red); font-weight:700; }
+}
