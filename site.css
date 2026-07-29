@@ -1979,47 +1979,49 @@ body.map-full .map-caption{ display:none !important; }
      note/RSVP drawer (1001), the account sheet (3000). At 2600 the crest was
      painting over the fullscreen video and its close button. */
   .crest{ z-index:900; }
-  /* iOS ignores taps on a bare transparent div — cursor:pointer plus a hair of
-     colour makes it a real hit target, which is half of why exiting failed. */
-  .mnav-veil{ position:fixed; inset:0; z-index:880; cursor:pointer;
-    background:rgba(13,9,5,.06); -webkit-tap-highlight-color:transparent; }
-  .mnav, .mnav-toggle, .mnav-close, .mnav-home{ touch-action:manipulation;
-    -webkit-tap-highlight-color:transparent; }
-  .mnav{ position:fixed; z-index:890; width:min(280px, calc(100vw - 24px));
-    max-height:calc(100dvh - 92px); background:#fff;
-    border:1px solid var(--line); box-shadow:0 16px 42px rgba(13,9,5,.18);
-    display:flex; flex-direction:column; padding:8px; overflow:hidden;
-    border-radius:18px; animation:mnavIn .14s ease-out; }
-  @keyframes mnavIn{ from{ transform:translateY(-5px); opacity:.5 } to{ transform:none; opacity:1 } }
+  /* Full-screen, over everything including the crest — the Thinking Machines
+     pattern. The sheet carries its own wordmark at exactly the crest's position
+     and its ✕ lands on the kebab's coordinates, so opening reads as the bar
+     morphing rather than a new surface arriving. One control, not two. */
+  .mnav-veil{ display:none !important; }
+  .mnav{ position:fixed; inset:0; z-index:2700; width:auto; max-height:none;
+    background:#fff; border:0; border-radius:0; box-shadow:none;
+    display:flex; flex-direction:column; padding:0; overflow:hidden;
+    animation:mnavIn .18s ease-out; }
+  @keyframes mnavIn{ from{ opacity:0 } to{ opacity:1 } }
   body.mnav-open{ overflow:hidden; }
+  /* the kebab hides while open so the ✕ is the only thing in that corner */
+  body.mnav-open .mnav-toggle, body.mnav-open .mnav-home{ opacity:0; pointer-events:none; }
 
-  /* No "Menu" label and no header band — the ✕ sits on the first item's line,
-     absolutely placed so the list starts at the top of the sheet. */
-  .mnav-close{ -webkit-appearance:none; appearance:none; position:absolute;
-    top:8px; right:8px; width:44px; height:48px;
+  /* matches .crest padding (13px 16px 15px) and .crest-mobile-nav (top:7px) */
+  .mnav-top{ flex:0 0 auto; display:flex; align-items:center; justify-content:space-between;
+    padding:7px 13px 0 16px; min-height:44px; }
+  .mnav-brand{ font-family:inherit; font-size:20px; font-weight:800; letter-spacing:.03em;
+    text-transform:uppercase; color:var(--red); text-decoration:none; white-space:nowrap; }
+  .mnav-brand span{ font-weight:500; }
+  .mnav-close{ -webkit-appearance:none; appearance:none; width:44px; height:44px;
     display:inline-flex; align-items:center; justify-content:center; padding:0;
-    border:0; border-radius:11px; background:none; color:#8a796c; cursor:pointer; z-index:1; }
-  .mnav-close svg{ width:17px; height:17px; }
-  .mnav-close:active{ background:var(--ivory); color:var(--dark); }
-  .mnav-list a:first-child, .mnav-list button:first-child{ padding-right:52px; }
+    margin-right:-9px; border:0; background:none; color:var(--red); cursor:pointer; }
+  .mnav-close svg{ width:25px; height:25px; }
+  .mnav-close:active{ opacity:.55; }
 
-  .mnav-list{ display:flex; flex-direction:column; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+  .mnav-list{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
+    align-items:center; gap:2px; padding:0 20px calc(24px + env(safe-area-inset-bottom));
+    overflow-y:auto; -webkit-overflow-scrolling:touch; }
   .mnav-list a, .mnav-list button{ -webkit-appearance:none; appearance:none; font-family:inherit;
-    text-align:left; background:none; border:0; cursor:pointer;
-    min-height:48px; padding:0 14px; border-radius:11px;
-    font-size:16px; font-weight:600; letter-spacing:0;
+    text-align:center; background:none; border:0; cursor:pointer;
+    min-height:52px; padding:0 16px; border-radius:12px;
+    font-size:21px; font-weight:500; letter-spacing:.01em;
     color:var(--dark); text-decoration:none; text-transform:none;
-    display:flex; align-items:center; width:100%; }
-  .mnav-list a.is-here{ color:var(--dark); background:var(--ivory); }
-  .mnav-list a:active, .mnav-list button:active{ background:var(--ivory); }
+    display:flex; align-items:center; justify-content:center; }
+  .mnav-list a.is-here{ color:var(--red); background:none; }
+  .mnav-list a:active, .mnav-list button:active{ opacity:.55; }
   .mnav-action{ color:var(--dark) !important; }
   .mnav-action--rsvp{ color:var(--red) !important; font-weight:800 !important; }
   .mnav-action--note{ color:#a77d00 !important; font-weight:800 !important; }
-  .mnav-list > * + *{ border-top:1px solid rgba(13,9,5,.055); }
-  .mnav-list > * + *{ border-top-left-radius:0; border-top-right-radius:0; }
-  .mnav-list > *:has(+ *){ border-bottom-left-radius:0; border-bottom-right-radius:0; }
 
-  .mnav-foot{ margin-top:6px; padding:6px 0 0; border-top:1px solid var(--line); }
+  .mnav-foot{ flex:0 0 auto; display:flex; justify-content:center;
+    padding:0 20px calc(26px + env(safe-area-inset-bottom)); }
   .mnav-foot:empty{ display:none; }
   .mnav-acct{ -webkit-appearance:none; appearance:none; font-family:inherit;
     width:100%; min-height:48px; background:none; border:0; border-radius:11px;

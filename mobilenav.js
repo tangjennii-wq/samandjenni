@@ -64,9 +64,12 @@
   panel.setAttribute('aria-label', 'More wedding actions');
   panel.hidden = true;
 
-  var html = '<button type="button" class="mnav-close" aria-label="Close menu">' +
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" ' +
-    'stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+  var html = '<div class="mnav-top">' +
+      '<a class="mnav-brand" href="index.html">Sam <span>+</span> Jenni</a>' +
+      '<button type="button" class="mnav-close" aria-label="Close menu">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
+      'stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+    '</div>' +
     '<nav class="mnav-list">';
   links.forEach(function (l) {
     var label = /^faq$/i.test(l.label) ? 'FAQs' : l.label;
@@ -95,15 +98,9 @@
   veil.hidden = true;
   document.body.appendChild(veil);
 
-  // Anchor the popover below the More button and keep it inside the viewport.
-  function place() {
-    var r = toggle.getBoundingClientRect();
-    var crestBottom = crest ? crest.getBoundingClientRect().bottom : r.bottom;
-    var top = Math.max(8, Math.round(Math.max(r.bottom, crestBottom) + 8));
-    panel.style.top = top + 'px';
-    panel.style.right = Math.max(12, Math.round(window.innerWidth - r.right)) + 'px';
-    veil.style.top = Math.max(0, Math.round(crestBottom)) + 'px';
-  }
+  // The sheet is full-screen now, so there is nothing to anchor — the ✕ is
+  // placed by CSS to land on the kebab's own coordinates.
+  function place() {}
 
   function setOpen(on) {
     var wasOpen = !panel.hidden;
