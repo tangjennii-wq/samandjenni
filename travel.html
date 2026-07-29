@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260728p">
+<link rel="stylesheet" href="site.css?v=20260728q">
 <style>
   /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
   .wrap{ max-width:1280px; }
@@ -57,9 +57,16 @@
      a half-scrolled card showed nothing but a picture — you couldn't tell which
      hotel you were looking at. Names and prices now sit at the top of every
      card, so they peep above the fold as you scroll. */
-  .hotelgrid .hotel{ display:flex; flex-direction:column; }
+  .hotelgrid .hotel{ display:flex; flex-direction:column; align-items:stretch; gap:0; }
   .hotelgrid .hin{ order:1; }
   .hotelgrid .hshot{ order:2; }
+  /* align-items:stretch and gap:0 are not decoration — the base .hotel rule in
+     site.css is `display:grid; grid-template-columns:1fr auto; align-items:center;
+     gap:14px`, written for the old wide two-column card. Switching this grid's
+     cards to flex column inherited both. In a column, align-items:center sizes
+     .hin to its content and centres it, so cards with short text (The Pierre,
+     Le Méridien) sat visibly inset while long ones (Lotte) looked flush left —
+     and the 14px gap opened a white band between the text and the photo. */
   .hotelgrid .hshot{ display:block; width:100%; height:auto; aspect-ratio:16/10;
     overflow:hidden; background:#F1EADD; border-radius:0; }
   .hotelgrid .hshot img{ width:100%; height:100%; object-fit:cover; display:block; }
