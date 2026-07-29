@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260729z">
+<link rel="stylesheet" href="site.css?v=20260730a">
 <style>
   :root {
     --red: #E53C2D;
@@ -1022,8 +1022,16 @@
   .recgrid{ gap:10px; }
   .sfoot{ padding:24px 18px; border-radius:var(--r-lg) var(--r-lg) 0 0; }
 </style>
+<style>
+  /* The home page is film + three links and nothing else, so the ivory page
+     background showed as a white band under the fold. Black all the way down. */
+  body.is-home-dark, html:has(body.is-home-dark){ background:var(--dark); }
+  /* the rules either side of SAM + JENNI go — Jenni's call, and it lets the
+     kebab sit in that space without crowding */
+  .crest-rule{ display:none !important; }
+</style>
 </head>
-<body class="has-mobile-actions">
+<body class="has-mobile-actions is-home-dark">
   <span id="top"></span>
 <!-- White crest band -->
   <header class="crest">

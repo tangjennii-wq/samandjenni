@@ -1863,11 +1863,12 @@ body.map-full .map-caption{ display:none !important; }
   color:rgba(250,243,224,.94); font-size:12px; font-weight:650; letter-spacing:.04em;
   text-transform:none; border-bottom:1px solid transparent;
   transition:color .14s ease, border-color .14s ease; }
-.hero-note-btn:hover{ color:var(--ivory); border-bottom-color:rgba(250,243,224,.5); }
+.hero-note-btn:hover{ color:#fff; border-bottom-color:rgba(255,255,255,.6); }
 .hero-note-btn{ text-decoration:none; }
 .hero-note a.hero-note-btn{ color:#ff6558; }
 .hero-note-btn.is-mid{ color:#f1d322; }
 .hero-note .ou-slash{ color:var(--red); }
+.hero-note-btn{ color:#fff !important; }
 @media(max-width:760px){
   .hero-note{ gap:16px; padding-bottom:calc(18px + env(safe-area-inset-bottom)); }
   .hero-note-btn{ font-size:11px; padding:0 2px; }
@@ -1967,11 +1968,11 @@ body.map-full .map-caption{ display:none !important; }
     width:44px; height:44px; margin-left:auto; padding:0;
     background:none; border:0; cursor:pointer; flex:0 0 auto;
     color:var(--dark); border-radius:50%; }
-  .mnav-toggle span{ display:block; width:21px; height:1.5px; border-radius:2px;
+  .mnav-toggle span{ display:block; width:25px; height:2.5px; border-radius:2px;
     background:var(--red); transition:transform .16s ease, opacity .16s ease; }
-  .mnav-toggle.is-open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .mnav-toggle.is-open span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
   .mnav-toggle.is-open span:nth-child(2){ opacity:0; }
-  .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+  .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
   .mnav-toggle:active, .mnav-toggle[aria-expanded="true"]{ background:rgba(229,60,45,.08); }
 
   /* Above the popover, below every real overlay: the film modal (1000), the
