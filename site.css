@@ -1577,7 +1577,10 @@ body.map-full .map-caption{ display:none !important; }
   .titlestack .ts-note{ background:var(--gold); color:var(--dark); }
   .sect .wrap{ position:relative; }
   #recs .eyebrow, #travel .eyebrow, .ev-intro, .ou-head{ padding-right:88px; }
-  #recs h2, #travel h2, .ou-head h2{ padding-right:88px; }
+  /* NOT .ou-head h2 — .ou-head is the .wrap itself, so its 88px already applies
+     to the h2. Listing the h2 as well inset it 176px and pushed "OVER/UNDER"
+     visibly off-centre from its own eyebrow, rule and lede. */
+  #recs h2, #travel h2{ padding-right:88px; }
 }
 @media(min-width:761px){ .titlestack{ display:none; } }
 
@@ -1587,3 +1590,26 @@ body.map-full .map-caption{ display:none !important; }
 .note-row2 .note-field{ display:flex; flex-direction:column; justify-content:flex-end; height:100%; }
 .note-row2 .note-l{ min-height:2.6em; display:flex; align-items:flex-end; }
 @media(max-width:760px){ .note-row2 .note-l{ min-height:2.4em; } }
+
+
+/* ============================================================
+   TITLESTACK CLEARANCE
+   .titlestack is position:absolute; top:0; right:0 inside .sect .wrap and is
+   32 + 6 + 32 = 70px tall. On weekend.html and over-under.html the page head
+   (eyebrow + h2 + rule + lede) is taller than that, so nothing can slide under
+   it. On the other three inner pages it is NOT, and the pills were painting on
+   top of live content:
+     recs   — the gold "Note" pill covered the top-right 25px of the full-width
+              "See in Google Maps" button (a link, so it was also stealing taps)
+     travel — same pill sat on the top-right corner of the map
+     rsvp   — the header is a single 11px eyebrow, so BOTH pills landed on the
+              red RSVP masthead inside #sjrsvp
+   Push the first block below the stack. Mobile only; ≥761px hides .titlestack.
+   ============================================================ */
+@media(max-width:760px){
+  #recs .recsplit{ margin-top:40px; }      /* was 14px — needed +25 to clear */
+  #travel .hotelsplit{ margin-top:38px; }  /* was 14px — needed +22 to clear */
+  /* 60, not 52: this margin collapses with .eyebrow's 8px bottom margin rather
+     than adding to it, so the eyebrow contributes nothing to the gap. */
+  #rsvp #sjrsvp{ margin-top:60px; }
+}
