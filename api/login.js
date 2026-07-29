@@ -4,9 +4,10 @@
 // We call a security-definer function that answers a bare true/false — it can
 // tell us "yes, that's a guest" without ever handing over the guest list.
 //
-// sj_pass  = the shared passphrase (HttpOnly) — what middleware.js checks.
-// sj_guest = the guest's lowercased email or last name (readable by page JS),
-//            used to personalise events and prefill the RSVP.
+// sj_guest = the guest's normalised full name, last name or email (readable by
+//            page JS). Its presence is what middleware.js treats as "signed
+//            in"; its value drives the tier lookup and prefills the RSVP.
+// There is no shared passphrase any more — being on the list IS the key.
 
 const SB_URL = 'https://aybkcrmbdvuxenljqkab.supabase.co';
 const SB_KEY = 'sb_publishable_RzS1uAPwarXf0b7S-uB-1w_4fHKWgIX';
@@ -46,28 +47,19 @@ async function lookUp(key) {
 }
 
 export default async function handler(req, res) {
-  const expected = process.env.SITE_PASSWORD || 'shlang';
-
-  let password = '', lastname = '';
+  let lastname = '';
   if (req.method === 'POST') {
     const body = req.body || {};
     if (typeof body === 'string') {
       const p = new URLSearchParams(body);
-      password = p.get('password') || '';
       lastname = p.get('lastname') || '';
     } else {
-      password = body.password || '';
       lastname = body.lastname || '';
     }
   }
 
-  const pw = String(password).trim().toLowerCase().replace(/\s+/g, '');
   const ln = String(lastname).trim().toLowerCase();
 
-  if (pw !== String(expected).trim().toLowerCase()) {
-    res.writeHead(302, { Location: '/gate?e=pass' });
-    return res.end();
-  }
   if (!ln) {
     res.writeHead(302, { Location: '/gate?e=name' });
     return res.end();
@@ -110,10 +102,10 @@ export default async function handler(req, res) {
 
   const maxAge = 60 * 60 * 24 * 400;
   res.setHeader('Set-Cookie', [
-    `sj_pass=${expected}; Path=/; Max-Age=${maxAge}; SameSite=Lax; HttpOnly; Secure`,
     `sj_guest=${encodeURIComponent(matched)}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
     `sj_tier=${tier}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
   ]);
-  res.writeHead(302, { Location: '/' });
+  const next = (req.url && /[?&]next=rsvp/.test(req.url)) ? '/rsvp.html' : '/';
+  res.writeHead(302, { Location: next });
   return res.end();
 }
