@@ -1851,12 +1851,13 @@ body.map-full .map-caption{ display:none !important; }
 .hero-note-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
   display:inline-flex; align-items:center; justify-content:center;
   min-height:44px; line-height:1; padding:0 8px; border:0; background:none; cursor:pointer;
-  color:rgba(250,243,224,.78); font-size:12px; font-weight:500; letter-spacing:.04em;
+  color:rgba(250,243,224,.94); font-size:12px; font-weight:650; letter-spacing:.04em;
   text-transform:none; border-bottom:1px solid transparent;
   transition:color .14s ease, border-color .14s ease; }
 .hero-note-btn:hover{ color:var(--ivory); border-bottom-color:rgba(250,243,224,.5); }
 .hero-note-btn{ text-decoration:none; }
-.hero-note-btn.is-mid{ color:var(--ivory); }
+.hero-note a.hero-note-btn{ color:#ff6558; }
+.hero-note-btn.is-mid{ color:#f1d322; }
 .hero-note .ou-slash{ color:var(--red); }
 @media(max-width:760px){
   .hero-note{ gap:16px; padding-bottom:calc(18px + env(safe-area-inset-bottom)); }
@@ -1929,26 +1930,35 @@ body.map-full .map-caption{ display:none !important; }
    in one anchored popover instead of competing for 390px.
    Built from .sitenav by mobilenav.js, so the HTML stays the single source. */
 .mnav-toggle{ display:none; }
+.crest-mobile-nav{ display:none; }
 @media(max-width:760px){
-  /* Only Home and More remain in the bar. */
-  .sitenav a:not([href="index.html"]):not([data-rsvp-open]),
-  .sitenav .nav-ou{ display:none !important; }
-  .sitenav .nav-actions,
-  .sitenav .nav-acct{ display:none !important; }
-  .sitenav{ justify-content:space-between; gap:0; overflow:visible; padding:7px 14px; }
-  .sitenav a[href="index.html"]{ flex:0 0 auto; }
-  .sitenav a[href="index.html"] .nav-word{ display:none; }   /* icon only */
+  /* The separate navigation band disappears. Home and More sit in the crest. */
+  .crest{ position:relative; }
+  .sitenav{ display:none !important; }
+  .crest-mobile-nav{ position:absolute; z-index:2600; top:7px; left:13px; right:13px;
+    height:44px; display:flex; align-items:center; justify-content:space-between;
+    pointer-events:none; }
+  .crest-mobile-nav > *{ pointer-events:auto; }
+  .mnav-home{ width:44px; height:44px; display:inline-flex; align-items:center;
+    justify-content:center; color:var(--red); text-decoration:none; border-radius:50%; }
+  .mnav-home .nav-word{ display:none; }
+  .mnav-home .nav-home-ico{ display:block; width:25px; height:25px; }
+  .mnav-home:active{ background:rgba(229,60,45,.08); }
 
-  .mnav-toggle{ display:inline-flex; align-items:center; justify-content:center;
+  .mnav-toggle{ display:inline-flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:4px;
     width:44px; height:44px; margin-left:auto; padding:0;
     background:none; border:0; cursor:pointer; flex:0 0 auto;
     color:var(--dark); border-radius:50%; }
-  .mnav-toggle span{ display:block; height:auto; background:none; font-size:30px;
-    font-weight:700; line-height:1; transform:translateY(-2px); }
-  .mnav-toggle:active, .mnav-toggle[aria-expanded="true"]{ background:var(--ivory); }
+  .mnav-toggle span{ display:block; width:24px; height:3px; border-radius:3px;
+    background:var(--red); transition:transform .16s ease, opacity .16s ease; }
+  .mnav-toggle.is-open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .mnav-toggle.is-open span:nth-child(2){ opacity:0; }
+  .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  .mnav-toggle:active, .mnav-toggle[aria-expanded="true"]{ background:rgba(229,60,45,.08); }
 
-  /* The nav stays above the small popover so More remains reachable. */
-  .sitenav{ z-index:2600; }
+  /* The crest controls stay above the popover/veil. */
+  .crest{ z-index:2600; }
   .mnav-veil{ position:fixed; inset:0; z-index:2400; background:transparent; }
   .mnav{ position:fixed; z-index:2500; width:min(280px, calc(100vw - 24px));
     max-height:calc(100dvh - 92px); background:#fff;
@@ -1958,6 +1968,16 @@ body.map-full .map-caption{ display:none !important; }
     border-radius:18px; animation:mnavIn .14s ease-out; }
   @keyframes mnavIn{ from{ transform:translateY(-5px); opacity:.5 } to{ transform:none; opacity:1 } }
   body.mnav-open{ overflow:auto; }
+
+  .mnav-head{ min-height:42px; padding:0 6px 5px 14px; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    color:#8a796c; font-size:10px; font-weight:800; letter-spacing:.16em;
+    text-transform:uppercase; }
+  .mnav-close{ -webkit-appearance:none; appearance:none; width:38px; height:38px;
+    display:inline-flex; align-items:center; justify-content:center; padding:0;
+    border:0; border-radius:50%; background:none; color:var(--dark);
+    font-family:inherit; font-size:29px; font-weight:400; line-height:1; cursor:pointer; }
+  .mnav-close:active{ background:rgba(229,60,45,.09); color:var(--red); }
 
   .mnav-list{ display:flex; flex-direction:column; }
   .mnav-list a, .mnav-list button{ -webkit-appearance:none; appearance:none; font-family:inherit;
@@ -1969,6 +1989,8 @@ body.map-full .map-caption{ display:none !important; }
   .mnav-list a.is-here{ color:var(--dark); background:var(--ivory); }
   .mnav-list a:active, .mnav-list button:active{ background:var(--ivory); }
   .mnav-action{ color:var(--dark) !important; }
+  .mnav-action--rsvp{ color:var(--red) !important; font-weight:800 !important; }
+  .mnav-action--note{ color:#a77d00 !important; font-weight:800 !important; }
   .mnav-list > * + *{ border-top:1px solid rgba(13,9,5,.055); }
   .mnav-list > * + *{ border-top-left-radius:0; border-top-right-radius:0; }
   .mnav-list > *:has(+ *){ border-bottom-left-radius:0; border-bottom-right-radius:0; }
