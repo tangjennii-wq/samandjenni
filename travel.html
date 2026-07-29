@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260729p">
+<link rel="stylesheet" href="site.css?v=20260729q">
 <style>
   /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
   .wrap{ max-width:1280px; }
@@ -151,7 +151,8 @@
     <a href="index.html"><svg class="nav-home-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.6V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.6"/><path d="M9.5 21v-6h5v6"/></svg><span class="nav-word">home</span></a>
     <a href="weekend.html">events</a>
     <a href="recommendations.html"><span class="nav-long">NYC recs</span><span class="nav-brief">recs</span></a>
-    <a class="active" href="travel.html"><span class="nav-long">hotels/FAQ</span><span class="nav-brief">hotels/FAQ</span></a>
+    <a class="active" href="travel.html"><svg class="nav-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a1 1 0 0 0-.9 1.7l6 3.4-2.2 3.3-2.6-.4a.8.8 0 0 0-.7 1.3l2.3 2.6 2.6 2.3a.8.8 0 0 0 1.3-.7l-.4-2.6 3.3-2.2 3.4 6a1 1 0 0 0 1.7-.9Z"/></svg><span class="nav-word">hotels</span></a>
+    <a href="faq.html">FAQ</a>
     <button type="button" class="nav-ou" data-ou-open aria-label="Over/under"><span class="nav-long">over/under</span><span class="nav-brief">+/−</span></button>
       <span class="nav-actions">
         <a class="nav-act nav-act--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
@@ -432,7 +433,7 @@
         <p>We’ve also listed other hotels in case you want to stay elsewhere — feel free to text us for help!</p>
       </div>
 
-      <div class="infopair">
+      <div class="infopair infopair--one">
         <section class="infocard">
           <h3 class="infohead"><span class="infoicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.2 13.8 3 11.4V9.6l2 .5 1.6-1.6L3 6.9V5.1l4.6.8L11 2.5a1.4 1.4 0 0 1 2 2l-3.4 3.4.8 4.6h-1.8l-1.6-3.6L5.4 10.4l.5 2H4.1"/><path d="M13.8 10.2 21 12.6v1.8l-2-.5-1.6 1.6 3.6 1.6v1.8l-4.6-.8L13 21.5a1.4 1.4 0 0 1-2-2l3.4-3.4-.8-4.6h1.8l1.6 3.6 1.6-1.6-.5-2H20"/></svg></span>Getting here</h3>
           <p class="infobody">Fly into <b>JFK</b>, <b>LGA</b> (closest — ~30 min) or <b>EWR</b>. From any of them, a taxi or Uber to Midtown runs roughly 30–60 minutes depending on traffic. Once you're here, the wedding, the welcome party and every hotel above are reachable by a short cab ride or the subway — you will not need a car.</p>
@@ -451,28 +452,7 @@
             <li><b>Chinese Tuxedo</b> (Friday) — <span class="ln">J</span><span class="ln">N</span><span class="ln">Q</span><span class="ln">R</span><span class="ln">W</span><span class="ln">Z</span><span class="ln">6</span> to Canal St, then a five-minute walk into Doyers Street.</li>
           </ul>
         </section>
-        <section class="infocard">
-          <h3 class="infohead"><span class="infoicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M9.4 9.2a2.7 2.7 0 1 1 3.6 2.6c-.7.3-1 .9-1 1.6v.4"/><circle cx="12" cy="17.2" r=".9" fill="currentColor" stroke="none"/></svg></span>Questions</h3>
-      <div class="faq">
-        <details open>
-          <summary>When should I book my hotel?</summary>
-          <div class="a">Now, honestly. Our rooms are held only until a cut-off date, after which anything unbooked goes back to the hotel and you'd pay the regular rate. <b>Lotte New York Palace</b> and <b>Thompson Central Park</b> release on <b>17 February 2027</b>; <b>Le Méridien</b> releases on <b>19 February 2027</b>. Our block at The Pierre is already full.</div>
-        </details>
-        <details>
-          <summary>What's the dress code?</summary>
-          <div class="a"><b>Black tie</b>, and colour is encouraged. There's a <a href="weekend.html#wear"><b>what to wear</b></a> breakdown for every event on the events page.</div>
-        </details>
-        <details>
-          <summary>Do I need to come Friday too?</summary>
-          <div class="a">We'd love you there. Friday is a welcome party at Chinese Tuxedo in Chinatown — a proper night, not a drop-in. If Friday shows up on your events page, you're on the list.</div>
-        </details>
-        <details>
-          <summary>How do I RSVP?</summary>
-          <div class="a"><a href="rsvp.html" data-rsvp-open><b>Open the RSVP form</b></a> — it takes a minute, and it only shows the events you’re invited to. Replies are due by <b>January 2027</b>.</div>
-        </details>
-      </div>
-    
-        </section>
+        
       </div>
 
     </div>

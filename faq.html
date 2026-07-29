@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>FAQ · sam + jenni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="stylesheet" href="site.css?v=20260729q">
+<style>
+  /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
+  .wrap{ max-width:1280px; }
+  #travel{ overflow-x:clip; }
+  /* half the page each — the map was swallowing the room */
+  /* half and half — six pins don't need more than that */
+  .hotelsplit{ display:grid; grid-template-columns:minmax(0, 1.22fr) minmax(0, 1fr); gap:20px;
+    align-items:start; margin-top:14px; }
+  .hotelsplit > *{ min-width:0; }
+
+  .recbar{ display:flex; flex-wrap:wrap; align-items:center; gap:7px 8px;
+    padding-bottom:10px; border-bottom:1px solid var(--line); }
+  .fgroup{ display:flex; flex-wrap:wrap; gap:5px; }
+  .fgroup--top{ flex:1 1 auto; }
+  .fgroup--hoods{ width:100%; padding-top:8px; border-top:1px dashed var(--line); }
+  .fgroup--hoods[hidden]{ display:none; }
+  .fchip{ font:inherit; font-size:9px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+    padding:5px 10px; border-radius:var(--r-pill); border:1px solid var(--line-2);
+    background:#fff; color:#6b5a50; cursor:pointer; line-height:1.1; white-space:nowrap; }
+  .fchip:hover{ border-color:var(--dark); color:var(--dark); }
+  .fchip.is-on{ background:var(--red); border-color:var(--red); color:#fff; }
+  .fchip[data-v="block"]{ border-color:rgba(196,168,20,.75); color:#8a6d00; }
+  .fchip[data-v="block"].is-on{ background:var(--gold); border-color:var(--gold); color:var(--dark); }
+  .fchip--hood{ font-size:8.5px; padding:4px 9px; }
+  .fcount{ font-size:9.5px; font-weight:700; letter-spacing:.11em; text-transform:uppercase;
+    color:#a2907a; white-space:nowrap; }
+  .fcount b{ color:var(--dark); }
+
+  .hotelpanel{ margin-top:10px; height:min(560px, calc(100vh - 230px));
+    overflow-y:auto; overscroll-behavior:auto; padding-right:7px; margin-right:-7px; }
+  .hotelpanel::-webkit-scrollbar{ width:6px; }
+  .hotelpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
+  .hotelgrid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:10px; align-items:start; }
+  .hotelgrid > *{ flex:0 0 auto; }
+
+  /* photo leads the card, full width — nothing sits on top of it */
+  .hotelgrid .hotel{ display:block; padding:0; margin:0; overflow:hidden;
+    text-decoration:none; color:inherit; border:1px solid var(--line);
+    border-radius:var(--r-md); background:#fff;
+    transition:border-color .12s, transform .12s; }
+  .hotelgrid .hotel[hidden]{ display:none !important; }
+  .hotelgrid .hotel:hover{ border-color:var(--red); transform:translateY(-1px); }
+  /* Text first, photo underneath. The panel scrolls, and with the photo on top
+     a half-scrolled card showed nothing but a picture — you couldn't tell which
+     hotel you were looking at. Names and prices now sit at the top of every
+     card, so they peep above the fold as you scroll. */
+  .hotelgrid .hotel{ display:flex; flex-direction:column; align-items:stretch; gap:0; }
+  .hotelgrid .hin{ order:1; }
+  .hotelgrid .hshot{ order:2; }
+  /* align-items:stretch and gap:0 are not decoration — the base .hotel rule in
+     site.css is `display:grid; grid-template-columns:1fr auto; align-items:center;
+     gap:14px`, written for the old wide two-column card. Switching this grid's
+     cards to flex column inherited both. In a column, align-items:center sizes
+     .hin to its content and centres it, so cards with short text (The Pierre,
+     Le Méridien) sat visibly inset while long ones (Lotte) looked flush left —
+     and the 14px gap opened a white band between the text and the photo. */
+  .hotelgrid .hshot{ display:block; width:100%; height:auto; aspect-ratio:16/10;
+    overflow:hidden; background:#F1EADD; border-radius:0; }
+  .hotelgrid .hshot img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hin{ display:block; padding:10px 13px 9px; }
+  .hkind{ display:block; font-size:9px; font-weight:800; letter-spacing:.16em;
+    text-transform:uppercase; color:#8a6d00; }
+  .hkind--alt{ color:var(--red); }
+  .fcaret{ font-size:11px; line-height:1; margin-left:2px; }
+  .fchip.is-on .fcaret{ transform:rotate(180deg); display:inline-block; }
+  .fhoodlabel{ align-self:center; margin-right:4px; font-size:8px; font-weight:800;
+    letter-spacing:.16em; text-transform:uppercase; color:#a2907a; }
+  .howto{ max-width:760px; margin:26px auto 0; text-align:center; }
+  .howto p{ margin:0; font-size:15px; line-height:1.6; color:#6b5a50; }
+  .howto-lead{ margin-bottom:10px !important; font-size:16.5px !important; font-weight:700;
+    color:var(--dark) !important; }
+  .howto p b{ color:var(--dark); }
+  .howto-cut{ margin-top:9px !important; font-size:13px !important; }
+  .howto-fine{ margin-top:9px !important; font-size:13px !important; font-style:italic; }
+  .hname{ display:block; font-size:16px; font-weight:700; letter-spacing:0;
+    text-transform:none; line-height:1.2; margin-top:3px; }
+  .hprice{ display:inline-block; margin-top:5px; font-size:12.5px; font-weight:800;
+    color:var(--red); border-bottom:2px solid var(--gold); padding-bottom:1px; }
+  .hwhere{ display:block; font-size:11px; color:#6b5a50; line-height:1.4; margin-top:6px; }
+  .hbook{ display:block; width:fit-content; margin-top:9px; font-size:9.5px; font-weight:800;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--dark);
+    border-bottom:1.5px solid var(--line-2); padding-bottom:2px; }
+  .hotelgrid .hotel:hover .hbook{ color:var(--red); border-bottom-color:var(--red); }
+
+  .hotelmap{ position:sticky; top:64px; }
+  .hotelmap .sjmap{ height:min(560px, calc(100vh - 230px)); margin-top:0; }
+  .hotelmap .map-caption{ margin-top:12px; }
+
+  @media(max-width:960px){
+    .hotelsplit{ grid-template-columns:1fr; }
+    .hotelmap{ position:static; order:-1; }
+    .hotelmap .sjmap{ height:44vh; }
+    .hotelpanel{ height:auto; overflow:visible; padding-right:0; margin-right:0; }
+    .hotelgrid{ grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); }
+    .hotelgrid .hshot{ aspect-ratio:16/9; }
+  }
+  /* Getting here + Questions, side by side as cards */
+  .infopair{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:30px;
+    align-items:start; }
+  .infocard{ background:#fff; border:1px solid var(--line); border-radius:18px;
+    padding:18px 20px 20px; box-shadow:var(--lift); }
+  .infohead{ display:flex; align-items:center; gap:10px; margin:0 0 12px;
+    font-size:12px; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--dark); text-align:left; }
+  .infohead::after{ content:none; }
+  .infoicon{ display:inline-flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border-radius:50%; background:var(--gold); color:var(--dark); flex:0 0 auto; }
+  .infoicon svg{ width:17px; height:17px; }
+  .infobody{ margin:0; font-size:15px; line-height:1.65; color:#6b5a50; text-align:left; }
+  .infobody b{ color:var(--dark); }
+  .infosub{ margin:16px 0 7px; font-size:10px; font-weight:800; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--red); text-align:left; }
+  .infolist{ margin:0; padding:0 0 0 17px; text-align:left; }
+  .infolist li{ font-size:14px; line-height:1.6; color:#6b5a50; margin-bottom:8px; }
+  .infolist li:last-child{ margin-bottom:0; }
+  .infolist b{ color:var(--dark); }
+  .infolist li::marker{ color:var(--line-2); }
+  /* subway bullets — round like the real signage, not squares */
+  .ln{ display:inline-flex; align-items:center; justify-content:center;
+    width:17px; height:17px; margin-right:2px; border-radius:50%;
+    background:var(--dark); color:#fff; font-size:10px; font-weight:800;
+    vertical-align:-3px; }
+  .infocard .faq{ border:0; box-shadow:none; background:none; border-radius:0; }
+  /* the questions themselves, up to match the card body beside them */
+  .infocard .faq summary{ font-size:15px; }
+  .infocard .faq .a{ font-size:14.5px; line-height:1.7; }
+  .infocard .faq details{ border-top:1px dashed var(--line); }
+  .infocard .faq details:first-child{ border-top:0; }
+  @media(max-width:820px){ .infopair{ grid-template-columns:1fr; gap:12px; } }
+</style>
+</head>
+<body class="has-mobile-actions">
+<header class="crest">
+    <div class="crest-name"><a href="index.html">Sam + Jenni</a></div>
+    <div class="crest-tag">3.19.27 – 3.20.27 · new york, new york</div>
+  </header>
+  <nav class="sitenav">
+    <a href="index.html"><svg class="nav-home-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.6V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.6"/><path d="M9.5 21v-6h5v6"/></svg><span class="nav-word">home</span></a>
+    <a href="weekend.html">events</a>
+    <a href="recommendations.html"><span class="nav-long">NYC recs</span><span class="nav-brief">recs</span></a>
+    <a href="travel.html"><svg class="nav-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a1 1 0 0 0-.9 1.7l6 3.4-2.2 3.3-2.6-.4a.8.8 0 0 0-.7 1.3l2.3 2.6 2.6 2.3a.8.8 0 0 0 1.3-.7l-.4-2.6 3.3-2.2 3.4 6a1 1 0 0 0 1.7-.9Z"/></svg><span class="nav-word">hotels</span></a>
+    <a class="active" href="faq.html">FAQ</a>
+    <button type="button" class="nav-ou" data-ou-open aria-label="Over/under"><span class="nav-long">over/under</span><span class="nav-brief">+/−</span></button>
+      <span class="nav-actions">
+        <a class="nav-act nav-act--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
+        <button type="button" class="nav-act nav-act--note" data-note-open>Note</button>
+      </span>
+      <span class="nav-cta">
+      <a class="cta-btn cta-primary" href="rsvp.html" data-rsvp-open>RSVP</a>
+      <button type="button" class="cta-btn" data-note-open>Leave a note</button>
+    </span>
+      <span class="nav-acct">
+        <button type="button" class="acct-btn" aria-expanded="false" aria-label="Your details">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+        </button>
+      </span>
+  </nav>
+
+  <div class="mobile-actions">
+    <a class="ma-btn ma-rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
+    <button type="button" class="ma-btn ma-note" data-note-open>Leave a note</button>
+  </div>
+
+
+
+  <section class="sect" id="faq">
+    <div class="wrap wrap--narrow">
+      <div class="titlestack">
+        <a class="ts-rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
+        <button type="button" class="ts-note" data-note-open hidden>Note</button>
+        <button type="button" class="ts-done" data-rsvp-open hidden>RSVP <span>&#10003;</span></button>
+      </div>
+      <h2>Questions</h2>
+      <div class="rule"></div>
+      <p class="faq-lede">Anything we haven't covered — just text us.</p>
+<div class="faq">
+        <details open>
+          <summary>When should I book my hotel?</summary>
+          <div class="a">Now, honestly. Our rooms are held only until a cut-off date, after which anything unbooked goes back to the hotel and you'd pay the regular rate. <b>Lotte New York Palace</b> and <b>Thompson Central Park</b> release on <b>17 February 2027</b>; <b>Le Méridien</b> releases on <b>19 February 2027</b>. Our block at The Pierre is already full.</div>
+        </details>
+        <details>
+          <summary>What's the dress code?</summary>
+          <div class="a"><b>Black tie</b>, and colour is encouraged. There's a <a href="weekend.html#wear"><b>what to wear</b></a> breakdown for every event on the events page.</div>
+        </details>
+        <details>
+          <summary>Do I need to come Friday too?</summary>
+          <div class="a">We'd love you there. Friday is a welcome party at Chinese Tuxedo in Chinatown — a proper night, not a drop-in. If Friday shows up on your events page, you're on the list.</div>
+        </details>
+        <details>
+          <summary>How do I RSVP?</summary>
+          <div class="a"><a href="rsvp.html" data-rsvp-open><b>Open the RSVP form</b></a> — it takes a minute, and it only shows the events you’re invited to. Replies are due by <b>January 2027</b>.</div>
+        </details>
+      </div>
+    
+        
+    </div>
+  </section>
+
+  <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
+  <script src="personalize.js?v=20260729n" defer></script>
+  <script src="account.js?v=20260729h" defer></script>
+  <script src="cal.js?v=20260731j" defer></script>
+  <script src="upload.js?v=20260731j" defer></script>
+  <script src="drawer.js?v=20260731j" defer></script>
+  <script src="outab.js?v=20260728t" defer></script>
+  <script src="rsvpform.js?v=20260728u" defer></script>
+  <script src="notes.js?v=20260728u" defer></script>
+<script>
+(function(){
+  var bar = document.querySelector('#travel .recbar'); if(!bar) return;
+  var cards = [].slice.call(document.querySelectorAll('.hotelgrid .hotel'));
+  var count = document.getElementById('hotelCount');
+  var empty = document.querySelector('#travel .recempty');
+  var hoods = bar.querySelector('.fgroup--hoods');
+  var top   = bar.querySelector('.fgroup--top');
+  var f = 'block';
+
+  function apply(){
+    var n = 0;
+    cards.forEach(function(c){
+      var ok = f === 'block' || f === 'other' ? c.dataset.kind === f
+                                              : c.dataset.hood === f;
+      c.hidden = !ok; if (ok) n++;
+    });
+    count.textContent = n;
+    empty.hidden = n > 0;
+    document.dispatchEvent(new CustomEvent('sj:filter', { detail:{ area:f, kind:'hotels' } }));
+  }
+
+  bar.addEventListener('click', function(e){
+    var b = e.target.closest('.fchip'); if(!b) return;
+    f = b.dataset.v;
+    var isHood = b.classList.contains('fchip--hood');
+
+    // "other hotels" opens the neighbourhood row; "our room blocks" closes it
+    if (!isHood) {
+      hoods.hidden = (f !== 'other');
+      var more = top.querySelector('.fchip--more');
+      if (more) more.setAttribute('aria-expanded', String(f === 'other'));
+      top.querySelectorAll('.fchip').forEach(function(x){ x.classList.toggle('is-on', x === b); });
+      hoods.querySelectorAll('.fchip').forEach(function(x){
+        x.classList.toggle('is-on', x.dataset.v === 'other');
+      });
+    } else {
+      hoods.querySelectorAll('.fchip').forEach(function(x){ x.classList.toggle('is-on', x === b); });
+    }
+    apply();
+  });
+
+  // hovering a card nudges the map to that hotel
+  cards.forEach(function(c){
+    c.addEventListener('mouseenter', function(){
+      var ll = (c.dataset.ll || '').split(',');
+      if (ll.length === 2) document.dispatchEvent(new CustomEvent('sj:focus',
+        { detail:{ lat:+ll[0], lng:+ll[1], name:c.dataset.n } }));
+    });
+  });
+
+  apply();
+  window.addEventListener('load', apply);
+})();
+</script>
+</body>
+</html>

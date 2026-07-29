@@ -1883,3 +1883,16 @@ body.map-full .map-caption{ display:none !important; }
 /* the nav pill grows a word, so let it breathe rather than clip */
 .nav-act.is-find{ white-space:nowrap; letter-spacing:.06em; font-size:8.5px; }
 @media(max-width:760px){ .nav-act.is-find{ font-size:8px; padding:0 8px; } }
+
+/* travel gets a plane so the hotels link reads as "everything about getting
+   here", now that the questions have moved out to their own page */
+.nav-plane{ width:15px; height:15px; margin-right:5px; vertical-align:-3px; flex:0 0 auto; }
+.sitenav a{ display:inline-flex; align-items:center; }
+.wrap--narrow{ max-width:760px; }
+.faq-lede{ margin:14px 0 20px; text-align:center; font-size:14px; color:#8a7967; }
+#faq .faq{ border:1px solid var(--line); border-radius:var(--r-lg); background:#fff;
+  box-shadow:var(--lift); overflow:hidden; }
+#faq .faq summary{ font-size:15.5px; padding:16px 20px; }
+#faq .faq .a{ font-size:14.5px; line-height:1.7; padding:0 20px 18px; }
+/* one card, not a pair, now that Questions has left the hotels page */
+.infopair--one{ grid-template-columns:1fr !important; max-width:820px; margin-left:auto; margin-right:auto; }
