@@ -1870,3 +1870,16 @@ body.map-full .map-caption{ display:none !important; }
 .acct-name{ font-size:11px; font-weight:800; letter-spacing:.1em;
   text-transform:uppercase; color:inherit; margin-left:1px; }
 @media(max-width:760px){ .acct-name{ display:none; } }
+
+/* ---------- public view: not signed in ------------------------------------
+   The site is open now, so these states are what a stranger sees. They exist
+   to make the thinness of the page legible — "there's more here for you" —
+   rather than looking like a site that's simply missing information. */
+.ev-public-note{ margin:0 0 4px; text-align:center; font-size:13.5px; color:#8a7967; }
+.ev-public-note a{ color:var(--red); font-weight:700; text-decoration:none;
+  border-bottom:1.5px solid rgba(229,60,45,.35); }
+.ev-public-note a:hover{ border-bottom-color:var(--red); }
+.ev-find{ color:var(--red) !important; font-weight:800; }
+/* the nav pill grows a word, so let it breathe rather than clip */
+.nav-act.is-find{ white-space:nowrap; letter-spacing:.06em; font-size:8.5px; }
+@media(max-width:760px){ .nav-act.is-find{ font-size:8px; padding:0 8px; } }

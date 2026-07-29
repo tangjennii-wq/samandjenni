@@ -26,20 +26,28 @@
   var guest = cookie('sj_guest').trim().toLowerCase();
   // strict: only a bare 1-4 counts, so "1abc" can't slip through parseInt
   var rawTier = cookie('sj_tier').trim();
-  var tier = /^[1-4]$/.test(rawTier) ? parseInt(rawTier, 10) : 3;
+
+  // Tier 0 = nobody has signed in yet. The site is public now, so this is the
+  // ordinary state for a stranger who found the domain — they should see that a
+  // wedding is happening without learning where anyone needs to be and when.
+  // Previously an unknown visitor fell through to tier 3, which showed them the
+  // Friday party and the Pierre's street address.
+  var signedIn = !!guest;
+  var tier = !signedIn ? 0
+           : (/^[1-4]$/.test(rawTier) ? parseInt(rawTier, 10) : 3);
 
   var sees = {
     thursday:  tier === 1,
-    rehearsal: tier <= 2,
-    friday:    tier <= 3,   // Friday welcome party
-    saturday:  true,        // everyone invited (tiers 1–4)
+    rehearsal: tier >= 1 && tier <= 2,
+    friday:    tier >= 1 && tier <= 3,   // Friday welcome party
+    saturday:  true,        // the wedding itself is public, minus the details
     sunday:    tier === 1   // brunch = same close group as Thursday
   };
 
   document.documentElement.setAttribute('data-tier', String(tier));
 
   // The date line matches what you're actually invited to.
-  var DATES = { 1:'March 18–21, 2027', 2:'March 19–20, 2027',
+  var DATES = { 0:'March 2027', 1:'March 18–21, 2027', 2:'March 19–20, 2027',
                 3:'March 19–20, 2027', 4:'March 20, 2027' };
   var dateEl = document.querySelector('[data-dates]');
   if (dateEl && DATES[tier]) dateEl.textContent = DATES[tier];
@@ -50,6 +58,33 @@
     var ev = el.getAttribute('data-event');
     if (sees[ev] === false) el.style.display = 'none';
   });
+
+  // Not signed in: the Saturday card stays, but the exact time, the street
+  // address and the add-to-calendar link come off it. "The Pierre, New York" is
+  // already on the home page — the logistics are what's worth holding back.
+  if (!signedIn) {
+    document.querySelectorAll('[data-event="saturday"]').forEach(function (card) {
+      var when = card.querySelector('.when');
+      if (when) when.textContent = 'Saturday, March 20, 2027';
+      var where = card.querySelector('.where');
+      if (where) where.innerHTML = '<b>The Pierre</b><br>New York City';
+      var note = card.querySelector('.enote');
+      if (note) note.remove();
+      var links = card.querySelector('.links');
+      if (links) links.innerHTML =
+        '<a href="/gate?next=rsvp" class="ev-find">Find my invitation &rarr;</a>';
+    });
+
+    // and say why the page looks thin
+    var grid = document.querySelector('.evgrid');
+    if (grid && !document.querySelector('.ev-public-note')) {
+      var p = document.createElement('p');
+      p.className = 'ev-public-note';
+      p.innerHTML = 'Invited? <a href="/gate?next=rsvp">Find your invitation</a> ' +
+                    'to see your own events, times and addresses.';
+      grid.parentNode.insertBefore(p, grid);
+    }
+  }
 
   // Saturday-only guests (tier 4): simplify the ribbon + the date line so the
   // site doesn't tease them with events they aren't part of.
@@ -63,4 +98,31 @@
     var crest = document.querySelector('.crest-tag');
     if (crest && /\d/.test(crest.textContent)) crest.textContent = 'new york, new york';
   }
+})();
+
+// ---- "find my invitation" until we know who you are ------------------------
+// The nav's RSVP pill is meaningless to someone the site hasn't recognised —
+// they'd click it and hit the finder anyway. Say so up front instead.
+(function () {
+  function cookie(name) {
+    var m = document.cookie.split('; ').find(function (r) { return r.indexOf(name + '=') === 0; });
+    return m ? decodeURIComponent(m.split('=').slice(1).join('=')) : '';
+  }
+  if (cookie('sj_guest').trim()) return;   // recognised — leave everything alone
+
+  document.querySelectorAll('[data-rsvp-open]').forEach(function (el) {
+    el.removeAttribute('data-rsvp-open');          // don't open the form
+    el.setAttribute('href', '/gate?next=rsvp');
+    if (el.tagName !== 'A') return;
+    el.classList.add('is-find');
+    el.textContent = el.classList.contains('nav-act') ? 'find my invitation'
+                                                      : 'Find my invitation';
+  });
+  // buttons can't be re-pointed with href — send them to the finder on click
+  document.querySelectorAll('button[data-rsvp-open], button.ma-rsvp').forEach(function (b) {
+    b.addEventListener('click', function (e) { e.preventDefault(); location.href = '/gate?next=rsvp'; });
+  });
+  // the account icon has nobody to describe yet
+  var acct = document.querySelector('.nav-acct');
+  if (acct) acct.style.display = 'none';
 })();
