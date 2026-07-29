@@ -1699,7 +1699,7 @@ body.map-full .map-caption{ display:none !important; }
    pill group is pinned at right:34px — its exact width — so the two occupy
    separate bands and cannot overlap however far the nav scrolls. */
 @media(max-width:760px){
-  .sitenav .nav-actions{ display:inline-flex !important;
+  .sitenav .nav-actions{ display:inline-flex !important; gap:5px;
     position:sticky; right:34px; margin-left:auto; flex:0 0 auto;
     padding:5px 6px 5px 9px; background:#fff; z-index:2;
     box-shadow:-12px 0 10px -6px #fff; }
@@ -1707,8 +1707,18 @@ body.map-full .map-caption{ display:none !important; }
      the account icon must give it up or the two both claim the free space. */
   .nav-acct{ margin-left:0; right:0; z-index:3; padding-left:2px; box-shadow:none; }
 
-  .sitenav .nav-actions .nav-act{ min-height:28px; height:28px; padding:0 10px; font-size:9px; }
+  .sitenav .nav-actions .nav-act{ min-height:28px; height:28px; padding:0 9px; font-size:8.5px;
+    letter-spacing:.08em; }
   .sitenav .nav-actions .nav-act[hidden]{ display:none !important; }
+  /* Both pills ride the phone nav now. The note keeps the short label here —
+     "leave us a note" is ~90px of the ~390px viewport, which pushed the nav
+     links off screen; the drawer it opens is titled in full. */
+  .sitenav .nav-actions .nav-act--note::after{ content:'note'; }
+  .sitenav .nav-actions .nav-act--note{ font-size:0; }
+  .sitenav .nav-actions .nav-act--note::after{ font-size:8.5px; }
+  /* once the RSVP is in, its pill steps back so the note reads as the live one */
+  .sitenav .nav-actions .nav-act--rsvp.is-done{ background:none; color:#a2907a;
+    border-color:var(--line-2); }
 
   /* the pills are in the nav now, so the title no longer reserves room */
   .titlestack{ display:none !important; }

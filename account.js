@@ -15,12 +15,15 @@
       if (note) note.hidden = !done;
       if (chip) chip.hidden = !done;
     });
-    // the mobile nav carries the same pair — RSVP until you've replied, then Note
+    // The mobile nav shows BOTH pills at all times. It used to swap RSVP → Note
+    // once you'd replied, but that hid the note from everyone who hadn't RSVPed
+    // yet — which is most people, most of the time, and leaving a note doesn't
+    // depend on having replied. The RSVP pill just goes quiet once you're done.
     document.querySelectorAll('.nav-actions').forEach(function (st) {
       var rsvp = st.querySelector('.nav-act--rsvp'),
           note = st.querySelector('.nav-act--note');
-      if (rsvp) rsvp.hidden = done;
-      if (note) note.hidden = !done;
+      if (rsvp) { rsvp.hidden = false; rsvp.classList.toggle('is-done', done); }
+      if (note) note.hidden = false;
     });
   }
   syncStack();
