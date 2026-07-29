@@ -63,14 +63,33 @@
       '<p class="acct-msg" hidden></p>' +
       '<button class="acct-out" type="button">Sign out</button>' +
     '</div>';
-  wrap.appendChild(pop);
+  // Appended to <body>, NOT to the nav: .sitenav is position:sticky with
+  // overflow-x:auto, which can trap a fixed-position child on iOS Safari.
+  document.body.appendChild(pop);
+
+  // a tap-catcher behind the sheet on phones
+  var veil = document.createElement('div');
+  veil.className = 'acct-veil';
+  veil.hidden = true;
+  document.body.appendChild(veil);
 
   function setOpen(on){
     pop.hidden = !on;
+    veil.hidden = !on;
     btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    document.body.classList.toggle('acct-open', on);
+    if (on) {
+      // anchor under the icon on desktop; the CSS pins it as a sheet on mobile
+      var r = btn.getBoundingClientRect();
+      pop.style.top = (r.bottom + 10) + 'px';
+      pop.style.right = Math.max(12, window.innerWidth - r.right) + 'px';
+    }
   }
   btn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); setOpen(pop.hidden); });
-  document.addEventListener('click', function(e){ if (!pop.hidden && !wrap.contains(e.target)) setOpen(false); });
+  veil.addEventListener('click', function(){ setOpen(false); });
+  document.addEventListener('click', function(e){
+    if (!pop.hidden && !pop.contains(e.target) && !wrap.contains(e.target)) setOpen(false);
+  });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !pop.hidden) { setOpen(false); btn.focus(); } });
   pop.addEventListener('click', function(e){ e.stopPropagation(); });
 
