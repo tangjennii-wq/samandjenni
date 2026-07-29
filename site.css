@@ -1835,24 +1835,6 @@ body.map-full .map-caption{ display:none !important; }
 @media(min-width:761px){ .nav-ou{ display:none; } }
 @media(max-width:760px){ .nav-ou{ display:none; } }
 
-/* ---------- over/under, as a home-page card ------------------------------
-   Deliberately quiet. RSVP and "leave a note" sit directly above this and are
-   the only filled buttons on the page — when this card had an eyebrow, a 24px
-   title and its own gold pill it outweighed them, which is backwards: the RSVP
-   is the thing actually being asked for. This reads as a footnote. */
-.ou-home{ display:flex; flex-direction:column; align-items:center; text-align:center;
-  gap:3px; padding:24px 22px 28px; background:var(--ivory); }
-.ou-home-title{ margin:0; font-size:18px; font-weight:800; letter-spacing:.06em;
-  text-transform:uppercase; color:var(--dark); line-height:1; }
-.ou-home-note{ margin:5px 0 0; max-width:40ch; font-size:12.5px; line-height:1.55; color:#8a7967; }
-.ou-home-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
-  margin-top:9px; min-height:44px; padding:0 4px; border:0; background:none;
-  color:var(--red); cursor:pointer;
-  font-size:10px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
-  border-bottom:1.5px solid transparent; transition:border-color .14s ease; }
-.ou-home-btn:hover{ border-bottom-color:var(--red); }
-@media(max-width:760px){
-  .ou-home{ padding:20px 20px 24px; }
   .ou-home-title{ font-size:16px; }
   .ou-home-note{ font-size:12px; max-width:32ch; }
 }
@@ -1861,16 +1843,25 @@ body.map-full .map-caption{ display:none !important; }
    RSVP is permanently in the nav now, so repeating it under the video as a
    second big filled button was saying the same thing twice at full volume.
    What's left is the softer of the two asks, sitting on the dark hero edge. */
-.hero-note{ display:flex; justify-content:center; background:var(--dark);
-  padding:0 16px calc(20px + env(safe-area-inset-bottom)); }
+/* three plain links across the foot of the film. No filled buttons here —
+   RSVP is permanently in the nav, so this row is a quiet set of doors rather
+   than a second call to action competing with the one above it. */
+.hero-note{ display:flex; justify-content:center; align-items:center; gap:26px;
+  background:var(--dark); padding:0 16px calc(22px + env(safe-area-inset-bottom)); }
 .hero-note-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
   min-height:44px; padding:0 8px; border:0; background:none; cursor:pointer;
   color:rgba(250,243,224,.78); font-size:12px; font-weight:500; letter-spacing:.04em;
   text-transform:none; border-bottom:1px solid transparent;
   transition:color .14s ease, border-color .14s ease; }
 .hero-note-btn:hover{ color:var(--ivory); border-bottom-color:rgba(250,243,224,.5); }
+.hero-note-btn{ text-decoration:none; }
+.hero-note-btn.is-mid{ color:var(--ivory); }
+.hero-note .ou-slash{ color:var(--red); }
+@media(max-width:760px){
+  .hero-note{ gap:16px; padding-bottom:calc(18px + env(safe-area-inset-bottom)); }
+  .hero-note-btn{ font-size:11px; padding:0 2px; }
+}
 /* the game follows straight after, no ivory gap between them */
-.hero-note + .ou-home{ padding-top:26px; }
 
 /* the account icon keeps its job but stops being a mystery: on desktop it
    carries the guest's first name, so it reads as "you" rather than a generic
