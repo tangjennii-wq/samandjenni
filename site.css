@@ -1930,18 +1930,22 @@ body.map-full .map-caption{ display:none !important; }
    Built from .sitenav by mobilenav.js, so the HTML stays the single source. */
 .mnav-toggle{ display:none; }
 @media(max-width:760px){
-  /* everything except home leaves the bar */
+  /* only the page links leave the bar. RSVP, the note pill and the account
+     icon are actions rather than destinations, so they stay put — those three
+     plus a home icon and the kebab fit 390px with room to spare. */
   .sitenav a:not([href="index.html"]):not([data-rsvp-open]),
-  .sitenav .nav-act--note,
-  .sitenav .nav-ou,
-  .sitenav .nav-acct{ display:none !important; }
+  .sitenav .nav-ou{ display:none !important; }
+  .sitenav .nav-acct{ display:inline-flex !important; margin-left:0; padding-left:4px; }
   .sitenav{ justify-content:flex-start; gap:0; overflow:visible; padding:9px 14px; }
   .sitenav a[href="index.html"]{ flex:0 0 auto; }
   .sitenav a[href="index.html"] .nav-word{ display:none; }   /* icon only */
   .sitenav .nav-actions{ position:static; right:auto; margin-left:auto;
     padding:0; box-shadow:none; background:none; }
-  .sitenav .nav-actions .nav-act{ height:30px; min-height:30px; font-size:9px; padding:0 13px;
-    background:var(--red); color:#fff; border-color:var(--red); }
+  .sitenav .nav-actions{ gap:5px; }
+  .sitenav .nav-actions .nav-act{ height:30px; min-height:30px; font-size:8.5px; padding:0 11px; }
+  .sitenav .nav-actions .nav-act--rsvp{ background:var(--red); color:#fff; border-color:var(--red); }
+  .sitenav .nav-actions .nav-act--note{ background:var(--gold); color:var(--dark); border-color:var(--gold); }
+  .mnav-toggle{ margin-left:6px; }
 
   .mnav-toggle{ display:inline-flex; flex-direction:column; justify-content:center;
     gap:4px; width:40px; height:40px; margin-left:10px; padding:0 9px;
