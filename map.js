@@ -263,7 +263,7 @@
         }
       }, { passive:true });
     }
-    L.control.zoom({ position:'bottomleft' }).addTo(map);
+    L.control.zoom({ position:'topleft' }).addTo(map);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution:'&copy; OpenStreetMap &copy; CARTO', subdomains:'abcd', maxZoom:19
@@ -309,7 +309,7 @@
     var N_HOOD  = '<i class="lgd lgd-hood"></i>Neighborhoods';
     var N_SUB   = '<i class="lgd lgd-sub"></i>Subway lines';
 
-    var ctl = L.control.layers(null, {}, { collapsed:false, position:'bottomright' }).addTo(map);
+    var ctl = L.control.layers(null, {}, { collapsed:false, position:'topright' }).addTo(map);
     if (mode === 'recs') {
       // One combined pin group here: the Pierre, Chinese Tuxedo (tier-gated) and
       // the room-block hotels. "Other hotels" belongs on the hotels page only.
