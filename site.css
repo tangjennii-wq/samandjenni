@@ -1751,14 +1751,13 @@ body.map-full .map-caption{ display:none !important; }
   .fchip--more .fnum{ min-width:15px; height:15px; font-size:8.5px; }
 }
 
-/* ---------- page titles, one size on phones ------------------------------
-   Titles were stepping 30 → 23 → 21px across two mobile breakpoints, so the
-   header visibly resized between pages and across a rotation. One size below
-   760px instead, with balanced wrapping so "WHERE TO STAY" and "SHLANG
-   FAVORITES" break into even lines rather than one long word on its own. */
+/* ---------- page titles, one line on phones ------------------------------
+   Short display titles should read as a single editorial label at every phone
+   width. Scale them to the viewport instead of balancing them onto two lines. */
 @media(max-width:760px){
-  .sect h1, .sect h2{ font-size:22px !important; text-wrap:balance;
-    line-height:1.16; margin-left:auto; margin-right:auto; max-width:11ch; }
+  .sect h1, .sect h2{ font-size:clamp(18px, 5.7vw, 22px) !important;
+    line-height:1.1; margin-left:auto; margin-right:auto; max-width:none;
+    white-space:nowrap; text-wrap:nowrap; }
   .eyebrow{ font-size:9.5px !important; letter-spacing:.26em !important; }
   /* every page's title block now reserves the same height, so the content
      below it starts at the same place whichever page you land on */
@@ -1766,7 +1765,17 @@ body.map-full .map-caption{ display:none !important; }
   .rule{ margin-top:11px; }
 }
 @media(max-width:430px){
-  .sect h1, .sect h2{ max-width:13ch; }
+  .sect h1, .sect h2{ max-width:none; }
+}
+@media(max-width:760px){
+  /* Keep short display labels intact; body copy remains free to wrap. */
+  .dcard h3, .subhead, .infosub, .faq-door-t, .lookeyebrow{
+    white-space:nowrap;
+  }
+  .dcard h3{ font-size:clamp(16px, 5vw, 19px); }
+  .subhead, .faq-door-t{ font-size:clamp(9px, 3.2vw, 11px); }
+  .hname{ font-size:clamp(13px, 4.2vw, 16.5px); white-space:nowrap; }
+  .rec .rname{ font-size:clamp(11.5px, 4vw, 15px); white-space:nowrap; }
 }
 
 /* ---------- over/under, as a pull-out tab --------------------------------
@@ -1942,24 +1951,31 @@ body.map-full .map-caption{ display:none !important; }
   .mnav-home{ width:44px; height:44px; display:inline-flex; align-items:center;
     justify-content:center; color:var(--red); text-decoration:none; border-radius:50%; }
   .mnav-home .nav-word{ display:none; }
-  .mnav-home .nav-home-ico{ display:block; width:25px; height:25px; }
+  /* slimmer strokes: the icons were reading as heavy furniture against a very
+     light crest. 1.5px is the thinnest that still holds on a retina screen. */
+  .mnav-home .nav-home-ico{ display:block; width:21px; height:21px; stroke-width:1.5; }
   .mnav-home:active{ background:rgba(229,60,45,.08); }
 
   .mnav-toggle{ display:inline-flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:4px;
+    gap:5px;
     width:44px; height:44px; margin-left:auto; padding:0;
     background:none; border:0; cursor:pointer; flex:0 0 auto;
     color:var(--dark); border-radius:50%; }
-  .mnav-toggle span{ display:block; width:24px; height:3px; border-radius:3px;
+  .mnav-toggle span{ display:block; width:21px; height:1.5px; border-radius:2px;
     background:var(--red); transition:transform .16s ease, opacity .16s ease; }
-  .mnav-toggle.is-open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .mnav-toggle.is-open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
   .mnav-toggle.is-open span:nth-child(2){ opacity:0; }
-  .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
   .mnav-toggle:active, .mnav-toggle[aria-expanded="true"]{ background:rgba(229,60,45,.08); }
 
   /* The crest controls stay above the popover/veil. */
   .crest{ z-index:2600; }
-  .mnav-veil{ position:fixed; inset:0; z-index:2400; background:transparent; }
+  /* iOS ignores taps on a bare transparent div — cursor:pointer plus a hair of
+     colour makes it a real hit target, which is half of why exiting failed. */
+  .mnav-veil{ position:fixed; inset:0; z-index:2400; cursor:pointer;
+    background:rgba(13,9,5,.06); -webkit-tap-highlight-color:transparent; }
+  .mnav, .mnav-toggle, .mnav-close, .mnav-home{ touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent; }
   .mnav{ position:fixed; z-index:2500; width:min(280px, calc(100vw - 24px));
     max-height:calc(100dvh - 92px); background:#fff;
     border:1px solid var(--line); box-shadow:0 16px 42px rgba(13,9,5,.18);
@@ -1969,15 +1985,15 @@ body.map-full .map-caption{ display:none !important; }
   @keyframes mnavIn{ from{ transform:translateY(-5px); opacity:.5 } to{ transform:none; opacity:1 } }
   body.mnav-open{ overflow:auto; }
 
-  .mnav-head{ min-height:42px; padding:0 6px 5px 14px; border-bottom:1px solid var(--line);
-    display:flex; align-items:center; justify-content:space-between;
-    color:#8a796c; font-size:10px; font-weight:800; letter-spacing:.16em;
-    text-transform:uppercase; }
-  .mnav-close{ -webkit-appearance:none; appearance:none; width:38px; height:38px;
+  /* No "Menu" label and no header band — the ✕ sits on the first item's line,
+     absolutely placed so the list starts at the top of the sheet. */
+  .mnav-close{ -webkit-appearance:none; appearance:none; position:absolute;
+    top:8px; right:8px; width:44px; height:48px;
     display:inline-flex; align-items:center; justify-content:center; padding:0;
-    border:0; border-radius:50%; background:none; color:var(--dark);
-    font-family:inherit; font-size:29px; font-weight:400; line-height:1; cursor:pointer; }
-  .mnav-close:active{ background:rgba(229,60,45,.09); color:var(--red); }
+    border:0; border-radius:11px; background:none; color:#8a796c; cursor:pointer; z-index:1; }
+  .mnav-close svg{ width:17px; height:17px; }
+  .mnav-close:active{ background:var(--ivory); color:var(--dark); }
+  .mnav-list a:first-child, .mnav-list button:first-child{ padding-right:52px; }
 
   .mnav-list{ display:flex; flex-direction:column; }
   .mnav-list a, .mnav-list button{ -webkit-appearance:none; appearance:none; font-family:inherit;

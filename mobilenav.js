@@ -44,13 +44,16 @@
   var crest = document.querySelector('.crest');
   var mobileDock = document.createElement('div');
   mobileDock.className = 'crest-mobile-nav';
+  // On the home page the icon is a link to where you already are, so it's just
+  // noise — the crest above it links home anyway.
+  var onHome = /(^\/$|index\.html$)/.test(location.pathname);
   var sourceHome = nav.querySelector('a[href="index.html"]');
   var mobileHome = sourceHome ? sourceHome.cloneNode(true) : document.createElement('a');
   mobileHome.classList.remove('active');
   mobileHome.classList.add('mnav-home');
   mobileHome.setAttribute('href', 'index.html');
   mobileHome.setAttribute('aria-label', 'Home');
-  mobileDock.appendChild(mobileHome);
+  if (!onHome) mobileDock.appendChild(mobileHome);
   mobileDock.appendChild(toggle);
   (crest || nav).appendChild(mobileDock);
 
@@ -62,8 +65,9 @@
   panel.setAttribute('aria-label', 'More wedding actions');
   panel.hidden = true;
 
-  var html = '<div class="mnav-head"><span>Menu</span>' +
-    '<button type="button" class="mnav-close" aria-label="Close menu">×</button></div>' +
+  var html = '<button type="button" class="mnav-close" aria-label="Close menu">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
     '<nav class="mnav-list">';
   links.forEach(function (l) {
     var label = /^faq$/i.test(l.label) ? 'FAQs' : l.label;
@@ -113,22 +117,40 @@
   }
   window.addEventListener('resize', function () { if (!panel.hidden) place(); });
   window.addEventListener('orientationchange', function () { if (!panel.hidden) place(); });
-  toggle.addEventListener('click', function () { setOpen(panel.hidden); });
-  panel.querySelector('.mnav-close').addEventListener('click', function () {
+  // Closing, rebuilt. The previous version listened for `click` on document,
+  // and iOS Safari does not reliably fire click on non-interactive elements —
+  // so taps on the page behind the sheet went nowhere and the menu felt stuck.
+  // pointerdown fires for touch, pen and mouse alike, and fires before any
+  // scroll or focus handling, so an outside tap always registers.
+  var justToggled = 0;
+
+  toggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    justToggled = Date.now();
+    setOpen(panel.hidden);
+  });
+
+  panel.querySelector('.mnav-close').addEventListener('click', function (e) {
+    e.preventDefault();
     setOpen(false);
     toggle.focus();
   });
-  veil.addEventListener('click', function () { setOpen(false); });
-  // iOS can occasionally route the tap around a transparent fixed veil.
-  // A document-level guard makes every genuine outside tap close the popover.
-  document.addEventListener('click', function (e) {
-    if (panel.hidden || panel.contains(e.target) || toggle.contains(e.target)) return;
+
+  function outside(e) {
+    if (panel.hidden) return;
+    if (Date.now() - justToggled < 350) return;      // the tap that opened it
+    if (panel.contains(e.target) || toggle.contains(e.target)) return;
     setOpen(false);
-  });
+  }
+  document.addEventListener('pointerdown', outside, true);
+  document.addEventListener('touchstart', outside, { passive: true, capture: true });
+  veil.addEventListener('pointerdown', function () { setOpen(false); });
+
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !panel.hidden) { setOpen(false); toggle.focus(); }
   });
-  // Anything that opens a drawer or navigates should close this popover first.
+  // Anything that navigates or opens a drawer of its own closes this first.
   panel.addEventListener('click', function (e) {
     if (e.target.closest('[data-note-open],[data-rsvp-open],.mnav-acct,.mnav-list a')) setOpen(false);
   });
