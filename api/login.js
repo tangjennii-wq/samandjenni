@@ -97,7 +97,9 @@ export default async function handler(req, res) {
   let { allowed, tier, degraded } = await lookUp(key);
   let matched = key;
   if (!allowed && !email && key.includes(' ')) {
-    const surname = key.split(' ').pop();
+    // apostrophes are stripped from stored surnames ("obrien", not "o'brien"),
+    // so strip them here too or O'Brien never matches the fallback
+    const surname = key.split(' ').pop().replace(/'/g, '');
     const alt = await lookUp(surname);
     if (alt.allowed) { allowed = true; tier = alt.tier; degraded = alt.degraded; matched = surname; }
   }
