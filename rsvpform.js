@@ -264,7 +264,7 @@
           '<p class="note-sub">your reply is in \u2014 we can\u2019t wait.</p>' +
           calBlock() +
           '<p class="thanks-ask">while you\u2019re here \u2014 leave us a note, submit a song request, share a favorite memory.</p>' +
-          '<button class="note-btn thanks-btn" type="button" data-note-open>Leave us a note &rarr;</button>' +
+          '<button class="note-btn thanks-btn" type="button" data-note-open>Leave a note &rarr;</button>' +
           '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
           '</div>';
       // wire the freshly-rendered buttons

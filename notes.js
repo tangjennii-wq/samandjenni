@@ -122,7 +122,7 @@
 
   if (triggers.length && window.SJDrawer) {
     var d = window.SJDrawer.create({
-      label: 'Leave us a note',
+      label: 'Leave a note',
       html: '<div class="note-card note-card--drawer">' + formHTML('d', '') + '</div>',
       onMount: function (api) { wire(api.body, 'd', api.close); }
     });
