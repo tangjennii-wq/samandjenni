@@ -1752,3 +1752,33 @@ body.map-full .map-caption{ display:none !important; }
 @media(max-width:430px){
   .sect h1, .sect h2{ max-width:13ch; }
 }
+
+/* ---------- over/under, as a pull-out tab --------------------------------
+   It was taking a top-level nav slot beside events/recs/hotels, which
+   overweighted a side game and crowded the phone nav. Now it rides on a tab at
+   the edge of the screen and opens in the shared drawer. */
+.ou-tab{ -webkit-appearance:none; appearance:none; font-family:inherit;
+  position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:1200;
+  border:0; border-right:0; border-radius:var(--r-md) 0 0 var(--r-md);
+  background:var(--gold); color:var(--dark); cursor:pointer;
+  padding:14px 7px; box-shadow:-3px 0 14px rgba(13,9,5,.16);
+  transition:padding-right .14s ease, background .14s ease; }
+.ou-tab-in{ display:block; writing-mode:vertical-rl; text-orientation:mixed;
+  font-size:10px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
+.ou-slash{ color:var(--red); }
+.ou-tab:hover{ padding-right:11px; background:#F0D64A; }
+.ou-tab:focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+
+.ou-frame{ display:block; width:100%; height:100%; min-height:60vh; border:0; background:transparent; }
+.note-drawer .drawer-body:has(.ou-frame){ padding:0 14px 10px; display:flex; }
+
+@media(max-width:760px){
+  /* a vertical tab on a phone edge is a thumb trap next to the browser's own
+     back-swipe zone, so it becomes a small horizontal pill above the corner */
+  .ou-tab{ top:auto; bottom:14px; right:12px; transform:none;
+    border-radius:var(--r-pill); padding:8px 13px; box-shadow:0 4px 14px rgba(13,9,5,.20); }
+  .ou-tab-in{ writing-mode:horizontal-tb; font-size:9px; letter-spacing:.14em; }
+  .ou-tab:hover{ padding-right:13px; }
+  /* the home page already has RSVP/note pinned to the bottom — sit above them */
+  body.has-bottom-actions .ou-tab{ bottom:74px; }
+}

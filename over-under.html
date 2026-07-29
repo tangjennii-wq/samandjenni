@@ -94,6 +94,16 @@
   .ousent{ margin-top:14px; font-size:13.5px; font-weight:700; color:var(--red); display:none; }
   .ousent.show{ display:block; }
 </style>
+<style id="ou-embed-css">
+  /* ?embed=1 — shown inside the pull-out drawer, where the surrounding page
+     already supplies the crest, nav and footer. */
+  html.ou-embed body{ background:transparent; }
+  html.ou-embed .sitecrest, html.ou-embed .sitenav, html.ou-embed .sfoot,
+  html.ou-embed .titlestack, html.ou-embed .ribbon{ display:none !important; }
+  html.ou-embed .sect{ padding:4px 0 18px; }
+  html.ou-embed .sect h2{ font-size:22px; }
+</style>
+<script>if(/[?&]embed=1/.test(location.search))document.documentElement.className+=' ou-embed';</script>
 </head>
 <body class="has-mobile-actions">
 <header class="crest">
@@ -106,7 +116,6 @@
     <a href="weekend.html">events</a>
     <a href="recommendations.html"><span class="nav-long">NYC recs</span><span class="nav-brief">recs</span></a>
     <a href="travel.html">hotels</a>
-    <a class="active" href="over-under.html">over/under</a>
       <span class="nav-actions">
         <a class="nav-act nav-act--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>
         <button type="button" class="nav-act nav-act--note" data-note-open>Note</button>
@@ -356,6 +365,7 @@
   <script src="cal.js?v=20260731j" defer></script>
   <script src="upload.js?v=20260731j" defer></script>
   <script src="drawer.js?v=20260731j" defer></script>
+  <script src="outab.js?v=20260728m" defer></script>
   <script src="rsvpform.js?v=20260731j" defer></script>
   <script src="notes.js?v=20260731j" defer></script>
 </body>
