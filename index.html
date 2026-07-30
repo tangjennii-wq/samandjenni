@@ -170,7 +170,7 @@
     /* Mobile: vertical 1080x1235 aspect, fills phone width.
        Tighter padding so markings sit right at the video edge. */
     .film-frame {
-      width: 100vw;
+      width: 100%;
       max-width: none;
       aspect-ratio: 1080 / 1235;
       padding: 14px 18px 4px;
@@ -209,6 +209,7 @@
   /* ===== Analog film markings around the frame ===== */
   .film-mark {
     position: absolute;
+    z-index: 1;           /* paint above .stage (video container) */
     color: var(--film-rust);
     font-family: 'Figtree', sans-serif;
     font-weight: 600;
@@ -217,7 +218,9 @@
     text-transform: uppercase;
     white-space: nowrap;
     opacity: 0.92;
+    pointer-events: none;  /* don't block video interactions beneath */
   }
+  .film-mark a { pointer-events: auto; } /* re-enable clicks on the Blennon credit link */
   @media (max-width: 720px) {
     .film-mark { font-size: 8px; letter-spacing: 0.16em; }
   }
@@ -992,7 +995,7 @@
   /* Mobile keeps its own scrollable rhythm */
   @media (max-width: 720px){
     .hero{ height:auto !important; min-height:0 !important; padding:10px 0 !important; }
-    .film-frame{ height:auto !important; width:100vw !important; max-width:none !important; }
+    .film-frame{ height:auto !important; width:100% !important; max-width:none !important; margin:0 auto !important; }
     .hero-utils{ position:static !important; padding:12px !important; }
   }
 </style>
