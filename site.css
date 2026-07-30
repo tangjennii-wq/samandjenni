@@ -1856,11 +1856,11 @@ body.map-full .map-caption{ display:none !important; }
    The site is open now, so these states are what a stranger sees. They exist
    to make the thinness of the page legible — "there's more here for you" —
    rather than looking like a site that's simply missing information. */
-.ev-public-note{ margin:0 0 4px; text-align:center; font-size:13.5px; color:#8a7967; }
-.ev-public-note a{ color:var(--red); font-weight:700; text-decoration:none;
-  border-bottom:1.5px solid rgba(229,60,45,.35); }
-.ev-public-note a:hover{ border-bottom-color:var(--red); }
 .ev-find{ color:var(--red) !important; font-weight:800; }
+/* "Invited?" leads in quieter than the link itself, so the row reads as one
+   sentence rather than two competing calls to action */
+.ev-find-lead{ color:#8a7967; font-weight:600; text-transform:none; letter-spacing:0;
+  margin-right:4px; }
 /* the nav pill grows a word, so let it breathe rather than clip */
 .nav-act.is-find{ white-space:nowrap; letter-spacing:.06em; font-size:8.5px; }
 @media(max-width:760px){ .nav-act.is-find{ font-size:8px; padding:0 8px; } }

@@ -82,18 +82,13 @@
       if (note) note.remove();
       var links = card.querySelector('.links');
       if (links) links.innerHTML =
-        '<a href="/gate?next=rsvp" class="ev-find">Find my invitation &rarr;</a>';
+        '<a href="/gate?next=rsvp" class="ev-find">' +
+        '<span class="ev-find-lead">Invited?</span> Find my invitation &rarr;</a>';
     });
 
-    // and say why the page looks thin
-    var grid = document.querySelector('.evgrid');
-    if (grid && !document.querySelector('.ev-public-note')) {
-      var p = document.createElement('p');
-      p.className = 'ev-public-note';
-      p.innerHTML = 'Invited? <a href="/gate?next=rsvp">Find your invitation</a> ' +
-                    'to see your own events, times and addresses.';
-      grid.parentNode.insertBefore(p, grid);
-    }
+    // No banner above the grid: it said the same thing as the link on the card
+    // itself, in a wider column, so the page opened with two paragraphs of
+    // apology before you saw a single event.
   }
 
   // Saturday-only guests (tier 4): simplify the ribbon + the date line so the
