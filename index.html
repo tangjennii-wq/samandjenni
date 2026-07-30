@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730h">
+<link rel="stylesheet" href="site.css?v=20260730j">
 <style>
   :root {
     --red: #E53C2D;
@@ -923,8 +923,8 @@
      used to claim the whole viewport below the header, which pushed that row
      just past the fold — you had to scroll a few pixels to learn the links
      existed. Subtracting its height means film + links land together. */
-  /* room for the single italic RSVP link under the film — tight, so the page
-     still ends just after the video rather than trailing off into black */
+  /* The film sits at its natural size now rather than filling the viewport, so
+     the ivory page shows below it. --sj-links is the RSVP row's share. */
   :root{ --sj-header: 140px; --sj-links: 42px; }
 
   /* Crest ~92px tall */
@@ -1027,16 +1027,12 @@
 <style>
   /* The home page is film + three links and nothing else, so the ivory page
      background showed as a white band under the fold. Black all the way down. */
-  /* Both html AND body: the root element paints the canvas below the body box,
-     so setting body alone leaves a white band under the fold. */
-  html, body.is-home-dark{ background:var(--dark) !important; }
-  body.is-home-dark{ min-height:100svh; }
   /* the rules either side of SAM + JENNI go — Jenni's call, and it lets the
      kebab sit in that space without crowding */
   .crest-rule{ display:none !important; }
 </style>
 </head>
-<body class="has-mobile-actions is-home-dark">
+<body class="has-mobile-actions">
   <span id="top"></span>
 <!-- White crest band -->
   <header class="crest">
@@ -1164,6 +1160,15 @@
             openReelMobile = document.getElementById('openReelMobile'),
             soundOverlay = document.getElementById('soundOverlay');
       // hero-home.mp4 already begins at 0:20 and loops on its own (loop attribute).
+
+      // Phones: show the native controls immediately and drop the custom
+      // overlay. Two play affordances stacked on one video is worse than one,
+      // and the native arrow is the one people already know.
+      var isPhone = window.matchMedia && window.matchMedia('(max-width:760px)').matches;
+      if (isPhone && hero) {
+        hero.controls = true;
+        if (soundOverlay) soundOverlay.remove();
+      }
 
       // Tap the overlay → unmute + reveal the native player controls (hidden until then)
       function revealPlayer() {
