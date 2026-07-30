@@ -338,11 +338,21 @@
             photo_path: uploader ? uploader.getPath() : ''
           };
 
-          var saving = (window.SJUpload && window.SJUpload.upsert)
-            ? window.SJUpload.upsert('wedding_rsvps', payload, 'guest_key')
-            : (window.SJUpload && window.SJUpload.save)
-              ? window.SJUpload.save('wedding_rsvps', payload)
-              : Promise.reject(new Error('no uploader'));
+          // Plain INSERT, deliberately — every submission is a new row.
+          //
+          // This used to upsert on guest_key and it failed for EVERY guest:
+          // `resolution=merge-duplicates` makes Postgres run INSERT ON CONFLICT
+          // DO UPDATE, RLS checks the UPDATE arm too, and this table only has an
+          // INSERT policy. Result: a 401 and "that didn't send" on every reply.
+          //
+          // Appending rather than updating is also the safer shape here. guest_key
+          // is the sj_guest cookie, and shared surnames ("lee", "tang") are one key
+          // across several households — an upsert would let one family silently
+          // overwrite another's answers. Reading the newest row per guest_key gives
+          // the current reply and keeps every earlier version.
+          var saving = (window.SJUpload && window.SJUpload.save)
+            ? window.SJUpload.save('wedding_rsvps', payload)
+            : Promise.reject(new Error('no uploader'));
 
           saving.then(function(){
             // Persist for edit-mode prefill + done state

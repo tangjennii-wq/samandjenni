@@ -112,9 +112,18 @@
 
   // Upsert — insert or update if a row with the same onConflict column exists.
   // Used by RSVP to allow guests to edit & resubmit.
+  // Upsert. Two things this got wrong before and that any caller needs to know:
+  //   1. The onConflict argument was accepted and then ignored — no on_conflict
+  //      ever reached PostgREST, so it fell back to the primary key.
+  //   2. merge-duplicates runs INSERT ... ON CONFLICT DO UPDATE, and RLS checks
+  //      the UPDATE arm as well. A table with only an INSERT policy returns 401.
+  // So: pass a column that carries a UNIQUE constraint, and make sure the table
+  // has an UPDATE policy for anon. Otherwise use save() and append.
   function upsert(table, row, onConflict){
     if (typeof fetch !== 'function') return Promise.reject(new Error('offline'));
-    return fetch(URL_BASE + '/rest/v1/' + table, {
+    var url = URL_BASE + '/rest/v1/' + table +
+      (onConflict ? '?on_conflict=' + encodeURIComponent(onConflict) : '');
+    return fetch(url, {
       method:'POST',
       headers:{ 'apikey':KEY, 'Authorization':'Bearer '+KEY,
                 'Content-Type':'application/json',
