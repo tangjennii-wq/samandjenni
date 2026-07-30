@@ -551,7 +551,10 @@
       var panel = document.querySelector('.hotelpanel');
       if (panel) panel.scrollTop = 0;
       var head = document.querySelector('#travel .recbar');
-      if (head) head.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (head && head.scrollIntoView) {
+        try { head.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        catch (err) { head.scrollIntoView(true); }   // older Safari: no options object
+      }
     });
   }
 
