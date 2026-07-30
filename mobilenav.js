@@ -74,6 +74,7 @@
     html += '<a class="mnav-action mnav-action--rsvp" href="/gate?next=rsvp">Find my invitation</a>';
   }
   html += '<button type="button" class="mnav-action mnav-action--note" data-note-open>Leave us a note &#9825;</button>';
+  html += '<button type="button" class="mnav-action mnav-action--ou" data-ou-open>Over<span class="ou-slash">/</span>under</button>';
   html += '</nav>';
   html += '<div class="mnav-foot">';
   if (who) {
@@ -143,7 +144,7 @@
   });
   // Anything that navigates or opens a drawer of its own closes this first.
   panel.addEventListener('click', function (e) {
-    if (e.target.closest('[data-note-open],[data-rsvp-open],.mnav-acct,.mnav-list a')) setOpen(false);
+    if (e.target.closest('[data-note-open],[data-rsvp-open],[data-ou-open],.mnav-acct,.mnav-list a')) setOpen(false);
   });
   // a back gesture or hardware back shouldn't leave it hanging open
   window.addEventListener('pagehide', function () { setOpen(false); });

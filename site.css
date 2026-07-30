@@ -322,7 +322,7 @@ a.cta-btn{ text-decoration:none; display:inline-block; }
 .rsvp-title{ font-size:26px; font-weight:900; letter-spacing:.22em; text-transform:uppercase; line-height:1; }
 .rsvp-sub{ margin-top:5px; font-size:10px; font-weight:700; letter-spacing:.22em;
   text-transform:uppercase; opacity:.9; }
-.rsvp-body{ background:var(--ivory); padding:13px 16px 16px; }
+.rsvp-body{ background:#fff; padding:13px 16px 16px; }
 
 .rsvp-list{ border:1.5px solid var(--dark); border-radius:var(--r-md); background:#fff; overflow:hidden; }
 .rsvp-ev{ display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center;
@@ -1253,7 +1253,7 @@ body.map-full .map-caption{ display:none !important; }
 
 
 /* ---- RSVP thank-you: add the accepted events to a calendar ---------------- */
-.thanks-cal{ margin-top:14px; padding:13px 14px; background:var(--ivory);
+.thanks-cal{ margin-top:14px; padding:13px 14px; background:#FBF7EE;
   border:1px solid var(--line); border-radius:var(--r-md); }
 .thanks-cal-h{ margin:0 0 9px; font-size:10px; font-weight:800; letter-spacing:.18em;
   text-transform:uppercase; color:#a2907a; }
@@ -1366,8 +1366,8 @@ body.map-full .map-caption{ display:none !important; }
    WARMTH — the light pass went a bit cold. Put the paper back:
    cream fields, warm-brown hairlines, a gold thread at the top.
    ============================================================ */
-.note-card--drawer{ background:#FDFAF3; }
-.note-drawer{ background:#FDFAF3; }
+.note-card--drawer{ background:#fff; }
+.note-drawer{ background:#fff; }
 .note-thread{ display:block; height:3px; margin:0 0 18px;
   background:linear-gradient(90deg, var(--red) 0 34%, var(--gold) 34% 100%);
   border-radius:2px; }
@@ -1517,7 +1517,7 @@ body.map-full .map-caption{ display:none !important; }
 .acct-btn[aria-expanded="true"]{ color:var(--red); }
 
 .acct-pop{ position:fixed; z-index:3000; width:300px;
-  background:#FDFAF3; border:1px solid var(--line); border-radius:var(--r-md);
+  background:#fff; border:1px solid var(--line); border-radius:var(--r-md);
   box-shadow:0 14px 40px rgba(13,9,5,.22); overflow:hidden; text-align:left; }
 .acct-pop[hidden]{ display:none; }
 .acct-head{ padding:13px 15px 12px; background:var(--red); color:#fff; }
@@ -1991,9 +1991,10 @@ body.map-full .map-caption{ display:none !important; }
      the page you're on. No background blocks at all. */
   .mnav-list a.is-here{ color:#a2907a; background:none; }
   .mnav-list a:active, .mnav-list button:active{ opacity:.55; }
-  /* navigation is dark, the two actions are red — one accent, two items */
-  .mnav-action--rsvp, .mnav-action--note{
+  /* navigation is dark; the things you can DO are red */
+  .mnav-action--rsvp, .mnav-action--note, .mnav-action--ou{
     color:var(--red) !important; font-weight:600 !important; }
+  .mnav-action--ou .ou-slash{ color:inherit; }
 
   .mnav-foot{ flex:0 0 auto; display:flex; justify-content:center;
     padding:0 20px calc(26px + env(safe-area-inset-bottom)); }
@@ -2039,8 +2040,8 @@ body.map-full .map-caption{ display:none !important; }
    A plain upright word here read as a caption, not something you could tap.
    Italics plus a following arrow is the smallest treatment that says "this
    goes somewhere" — no pill, no fill, nothing competing with the film. */
-.hero-note{ display:flex; justify-content:center; align-items:center;
-  background:var(--dark); padding:0 16px 12px; }
+.hero-note{ display:flex; justify-content:flex-end; align-items:center;
+  background:var(--dark); padding:0 20px 12px; }
 .hero-rsvp{ display:inline-flex; align-items:center; gap:7px; min-height:36px;
   padding:0 6px; font-family:inherit; font-style:italic; font-size:15px; font-weight:500;
   letter-spacing:.02em; color:#fff; text-decoration:none;
@@ -2060,3 +2061,12 @@ body.map-full .map-caption{ display:none !important; }
   .sound-overlay{ display:none !important; }
   .hero-watch-reel{ display:none !important; }
 }
+
+/* ---------- drawers and popovers sit on white ----------------------------
+   RSVP, the note form, the account sheet and the over/under drawer were all on
+   #FDFAF3 — a cream that looked like an off-white mistake beside the pure-white
+   cards inside them. One surface colour now. */
+.note-drawer, .note-drawer .drawer-body, .note-card--drawer,
+.acct-pop, .acct-body{ background:#fff !important; }
+.note-drawer .drawer-bar{ background:#fff; }
+html.ou-embed body{ background:#fff; }
