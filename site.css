@@ -196,7 +196,7 @@ img,video{max-width:100%;height:auto}
 .note-intro b{ color:var(--dark); }
 .note-field{ display:flex; flex-direction:column; }
 .note-l{ font-size:10px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:#a2907a; margin:0 0 6px; }
-.note-f{ width:100%; border:2px solid var(--dark); border-radius:var(--r-md); background:#fbf7ef; font-family:inherit; font-size:15px; padding:9px 12px; outline:none; }
+.note-f{ width:100%; border:2px solid var(--dark); border-radius:var(--r-md); background:#fff; font-family:inherit; font-size:15px; padding:9px 12px; outline:none; }
 .note-f:focus{ border-color:var(--red); background:#fff; }
 .note-ta{ min-height:84px; resize:vertical; }
 .note-row2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
@@ -1253,7 +1253,7 @@ body.map-full .map-caption{ display:none !important; }
 
 
 /* ---- RSVP thank-you: add the accepted events to a calendar ---------------- */
-.thanks-cal{ margin-top:14px; padding:13px 14px; background:#FBF7EE;
+.thanks-cal{ margin-top:14px; padding:13px 14px; background:#fff;
   border:1px solid var(--line); border-radius:var(--r-md); }
 .thanks-cal-h{ margin:0 0 9px; font-size:10px; font-weight:800; letter-spacing:.18em;
   text-transform:uppercase; color:#a2907a; }
@@ -1372,14 +1372,14 @@ body.map-full .map-caption{ display:none !important; }
   background:linear-gradient(90deg, var(--red) 0 34%, var(--gold) 34% 100%);
   border-radius:2px; }
 
-.note-f{ background:#FFFDF7; border-color:rgba(139,110,74,.28); }
+.note-f{ background:#fff; border-color:rgba(139,110,74,.28); }
 .note-f:hover{ border-color:rgba(139,110,74,.45); }
 .note-f:focus{ background:#fff; border-color:var(--red); }
 .note-l{ color:#8a7355; font-weight:600; }
 
 .note-sub--top{ font-size:14px; font-style:italic; color:#8a7355; margin-bottom:18px; }
 
-.rsvp-list, .guest-row, .plusone{ background:#FFFDF7; border-color:rgba(139,110,74,.24); }
+.rsvp-list, .guest-row, .plusone{ background:#fff; border-color:rgba(139,110,74,.24); }
 .rsvp-ev{ border-bottom-color:rgba(139,110,74,.16); }
 .rsvp-ev:nth-child(odd){ background:rgba(229,200,34,.045); }
 .yn{ background:#fff; border-color:rgba(139,110,74,.30); color:#7a6650; }
@@ -2052,3 +2052,17 @@ html.ou-embed body{ background:#fff; }
 .mnav-acct--signin{ text-decoration:none; }
 .acct-btn--signin{ color:var(--dark); }
 .acct-btn--signin:hover{ color:var(--red); }
+
+/* ---------- one white surface inside every drawer -------------------------
+   RSVP, the note form and over/under were each painted on a slightly different
+   off-white (#FFFDF7, #fbf7ef, #FBF7EE) sitting inside a pure-white sheet, so
+   the panels read as grubby rather than layered. Everything inside a drawer is
+   #fff; separation comes from the hairline borders, not from tinted fills. */
+.note-drawer .rsvp-list, .note-drawer .guest-row, .note-drawer .plusone,
+.note-drawer .rsvp-body, .note-drawer .rsvp-row, .note-drawer .note-f,
+.note-drawer .thanks-cal, .note-drawer .note-card, .note-drawer fieldset{
+  background:#fff !important; }
+html.ou-embed body, html.ou-embed .sect, html.ou-embed .ou-card,
+html.ou-embed .oucard, html.ou-embed .ourow, html.ou-embed .ou-row,
+html.ou-embed .scorebar, html.ou-embed .num, html.ou-embed input,
+html.ou-embed .note-f{ background:#fff !important; }

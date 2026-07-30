@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730z">
+<link rel="stylesheet" href="site.css?v=20260731a">
 <style>
 
   body{background:var(--paper)}
@@ -25,7 +25,7 @@
   .scorebar span{color:var(--white)}
 
   .line{border:1px solid var(--line);border-top:none;background:#fff;padding:13px 16px 12px}
-  .line:nth-child(even){background:#FDFBF7}
+  .line--zebra-removed{background:#FDFBF7}
   .board{filter:drop-shadow(0 1px 2px rgba(13,9,5,.04)) drop-shadow(0 10px 26px rgba(13,9,5,.05))}
   .line:last-child{border-radius:0 0 var(--r-md) var(--r-md)}
   .q{font-size:15px;font-weight:600;line-height:1.45}
@@ -93,6 +93,11 @@
   .ouname:focus{ border-color:var(--red); }
   .ousent{ margin-top:14px; font-size:13.5px; font-weight:700; color:var(--red); display:none; }
   .ousent.show{ display:block; }
+  /* The zebra stripe on alternate rows was the cream inside this drawer. Rows
+     are separated by their hairline border instead, which is what every other
+     list on the site does. */
+  .line{ background:#fff; }
+  .line + .line{ border-top:1px solid var(--line); }
 </style>
 <style id="ou-embed-css">
   /* ?embed=1 — shown inside the pull-out drawer, where the surrounding page
