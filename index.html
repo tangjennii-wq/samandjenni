@@ -1196,6 +1196,43 @@
         if (openReel) openReel.remove();
       }
 
+      // ---- sound on first deliberate play --------------------------------
+      // The film needs `muted` to autoplay at all — every browser blocks audible
+      // autoplay. So pressing the native play button resumed it still silent,
+      // and you had to find the volume icon as a second step.
+      //
+      // The autoplay itself also fires a `play` event, so we can't just unmute
+      // on `play`. We wait for a real user gesture first, then unmute the next
+      // time playback starts. Unmuting inside a gesture-initiated play is
+      // allowed by Safari's autoplay policy; doing it on load would be blocked.
+      //
+      // Once only: if someone deliberately mutes it again, we leave them alone.
+      var gestured = false, didUnmute = false;
+      ['pointerdown', 'touchstart', 'keydown'].forEach(function (t) {
+        document.addEventListener(t, function () { gestured = true; },
+          { once: true, capture: true, passive: true });
+      });
+      if (hero) {
+        hero.addEventListener('play', function () {
+          if (gestured && !didUnmute && hero.muted) {
+            didUnmute = true;
+            hero.muted = false;
+            hero.removeAttribute('muted');
+            if (hero.volume === 0) hero.volume = 1;
+          }
+        });
+        // Tapping the frame itself (not the controls) also turns the sound on,
+        // since on a phone the whole film is the obvious thing to press.
+        hero.addEventListener('click', function () {
+          if (!didUnmute && hero.muted) {
+            didUnmute = true;
+            hero.muted = false;
+            hero.removeAttribute('muted');
+            hero.play().catch(function () {});
+          }
+        });
+      }
+
       // Tap the overlay → unmute + reveal the native player controls (hidden until then)
       function revealPlayer() {
         hero.muted = false;
