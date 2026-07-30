@@ -68,11 +68,13 @@
     var label = /^faq$/i.test(l.label) ? 'FAQs' : l.label;
     html += '<a href="' + l.href + '"' + (l.active ? ' class="is-here" aria-current="page"' : '') + '>' + label + '</a>';
   });
-  if (who) {
-    html += '<a class="mnav-action mnav-action--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>';
-  } else {
-    html += '<a class="mnav-action mnav-action--rsvp" href="/gate?next=rsvp">Find my invitation</a>';
-  }
+  // Always "RSVP" — that's what the guest wants to do. If we don't know who they
+  // are yet the link goes to the finder, which explains itself when they land.
+  // Labelling the nav "Find my invitation" made people wonder whether RSVPing
+  // was somewhere else entirely.
+  html += who
+    ? '<a class="mnav-action mnav-action--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>'
+    : '<a class="mnav-action mnav-action--rsvp" href="/gate?next=rsvp">RSVP</a>';
   html += '<button type="button" class="mnav-action mnav-action--note" data-note-open>Leave us a note &#9825;</button>';
   html += '<button type="button" class="mnav-action mnav-action--ou" data-ou-open>Over<span class="ou-slash">/</span>under</button>';
   html += '</nav>';

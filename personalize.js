@@ -121,13 +121,13 @@
   }
   if (cookie('sj_guest').trim()) return;   // recognised — leave everything alone
 
+  // Re-point RSVP at the finder, but DON'T relabel it. The button keeps saying
+  // "RSVP" because that's the guest's intent; the finder page then explains that
+  // we need a name first. Renaming the nav item made people think RSVP lived
+  // somewhere else.
   document.querySelectorAll('[data-rsvp-open]').forEach(function (el) {
     el.removeAttribute('data-rsvp-open');          // don't open the form
     el.setAttribute('href', '/gate?next=rsvp');
-    if (el.tagName !== 'A') return;
-    el.classList.add('is-find');
-    el.textContent = el.classList.contains('nav-act') ? 'find my invitation'
-                                                      : 'Find my invitation';
   });
   // buttons can't be re-pointed with href — send them to the finder on click
   document.querySelectorAll('button[data-rsvp-open], button.ma-rsvp').forEach(function (b) {
