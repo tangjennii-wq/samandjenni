@@ -104,9 +104,10 @@
       ribbon.innerHTML = '<span>3.20.27 &middot; wedding at ' +
         '<a href="https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+New+York" target="_blank" rel="noopener">the pierre</a></span>';
     }
-    // Only touch the crest line that holds the date (home page) — leave "new york or nowhere" alone.
-    var crest = document.querySelector('.crest-tag');
-    if (crest && /\d/.test(crest.textContent)) crest.textContent = 'new york, new york';
+    // The crest byline used to be blanked to just "new york, new york" here,
+    // which hid the date from Saturday-only guests rather than correcting it.
+    // The [data-dates-short] handling above now gives them "3.20.27" — their
+    // actual date — so this blunt override is gone.
   }
 })();
 
