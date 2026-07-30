@@ -1037,7 +1037,18 @@
      the canvas below the body box, which is what left a white strip last time. */
   html, body.is-home-dark{ background:var(--dark) !important; }
   body.is-home-dark{ min-height:100svh; }
-  body.is-home-dark .hero{ min-height:0; }
+  /* The black region is a deliberate frame, not leftover canvas. It fills the
+     viewport below the crest and CENTRES the film inside itself, so theempty space
+     is shared above and below rather than dumped underneath. The film keeps its
+     own size — nothing here stretches or crops it. */
+  @media (max-width:760px){
+    body.is-home-dark .hero{
+      min-height: calc(100svh - var(--sj-crest, 96px)) !important;
+      display:flex !important; align-items:center !important; justify-content:center !important;
+      padding:22px 14px 54px !important; }
+    /* a touch more air under the wordmark, to balance the black below */
+    body.is-home-dark .crest{ padding-bottom:19px !important; }
+  }
 </style>
 </head>
 <body class="has-mobile-actions is-home-dark">
