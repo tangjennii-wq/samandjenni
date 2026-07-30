@@ -2057,7 +2057,11 @@ body.map-full .map-caption{ display:none !important; }
    underneath has to sit in the same place — so it left-aligns on phones only.
    Both use 16px left padding and 20px/800 type. */
 @media(max-width:760px){
-  .crest{ text-align:left; }
+  /* !important is load-bearing: index.html's own <style> sets
+     .crest{text-align:center} and page styles load AFTER site.css, so an
+     equal-specificity rule here loses. .crest-row is inline-flex, so the
+     parent's text-align is what actually positions the wordmark. */
+  .crest{ text-align:left !important; }
   .crest-row{ justify-content:flex-start; gap:0; }
   .crest-name{ font-size:20px !important; letter-spacing:.03em !important; }
   .crest-tag{ text-align:left; padding-right:56px; }
