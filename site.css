@@ -2044,3 +2044,6 @@ body.map-full .map-caption{ display:none !important; }
 .acct-pop, .acct-body{ background:#fff !important; }
 .note-drawer .drawer-bar{ background:#fff; }
 html.ou-embed body{ background:#fff; }
+
+/* a quieter second line inside an FAQ answer, for caveats and "we'll confirm" */
+.faq-note{ display:block; margin-top:7px; font-size:13px; font-style:italic; color:#a2907a; }
