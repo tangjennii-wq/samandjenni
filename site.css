@@ -2036,37 +2036,6 @@ body.map-full .map-caption{ display:none !important; }
   .crest-row{ padding-right:52px; }
 }
 
-/* ---------- home: one italic RSVP under the film -------------------------
-   A plain upright word here read as a caption, not something you could tap.
-   Italics plus a following arrow is the smallest treatment that says "this
-   goes somewhere" — no pill, no fill, nothing competing with the film. */
-.hero-note{ display:flex; justify-content:flex-end; align-items:center;
-  background:var(--dark); padding:6px 16px 22px; }
-@media(max-width:760px){ .hero-note{ padding:6px 14px 20px; } }
-/* Red, not white — it picks up the crest and reads as the site's one accent
-   rather than a caption. #FF6558 rather than --red (#E53C2D): the brand red on
-   near-black is about 4.2:1, under the 4.5:1 minimum for text this size, and
-   this lighter red clears it while still reading as the same colour. */
-.hero-rsvp{ display:inline-flex; align-items:center; gap:7px; min-height:36px;
-  padding:0 2px; font-family:inherit; font-style:italic; font-size:15px; font-weight:600;
-  letter-spacing:.02em; color:#FF6558; text-decoration:none;
-  border-bottom:1px solid rgba(255,101,88,.4); transition:border-color .14s ease, gap .14s ease; }
-.hero-rsvp span{ font-style:normal; }
-.hero-rsvp:hover{ border-bottom-color:#FF6558; gap:10px; }
-@media(max-width:760px){
-  .hero-rsvp{ font-size:14px; }
-}
-
-@media(max-width:760px){
-  /* the film is an object on an ivory page again, not the page itself */
-  .hero{ height:auto !important; min-height:0 !important; }
-  /* The custom overlay and the expand button both sat on top of the native
-     player's own controls — two play arrows and two fullscreen icons in the
-     same corners. iOS already gives you both; ours were just in the way. */
-  .sound-overlay{ display:none !important; }
-  .hero-watch-reel{ display:none !important; }
-}
-
 /* ---------- drawers and popovers sit on white ----------------------------
    RSVP, the note form, the account sheet and the over/under drawer were all on
    #FDFAF3 — a cream that looked like an off-white mistake beside the pure-white
