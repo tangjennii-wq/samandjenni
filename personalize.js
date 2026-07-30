@@ -133,7 +133,19 @@
   document.querySelectorAll('button[data-rsvp-open], button.ma-rsvp').forEach(function (b) {
     b.addEventListener('click', function (e) { e.preventDefault(); location.href = '/gate?next=rsvp'; });
   });
-  // the account icon has nobody to describe yet
+  // The account icon has nobody to describe yet, but it shouldn't vanish —
+  // someone who skipped the finder needs a way back in. It becomes a sign-in
+  // link instead of the details popover.
   var acct = document.querySelector('.nav-acct');
-  if (acct) acct.style.display = 'none';
+  if (acct) {
+    var btn = acct.querySelector('.acct-btn');
+    if (btn) {
+      var a = document.createElement('a');
+      a.className = 'acct-btn acct-btn--signin';
+      a.href = '/gate';
+      a.setAttribute('aria-label', 'Sign in to see your invitation');
+      a.innerHTML = btn.innerHTML;
+      btn.replaceWith(a);
+    }
+  }
 })();

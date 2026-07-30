@@ -2047,3 +2047,8 @@ html.ou-embed body{ background:#fff; }
 
 /* a quieter second line inside an FAQ answer, for caveats and "we'll confirm" */
 .faq-note{ display:block; margin-top:7px; font-size:13px; font-style:italic; color:#a2907a; }
+
+/* the account row as a sign-in door for anyone who skipped the finder */
+.mnav-acct--signin{ text-decoration:none; }
+.acct-btn--signin{ color:var(--dark); }
+.acct-btn--signin:hover{ color:var(--red); }

@@ -78,13 +78,17 @@
   html += '<button type="button" class="mnav-action mnav-action--note" data-note-open>Leave us a note &#9825;</button>';
   html += '<button type="button" class="mnav-action mnav-action--ou" data-ou-open>Over<span class="ou-slash">/</span>under</button>';
   html += '</nav>';
+  // The foot is the account row either way. Signed in it's your name and opens
+  // your details; not signed in it's "sign in", because someone who browsed past
+  // the finder has no other way back to it — the RSVP link is the only other
+  // door and that reads as a different errand.
+  var PERSON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<circle cx="12" cy="8" r="3.6"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>';
   html += '<div class="mnav-foot">';
-  if (who) {
-    html += '<button type="button" class="mnav-acct">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" ' +
-            'stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/>' +
-            '<path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>' + (first || 'your details') + '</button>';
-  }
+  html += who
+    ? '<button type="button" class="mnav-acct">' + PERSON + (first || 'your details') + '</button>'
+    : '<a class="mnav-acct mnav-acct--signin" href="/gate">' + PERSON + 'Sign in</a>';
   html += '</div>';
   panel.innerHTML = html;
   document.body.appendChild(panel);
