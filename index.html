@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730j">
+<link rel="stylesheet" href="site.css?v=20260730k">
 <style>
   :root {
     --red: #E53C2D;
@@ -1168,6 +1168,8 @@
       if (isPhone && hero) {
         hero.controls = true;
         if (soundOverlay) soundOverlay.remove();
+        // iOS's own player has a fullscreen button in the same corner as ours
+        if (openReel) openReel.remove();
       }
 
       // Tap the overlay → unmute + reveal the native player controls (hidden until then)

@@ -2058,5 +2058,9 @@ body.map-full .map-caption{ display:none !important; }
 @media(max-width:760px){
   /* the film is an object on an ivory page again, not the page itself */
   .hero{ height:auto !important; min-height:0 !important; }
+  /* The custom overlay and the expand button both sat on top of the native
+     player's own controls — two play arrows and two fullscreen icons in the
+     same corners. iOS already gives you both; ours were just in the way. */
   .sound-overlay{ display:none !important; }
+  .hero-watch-reel{ display:none !important; }
 }
