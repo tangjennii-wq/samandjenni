@@ -1845,36 +1845,6 @@ body.map-full .map-caption{ display:none !important; }
 @media(max-width:760px){ .nav-ou{ display:none; } }
 
 
-/* ---------- home: one quiet note link under the film ---------------------
-   RSVP is permanently in the nav now, so repeating it under the video as a
-   second big filled button was saying the same thing twice at full volume.
-   What's left is the softer of the two asks, sitting on the dark hero edge. */
-/* three plain links across the foot of the film. No filled buttons here —
-   RSVP is permanently in the nav, so this row is a quiet set of doors rather
-   than a second call to action competing with the one above it. */
-.hero-note{ display:flex; justify-content:center; align-items:center; gap:26px;
-  background:var(--dark); padding:0 16px calc(14px + env(safe-area-inset-bottom)); }
-/* All three are the same shape: the RSVP one is an <a> and the other two are
-   <button>, which sit on different baselines by default — that's why RSVP rode
-   high. inline-flex + a shared min-height lines them up regardless of tag. */
-.hero-note-btn{ -webkit-appearance:none; appearance:none; font-family:inherit;
-  display:inline-flex; align-items:center; justify-content:center;
-  min-height:44px; line-height:1; padding:0 8px; border:0; background:none; cursor:pointer;
-  color:rgba(250,243,224,.94); font-size:12px; font-weight:650; letter-spacing:.04em;
-  text-transform:none; border-bottom:1px solid transparent;
-  transition:color .14s ease, border-color .14s ease; }
-.hero-note-btn:hover{ color:#fff; border-bottom-color:rgba(255,255,255,.6); }
-.hero-note-btn{ text-decoration:none; }
-.hero-note a.hero-note-btn{ color:#ff6558; }
-.hero-note-btn.is-mid{ color:#f1d322; }
-.hero-note .ou-slash{ color:var(--red); }
-.hero-note-btn{ color:#fff !important; }
-@media(max-width:760px){
-  .hero-note{ gap:16px; padding-bottom:calc(18px + env(safe-area-inset-bottom)); }
-  .hero-note-btn{ font-size:11px; padding:0 2px; }
-}
-/* the game follows straight after, no ivory gap between them */
-
 /* the account icon keeps its job but stops being a mystery: on desktop it
    carries the guest's first name, so it reads as "you" rather than a generic
    glyph. Phones keep the icon alone for width. */
