@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730u">
+<link rel="stylesheet" href="site.css?v=20260730w">
 <style>
   :root {
     --red: #E53C2D;
@@ -1185,6 +1185,11 @@
       // and the native arrow is the one people already know.
       var isPhone = window.matchMedia && window.matchMedia('(max-width:760px)').matches;
       if (isPhone && hero) {
+        // setAttribute, not the property: iOS suppresses the control bar for an
+        // autoplaying muted inline video unless `controls` is a real attribute
+        // on the element, so `hero.controls = true` left the film with no
+        // scrubber, no volume and no visible way in.
+        hero.setAttribute('controls', '');
         hero.controls = true;
         if (soundOverlay) soundOverlay.remove();
         // iOS's own player has a fullscreen button in the same corner as ours

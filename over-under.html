@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730u">
+<link rel="stylesheet" href="site.css?v=20260730w">
 <style>
 
   body{background:var(--paper)}
@@ -98,8 +98,13 @@
   /* ?embed=1 — shown inside the pull-out drawer, where the surrounding page
      already supplies the crest, nav and footer. */
   html.ou-embed body{ background:transparent; }
-  html.ou-embed .sitecrest, html.ou-embed .sitenav, html.ou-embed .sfoot,
-  html.ou-embed .titlestack, html.ou-embed .ribbon{ display:none !important; }
+  /* `.sitecrest` never existed — the class is `.crest`, so none of this applied
+     and the drawer showed a second wordmark plus its own kebab on top of the
+     host page's. */
+  html.ou-embed .crest, html.ou-embed .sitenav, html.ou-embed .sfoot,
+  html.ou-embed .titlestack, html.ou-embed .ribbon,
+  html.ou-embed .crest-mobile-nav, html.ou-embed .mnav,
+  html.ou-embed .mnav-veil, html.ou-embed .nav-acct{ display:none !important; }
   html.ou-embed .sect{ padding:4px 0 18px; }
   html.ou-embed .sect h2{ font-size:22px; }
 </style>
