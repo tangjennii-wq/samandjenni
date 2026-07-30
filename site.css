@@ -2041,13 +2041,18 @@ body.map-full .map-caption{ display:none !important; }
    Italics plus a following arrow is the smallest treatment that says "this
    goes somewhere" — no pill, no fill, nothing competing with the film. */
 .hero-note{ display:flex; justify-content:flex-end; align-items:center;
-  background:var(--dark); padding:0 20px 12px; }
+  background:var(--dark); padding:2px 16px 14px; }
+@media(max-width:760px){ .hero-note{ padding:2px 14px 14px; } }
+/* Red, not white — it picks up the crest and reads as the site's one accent
+   rather than a caption. #FF6558 rather than --red (#E53C2D): the brand red on
+   near-black is about 4.2:1, under the 4.5:1 minimum for text this size, and
+   this lighter red clears it while still reading as the same colour. */
 .hero-rsvp{ display:inline-flex; align-items:center; gap:7px; min-height:36px;
-  padding:0 6px; font-family:inherit; font-style:italic; font-size:15px; font-weight:500;
-  letter-spacing:.02em; color:#fff; text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.28); transition:border-color .14s ease, gap .14s ease; }
+  padding:0 2px; font-family:inherit; font-style:italic; font-size:15px; font-weight:600;
+  letter-spacing:.02em; color:#FF6558; text-decoration:none;
+  border-bottom:1px solid rgba(255,101,88,.4); transition:border-color .14s ease, gap .14s ease; }
 .hero-rsvp span{ font-style:normal; }
-.hero-rsvp:hover{ border-bottom-color:#fff; gap:10px; }
+.hero-rsvp:hover{ border-bottom-color:#FF6558; gap:10px; }
 @media(max-width:760px){
   .hero-rsvp{ font-size:14px; }
 }
