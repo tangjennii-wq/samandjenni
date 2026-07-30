@@ -7,3 +7,7 @@ img/**/*.heic
 img/hotels-raw/
 img/photos/
 img/pictures/
+
+# the engagement shoot — 46 originals, never referenced by the site.
+# photos are served from Supabase, not from this public repo.
+img/engagement/
