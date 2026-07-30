@@ -2073,7 +2073,13 @@ html.ou-embed .note-f{ background:#fff !important; }
    On phones they become two half-width buttons, and the foot of each list
    carries a link to the other one, so you never have to scroll back up. */
 .hotelflip{ display:none; }
+/* "other hotels by neighborhood" overflows its own pill at 390px. The
+   neighbourhood chips appear the moment you pick it, so the phone label can
+   just say what the button is — the row underneath explains the rest. */
+.fchip-brief{ display:none; }
 @media(max-width:760px){
+  .fchip-long{ display:none; }
+  .fchip-brief{ display:inline; }
   #travel .fgroup--top{ display:grid !important; grid-template-columns:1fr 1fr;
     gap:8px; width:100%; }
   #travel .fgroup--top .fchip{ width:100%; min-height:46px; padding:0 10px;
@@ -2090,4 +2096,11 @@ html.ou-embed .note-f{ background:#fff !important; }
     font-size:11px; font-weight:800; letter-spacing:.13em; text-transform:uppercase;
     color:var(--red); }
   .hotelflip:active{ opacity:.55; }
+
+  /* the neighbourhood chips that appear once "other hotels" is picked */
+  #travel .fgroup--hoods{ display:flex; flex-wrap:wrap; gap:6px;
+    width:100%; margin-top:10px; padding-top:10px; }
+  #travel .fgroup--hoods .fchip--hood{ min-height:34px; font-size:9.5px;
+    padding:0 12px; display:inline-flex; align-items:center; }
+  #travel .fhoodlabel{ width:100%; margin:0 0 2px; text-align:left; }
 }
