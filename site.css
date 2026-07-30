@@ -2038,3 +2038,19 @@ body.map-full .map-caption{ display:none !important; }
   /* room for the kebab at the right edge */
   .crest-row{ padding-right:52px; }
 }
+
+/* ---------- home: one italic RSVP under the film -------------------------
+   A plain upright word here read as a caption, not something you could tap.
+   Italics plus a following arrow is the smallest treatment that says "this
+   goes somewhere" — no pill, no fill, nothing competing with the film. */
+.hero-note{ display:flex; justify-content:center; align-items:center;
+  background:var(--dark); padding:0 16px calc(10px + env(safe-area-inset-bottom)); }
+.hero-rsvp{ display:inline-flex; align-items:center; gap:7px; min-height:36px;
+  padding:0 6px; font-family:inherit; font-style:italic; font-size:15px; font-weight:500;
+  letter-spacing:.02em; color:#fff; text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.28); transition:border-color .14s ease, gap .14s ease; }
+.hero-rsvp span{ font-style:normal; }
+.hero-rsvp:hover{ border-bottom-color:#fff; gap:10px; }
+@media(max-width:760px){
+  .hero-rsvp{ font-size:14px; }
+}

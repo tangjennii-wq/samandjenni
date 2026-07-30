@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730g">
+<link rel="stylesheet" href="site.css?v=20260730h">
 <style>
   :root {
     --red: #E53C2D;
@@ -923,9 +923,9 @@
      used to claim the whole viewport below the header, which pushed that row
      just past the fold — you had to scroll a few pixels to learn the links
      existed. Subtracting its height means film + links land together. */
-  /* --sj-links was room for the RSVP/note row under the film. That row is
-     gone, so the film takes the space back and the page ends at the video. */
-  :root{ --sj-header: 140px; --sj-links: 14px; }
+  /* room for the single italic RSVP link under the film — tight, so the page
+     still ends just after the video rather than trailing off into black */
+  :root{ --sj-header: 140px; --sj-links: 42px; }
 
   /* Crest ~92px tall */
   .crest{ padding:13px 16px 15px !important; }
@@ -1143,6 +1143,10 @@
 
 
 
+
+  <div class="hero-note">
+    <a class="hero-rsvp" href="rsvp.html" data-rsvp-open>RSVP <span aria-hidden="true">&rarr;</span></a>
+  </div>
 
   <!-- Full-screen reel overlay — the whole film, easy to exit -->
   <div class="reel-modal" id="reelModal" aria-hidden="true">
