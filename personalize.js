@@ -52,6 +52,16 @@
   var dateEl = document.querySelector('[data-dates]');
   if (dateEl && DATES[tier]) dateEl.textContent = DATES[tier];
 
+  // The crest byline under SAM + JENNI was hard-coded to "3.19.27 – 3.20.27" on
+  // every page, so a Saturday-only guest was told the weekend runs the 19th to
+  // the 20th — teasing the Friday party they aren't invited to. Same problem the
+  // event cards had, in the one place that appears on every single page.
+  var SHORT = { 0:'3.20.27', 1:'3.18.27 – 3.21.27', 2:'3.19.27 – 3.20.27',
+                3:'3.19.27 – 3.20.27', 4:'3.20.27' };
+  document.querySelectorAll('[data-dates-short]').forEach(function (el) {
+    if (SHORT[tier]) el.textContent = SHORT[tier];
+  });
+
   // Hide any event the guest isn't invited to.
   // Event elements are tagged data-event="thursday|rehearsal|friday|saturday|sunday".
   document.querySelectorAll('[data-event]').forEach(function (el) {
