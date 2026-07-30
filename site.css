@@ -1921,17 +1921,10 @@ body.map-full .map-caption{ display:none !important; }
   /* The separate navigation band disappears. Home and More sit in the crest. */
   .crest{ position:relative; }
   .sitenav{ display:none !important; }
-  .crest-mobile-nav{ position:absolute; z-index:900; top:7px; left:13px; right:13px;
-    height:44px; display:flex; align-items:center; justify-content:space-between;
+  .crest-mobile-nav{ position:absolute; z-index:900; top:7px; right:13px;
+    height:44px; display:flex; align-items:center; justify-content:flex-end;
     pointer-events:none; }
   .crest-mobile-nav > *{ pointer-events:auto; }
-  .mnav-home{ width:44px; height:44px; display:inline-flex; align-items:center;
-    justify-content:center; color:var(--red); text-decoration:none; border-radius:50%; }
-  .mnav-home .nav-word{ display:none; }
-  /* slimmer strokes: the icons were reading as heavy furniture against a very
-     light crest. 1.5px is the thinnest that still holds on a retina screen. */
-  .mnav-home .nav-home-ico{ display:block; width:21px; height:21px; stroke-width:1.5; }
-  .mnav-home:active{ background:rgba(229,60,45,.08); }
 
   .mnav-toggle{ display:inline-flex; flex-direction:column; align-items:center; justify-content:center;
     gap:5px;
@@ -1943,7 +1936,10 @@ body.map-full .map-caption{ display:none !important; }
   .mnav-toggle.is-open span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
   .mnav-toggle.is-open span:nth-child(2){ opacity:0; }
   .mnav-toggle.is-open span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
-  .mnav-toggle:active, .mnav-toggle[aria-expanded="true"]{ background:rgba(229,60,45,.08); }
+  .mnav-toggle:active{ background:rgba(229,60,45,.08); }
+  /* the global gold focus ring read as decoration on this control; keyboard
+     users still get one, pointer taps don't */
+  .mnav-toggle:focus:not(:focus-visible){ outline:none; }
 
   /* Above the popover, below every real overlay: the film modal (1000), the
      note/RSVP drawer (1001), the account sheet (3000). At 2600 the crest was
@@ -1961,7 +1957,7 @@ body.map-full .map-caption{ display:none !important; }
   @keyframes mnavIn{ from{ opacity:0 } to{ opacity:1 } }
   body.mnav-open{ overflow:hidden; }
   /* the kebab hides while open so the ✕ is the only thing in that corner */
-  body.mnav-open .mnav-toggle, body.mnav-open .mnav-home{ opacity:0; pointer-events:none; }
+  body.mnav-open .mnav-toggle{ opacity:0; pointer-events:none; }
 
   /* The crest is `padding:13px 16px 15px` and the name sits at the top of that
      box. The menu's wordmark has to start at the identical x AND y or the open

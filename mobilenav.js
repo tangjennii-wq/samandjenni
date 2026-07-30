@@ -1,4 +1,5 @@
-// mobilenav.js — phones get a home icon and a compact actions popover.
+// mobilenav.js — phones get a kebab and a full-screen menu. The crest's own
+// wordmark is the home link, so there is no separate home icon.
 //
 // The nav had six links plus three pills plus an account icon competing for
 // 390px, and every addition this week made something else worse. A drawer ends
@@ -44,17 +45,8 @@
   var crest = document.querySelector('.crest');
   var mobileDock = document.createElement('div');
   mobileDock.className = 'crest-mobile-nav';
-  // On the home page the icon is a link to where you already are, so it's just
-  // noise — the crest above it links home anyway.
-  var onHome = /(^\/$|index\.html$)/.test(location.pathname);
-  var sourceHome = nav.querySelector('a[href="index.html"]');
-  var mobileHome = sourceHome ? sourceHome.cloneNode(true) : document.createElement('a');
-  mobileHome.classList.remove('active');
-  mobileHome.classList.add('mnav-home');
-  mobileHome.setAttribute('href', 'index.html');
-  mobileHome.setAttribute('aria-label', 'Home');
-  if (!onHome) mobileDock.appendChild(mobileHome);
-  mobileDock.appendChild(toggle);
+  // No home icon: "SAM + JENNI" is itself a link to the home page, and now that
+  // the crest is left-aligned the icon sat right on top of it doing the same job.
   (crest || nav).appendChild(mobileDock);
 
   // ---- the panel ------------------------------------------------------------
