@@ -61,6 +61,28 @@
   .skip{ display:inline-block; margin-top:16px; font-size:12px; letter-spacing:.02em;
     color:#a2907a; text-decoration:none; border-bottom:1px solid transparent; }
   .skip:hover{ color:var(--dark); border-bottom-color:#a2907a; }
+  /* ---- cleaned up to match the phone home page --------------------------
+     Order is city, then the names, then the date — the same reading order as
+     the crest. The red band came off: the card is white with one red accent
+     (the label and the +), which is how the rest of the site behaves. */
+  .card{ border-radius:18px; overflow:hidden; }
+  .box{ padding:34px 26px 28px; }
+  .sub{ margin-bottom:12px; font-size:10.5px; font-weight:800; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--red); }
+  h1{ margin:0; font-size:34px; letter-spacing:.02em; }
+  .date{ margin-top:10px; font-size:15px; letter-spacing:.16em; color:#8a7967; }
+  form{ margin-top:30px; }
+  label{ display:block; margin-bottom:9px; font-size:10.5px; font-weight:800;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--red); }
+  input{ border-radius:var(--r-pill); background:#fff; text-align:center; }
+  /* "Find it" read like a search engine. The button says the same thing as the
+     label above it, which is the plainest way to be sure. */
+  button[type=submit]{ border-radius:var(--r-pill); background:var(--red); color:#fff;
+    border:0; font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+  button[type=submit]:hover{ background:var(--dark); }
+  .hint{ margin-top:22px; font-size:12px; }
+  .gate-foot{ display:flex; flex-direction:column; align-items:center; gap:9px; margin-top:18px; }
+  .gate-foot .skip{ margin-top:0; }
 </style>
 </head>
 <body>
@@ -70,22 +92,24 @@
   <div class="bgtint"></div>
 
   <div class="card">
-    <div class="band">New York or Nowhere</div>
     <div class="box">
+      <div class="sub">The Pierre &middot; New York, New York</div>
       <h1>Sam <span class="plus">+</span> Jenni</h1>
-      <div class="sub">The Pierre · New York</div>
       <div class="date">3.20.27</div>
 
       <form method="POST" action="/api/login">
         <label for="lastname">Find my invitation</label>
         <input id="lastname" name="lastname" type="text" autocomplete="name" autofocus
                placeholder="your full name or email" spellcheck="false" autocapitalize="words" />
-        <button type="submit">Find it</button>
+        <button type="submit">Find my invitation &rarr;</button>
       </form>
 
       <div class="err" id="err"></div>
-      <div class="hint">your name as we'd have written it, or the email we sent this to.<br>can't find yourself? just text us.</div>
-      <a class="skip" href="/">or have a look around first &rarr;</a>
+      <div class="hint">your name as we&rsquo;d have written it, or the email we sent this to.</div>
+      <div class="gate-foot">
+        <a class="skip" href="sms:">can&rsquo;t find it? text us</a>
+        <a class="skip" href="/">have a look around first &rarr;</a>
+      </div>
     </div>
   </div>
 <script>
