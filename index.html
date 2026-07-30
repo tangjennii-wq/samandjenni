@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730b">
+<link rel="stylesheet" href="site.css?v=20260730c">
 <style>
   :root {
     --red: #E53C2D;
@@ -1025,7 +1025,10 @@
 <style>
   /* The home page is film + three links and nothing else, so the ivory page
      background showed as a white band under the fold. Black all the way down. */
-  body.is-home-dark, html:has(body.is-home-dark){ background:var(--dark); }
+  /* Both html AND body: the root element paints the canvas below the body box,
+     so setting body alone leaves a white band under the fold. */
+  html, body.is-home-dark{ background:var(--dark) !important; }
+  body.is-home-dark{ min-height:100svh; }
   /* the rules either side of SAM + JENNI go — Jenni's call, and it lets the
      kebab sit in that space without crowding */
   .crest-rule{ display:none !important; }
@@ -1138,9 +1141,7 @@
 
 
   <div class="hero-note">
-    <a class="hero-note-btn" href="rsvp.html" data-rsvp-open>RSVP</a>
-    <button type="button" class="hero-note-btn is-mid" data-note-open>leave us a note <span aria-hidden="true">&#9825;</span></button>
-    <button type="button" class="hero-note-btn" data-ou-open>over<span class="ou-slash">/</span>under</button>
+    <a class="hero-note-btn is-mid" href="rsvp.html" data-rsvp-open>RSVP</a>
   </div>
 
 

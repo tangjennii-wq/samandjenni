@@ -2041,3 +2041,17 @@ body.map-full .map-caption{ display:none !important; }
     background:#fff; color:var(--dark); font-size:16px; font-weight:600;
     letter-spacing:0; text-transform:none; }
 }
+
+/* ---------- phones: crest title left, so the menu overlays it exactly -------
+   The full-screen menu draws its own "Sam + Jenni" at the top-left. For the
+   open to read as the bar transforming rather than a panel arriving, the crest
+   underneath has to sit in the same place — so it left-aligns on phones only.
+   Both use 16px left padding and 20px/800 type. */
+@media(max-width:760px){
+  .crest{ text-align:left; }
+  .crest-row{ justify-content:flex-start; gap:0; }
+  .crest-name{ font-size:20px !important; letter-spacing:.03em !important; }
+  .crest-tag{ text-align:left; padding-right:56px; }
+  /* room for the kebab at the right edge */
+  .crest-row{ padding-right:52px; }
+}
