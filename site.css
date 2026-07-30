@@ -2041,8 +2041,8 @@ body.map-full .map-caption{ display:none !important; }
    Italics plus a following arrow is the smallest treatment that says "this
    goes somewhere" — no pill, no fill, nothing competing with the film. */
 .hero-note{ display:flex; justify-content:flex-end; align-items:center;
-  background:var(--dark); padding:2px 16px 14px; }
-@media(max-width:760px){ .hero-note{ padding:2px 14px 14px; } }
+  background:var(--dark); padding:6px 16px 22px; }
+@media(max-width:760px){ .hero-note{ padding:6px 14px 20px; } }
 /* Red, not white — it picks up the crest and reads as the site's one accent
    rather than a caption. #FF6558 rather than --red (#E53C2D): the brand red on
    near-black is about 4.2:1, under the 4.5:1 minimum for text this size, and

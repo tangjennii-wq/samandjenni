@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260730r">
+<link rel="stylesheet" href="site.css?v=20260730s">
 <style>
   :root {
     --red: #E53C2D;
@@ -1031,8 +1031,16 @@
      kebab sit in that space without crowding */
   .crest-rule{ display:none !important; }
 </style>
+<style>
+  /* The home page is the film and nothing else, so it's one black field rather
+     than a dark band on an ivory page. html AND body: the root element paints
+     the canvas below the body box, which is what left a white strip last time. */
+  html, body.is-home-dark{ background:var(--dark) !important; }
+  body.is-home-dark{ min-height:100svh; }
+  body.is-home-dark .hero{ min-height:0; }
+</style>
 </head>
-<body class="has-mobile-actions">
+<body class="has-mobile-actions is-home-dark">
   <span id="top"></span>
 <!-- White crest band -->
   <header class="crest">
