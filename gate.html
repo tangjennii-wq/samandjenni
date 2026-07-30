@@ -71,9 +71,9 @@
     text-transform:uppercase; color:var(--red); }
   h1{ margin:0; font-size:34px; letter-spacing:.02em; }
   .date{ margin-top:10px; font-size:15px; letter-spacing:.16em; color:#8a7967; }
-  form{ margin-top:30px; }
-  label{ display:block; margin-bottom:9px; font-size:10.5px; font-weight:800;
-    letter-spacing:.2em; text-transform:uppercase; color:var(--red); }
+  form{ margin-top:26px; }
+  .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; padding:0;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
   input{ border-radius:var(--r-pill); background:#fff; text-align:center; }
   /* "Find it" read like a search engine. The button says the same thing as the
      label above it, which is the plainest way to be sure. */
@@ -98,7 +98,10 @@
       <div class="date">3.20.27</div>
 
       <form method="POST" action="/api/login">
-        <label for="lastname">Find my invitation</label>
+        <!-- The visible label said the same words as the button directly below
+             it. Kept for screen readers only, since the field still needs a
+             name — the placeholder alone isn't an accessible label. -->
+        <label class="sr-only" for="lastname">Your full name or email</label>
         <input id="lastname" name="lastname" type="text" autocomplete="name" autofocus
                placeholder="your full name or email" spellcheck="false" autocapitalize="words" />
         <button type="submit">Find my invitation &rarr;</button>
