@@ -1067,6 +1067,27 @@ body.map-full .map-caption{ display:none !important; }
 .plusone-yn{ display:flex; gap:7px; }
 .yn.p1{ min-width:62px; height:38px; border-radius:var(--r-pill); font-size:11px; }
 
+/* ---- RSVP wizard: step navigation ----------------------------------------- */
+.rsvp-nav{ display:flex; gap:10px; align-items:center; margin-top:14px; }
+.rsvp-back{ background:none; border:1.5px solid var(--line-2); border-radius:var(--r-pill);
+  font:inherit; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:#6b5a50; cursor:pointer; padding:10px 18px; white-space:nowrap; }
+.rsvp-back:hover{ border-color:var(--dark); color:var(--dark); }
+.rsvp-nav .rsvp-send{ flex:1; margin-top:0; }
+.rsvp-edit-hint{ margin-top:18px; font-size:12px; color:#a2907a; text-align:center; }
+.rsvp-edit-link{ background:none; border:none; cursor:pointer; font:inherit; font-size:12px;
+  color:var(--red); text-decoration:underline; text-underline-offset:3px; padding:0; }
+.rsvp-edit-link:hover{ color:var(--dark); }
+.rsvp-notes-inline{ text-align:left; margin-top:18px; padding-top:18px;
+  border-top:1px dashed var(--line); }
+.rsvp-notes-inline .note-field{ margin-top:12px; }
+.rsvp-notes-inline .note-field:first-child{ margin-top:0; }
+.rsvp-notes-inline .note-btn{ width:100%; margin-top:14px; }
+@media(max-width:600px){
+  .rsvp-nav{ flex-direction:column-reverse; }
+  .rsvp-back{ width:100%; text-align:center; }
+}
+
 /* ---- Nav: home icon + two action pills pinned right (mobile) --------------- */
 .nav-home-ico{ display:none; width:18px; height:18px; }
 .nav-brief{ display:none; }

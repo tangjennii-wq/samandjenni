@@ -110,10 +110,26 @@
     });
   }
 
+  // Upsert — insert or update if a row with the same onConflict column exists.
+  // Used by RSVP to allow guests to edit & resubmit.
+  function upsert(table, row, onConflict){
+    if (typeof fetch !== 'function') return Promise.reject(new Error('offline'));
+    return fetch(URL_BASE + '/rest/v1/' + table, {
+      method:'POST',
+      headers:{ 'apikey':KEY, 'Authorization':'Bearer '+KEY,
+                'Content-Type':'application/json',
+                'Prefer':'return=minimal,resolution=merge-duplicates' },
+      body: JSON.stringify(row)
+    }).then(function(r){
+      if (!r.ok) throw new Error('upsert failed: ' + r.status);
+      return r;
+    });
+  }
+
   function guestKey(){
     var m = document.cookie.split('; ').find(function(r){ return r.indexOf('sj_guest=') === 0; });
     return m ? decodeURIComponent(m.split('=').slice(1).join('=')) : '';
   }
 
-  window.SJUpload = { wire: wire, save: save, guestKey: guestKey };
+  window.SJUpload = { wire: wire, save: save, upsert: upsert, guestKey: guestKey };
 })();

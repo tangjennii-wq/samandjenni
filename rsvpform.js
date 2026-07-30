@@ -1,24 +1,19 @@
-// rsvpform.js — tier-aware RSVP.
+// rsvpform.js — tier-aware 3-step RSVP wizard.
+// Step 1: Guest info (name, email, +1, dietary).
+// Step 2: Events (yes/no for each tier-visible event).
+// Step 3: Thank-you confirmation with calendar links + inline notes/song/memory.
+//
 // Opens in the shared drawer from any [data-rsvp-open] trigger (the nav button),
 // and renders inline if a <div id="sjrsvp"> exists (the RSVP page).
-// Each guest only sees the events their tier is invited to (same rules as
-// personalize.js). Replies email today; set GFORM to post into a Google Sheet.
+// Supports edit & resubmit — uses UPSERT so a second submission updates the row.
 (function () {
   var inline = document.getElementById('sjrsvp');
   var triggers = document.querySelectorAll('[data-rsvp-open]');
   if (!inline && !triggers.length) return;
 
-  // From the RSVP form's "Get pre-filled link":
-  // { action:'…/formResponse', name:'entry.1', email:'entry.2', events:'entry.3',
-  //   count:'entry.4', diet:'entry.5', note:'entry.6' }
-  var GFORM = null;
-
+  /* ── tier + prefill ──────────────────────────────────────────────── */
   var rawTier = (document.documentElement.getAttribute('data-tier') || '').trim();
   var tier = /^[1-4]$/.test(rawTier) ? parseInt(rawTier, 10) : 3;
-
-  // What the guest typed at the gate (email or last name) — used to prefill.
-  // No household lookup table here on purpose: this file is public.
-  var GUEST_MAP = {};
 
   function cookie(name){
     var m = document.cookie.split('; ').find(function(r){ return r.indexOf(name + '=') === 0; });
@@ -27,19 +22,26 @@
   function titleCase(x){ return x.replace(/\b[a-z]/g, function(c){ return c.toUpperCase(); }); }
 
   var who = cookie('sj_guest').trim().toLowerCase();
-  var known = GUEST_MAP[who] || {};
   var PRE = {
-    email: known.email || (who.indexOf('@') > -1 ? who : ''),
-    name:  known.name  || (who && who.indexOf('@') === -1 ? titleCase(who) : ''),
-    party: Math.min(2, known.party || 1)
+    email: who.indexOf('@') > -1 ? who : '',
+    name:  who && who.indexOf('@') === -1 ? titleCase(who) : '',
+    party: 1
   };
 
+  // Try to restore a previous submission so guests can edit & resubmit.
+  var prev = null;
+  try { prev = JSON.parse(localStorage.getItem('sj-rsvp-data')); } catch(e){}
+  if (prev) {
+    if (prev.guests && prev.guests[0]) {
+      PRE.name  = prev.guests[0].name  || PRE.name;
+      PRE.email = prev.guests[0].email || PRE.email;
+    }
+    PRE.party = prev.party_size || 1;
+  }
+
+  /* ── events ──────────────────────────────────────────────────────── */
   var CT  = 'https://www.google.com/maps/search/?api=1&query=Chinese+Tuxedo+5+Doyers+St+New+York';
   var PIE = 'https://www.google.com/maps/search/?api=1&query=The+Pierre+Hotel+2+E+61st+St+New+York';
-
-  // One line per event: name, then (day date, place). Keeps the whole form on
-  // a single phone screen.
-  // `cal` = Google Calendar dates + the location string used in the invite.
   var CT_ADDR  = 'Chinese Tuxedo, 5 Doyers St, New York, NY 10013';
   var PIE_ADDR = 'The Pierre, 2 E 61st St, New York, NY 10065';
   var EVENTS = [
@@ -63,7 +65,52 @@
       '&details=' + encodeURIComponent('samandjenni.com');
   }
 
-  function formHTML(p){
+  /* ── HTML generators ─────────────────────────────────────────────── */
+
+  function guestRow(p, i){
+    var who = i === 0 ? 'your' : '+1’s';
+    var prevGuest = prev && prev.guests && prev.guests[i];
+    var vName  = prevGuest ? prevGuest.name  : (i === 0 ? PRE.name  : '');
+    var vEmail = prevGuest ? prevGuest.email : (i === 0 ? PRE.email : '');
+    var vDiet  = prevGuest ? prevGuest.dietary : '';
+    return '<div class="guest-row">' +
+      '<div class="guest-fields">' +
+        '<div class="note-field"><label class="note-l" for="' + p + 'GN' + i + '">' + who + ' name</label>' +
+          '<input id="' + p + 'GN' + i + '" class="note-f gname" type="text" value="' +
+            vName.replace(/"/g,'&quot;') + '"></div>' +
+        '<div class="note-field"><label class="note-l" for="' + p + 'GE' + i + '">' + who + ' email' +
+          (i === 0 ? '' : ' <span class="opt">(optional)</span>') + '</label>' +
+          '<input id="' + p + 'GE' + i + '" class="note-f gemail" type="email" value="' +
+            vEmail.replace(/"/g,'&quot;') + '"></div>' +
+        '<div class="note-field span2"><label class="note-l" for="' + p + 'GD' + i + '">dietary / allergies</label>' +
+          '<input id="' + p + 'GD' + i + '" class="note-f gdiet" type="text" placeholder="none" value="' +
+            vDiet.replace(/"/g,'&quot;') + '"></div>' +
+      '</div></div>';
+  }
+
+  // Step 1 — guest info
+  function step1HTML(p){
+    return '' +
+      '<div class="rsvp-head">' +
+        '<div class="rsvp-title">R S V P</div>' +
+        '<div class="rsvp-sub">kindly reply by January 2027</div>' +
+      '</div>' +
+      '<div class="rsvp-body">' +
+        '<div class="rsvp-guests" data-guests></div>' +
+        '<div class="plusone">' +
+          '<span class="plusone-q">Bringing a +1?</span>' +
+          '<div class="plusone-yn">' +
+            '<button type="button" class="yn yes p1" data-p1="yes">Yes</button>' +
+            '<button type="button" class="yn no p1" data-p1="no">No</button>' +
+          '</div>' +
+        '</div>' +
+        '<input id="' + p + 'Count" type="hidden" value="' + PRE.party + '">' +
+        '<button class="note-btn rsvp-send" type="button" data-next="2">Next → Events</button>' +
+      '</div>';
+  }
+
+  // Step 2 — events
+  function step2HTML(p){
     var rows = EVENTS.map(function(e){
       var loc = e.url
         ? '<a href="' + e.url + '" target="_blank" rel="noopener" class="ev-loc">' + e.where + ' ↗</a>'
@@ -76,23 +123,13 @@
           '<button type="button" class="yn no"  data-k="' + e.k + '" data-v="no" aria-label="Declines">No</button>' +
         '</div></div>';
     }).join('');
-    return ('' +
+    return '' +
       '<div class="rsvp-head">' +
-        '<div class="rsvp-title">R S V P</div>' +
-        '<div class="rsvp-sub">kindly reply by January 2027</div>' +
+        '<div class="rsvp-title">E V E N T S</div>' +
+        '<div class="rsvp-sub">which events will you be joining?</div>' +
       '</div>' +
       '<div class="rsvp-body">' +
         '<div class="rsvp-list">' + rows + '</div>' +
-        '<div class="rsvp-guests" data-guests></div>' +
-        '<div class="plusone">' +
-          '<span class="plusone-q">Bringing a +1?</span>' +
-          '<div class="plusone-yn">' +
-            '<button type="button" class="yn yes p1" data-p1="yes">Yes</button>' +
-            '<button type="button" class="yn no p1" data-p1="no">No</button>' +
-          '</div>' +
-        '</div>' +
-        '<input id="{p}Count" type="hidden" value="' + PRE.party + '">' +
-        '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
         '<div class="rsvp-photo-block">' +
           '<p class="rsvp-photo-note"><b>Send us a photo of you &amp; Sam, you &amp; Jenni, us, etc!</b> ' +
             'Blurry is fine, unflattering is better. <span>(optional)</span></p>' +
@@ -101,91 +138,115 @@
               '<img src="img/photo-example.jpg" alt="" loading="lazy" onerror="this.closest(\'.photo-eg\').remove()">' +
               '<figcaption>like this</figcaption>' +
             '</figure>' +
-            '<label class="rsvp-photo-btn compact" for="{p}Photo">' +
+            '<label class="rsvp-photo-btn compact" for="' + p + 'Photo">' +
               '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
                 '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
               '<span class="photo-txt">upload a photo</span>' +
             '</label>' +
-            '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
+            '<input id="' + p + 'Photo" class="photo-input" type="file" accept="image/*">' +
           '</div>' +
           '<div class="photo-preview" data-preview hidden></div>' +
         '</div>' +
-      '</div>').replace(/\{p\}/g, p);
+        '<div class="rsvp-nav">' +
+          '<button class="rsvp-back" type="button" data-back="← Guest info">← Back</button>' +
+          '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
+        '</div>' +
+      '</div>';
   }
 
-  var cache = { Count: String(PRE.party) };
-  var answers = {};
-
-  function guestRow(p, i){
-    var who = i === 0 ? 'your' : '+1';
-    return '<div class="guest-row">' +
-      '<div class="guest-fields">' +
-        '<div class="note-field"><label class="note-l" for="' + p + 'GN' + i + '">' + who + ' name</label>' +
-          '<input id="' + p + 'GN' + i + '" class="note-f gname" type="text" value="' +
-            (i === 0 ? PRE.name.replace(/"/g,'&quot;') : '') + '"></div>' +
-        '<div class="note-field"><label class="note-l" for="' + p + 'GE' + i + '">' + who + ' email' +
-          (i === 0 ? '' : ' <span class="opt">(optional)</span>') + '</label>' +
-          '<input id="' + p + 'GE' + i + '" class="note-f gemail" type="email" value="' +
-            (i === 0 ? PRE.email.replace(/"/g,'&quot;') : '') + '"></div>' +
-        '<div class="note-field span2"><label class="note-l" for="' + p + 'GD' + i + '">dietary / allergies</label>' +
-          '<input id="' + p + 'GD' + i + '" class="note-f gdiet" type="text" placeholder="none"></div>' +
-      '</div></div>';
+  // Step 3 — thank you + inline notes
+  function step3HTML(calHtml){
+    return '' +
+      '<div class="note-thanks">' +
+        '<div class="note-h">Thank you ♡</div>' +
+        '<p class="note-sub">your reply is in — we can’t wait.</p>' +
+        calHtml +
+        '<p class="thanks-ask">while you’re here — leave us a note, submit a song request, or share a favorite memory.</p>' +
+        '<div class="rsvp-notes-inline">' +
+          '<div class="note-field">' +
+            '<label class="note-l" for="rn_Mem">a favorite memory with Sam and/or Jenni</label>' +
+            '<textarea id="rn_Mem" class="note-f note-ta"></textarea>' +
+          '</div>' +
+          '<div class="note-row2">' +
+            '<div class="note-field"><label class="note-l" for="rn_WordS">one word that defines Sam</label>' +
+              '<input id="rn_WordS" class="note-f" type="text"></div>' +
+            '<div class="note-field"><label class="note-l" for="rn_WordJ">one word that defines Jenni</label>' +
+              '<input id="rn_WordJ" class="note-f" type="text"></div>' +
+          '</div>' +
+          '<div class="note-field" style="margin-top:14px">' +
+            '<label class="note-l" for="rn_Song">a song you want to hear</label>' +
+            '<input id="rn_Song" class="note-f" type="text" placeholder="artist – title">' +
+          '</div>' +
+          '<button class="note-btn" type="button" data-send-note>Send note</button>' +
+        '</div>' +
+        '<button class="thanks-skip" type="button" data-close>skip — all done</button>' +
+        '<p class="rsvp-edit-hint">Changed your mind? <button type="button" class="rsvp-edit-link" data-edit-rsvp>Edit your RSVP</button></p>' +
+      '</div>';
   }
+
+  /* ── wiring ──────────────────────────────────────────────────────── */
 
   function wire(root, p, onSent){
+    var step = 1;
+    var answers = {};
+    var guestData = [];   // preserved across steps
+    var plusOneVal = PRE.party > 1 ? 'yes' : 'no';
+    var uploader = null;  // wired in step 2
+    var card = root.querySelector('.note-card') || root;
+
+    // Restore previous answers for edit mode
+    if (prev && prev.events) answers = Object.assign({}, prev.events);
+
+    /* ── render helpers ──────────────────────────────────────────── */
     function g(k){ return root.querySelector('#' + p + k); }
 
-    // Render one block per person; keeps whatever's already typed.
-    var box = root.querySelector('[data-guests]');
-    function renderGuests(){
-      var n = Math.max(1, Math.min(2, parseInt(g('Count').value, 10) || 1));
-      var keep = [].map.call(box.querySelectorAll('.guest-row'), function(r){
+    function saveGuestFields(){
+      var rows = [].slice.call(root.querySelectorAll('.guest-row'));
+      guestData = rows.map(function(r){
         return { name:r.querySelector('.gname').value, email:r.querySelector('.gemail').value,
-                 diet:r.querySelector('.gdiet').value };
-      });
-      var html = ''; for (var i = 0; i < n; i++) html += guestRow(p, i);
-      box.innerHTML = html;
-      [].forEach.call(box.querySelectorAll('.guest-row'), function(r, i){
-        if (!keep[i]) return;
-        r.querySelector('.gname').value  = keep[i].name;
-        r.querySelector('.gemail').value = keep[i].email;
-        r.querySelector('.gdiet').value  = keep[i].diet;
+                 dietary:r.querySelector('.gdiet').value };
       });
     }
-    renderGuests();
 
-    // "+1?" replaces the old number field. Yes reveals a second block, No hides it.
-    var p1wrap = root.querySelector('.plusone');
+    function renderGuests(){
+      var box = root.querySelector('[data-guests]');
+      if (!box) return;
+      var n = Math.max(1, Math.min(2, parseInt(g('Count').value, 10) || 1));
+      var html = ''; for (var i = 0; i < n; i++) html += guestRow(p, i);
+      box.innerHTML = html;
+      // Restore any previously typed values
+      [].forEach.call(box.querySelectorAll('.guest-row'), function(r, i){
+        if (!guestData[i]) return;
+        r.querySelector('.gname').value  = guestData[i].name;
+        r.querySelector('.gemail').value = guestData[i].email;
+        r.querySelector('.gdiet').value  = guestData[i].dietary;
+      });
+    }
+
     function setPlusOne(v){
-      g('Count').value = (v === 'yes') ? '2' : '1';
+      plusOneVal = v;
+      var countEl = g('Count');
+      if (countEl) countEl.value = (v === 'yes') ? '2' : '1';
       root.querySelectorAll('.yn.p1').forEach(function(x){
         x.classList.toggle('on', x.dataset.p1 === v);
       });
+      saveGuestFields();
       renderGuests();
     }
-    if (p1wrap) {
-      p1wrap.querySelectorAll('.yn.p1').forEach(function(b){
-        b.addEventListener('click', function(){ setPlusOne(b.dataset.p1); });
-      });
-      setPlusOne(PRE.party > 1 ? 'yes' : 'no');
-    }
 
-    var up = (window.SJUpload ? window.SJUpload.wire(g('Photo'), root.querySelector('[data-preview]')) : null);
-    Object.keys(cache).forEach(function(k){
-      var n = g(k); if(!n) return;
-      if (cache[k]) n.value = cache[k];
-      n.addEventListener('input', function(){ cache[k] = n.value; });
-    });
-    root.querySelectorAll('.yn:not(.p1)').forEach(function(b){
-      if (answers[b.dataset.k] === b.dataset.v) b.classList.add('on');
-      b.addEventListener('click', function(){
-        var k = b.dataset.k;
-        answers[k] = b.dataset.v;
-        root.querySelectorAll('.yn[data-k="' + k + '"]').forEach(function(x){ x.classList.remove('on'); });
-        b.classList.add('on');
-      });
-    });
-    // Only the events they said yes to — nobody wants five invites they declined.
+    function showErr(msg){
+      var box = root.querySelector('.form-err');
+      if (!box) {
+        box = document.createElement('p');
+        box.className = 'form-err';
+        box.setAttribute('role', 'alert');
+        var send = root.querySelector('[data-send]') || root.querySelector('[data-next]');
+        if (send) send.parentNode.insertBefore(box, send);
+      }
+      box.textContent = msg;
+    }
+    function clearErr(){ var box = root.querySelector('.form-err'); if (box) box.remove(); }
+
     function calBlock(){
       var yes = EVENTS.filter(function(e){ return answers[e.k] === 'yes'; });
       if (!yes.length) return '';
@@ -202,96 +263,177 @@
       '</div>';
     }
 
-    function showErr(el, msg){
-      var box = el.querySelector('.form-err');
-      if (!box) {
-        box = document.createElement('p');
-        box.className = 'form-err';
-        box.setAttribute('role', 'alert');
-        var send = el.querySelector('[data-send]');
-        send.parentNode.insertBefore(box, send);
+    /* ── step rendering ──────────────────────────────────────────── */
+    function renderStep(n){
+      step = n;
+      clearErr();
+
+      if (n === 1) {
+        card.innerHTML = step1HTML(p);
+        renderGuests();
+        // +1 toggle
+        var p1wrap = root.querySelector('.plusone');
+        if (p1wrap) {
+          p1wrap.querySelectorAll('.yn.p1').forEach(function(b){
+            b.addEventListener('click', function(){ setPlusOne(b.dataset.p1); });
+          });
+          setPlusOne(plusOneVal);
+        }
+        // Next button
+        root.querySelector('[data-next]').addEventListener('click', function(){
+          // Validate step 1
+          var rows = [].slice.call(root.querySelectorAll('.guest-row'));
+          var missing = [];
+          if (!rows.length || !rows[0].querySelector('.gname').value.trim()) missing.push('your name');
+          var email = rows.length ? rows[0].querySelector('.gemail').value.trim() : '';
+          if (!email) missing.push('your email');
+          else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) missing.push('a valid email');
+          if (missing.length) { showErr('We still need ' + missing.join(' and ') + '.'); return; }
+          clearErr();
+          saveGuestFields();
+          renderStep(2);
+        });
       }
-      box.textContent = msg;
-    }
-    function clearErr(el){
-      var box = el.querySelector('.form-err');
-      if (box) box.remove();
-    }
 
-    root.querySelector('[data-send]').addEventListener('click', function () {
-      var btn = this;
+      else if (n === 2) {
+        card.innerHTML = step2HTML(p);
+        // Restore event answers
+        root.querySelectorAll('.yn:not(.p1)').forEach(function(b){
+          if (answers[b.dataset.k] === b.dataset.v) b.classList.add('on');
+          b.addEventListener('click', function(){
+            var k = b.dataset.k;
+            answers[k] = b.dataset.v;
+            root.querySelectorAll('.yn[data-k="' + k + '"]').forEach(function(x){ x.classList.remove('on'); });
+            b.classList.add('on');
+          });
+        });
+        // Photo upload
+        uploader = (window.SJUpload ? window.SJUpload.wire(g('Photo'), root.querySelector('[data-preview]')) : null);
+        // Back button
+        root.querySelector('[data-back]').addEventListener('click', function(){
+          renderStep(1);
+        });
+        // Send button
+        root.querySelector('[data-send]').addEventListener('click', function(){
+          var btn = this;
+          // Validate: every event answered
+          if (EVENTS.some(function(e){ return !answers[e.k]; })){
+            showErr('Please pick yes or no for every event.');
+            return;
+          }
+          clearErr();
 
-      // ---- a reply with no answers isn't a reply --------------------------
-      var rows = [].slice.call(root.querySelectorAll('.guest-row'));
-      var missing = [];
-      if (EVENTS.some(function(e){ return !answers[e.k]; })) missing.push('a yes or no for every event');
-      if (!rows.length || !rows[0].querySelector('.gname').value.trim()) missing.push('your name');
-      var email = rows.length ? rows[0].querySelector('.gemail').value.trim() : '';
-      if (!email) missing.push('your email');
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) missing.push('a valid email');
-      if (missing.length) { showErr(root, 'We still need ' + missing.join(' and ') + '.'); return; }
-      clearErr(root);
+          var evAnswers = {};
+          EVENTS.forEach(function(e){ evAnswers[e.k] = answers[e.k]; });
 
-      var guestRows = rows.map(function(x){
-        return { name:x.querySelector('.gname').value.trim(),
-                 email:x.querySelector('.gemail').value.trim(),
-                 dietary:x.querySelector('.gdiet').value.trim() };
-      });
-      var evAnswers = {};
-      EVENTS.forEach(function(e){ evAnswers[e.k] = answers[e.k]; });
+          var label = btn.textContent;
+          btn.disabled = true; btn.textContent = 'Sending…';
 
-      var label = btn.textContent;
-      btn.disabled = true; btn.textContent = 'Sending…';
-
-      var saving = (window.SJUpload && window.SJUpload.save)
-        ? window.SJUpload.save('wedding_rsvps', {
-            guest_key: window.SJUpload.guestKey(),
+          var payload = {
+            guest_key: window.SJUpload ? window.SJUpload.guestKey() : '',
             tier: tier,
-            party_size: guestRows.length,
+            party_size: guestData.length,
             events: evAnswers,
-            guests: guestRows,
-            photo_path: up ? up.getPath() : ''
-          })
-        : Promise.reject(new Error('no uploader'));
+            guests: guestData,
+            photo_path: uploader ? uploader.getPath() : ''
+          };
 
-      // Only claim success once it has actually saved.
-      saving.then(function () {
-        try { localStorage.setItem('sj-rsvp-done', '1'); } catch (e) {}
-        document.dispatchEvent(new CustomEvent('sj:rsvped'));
-        var card = root.querySelector('.note-card') || root;
-        card.innerHTML = '<div class="note-thanks">' +
-          '<div class="note-h">Thank you \u2661</div>' +
-          '<p class="note-sub">your reply is in \u2014 we can\u2019t wait.</p>' +
-          calBlock() +
-          '<p class="thanks-ask">while you\u2019re here \u2014 leave us a note, submit a song request, share a favorite memory.</p>' +
-          '<button class="note-btn thanks-btn" type="button" data-note-open>Leave a note &rarr;</button>' +
-          '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
-          '</div>';
-      // wire the freshly-rendered buttons
-      var openNote = card.querySelector('[data-note-open]');
-      if (openNote) openNote.addEventListener('click', function(){
-        var t = document.querySelector('.nav-cta [data-note-open]');
-        if (t) t.click();
-      });
-      var skip = card.querySelector('[data-close]');
-      if (skip && onSent) skip.addEventListener('click', onSent);
-      }).catch(function () {
-        btn.disabled = false; btn.textContent = label;
-        showErr(root, 'That didn\u2019t send \u2014 check your connection and try again. ' +
-                      'Still stuck? Text us and we\u2019ll add you by hand.');
-      });
-    });
+          var saving = (window.SJUpload && window.SJUpload.upsert)
+            ? window.SJUpload.upsert('wedding_rsvps', payload, 'guest_key')
+            : (window.SJUpload && window.SJUpload.save)
+              ? window.SJUpload.save('wedding_rsvps', payload)
+              : Promise.reject(new Error('no uploader'));
+
+          saving.then(function(){
+            // Persist for edit-mode prefill + done state
+            try {
+              localStorage.setItem('sj-rsvp-done', '1');
+              localStorage.setItem('sj-rsvp-data', JSON.stringify(payload));
+            } catch(e){}
+            document.dispatchEvent(new CustomEvent('sj:rsvped'));
+            prev = payload;          // update in-memory copy for edit mode
+            renderStep(3);
+          }).catch(function(){
+            btn.disabled = false; btn.textContent = label;
+            showErr('That didn’t send — check your connection and try again. ' +
+                    'Still stuck? Text us and we’ll add you by hand.');
+          });
+        });
+      }
+
+      else if (n === 3) {
+        card.innerHTML = step3HTML(calBlock());
+        // Wire inline notes send
+        var noteBtn = root.querySelector('[data-send-note]');
+        if (noteBtn) {
+          noteBtn.addEventListener('click', function(){
+            var btn = this;
+            var val = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+            var mem = val('rn_Mem'), wS = val('rn_WordS'), wJ = val('rn_WordJ'), song = val('rn_Song');
+            if (!mem && !wS && !wJ && !song) return;  // nothing to send
+
+            var label = btn.textContent;
+            btn.disabled = true; btn.textContent = 'Sending…';
+
+            var noteSaving = (window.SJUpload && window.SJUpload.save)
+              ? window.SJUpload.save('wedding_notes', {
+                  guest_key: window.SJUpload.guestKey(),
+                  memory: mem, word_sam: wS, word_jenni: wJ, song: song,
+                  from_name: (guestData[0] && guestData[0].name) || PRE.name,
+                  photo_path: ''
+                })
+              : Promise.reject(new Error('no uploader'));
+
+            noteSaving.then(function(){
+              var wrap = root.querySelector('.rsvp-notes-inline');
+              if (wrap) wrap.innerHTML = '<p class="note-sub" style="margin-top:14px">Note sent ♡ thank you!</p>';
+            }).catch(function(){
+              btn.disabled = false; btn.textContent = label;
+            });
+          });
+        }
+        // Wire "all done" / close
+        var skip = root.querySelector('[data-close]');
+        if (skip && onSent) skip.addEventListener('click', onSent);
+        // Wire "edit RSVP"
+        var editBtn = root.querySelector('[data-edit-rsvp]');
+        if (editBtn) {
+          editBtn.addEventListener('click', function(){
+            renderStep(1);
+          });
+        }
+      }
+
+      // Scroll the form into view on step change
+      var target = card;
+      if (target && target.scrollIntoView && n <= 2) {
+        try { target.scrollIntoView({ behavior:'smooth', block:'start' }); }
+        catch(e){ target.scrollIntoView(true); }
+      }
+    }
+
+    /* ── initial render ──────────────────────────────────────────── */
+    // If already submitted, go straight to step 3 but allow editing
+    var alreadyDone = false;
+    try { alreadyDone = localStorage.getItem('sj-rsvp-done') === '1'; } catch(e){}
+
+    if (alreadyDone && prev) {
+      renderStep(3);
+    } else {
+      renderStep(1);
+    }
   }
 
+  /* ── mount ───────────────────────────────────────────────────────── */
   if (inline) {
-    inline.innerHTML = '<div class="note-card">' + formHTML('r') + '</div>';
+    inline.innerHTML = '<div class="note-card">' + step1HTML('r') + '</div>';
     wire(inline, 'r');
   }
 
   if (triggers.length && window.SJDrawer) {
     var d = window.SJDrawer.create({
       label: 'RSVP',
-      html: '<div class="note-card note-card--drawer">' + formHTML('q') + '</div>',
+      html: '<div class="note-card note-card--drawer">' + step1HTML('q') + '</div>',
       onMount: function (api) { wire(api.body, 'q', api.close); }
     });
     triggers.forEach(function (t) {
