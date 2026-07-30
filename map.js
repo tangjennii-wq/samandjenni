@@ -510,10 +510,17 @@
 
   function drawPins(groups){
     // Match the site's tier (set on <html data-tier> by personalize.js).
-    var tier = parseInt(document.documentElement.getAttribute('data-tier') || '1', 10) || 1;
+    //
+    // `parseInt(x || '1') || 1` used to do this, and it had two holes: tier 0 —
+    // a visitor the site hasn't recognised — is falsy, so `|| 1` promoted them
+    // to tier 1 and pinned the Friday venue for the public. And a missing
+    // attribute defaulted to the MOST permissive tier rather than the least.
+    var raw = document.documentElement.getAttribute('data-tier') || '';
+    var tier = /^[0-4]$/.test(raw) ? parseInt(raw, 10) : 3;
+    // Friday is tiers 1–3, exactly as personalize.js has it for the event cards.
+    var seesFriday = tier >= 1 && tier <= 3;
     PLACES.forEach(function(p){
-      // Friday-only venues (Chinese Tuxedo) hidden from Saturday-only guests (tier 4).
-      if (p.ev === 'friday' && tier >= 4) return;
+      if (p.ev === 'friday' && !seesFriday) return;
       var color = (CAT[p.cat]||CAT.do).color;
       var group = groups[p.cat];
       if (group === null) return;            // this map doesn't show that category
