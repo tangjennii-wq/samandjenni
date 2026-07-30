@@ -2100,6 +2100,7 @@ html.ou-embed .note-f{ background:#fff !important; }
   /* the neighbourhood chips that appear once "other hotels" is picked */
   #travel .fgroup--hoods{ display:flex; flex-wrap:wrap; gap:6px;
     width:100%; margin-top:10px; padding-top:10px; }
+  #travel .fgroup--hoods[hidden]{ display:none; }
   #travel .fgroup--hoods .fchip--hood{ min-height:34px; font-size:9.5px;
     padding:0 12px; display:inline-flex; align-items:center; }
   #travel .fhoodlabel{ width:100%; margin:0 0 2px; text-align:left; }
