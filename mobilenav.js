@@ -47,6 +47,7 @@
   mobileDock.className = 'crest-mobile-nav';
   // No home icon: "SAM + JENNI" is itself a link to the home page, and now that
   // the crest is left-aligned the icon sat right on top of it doing the same job.
+  mobileDock.appendChild(toggle);
   (crest || nav).appendChild(mobileDock);
 
   // ---- the panel ------------------------------------------------------------
