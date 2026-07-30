@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260731b">
+<link rel="stylesheet" href="site.css?v=20260731c">
 <style>
   /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
   .wrap{ max-width:1280px; }
@@ -431,6 +431,10 @@
             </div>
             <p class="recempty" hidden>Nothing here — try another neighborhood.</p>
           </div>
+          <!-- Phones only. On a small screen the two filter chips scroll out of
+               view once you're down the list, so the way back to the other set
+               is a link at the foot of the one you're reading. -->
+          <button type="button" class="hotelflip" data-flip></button>
         </div>
 
         <div class="hotelmap">
@@ -526,7 +530,30 @@
       hoods.querySelectorAll('.fchip').forEach(function(x){ x.classList.toggle('is-on', x === b); });
     }
     apply();
+    syncFlip();
   });
+
+  // The foot link mirrors whichever set you're NOT looking at.
+  var flip = document.querySelector('.hotelflip');
+  function syncFlip(){
+    if (!flip) return;
+    var onBlocks = (f === 'block');
+    flip.innerHTML = onBlocks
+      ? 'See other hotels <span aria-hidden="true">&rarr;</span>'
+      : 'See our room blocks <span aria-hidden="true">&rarr;</span>';
+    flip.setAttribute('data-target', onBlocks ? 'other' : 'block');
+  }
+  if (flip) {
+    flip.addEventListener('click', function () {
+      var want = flip.getAttribute('data-target');
+      var chip = bar.querySelector('.fgroup--top .fchip[data-v="' + want + '"]');
+      if (chip) chip.click();
+      var panel = document.querySelector('.hotelpanel');
+      if (panel) panel.scrollTop = 0;
+      var head = document.querySelector('#travel .recbar');
+      if (head) head.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 
   // hovering a card nudges the map to that hotel
   cards.forEach(function(c){
@@ -538,6 +565,7 @@
   });
 
   apply();
+  syncFlip();
   window.addEventListener('load', apply);
 })();
 </script>

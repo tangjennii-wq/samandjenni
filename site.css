@@ -2066,3 +2066,28 @@ html.ou-embed body, html.ou-embed .sect, html.ou-embed .ou-card,
 html.ou-embed .oucard, html.ou-embed .ourow, html.ou-embed .ou-row,
 html.ou-embed .scorebar, html.ou-embed .num, html.ou-embed input,
 html.ou-embed .note-f{ background:#fff !important; }
+
+/* ---------- phones: the two hotel filters, and a way back ------------------
+   The chips were 9px pills in a scrolling row, easy to miss and easy to lose —
+   once you're a few hotels down the list they've scrolled off the top entirely.
+   On phones they become two half-width buttons, and the foot of each list
+   carries a link to the other one, so you never have to scroll back up. */
+.hotelflip{ display:none; }
+@media(max-width:760px){
+  #travel .fgroup--top{ display:grid !important; grid-template-columns:1fr 1fr;
+    gap:8px; width:100%; }
+  #travel .fgroup--top .fchip{ width:100%; min-height:46px; padding:0 10px;
+    font-size:10.5px; letter-spacing:.1em; line-height:1.25; text-align:center;
+    display:flex; align-items:center; justify-content:center; }
+  #travel .fgroup--top .fchip--more{ gap:5px; }
+  #travel .fgroup--top .fchip--more .fnum{ min-width:17px; height:17px; font-size:9px; }
+  #travel .fcount{ display:block; width:100%; margin-top:8px; text-align:center; }
+
+  .hotelflip{ -webkit-appearance:none; appearance:none; font-family:inherit;
+    display:flex; align-items:center; justify-content:flex-end; gap:6px;
+    width:100%; min-height:48px; margin-top:4px; padding:0 2px;
+    background:none; border:0; cursor:pointer;
+    font-size:11px; font-weight:800; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--red); }
+  .hotelflip:active{ opacity:.55; }
+}
