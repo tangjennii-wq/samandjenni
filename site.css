@@ -1993,15 +1993,21 @@ body.map-full .map-caption{ display:none !important; }
   /* the kebab hides while open so the ✕ is the only thing in that corner */
   body.mnav-open .mnav-toggle, body.mnav-open .mnav-home{ opacity:0; pointer-events:none; }
 
-  /* matches .crest padding (13px 16px 15px) and .crest-mobile-nav (top:7px) */
-  .mnav-top{ flex:0 0 auto; display:flex; align-items:center; justify-content:space-between;
-    padding:7px 13px 0 16px; min-height:44px; }
-  .mnav-brand{ font-family:inherit; font-size:20px; font-weight:800; letter-spacing:.03em;
-    text-transform:uppercase; color:var(--red); text-decoration:none; white-space:nowrap; }
+  /* The crest is `padding:13px 16px 15px` and the name sits at the top of that
+     box. The menu's wordmark has to start at the identical x AND y or the open
+     reads as a jump. So: same 13px top, same 16px left, and the ✕ is taken out
+     of flow and pinned to the kebab's own coordinates (top:7px right:13px). */
+  .mnav-top{ position:relative; flex:0 0 auto; padding:13px 56px 0 16px; }
+  /* index.html drops the crest to padding:10px under 800px tall — match it */
+  @media (max-height:800px){ .mnav-top{ padding-top:10px; } }
+  .mnav-brand{ display:block; font-family:inherit; font-size:20px; font-weight:800;
+    letter-spacing:.03em; text-transform:uppercase; color:var(--red);
+    text-decoration:none; white-space:nowrap; line-height:1.15; }
   .mnav-brand span{ font-weight:500; }
-  .mnav-close{ -webkit-appearance:none; appearance:none; width:44px; height:44px;
+  .mnav-close{ -webkit-appearance:none; appearance:none; position:absolute;
+    top:7px; right:13px; width:44px; height:44px;
     display:inline-flex; align-items:center; justify-content:center; padding:0;
-    margin-right:-9px; border:0; background:none; color:var(--red); cursor:pointer; }
+    border:0; background:none; color:var(--red); cursor:pointer; }
   .mnav-close svg{ width:25px; height:25px; }
   .mnav-close:active{ opacity:.55; }
 
@@ -2014,11 +2020,14 @@ body.map-full .map-caption{ display:none !important; }
     font-size:21px; font-weight:500; letter-spacing:.01em;
     color:var(--dark); text-decoration:none; text-transform:none;
     display:flex; align-items:center; justify-content:center; }
-  .mnav-list a.is-here{ color:var(--red); background:none; }
+  /* Uniform, like the reference. RSVP was red and the note gold, which turned a
+     clean list into three competing colours; the only thing distinguished now is
+     the page you're on. No background blocks at all. */
+  .mnav-list a.is-here{ color:#a2907a; background:none; }
   .mnav-list a:active, .mnav-list button:active{ opacity:.55; }
-  .mnav-action{ color:var(--dark) !important; }
-  .mnav-action--rsvp{ color:var(--red) !important; font-weight:800 !important; }
-  .mnav-action--note{ color:#a77d00 !important; font-weight:800 !important; }
+  /* navigation is dark, the two actions are red — one accent, two items */
+  .mnav-action--rsvp, .mnav-action--note{
+    color:var(--red) !important; font-weight:600 !important; }
 
   .mnav-foot{ flex:0 0 auto; display:flex; justify-content:center;
     padding:0 20px calc(26px + env(safe-area-inset-bottom)); }
