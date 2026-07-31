@@ -24,7 +24,7 @@
         '<div class="note-field"><label class="note-l" for="{p}WordJ">one word that defines Jenni</label>' +
           '<input id="{p}WordJ" class="note-f" type="text"></div>' +
       '</div>' +
-      '<div class="note-field" style="margin-top:14px">' +
+      '<div class="note-field note-field--song">' +
         '<label class="note-l" for="{p}Song">a song you want to hear</label>' +
         '<input id="{p}Song" class="note-f" type="text" placeholder="artist – title">' +
       '</div>' +
