@@ -2176,7 +2176,10 @@ html.ou-embed .note-f{ background:#fff !important; }
    again rather than let it scroll. */
 @media (min-width:761px) and (max-height:760px){
   .note-card--drawer .note-ta{ min-height:52px; }
-  .note-card--drawer .photo-stack .photo-eg{ width:70px; }
+  /* Was 70px, from when the snapshot sat beside the button. Stacked and
+     centred it is the focal point of the field, and the measured card is
+     588px in a 720px pane, so there is room to keep it legible. */
+  .note-card--drawer .photo-stack .photo-eg{ width:130px; }
   .note-card--drawer .note-top{ font-size:12.5px; margin-bottom:7px; }
   .note-card--drawer .note-thread{ margin-bottom:9px; }
   .note-card--drawer .note-row2,
