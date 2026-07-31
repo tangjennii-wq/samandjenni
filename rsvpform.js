@@ -36,6 +36,21 @@
   // Try to restore a previous submission so guests can edit & resubmit.
   var prev = null;
   try { prev = JSON.parse(localStorage.getItem('sj-rsvp-data')); } catch(e){}
+
+  /* ── in-progress draft ───────────────────────────────────────────────
+     Nothing was saved until Send, so closing the drawer by accident — a tap
+     on the backdrop, a swipe, the back button — threw away everything typed.
+     The drawer makes that easy to do, which is exactly why it needs this.
+     Written on every keystroke and every yes/no, cleared once a reply is
+     actually recorded. Separate from 'sj-rsvp-data', which is the submitted
+     answer and drives edit mode. */
+  var DRAFT_KEY = 'sj-rsvp-draft';
+  function loadDraft(){
+    try { return JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch(e){ return null; }
+  }
+  function clearDraft(){
+    try { localStorage.removeItem(DRAFT_KEY); } catch(e){}
+  }
   if (prev) {
     if (prev.guests && prev.guests[0]) {
       PRE.name  = prev.guests[0].name  || PRE.name;
@@ -202,12 +217,39 @@
 
     function g(k){ return root.querySelector('#' + p + k); }
 
+    // Merges into guestData; never shrinks it.
+    //
+    // This used to be a straight `guestData = rows.map(...)`, which quietly
+    // deleted the +1 whenever it ran while only one row was on screen — and
+    // setPlusOne calls it BEFORE renderGuests, so that was every toggle.
+    // Answering "yes", typing the +1's name, tapping "no" and "yes" again lost
+    // the name. It also broke draft restore, since setPlusOne runs during the
+    // first render and truncated the restored array before it was ever drawn.
+    // Extra entries are trimmed at send time from the row count instead.
     function saveGuestFields(){
       var rows = [].slice.call(root.querySelectorAll('.guest-row'));
-      guestData = rows.map(function(r){
-        return { name:r.querySelector('.gname').value, email:r.querySelector('.gemail').value,
-                 dietary:r.querySelector('.gdiet').value };
+      if (!rows.length) return;
+      rows.forEach(function(r, i){
+        guestData[i] = { name:r.querySelector('.gname').value,
+                         email:r.querySelector('.gemail').value,
+                         dietary:r.querySelector('.gdiet').value };
       });
+    }
+
+    // The guests actually being reported for: as many as there are rows.
+    function activeGuests(){
+      return guestData.slice(0, root.querySelectorAll('.guest-row').length);
+    }
+
+    // Reads the DOM first so it can't persist a stale copy of the fields.
+    function saveDraft(){
+      if (!root.querySelector('[data-send]')) return;   // thank-you screen, nothing to draft
+      saveGuestFields();
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({
+          guests: guestData, events: answers, plusOne: plusOneVal
+        }));
+      } catch(e){}   // private mode / quota — a lost draft must never break Send
     }
 
     // Only replaces the guest block, so the event answers rendered elsewhere
@@ -219,10 +261,14 @@
       var html = ''; for (var i = 0; i < n; i++) html += guestRow(p, i);
       box.innerHTML = html;
       [].forEach.call(box.querySelectorAll('.guest-row'), function(r, i){
-        if (!guestData[i]) return;
-        r.querySelector('.gname').value  = guestData[i].name;
-        r.querySelector('.gemail').value = guestData[i].email;
-        r.querySelector('.gdiet').value  = guestData[i].dietary;
+        if (guestData[i]) {
+          r.querySelector('.gname').value  = guestData[i].name;
+          r.querySelector('.gemail').value = guestData[i].email;
+          r.querySelector('.gdiet').value  = guestData[i].dietary;
+        }
+        // Rows are rebuilt whenever the +1 toggles, so the listeners go on here
+        // rather than once in renderForm.
+        r.addEventListener('input', saveDraft);
       });
     }
 
@@ -235,6 +281,7 @@
       });
       saveGuestFields();
       renderGuests();
+      saveDraft();
     }
 
     function showErr(msg){
@@ -305,6 +352,7 @@
           b.classList.add('on');
           var row = b.closest('.rsvp-ev');
           if (row) row.classList.remove('miss');
+          saveDraft();
         });
       });
 
@@ -335,12 +383,13 @@
         var label = btn.textContent;
         btn.disabled = true; btn.textContent = 'Sending…';
 
+        var guests = activeGuests();
         var payload = {
           guest_key: window.SJUpload ? window.SJUpload.guestKey() : '',
           tier: tier,
-          party_size: guestData.length,
+          party_size: guests.length,
           events: evAnswers,
-          guests: guestData,
+          guests: guests,
           photo_path: uploader ? uploader.getPath() : ''
         };
 
@@ -361,6 +410,9 @@
           : Promise.reject(new Error('no uploader'));
 
         saving.then(function(){
+          // Only once the row is actually recorded. Clearing on click would
+          // lose the draft on a failed send, which is when it matters most.
+          clearDraft();
           try {
             localStorage.setItem('sj-rsvp-done', '1');
             localStorage.setItem('sj-rsvp-data', JSON.stringify(payload));
@@ -425,24 +477,69 @@
     var alreadyDone = false;
     try { alreadyDone = localStorage.getItem('sj-rsvp-done') === '1'; } catch(e){}
 
-    if (alreadyDone && prev) renderThanks();
-    else renderForm();
+    if (alreadyDone && prev) {
+      renderThanks();
+    } else {
+      // Pick up anything typed before the drawer was closed. Seeding guestData
+      // is enough for the fields — renderGuests writes it back over the markup.
+      var draft = loadDraft();
+      if (draft) {
+        if (draft.guests && draft.guests.length) guestData = draft.guests;
+        if (draft.events) answers = Object.assign(answers, draft.events);
+        if (draft.plusOne) plusOneVal = draft.plusOne;
+      }
+      renderForm();
+    }
   }
 
-  /* ── mount ───────────────────────────────────────────────────────── */
+  /* ── mount ───────────────────────────────────────────────────────────
+     The drawer and the page are both wanted — the drawer so a guest can reply
+     without losing their place, the page so the reply has a URL to put in a
+     reminder email. What was wrong is that rsvp.html mounted BOTH: the inline
+     form, plus a second live copy in the drawer stacked over it, each with its
+     own fields and its own Send. Two drafts, two submissions, one guest.
+
+     So: where the form is already on the page, the nav button scrolls to it.
+     Everywhere else, the drawer. Never both.
+
+     Delegated from document because mobilenav.js builds its RSVP link at
+     runtime — a NodeList captured here can miss it depending on script order. */
+  function firstEmptyField(scope){
+    var f = [].slice.call(scope.querySelectorAll('.note-f'));
+    for (var i = 0; i < f.length; i++) if (!f[i].value.trim()) return f[i];
+    return f[0] || null;
+  }
+
   if (inline) {
     inline.innerHTML = '<div class="note-card">' + formHTML('r') + '</div>';
     wire(inline, 'r');
+
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-rsvp-open]');
+      if (!t || inline.contains(t)) return;
+      e.preventDefault();
+      try { inline.scrollIntoView({ behavior:'smooth', block:'start' }); }
+      catch(err){ inline.scrollIntoView(true); }
+      var f = firstEmptyField(inline);
+      // Deliberately not focused on touch: it throws up the keyboard and hides
+      // the form the tap was meant to reveal.
+      if (f && !window.matchMedia('(hover:none)').matches) {
+        setTimeout(function(){ f.focus({ preventScroll:true }); }, 400);
+      }
+    });
   }
 
-  if (triggers.length && window.SJDrawer) {
+  else if (triggers.length && window.SJDrawer) {
     var d = window.SJDrawer.create({
       label: 'RSVP',
       html: '<div class="note-card note-card--drawer">' + formHTML('q') + '</div>',
       onMount: function (api) { wire(api.body, 'q', api.close); }
     });
-    triggers.forEach(function (t) {
-      t.addEventListener('click', function (e) { e.preventDefault(); d.open(); });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-rsvp-open]');
+      if (!t) return;
+      e.preventDefault();
+      d.open();
     });
   }
 })();
