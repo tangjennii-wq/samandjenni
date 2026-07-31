@@ -2349,3 +2349,55 @@ html.ou-embed .note-f{ background:#fff !important; }
 .note-h{ font-weight:700; letter-spacing:.06em; }
 .thanks-cal-h{ font-weight:600; letter-spacing:.13em; }
 .cal-chip{ font-weight:600; }
+
+
+/* ==========================================================================
+   All-white panel — the red RSVP header is the only fill left
+   --------------------------------------------------------------------------
+   Everything else was tinted: the event list had cream zebra striping plus a
+   faint gold wash, the miss state a pink one, the count badge a solid gold
+   disc, the photo tile ivory. Stacked up, the panel read as beige rather than
+   as paper.
+
+   The catch is the yes/no buttons, where the tint was doing real work: it was
+   the selected state. Selection now reads as an inset ring in the same colour
+   the fill used to be — gold for yes, red for no — which stays legible on
+   white and, being a box-shadow rather than a border width, doesn't reflow the
+   row when it toggles. The event rows also swap Yes/No for ☺/☹ on selection,
+   so they have a second signal; the +1 toggle deliberately does not, which is
+   exactly why it needs the ring to be unmistakable.
+   ========================================================================== */
+.rsvp-body,
+.rsvp-list,
+.rsvp-ev,
+.rsvp-ev:nth-child(even),
+.rsvp-ev:nth-child(odd),
+.plusone,
+.guest-row,
+.note-card--drawer .photo-drop,
+.photo-drop,
+.rsvp-photo-btn{ background:#fff; }
+
+/* keep the red edge that marks an unanswered event, drop its pink wash */
+.rsvp-ev.miss{ background:#fff; box-shadow:inset 3px 0 0 var(--red); }
+
+/* yes / no: ring instead of wash */
+.yn, .rsvp-list .yn, .plusone .yn{ background:#fff; }
+.yn:hover{ background:#fff; }
+.rsvp-list .yn.yes.on,
+.plusone .yn.yes.on{ background:#fff; border-color:#c4a814;
+  box-shadow:inset 0 0 0 1px #c4a814; }
+.rsvp-list .yn.no.on,
+.plusone .yn.no.on{ background:#fff; border-color:var(--red);
+  box-shadow:inset 0 0 0 1px var(--red); }
+/* NOT on .rsvp-list — those buttons keep color:transparent so the ☹ shows
+   through instead of the word. Setting a colour here painted "NO" back on top
+   of the face and the two overlapped. Only the +1 pair, which has no face,
+   takes the red text. */
+.plusone .yn.no.on{ color:var(--red); }
+/* the +1 pair has no ☺/☹ to fall back on, so its selection also goes bold */
+.plusone .yn.on{ font-weight:700; }
+
+/* the little event count: outline, not a solid disc */
+.rsvp-sect-n{ background:#fff; color:#a2907a; border:1px solid var(--line-2);
+  font-weight:600; }
