@@ -2150,14 +2150,16 @@ html.ou-embed .note-f{ background:#fff !important; }
   .note-card--drawer .note-row3 .note-field{ margin-top:0; }
   .note-card--drawer .note-row3 .note-btn{ width:auto; margin-top:0; padding:0 30px; height:44px; }
 
-  /* example photo beside the drop target, not stacked on top of it. Left
-     aligned, not centred — every other field in the drawer starts at the
-     same edge and a centred cluster read as a mistake. */
-  .note-card--drawer .photo-stack{ flex-direction:row; align-items:center;
-    justify-content:flex-start; gap:16px; padding:0; }
-  .note-card--drawer .photo-stack .photo-eg{ width:88px; }
-  .note-card--drawer .photo-stack .photo-eg figcaption{ font-size:9px; margin-top:4px; }
-  .note-card--drawer .photo-stack .photo-drop{ width:auto; padding:12px 22px; }
+  /* Example photo centred with the upload button beneath it. This was a
+     side-by-side row for a while — it saved ~120px and kept the drawer on one
+     screen — but the snapshot is the thing that explains the ask, and shrunk
+     to 88px in a corner it stopped doing that job. Height is bought back from
+     the rows above instead; see the trims below. */
+  .note-card--drawer .photo-stack{ flex-direction:column; align-items:center;
+    justify-content:center; gap:10px; padding:0; }
+  .note-card--drawer .photo-stack .photo-eg{ width:150px; }
+  .note-card--drawer .photo-stack .photo-eg figcaption{ font-size:10px; margin-top:5px; }
+  .note-card--drawer .photo-stack .photo-drop{ width:min(280px,100%); padding:12px 22px; }
 
   /* shave the vertical padding without making anything feel cramped */
   .note-card--drawer{ padding:16px 22px 24px; }
@@ -2401,3 +2403,18 @@ html.ou-embed .note-f{ background:#fff !important; }
 /* the little event count: outline, not a solid disc */
 .rsvp-sect-n{ background:#fff; color:#a2907a; border:1px solid var(--line-2);
   font-weight:600; }
+
+
+/* ==========================================================================
+   Field labels in black
+   --------------------------------------------------------------------------
+   They were #b0a08c, which came in with the "too thick" pass — the weight
+   needed to drop but the colour went with it and the labels ended up whispering
+   against white. Black at weight 600 reads as quiet without disappearing.
+   Placeholders stay muted: those ARE meant to recede, and on the RSVP form
+   they're standing in for labels, so making them black would look like the
+   fields were already filled in.
+   ========================================================================== */
+.note-l{ color:var(--dark); }
+.note-l .opt{ color:#8a7863; }
+.note-top{ color:var(--dark); }
