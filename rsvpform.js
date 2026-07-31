@@ -93,18 +93,27 @@
     var vName  = prevGuest ? prevGuest.name  : (i === 0 ? PRE.name  : '');
     var vEmail = prevGuest ? prevGuest.email : (i === 0 ? PRE.email : '');
     var vDiet  = prevGuest ? prevGuest.dietary : '';
-    return '<div class="guest-row">' +
+    // Placeholders rather than labels above every field. Three 8.5px uppercase
+    // captions per guest was ~39px of vertical space each and was most of what
+    // made the block read as heavy — the labels restate what the fields
+    // obviously are. Real <label>s stay for screen readers.
+    var lab = function(id, text){
+      return '<label class="sr-only" for="' + id + '">' + text + '</label>';
+    };
+    var nId = p + 'GN' + i, eId = p + 'GE' + i, dId = p + 'GD' + i;
+    return '<div class="guest-row" data-guest="' + i + '">' +
       '<div class="guest-fields">' +
-        '<div class="note-field"><label class="note-l" for="' + p + 'GN' + i + '">' + whose + ' name</label>' +
-          '<input id="' + p + 'GN' + i + '" class="note-f gname" type="text" value="' +
-            vName.replace(/"/g,'&quot;') + '"></div>' +
-        '<div class="note-field"><label class="note-l" for="' + p + 'GE' + i + '">' + whose + ' email' +
-          (i === 0 ? '' : ' <span class="opt">(optional)</span>') + '</label>' +
-          '<input id="' + p + 'GE' + i + '" class="note-f gemail" type="email" value="' +
+        '<div class="note-field">' + lab(nId, whose + ' name') +
+          '<input id="' + nId + '" class="note-f gname" type="text" ' +
+            'placeholder="' + whose + ' name" value="' + vName.replace(/"/g,'&quot;') + '"></div>' +
+        '<div class="note-field">' + lab(eId, whose + ' email') +
+          '<input id="' + eId + '" class="note-f gemail" type="email" ' +
+            // No "(optional)" here — at 390px it clipped mid-word.
+            'placeholder="' + whose + ' email" value="' +
             vEmail.replace(/"/g,'&quot;') + '"></div>' +
-        '<div class="note-field span2"><label class="note-l" for="' + p + 'GD' + i + '">dietary / allergies</label>' +
-          '<input id="' + p + 'GD' + i + '" class="note-f gdiet" type="text" placeholder="none" value="' +
-            vDiet.replace(/"/g,'&quot;') + '"></div>' +
+        '<div class="note-field span2">' + lab(dId, 'dietary or allergies') +
+          '<input id="' + dId + '" class="note-f gdiet" type="text" ' +
+            'placeholder="dietary / allergies" value="' + vDiet.replace(/"/g,'&quot;') + '"></div>' +
       '</div></div>';
   }
 
@@ -128,12 +137,16 @@
     return '' +
       '<div class="rsvp-head">' +
         '<div class="rsvp-title">R S V P</div>' +
-        '<div class="rsvp-sub">kindly reply by January 2027</div>' +
+        '<div class="rsvp-sub">reply by January 2027</div>' +
       '</div>' +
       '<div class="rsvp-body">' +
 
         '<div class="rsvp-sect">' +
           '<div class="rsvp-sect-h">who’s coming</div>' +
+          // Two containers with the toggle between them, deliberately. With one
+          // container the +1's fields appeared ABOVE the "Bringing a +1?"
+          // control that summons them, so answering yes made a block open
+          // upwards, behind your thumb on a phone.
           '<div class="rsvp-guests" data-guests></div>' +
           '<div class="plusone">' +
             '<span class="plusone-q">Bringing a +1?</span>' +
@@ -142,6 +155,7 @@
               '<button type="button" class="yn no p1" data-p1="no">No</button>' +
             '</div>' +
           '</div>' +
+          '<div class="rsvp-guests rsvp-guests--plus" data-guests-plus></div>' +
           '<input id="' + p + 'Count" type="hidden" value="' + PRE.party + '">' +
         '</div>' +
 
@@ -151,24 +165,9 @@
           '<div class="rsvp-list">' + eventRows() + '</div>' +
         '</div>' +
 
-        '<div class="rsvp-photo-block">' +
-          '<p class="rsvp-photo-note"><b>Send us a photo of you &amp; Sam, you &amp; Jenni, us, etc!</b> ' +
-            'Blurry is fine, unflattering is better. <span>(optional)</span></p>' +
-          '<div class="rsvp-extra">' +
-            '<figure class="photo-eg" aria-hidden="true">' +
-              '<img src="img/photo-example.jpg" alt="" loading="lazy" onerror="this.closest(\'.photo-eg\').remove()">' +
-              '<figcaption>like this</figcaption>' +
-            '</figure>' +
-            '<label class="rsvp-photo-btn compact" for="' + p + 'Photo">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-                '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
-              '<span class="photo-txt">upload a photo</span>' +
-            '</label>' +
-            '<input id="' + p + 'Photo" class="photo-input" type="file" accept="image/*">' +
-          '</div>' +
-          '<div class="photo-preview" data-preview hidden></div>' +
-        '</div>' +
-
+        // The photo prompt used to live here. It was optional and it was the
+        // second tallest thing on the form, so it now waits until after the
+        // reply is safely in and asks on the thank-you screen instead.
         '<button class="note-btn rsvp-send" type="button" data-send>Send RSVP</button>' +
       '</div>';
   }
@@ -180,23 +179,41 @@
         '<div class="note-h">Thank you ♡</div>' +
         '<p class="note-sub">your reply is in — we can’t wait.</p>' +
         calHtml +
-        '<p class="thanks-ask">while you’re here — leave us a note, submit a song request, or share a favorite memory.</p>' +
+        '<p class="thanks-ask">while you’re here — leave us a note, a song request, or a photo.</p>' +
         '<div class="rsvp-notes-inline">' +
           '<div class="note-field">' +
-            '<label class="note-l" for="rn_Mem">a favorite memory with Sam and/or Jenni</label>' +
+            '<label class="note-l" for="rn_Mem">a favorite memory</label>' +
             '<textarea id="rn_Mem" class="note-f note-ta"></textarea>' +
           '</div>' +
           '<div class="note-row2">' +
-            '<div class="note-field"><label class="note-l" for="rn_WordS">one word that defines Sam</label>' +
+            '<div class="note-field"><label class="note-l" for="rn_WordS">one word for Sam</label>' +
               '<input id="rn_WordS" class="note-f" type="text"></div>' +
-            '<div class="note-field"><label class="note-l" for="rn_WordJ">one word that defines Jenni</label>' +
+            '<div class="note-field"><label class="note-l" for="rn_WordJ">one word for Jenni</label>' +
               '<input id="rn_WordJ" class="note-f" type="text"></div>' +
           '</div>' +
           '<div class="note-field note-field--song">' +
             '<label class="note-l" for="rn_Song">a song you want to hear</label>' +
             '<input id="rn_Song" class="note-f" type="text" placeholder="artist – title">' +
           '</div>' +
-          '<button class="note-btn" type="button" data-send-note>Send note</button>' +
+          // Moved off the form. Asking once the reply is recorded means the
+          // upload can't stand between a guest and their RSVP.
+          '<div class="note-field photo-field">' +
+            '<label class="note-l" for="rn_Photo">a photo of us together</label>' +
+            '<div class="photo-stack">' +
+              '<figure class="photo-eg" aria-hidden="true">' +
+                '<img src="img/photo-example.jpg" alt="" loading="lazy" onerror="this.closest(\'.photo-eg\').remove()">' +
+                '<figcaption>like this</figcaption>' +
+              '</figure>' +
+              '<label class="photo-drop" for="rn_Photo">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                  '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
+                '<span class="photo-txt">upload a photo</span>' +
+              '</label>' +
+            '</div>' +
+            '<input id="rn_Photo" class="photo-input" type="file" accept="image/*">' +
+            '<div class="photo-preview" data-note-preview hidden></div>' +
+          '</div>' +
+          '<button class="note-btn" type="button" data-send-note>Send</button>' +
         '</div>' +
         '<button class="thanks-skip" type="button" data-close>skip — all done</button>' +
         '<p class="rsvp-edit-hint">Changed your mind? <button type="button" class="rsvp-edit-link" data-edit-rsvp>Edit your RSVP</button></p>' +
@@ -229,10 +246,13 @@
     function saveGuestFields(){
       var rows = [].slice.call(root.querySelectorAll('.guest-row'));
       if (!rows.length) return;
-      rows.forEach(function(r, i){
-        guestData[i] = { name:r.querySelector('.gname').value,
-                         email:r.querySelector('.gemail').value,
-                         dietary:r.querySelector('.gdiet').value };
+      rows.forEach(function(r){
+        // Indexed by data-guest, not DOM position — the two rows now live in
+        // separate containers with the +1 toggle between them.
+        guestData[Number(r.getAttribute('data-guest'))] = {
+          name:r.querySelector('.gname').value,
+          email:r.querySelector('.gemail').value,
+          dietary:r.querySelector('.gdiet').value };
       });
     }
 
@@ -255,12 +275,15 @@
     // Only replaces the guest block, so the event answers rendered elsewhere
     // on the page survive a +1 toggle untouched.
     function renderGuests(){
-      var box = root.querySelector('[data-guests]');
+      var box  = root.querySelector('[data-guests]');
+      var plus = root.querySelector('[data-guests-plus]');
       if (!box) return;
       var n = Math.max(1, Math.min(2, parseInt(g('Count').value, 10) || 1));
-      var html = ''; for (var i = 0; i < n; i++) html += guestRow(p, i);
-      box.innerHTML = html;
-      [].forEach.call(box.querySelectorAll('.guest-row'), function(r, i){
+      box.innerHTML = guestRow(p, 0);
+      if (plus) plus.innerHTML = n > 1 ? guestRow(p, 1) : '';
+
+      [].forEach.call(root.querySelectorAll('.guest-row'), function(r){
+        var i = Number(r.getAttribute('data-guest'));
         if (guestData[i]) {
           r.querySelector('.gname').value  = guestData[i].name;
           r.querySelector('.gemail').value = guestData[i].email;
@@ -356,8 +379,6 @@
         });
       });
 
-      uploader = (window.SJUpload ? window.SJUpload.wire(g('Photo'), root.querySelector('[data-preview]')) : null);
-
       root.querySelector('[data-send]').addEventListener('click', function(){
         var btn = this;
 
@@ -437,13 +458,20 @@
     function renderThanks(){
       card.innerHTML = thanksHTML(calBlock());
 
+      // The photo prompt lives here now rather than on the form.
+      uploader = (window.SJUpload
+        ? window.SJUpload.wire(root.querySelector('#rn_Photo'),
+                               root.querySelector('[data-note-preview]'))
+        : null);
+
       var noteBtn = root.querySelector('[data-send-note]');
       if (noteBtn) {
         noteBtn.addEventListener('click', function(){
           var btn = this;
           var val = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
           var mem = val('rn_Mem'), wS = val('rn_WordS'), wJ = val('rn_WordJ'), song = val('rn_Song');
-          if (!mem && !wS && !wJ && !song) return;  // nothing to send
+          var pic = uploader ? uploader.getPath() : '';
+          if (!mem && !wS && !wJ && !song && !pic) return;  // nothing to send
 
           var label = btn.textContent;
           btn.disabled = true; btn.textContent = 'Sending…';
@@ -453,7 +481,7 @@
                 guest_key: window.SJUpload.guestKey(),
                 memory: mem, word_sam: wS, word_jenni: wJ, song: song,
                 from_name: (guestData[0] && guestData[0].name) || PRE.name,
-                photo_path: ''
+                photo_path: pic
               })
             : Promise.reject(new Error('no uploader'));
 
