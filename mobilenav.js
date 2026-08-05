@@ -76,7 +76,10 @@
     ? '<a class="mnav-action mnav-action--rsvp" href="rsvp.html" data-rsvp-open>RSVP</a>'
     : '<a class="mnav-action mnav-action--rsvp" href="/gate?next=rsvp">RSVP</a>';
   html += '<button type="button" class="mnav-action mnav-action--note" data-note-open>Leave us a note &#9825;</button>';
-  html += '<button type="button" class="mnav-action mnav-action--ou" data-ou-open>Over<span class="ou-slash">/</span>under</button>';
+  // Feature switch lives in personalize.js.
+  if (window.SJ_FEATURES && window.SJ_FEATURES.overUnder) {
+    html += '<button type="button" class="mnav-action mnav-action--ou" data-ou-open>Over<span class="ou-slash">/</span>under</button>';
+  }
   html += '</nav>';
   // The foot is the account row either way. Signed in it's your name and opens
   // your details; not signed in it's "sign in", because someone who browsed past

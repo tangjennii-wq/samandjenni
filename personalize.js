@@ -1,3 +1,12 @@
+/* ── FEATURE SWITCHES ───────────────────────────────────────────────────────
+   Set overUnder back to true to bring the game back — that is the only edit
+   needed. personalize.js loads before mobilenav.js, notes.js and outab.js on
+   every page, so all three read this. Nothing has been deleted: over-under.html
+   and outab.js are intact, the page still works if you open it directly, and
+   scores already in wedding_overunder are untouched.
+   Hidden 5 Aug 2026 — bringing it back closer to the weekend.            */
+window.SJ_FEATURES = { overUnder: false };
+
 // personalize.js — shows each guest only the events they're invited to.
 // Reads the email / last name captured at the gate (sj_guest cookie), maps it
 // to a tier, and hides/swaps content accordingly.

@@ -11,6 +11,9 @@
 // also still works on its own if anyone has the URL.
 (function () {
   if (!window.SJDrawer) return;
+  // Feature switch lives in personalize.js. Returning here means no edge tab is
+  // built and the over-under.html iframe is never requested.
+  if (!(window.SJ_FEATURES && window.SJ_FEATURES.overUnder)) return;
 
   // don't put a tab on the page it opens
   var here = (location.pathname.split('/').pop() || 'index.html');

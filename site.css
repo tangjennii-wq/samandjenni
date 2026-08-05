@@ -2421,3 +2421,10 @@ html.ou-embed .note-f{ background:#fff !important; }
 .note-l{ color:var(--dark); }
 .note-l .opt{ color:#8a7863; }
 .note-top{ color:var(--dark); }
+
+
+/* Over/under hidden until closer to the weekend (5 Aug 2026). The switch that
+   matters is window.SJ_FEATURES.overUnder in personalize.js — this block is
+   just belt and braces for the static nav button, which is markup in all seven
+   pages rather than something JS builds. Delete both to bring it back. */
+.nav-ou, .ou-tab{ display:none !important; }

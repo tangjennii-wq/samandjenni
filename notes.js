@@ -83,13 +83,16 @@
       saving.then(function () {
       Object.keys(cache).forEach(function(k){ cache[k] = ''; });
       var card = root.querySelector('.note-card') || root;
+      // Feature switch lives in personalize.js. The count in the copy has to
+      // follow it — "two more things" above a single button reads as a bug.
+      var ou = !!(window.SJ_FEATURES && window.SJ_FEATURES.overUnder);
       card.innerHTML = '<div class="note-thanks"><div class="note-h">Thank you ♡</div>' +
         '<p class="note-sub">we’ve got it — see you in New York.</p>' +
-        '<p class="thanks-ask">two more things, if you have a minute —</p>' +
+        '<p class="thanks-ask">' + (ou ? 'two more things' : 'one more thing') +
+          ', if you have a minute —</p>' +
         '<div class="thanks-pills">' +
           '<button class="thanks-pill pill-rsvp" type="button" data-go-rsvp>RSVP</button>' +
-          // opens the drawer now that over/under isn't its own page
-          '<button class="thanks-pill pill-ou" type="button" data-ou-open>Over/Under</button>' +
+          (ou ? '<button class="thanks-pill pill-ou" type="button" data-ou-open>Over/Under</button>' : '') +
         '</div>' +
         '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
         '</div>';
