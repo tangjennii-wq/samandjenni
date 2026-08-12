@@ -101,7 +101,7 @@
       <h1>Sam <span class="plus">+</span> Jenni</h1>
       <div class="date">3.20.27</div>
 
-      <form method="POST" action="/api/login">
+      <form method="POST" action="/api/login" id="gateform">
         <!-- The visible label said the same words as the button directly below
              it. Kept for screen readers only, since the field still needs a
              name — the placeholder alone isn't an accessible label. -->
@@ -120,6 +120,22 @@
     </div>
   </div>
 <script>
+  // Carry ?next= from the middleware redirect through to the login endpoint, so
+  // a guest who clicked "hotels" while signed out lands on hotels rather than
+  // the home page. The form posts to a fixed action, and login reads next off
+  // the URL rather than the body, so it has to go on the action.
+  // Allow-listed here as well as server-side — belt and braces against
+  // reflecting something arbitrary into the redirect.
+  (function () {
+    var OK = ['index','weekend','recommendations','travel','faq','rsvp','over-under','stay'];
+    var m = location.search.match(/[?&]next=([^&]*)/);
+    if (!m) return;
+    var want = decodeURIComponent(m[1]).replace(/\.html$/, '');
+    if (OK.indexOf(want) === -1) return;
+    var f = document.getElementById('gateform');
+    if (f) f.action = '/api/login?next=' + encodeURIComponent(want);
+  })();
+
   var MSG = {
     pass: "we can't find that one — try your full name, or the email we sent this to ♡",
     name: "we just need your name or email ♡",

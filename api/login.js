@@ -105,7 +105,18 @@ export default async function handler(req, res) {
     `sj_guest=${encodeURIComponent(matched)}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
     `sj_tier=${tier}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
   ]);
-  const next = (req.url && /[?&]next=rsvp/.test(req.url)) ? '/rsvp.html' : '/';
+  // Send them back where they were headed. This only understood next=rsvp
+  // before, which was fine when /rsvp was the only gated page — now that every
+  // page but the home page is gated, a guest who clicked "hotels" would have
+  // been dumped on the home page instead.
+  //
+  // Allow-list rather than pattern-match: `next` comes off the query string,
+  // and echoing an arbitrary value into a Location header is an open redirect.
+  const NEXT_ALLOWED = new Set(['index','weekend','recommendations','travel','faq',
+                                'rsvp','over-under','stay']);
+  const m = (req.url || '').match(/[?&]next=([^&]*)/);
+  const want = m ? decodeURIComponent(m[1]).replace(/\.html$/, '') : '';
+  const next = (want && want !== 'index' && NEXT_ALLOWED.has(want)) ? '/' + want + '.html' : '/';
   res.writeHead(302, { Location: next });
   return res.end();
 }
