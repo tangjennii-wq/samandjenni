@@ -57,6 +57,8 @@
   button:hover{background:var(--red);color:#fff;border-color:var(--red)}
   .err{margin-top:16px;font-size:12.5px;color:var(--red);font-weight:600;display:none}
   .err.show{display:block}
+  /* the "it's all private" line is information, not a failure — same slot, calmer voice */
+  .err.is-note{color:#8a7967;font-weight:500;font-style:italic}
   .hint{margin-top:26px;font-size:11.5px;color:#a2907a;font-style:italic;line-height:1.7}
   .skip{ display:inline-block; margin-top:16px; font-size:12px; letter-spacing:.02em;
     color:#a2907a; text-decoration:none; border-bottom:1px solid transparent; }
@@ -114,8 +116,12 @@
       <div class="err" id="err"></div>
       <p class="hint">Enter your full name or the email we sent this to.<br>
         Can&rsquo;t find your invite? Text us.</p>
+      <!-- Back where it was, but it can't be a bypass any more: the whole site
+           is private, so / would just bounce here via the middleware and look
+           broken. It points at ?e=private instead, which lands on the same page
+           and says why — no server round trip, and the answer is instant. -->
       <div class="gate-foot">
-        <a class="skip" href="/">have a look around first &rarr;</a>
+        <a class="skip" href="/gate?e=private">have a look around first &rarr;</a>
       </div>
     </div>
   </div>
@@ -139,13 +145,22 @@
   var MSG = {
     pass: "we can't find that one — try your full name, or the email we sent this to ♡",
     name: "we just need your name or email ♡",
-    list: "we can't find that one — try your full name, or the email we sent this to. still stuck? just text us ♡"
+    list: "we can't find that one — try your full name, or the email we sent this to. still stuck? just text us ♡",
+    // "have a look around first" used to be a way past the door. It isn't one
+    // any more, so it explains itself rather than going nowhere.
+    // Short on purpose: the hint directly below already says what to type, and
+    // saying it twice in two lines read like a stutter.
+    private: "it's all private for now ♡"
   };
   var e = new URLSearchParams(location.search).get('e');
   if (e) {
     var box = document.getElementById('err');
     box.textContent = MSG[e] || MSG.pass;
     box.classList.add('show');
+    // Not an error in this one case, and it shouldn't shout in red.
+    if (e === 'private') box.classList.add('is-note');
+    var f = document.getElementById('lastname');
+    if (f) f.focus();
   }
 </script>
 </body>
