@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260809f">
+<link rel="stylesheet" href="site.css?v=20260809g">
 <style>
   /* ---- Hotels: one filterable list, map at 75% ---------------------------- */
   .wrap{ max-width:1280px; }
@@ -53,6 +53,10 @@
 
   .hotelpanel{ margin-top:10px; height:min(560px, calc(100vh - 230px));
     overflow-y:auto; overscroll-behavior:auto; padding-right:7px; margin-right:-7px; }
+  /* "Our room blocks": grow to fit, never scroll, show every card whole. Set by
+     apply() in the script below whenever that filter is active. */
+  .hotelpanel--full{ height:auto; max-height:none; overflow:visible;
+    padding-right:0; margin-right:0; }
   .hotelpanel::-webkit-scrollbar{ width:6px; }
   .hotelpanel::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:99px; }
   .hotelgrid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr));
@@ -91,7 +95,10 @@
   .fchip.is-on .fcaret{ transform:rotate(180deg); display:inline-block; }
   .fhoodlabel{ align-self:center; margin-right:4px; font-size:8px; font-weight:800;
     letter-spacing:.16em; text-transform:uppercase; color:#a2907a; }
-  .howto{ max-width:720px; margin:16px auto 4px; text-align:center; }
+  /* Left aligned and full content width. Centred at 720px it broke into three
+     ragged lines; given the whole column each paragraph lands on one line, so
+     the intro is two lines total. */
+  .howto{ max-width:none; margin:16px 0 6px; text-align:left; }
   .howto p{ margin:0; font-size:13px; line-height:1.55; color:#8a7967; }
   .howto-lead{ margin-bottom:5px !important; font-size:13.5px !important; font-weight:700;
     color:var(--dark) !important; }
@@ -517,6 +524,14 @@
     });
     count.textContent = n;
     empty.hidden = n > 0;
+
+    // Our four blocks are the ones people actually need to read, so the panel
+    // grows to fit them and never scrolls. The 26 other hotels keep the capped,
+    // scrolling panel — at full height that list would run for several screens
+    // and push the map miles down the page.
+    var panel = document.querySelector('.hotelpanel');
+    if (panel) panel.classList.toggle('hotelpanel--full', f === 'block');
+
     document.dispatchEvent(new CustomEvent('sj:filter', { detail:{ area:f, kind:'hotels' } }));
   }
 
