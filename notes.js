@@ -123,14 +123,24 @@
     wire(inline, 'n');
   }
 
-  if (triggers.length && window.SJDrawer) {
-    var d = window.SJDrawer.create({
-      label: 'Leave a note',
-      html: '<div class="note-card note-card--drawer">' + formHTML('d', '') + '</div>',
-      onMount: function (api) { wire(api.body, 'd', api.close); }
-    });
-    triggers.forEach(function (t) {
-      t.addEventListener('click', function (e) { e.preventDefault(); d.open(); });
+  // Full-screen sheet, same as the RSVP — the side drawer is retired here too.
+  //
+  // Built fresh on each open rather than once up front, which the drawer did.
+  // The typed-so-far values survive that because `cache` above is module-level
+  // and wire() reads it back on mount; only the DOM is thrown away.
+  //
+  // Delegated from document so the phone menu's note button works — mobilenav.js
+  // builds that at runtime, and a NodeList captured here can miss it.
+  if (triggers.length && window.SJSheet) {
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-note-open]');
+      if (!t) return;
+      e.preventDefault();
+      window.SJSheet.open({
+        label: 'Leave a note',
+        html: '<div class="note-card note-card--sheet">' + formHTML('d', '') + '</div>',
+        onMount: function (api) { wire(api.body, 'd', api.close); }
+      });
     });
   }
 })();

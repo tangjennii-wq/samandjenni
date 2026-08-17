@@ -564,37 +564,17 @@
      including the red skin — flip SHEET_RED to try it.                    */
   var SHEET_RED = false;
 
+  // The sheet itself now lives in drawer.js, shared with the note form — it
+  // gained a focus trap, focus restore and a scroll lock that this one-off
+  // version never had.
   function openSheet(){
-    if (document.querySelector('.sjsheet')) return;
-    var el = document.createElement('div');
-    el.className = 'sjsheet' + (SHEET_RED ? ' sjsheet--red' : '');
-    el.setAttribute('role', 'dialog');
-    el.setAttribute('aria-modal', 'true');
-    el.setAttribute('aria-label', 'RSVP');
-    el.innerHTML =
-      '<div class="sjsheet-top">' +
-        '<a class="sjsheet-brand" href="index.html">Sam <span>+</span> Jenni</a>' +
-        '<button type="button" class="sjsheet-x" aria-label="Close">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
-          'stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/>' +
-          '<line x1="19" y1="5" x2="5" y2="19"/></svg>' +
-        '</button>' +
-      '</div>' +
-      '<div class="sjsheet-body"><div class="sjsheet-in"></div></div>';
-    document.body.appendChild(el);
-    document.body.classList.add('sjsheet-open');
-
-    function shut(){
-      el.remove();
-      document.body.classList.remove('sjsheet-open');
-      document.removeEventListener('keydown', onKey);
-    }
-    function onKey(e){ if (e.key === 'Escape') shut(); }
-    document.addEventListener('keydown', onKey);
-    el.querySelector('.sjsheet-x').addEventListener('click', shut);
-
-    wire(el.querySelector('.sjsheet-in'), 's', shut);
-    return shut;
+    if (!window.SJSheet) return;
+    return window.SJSheet.open({
+      label: 'RSVP',
+      className: SHEET_RED ? 'sjsheet--red' : '',
+      // no html: wire() renders into the body itself, as it does inline
+      onMount: function(api){ wire(api.body, 's', api.close); }
+    }).close;
   }
 
   /* ── one-time prompt ───────────────────────────────────────────────────
