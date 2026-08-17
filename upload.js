@@ -140,5 +140,21 @@
     return m ? decodeURIComponent(m.split('=').slice(1).join('=')) : '';
   }
 
-  window.SJUpload = { wire: wire, save: save, upsert: upsert, guestKey: guestKey };
+  // Call a security-definer Postgres function. Used to ask yes/no questions
+  // about a guest's own row without giving the browser read access to the
+  // table — wedding_rsvps has an INSERT policy and deliberately no SELECT one,
+  // so a guest can reply but can't read anyone's answers, including their own.
+  function rpc(fn, key){
+    if (typeof fetch !== 'function') return Promise.reject(new Error('offline'));
+    return fetch(URL_BASE + '/rest/v1/rpc/' + fn, {
+      method:'POST',
+      headers:{ 'apikey':KEY, 'Authorization':'Bearer '+KEY, 'Content-Type':'application/json' },
+      body: JSON.stringify({ p_key: key })
+    }).then(function(r){
+      if (!r.ok) throw new Error(fn + ' ' + r.status);
+      return r.json();
+    });
+  }
+
+  window.SJUpload = { wire: wire, save: save, upsert: upsert, guestKey: guestKey, rpc: rpc };
 })();

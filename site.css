@@ -2428,3 +2428,137 @@ html.ou-embed .note-f{ background:#fff !important; }
    just belt and braces for the static nav button, which is markup in all seven
    pages rather than something JS builds. Delete both to bring it back. */
 .nav-ou, .ou-tab{ display:none !important; }
+
+
+/* ==========================================================================
+   RSVP sheet — the mobile menu's language, applied to the reply form
+   --------------------------------------------------------------------------
+   Same construction as .mnav: fixed full-screen, flat white, no card, no
+   border, no shadow, wordmark top-left, ✕ top-right where the kebab sits,
+   content centred in the space between. The drawer's red band and gold button
+   are what read as kitsch, so neither appears here — one weight of type, one
+   accent, a lot of air.
+
+   Two skins. .sjsheet--red is the bold one; drop that class and it falls back
+   to white. That's the only difference between them, so switching is one word.
+   ========================================================================== */
+.sjsheet[hidden]{ display:none !important; }
+.sjsheet{
+  position:fixed; inset:0; z-index:2800; display:flex; flex-direction:column;
+  background:#fff; color:var(--dark);
+  overscroll-behavior:contain;
+}
+body.sjsheet-open{ overflow:hidden; }
+
+.sjsheet-top{ position:relative; flex:0 0 auto; padding:13px 56px 0 16px; }
+.sjsheet-brand{ display:block; font-size:20px; font-weight:800; letter-spacing:.03em;
+  text-transform:uppercase; color:var(--red); text-decoration:none; }
+.sjsheet-brand span{ font-weight:500; }
+.sjsheet-x{ -webkit-appearance:none; appearance:none; position:absolute; top:7px; right:13px;
+  width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+  padding:0; border:0; background:none; color:var(--red); cursor:pointer; }
+.sjsheet-x svg{ width:25px; height:25px; }
+.sjsheet-x:active{ opacity:.55; }
+
+.sjsheet-body{ flex:1 1 auto; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:8px 20px calc(26px + env(safe-area-inset-bottom)); }
+.sjsheet-in{ width:100%; max-width:520px; margin:0 auto; }
+
+/* the form, restated in sheet language — flat rows, no boxes */
+.sjsheet .rsvp-head{ background:none; border:0; padding:0 0 22px; text-align:left; }
+.sjsheet .rsvp-title{ font-size:26px; font-weight:600; letter-spacing:.16em; color:var(--dark); }
+.sjsheet .rsvp-sub{ margin-top:6px; font-size:13px; font-weight:400; letter-spacing:0;
+  text-transform:none; font-style:italic; color:#8a7967; opacity:1; }
+.sjsheet .rsvp-body{ background:none; padding:0; }
+.sjsheet .rsvp-sect + .rsvp-sect{ border-top:0; margin-top:22px; padding-top:0; }
+.sjsheet .rsvp-sect-h{ font-size:10px; letter-spacing:.16em; color:#b9aa96; margin-bottom:10px; }
+.sjsheet .rsvp-sect-n{ display:none; }
+
+/* The all-white block further up paints .guest-row, .plusone, .rsvp-ev and the
+   inputs #fff. Inside the sheet nothing should carry its own fill — the ground
+   is the sheet. Missing .guest-row here is what made the red skin show three
+   solid white blocks with invisible white-on-white placeholders. !important
+   because that earlier block is a long shared selector list. */
+.sjsheet .rsvp-body,
+.sjsheet .rsvp-list,
+.sjsheet .rsvp-ev,
+.sjsheet .plusone,
+.sjsheet .guest-row,
+.sjsheet .guest-fields .note-f{ background:none !important; }
+
+.sjsheet .guest-fields{ gap:0; grid-template-columns:1fr; }
+/* !important is unavoidable here: an earlier rule sets
+   `.note-f, .rsvp-fields .note-f, .guest-fields .note-f { border:1px solid !important }`,
+   which drew a full box round every field and defeated the underline. The focus
+   rule alongside it is likewise !important, so the focus state has to restate
+   transparent sides or all four edges turn red. */
+.sjsheet .guest-fields .note-f{
+  border:0 !important; border-bottom:1px solid var(--line) !important;
+  border-radius:0 !important; padding:12px 2px; font-size:17px;
+  box-shadow:none !important; }
+.sjsheet .guest-fields .note-f:focus{
+  border-color:transparent !important; border-bottom-color:var(--red) !important;
+  box-shadow:none !important; }
+.sjsheet .guest-fields .note-f::placeholder{ color:#bcae9b; }
+
+.sjsheet .plusone{ border:0; border-bottom:1px solid var(--line); border-radius:0;
+  padding:12px 2px; margin-top:0; background:none; }
+.sjsheet .plusone-q{ font-size:17px; font-weight:400; }
+
+.sjsheet .rsvp-list{ border:0; border-radius:0; background:none; }
+.sjsheet .rsvp-ev{ padding:13px 2px; border-bottom:1px solid var(--line); background:none !important; }
+.sjsheet .rsvp-ev:last-child{ border-bottom:1px solid var(--line); }
+.sjsheet .rsvp-evname b{ font-size:17px; font-weight:500; }
+.sjsheet .rsvp-evname .ev-meta{ font-size:12.5px; color:#9a8878; }
+.sjsheet .yn{ border:1px solid var(--line-2); background:none; font-size:10px; font-weight:500;
+  min-width:52px; box-shadow:none; }
+.sjsheet .rsvp-list .yn.on{ box-shadow:inset 0 0 0 1px currentColor; }
+
+/* one flat CTA, in the accent rather than gold */
+.sjsheet .rsvp-send{ margin-top:26px; background:var(--red); color:#fff; border:0;
+  border-radius:var(--r-pill); font-size:12px; font-weight:600; letter-spacing:.14em;
+  box-shadow:none; padding:15px; }
+.sjsheet .rsvp-send:hover{ background:var(--dark); }
+.sjsheet .form-err{ background:none; border:0; padding:8px 0 0; color:var(--red); font-size:13px; }
+.sjsheet .rsvp-photo-block{ display:none; }
+
+/* ---- the bold skin: same sheet, red ground ---------------------------------
+   Everything that was dark ink becomes cream, and the accent inverts: the CTA
+   goes white-on-red-ground rather than red-on-white. */
+.sjsheet--red{ background:var(--red); color:#fff; }
+.sjsheet--red .sjsheet-brand,
+.sjsheet--red .sjsheet-x{ color:#fff; }
+.sjsheet--red .rsvp-title{ color:#fff; }
+.sjsheet--red .rsvp-sub{ color:rgba(255,255,255,.82); }
+.sjsheet--red .rsvp-sect-h{ color:rgba(255,255,255,.62); }
+.sjsheet--red .plusone-q,
+.sjsheet--red .rsvp-evname b{ color:#fff; }
+.sjsheet--red .rsvp-evname .ev-meta{ color:rgba(255,255,255,.72); }
+.sjsheet--red .ev-loc{ color:#fff; border-bottom-color:rgba(255,255,255,.5); }
+.sjsheet--red .ev-tbd{ color:rgba(255,255,255,.7); }
+.sjsheet--red .plusone,
+.sjsheet--red .rsvp-ev{ border-bottom-color:rgba(255,255,255,.28); }
+/* matching !important, for the same reason as the white skin above */
+.sjsheet--red .guest-fields .note-f{ color:#fff;
+  border-bottom-color:rgba(255,255,255,.28) !important; }
+.sjsheet--red .guest-fields .note-f::placeholder{ color:rgba(255,255,255,.55); }
+.sjsheet--red .guest-fields .note-f:focus{
+  border-color:transparent !important; border-bottom-color:#fff !important; }
+.sjsheet--red .yn{ border-color:rgba(255,255,255,.45); color:#fff; }
+.sjsheet--red .rsvp-list .yn.on{ box-shadow:inset 0 0 0 1px #fff; background:rgba(255,255,255,.12); }
+.sjsheet--red .plusone .yn.on{ background:rgba(255,255,255,.14); color:#fff; }
+.sjsheet--red .rsvp-send{ background:#fff; color:var(--red); }
+.sjsheet--red .rsvp-send:hover{ background:var(--dark); color:#fff; }
+.sjsheet--red .form-err{ color:#fff; font-weight:600; }
+.sjsheet--red .note-thanks .note-h,
+.sjsheet--red .note-thanks .note-sub,
+.sjsheet--red .thanks-ask{ color:#fff; }
+
+@media (min-width:761px){
+  .sjsheet-top{ padding:18px 64px 0 24px; }
+  .sjsheet-body{ padding:8px 24px 32px; }
+  .sjsheet .rsvp-title{ font-size:30px; }
+  .sjsheet .guest-fields{ grid-template-columns:1fr 1fr; column-gap:18px; }
+  .sjsheet .guest-fields .span2{ grid-column:1 / -1; }
+}

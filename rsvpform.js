@@ -557,7 +557,98 @@
     });
   }
 
-  else if (triggers.length && window.SJDrawer) {
+  /* ── the sheet ─────────────────────────────────────────────────────────
+     A full-screen presentation built in the same language as the phone menu:
+     flat, no card, wordmark top-left, ✕ top-right. Used for the one-time
+     prompt on a guest's first visit. Styling lives under .sjsheet in site.css,
+     including the red skin — flip SHEET_RED to try it.                    */
+  var SHEET_RED = false;
+
+  function openSheet(){
+    if (document.querySelector('.sjsheet')) return;
+    var el = document.createElement('div');
+    el.className = 'sjsheet' + (SHEET_RED ? ' sjsheet--red' : '');
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-label', 'RSVP');
+    el.innerHTML =
+      '<div class="sjsheet-top">' +
+        '<a class="sjsheet-brand" href="index.html">Sam <span>+</span> Jenni</a>' +
+        '<button type="button" class="sjsheet-x" aria-label="Close">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/>' +
+          '<line x1="19" y1="5" x2="5" y2="19"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="sjsheet-body"><div class="sjsheet-in"></div></div>';
+    document.body.appendChild(el);
+    document.body.classList.add('sjsheet-open');
+
+    function shut(){
+      el.remove();
+      document.body.classList.remove('sjsheet-open');
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e){ if (e.key === 'Escape') shut(); }
+    document.addEventListener('keydown', onKey);
+    el.querySelector('.sjsheet-x').addEventListener('click', shut);
+
+    wire(el.querySelector('.sjsheet-in'), 's', shut);
+    return shut;
+  }
+
+  /* ── one-time prompt ───────────────────────────────────────────────────
+     Opens the sheet once, on a signed-in guest's first visit, and never
+     nags again. Deliberately NOT a wall: the ✕ is the first thing your eye
+     lands on, and the reply-by date is January 2027 — most guests genuinely
+     cannot answer yet, and a forced answer now is a worse number than a
+     blank one.
+
+     Whether they've already replied is asked of the database, not just
+     localStorage: localStorage is per-device, so a guest who replied on a
+     laptop would otherwise be prompted again on their phone. The RPC is
+     security-definer and answers a bare true/false, so it reveals nothing
+     about anyone else. localStorage still short-circuits it, so the common
+     case costs no request.
+
+     To make this a hard block nearer the date, gate the ✕ and skip the
+     dismissed check — the plumbing is already here.                       */
+  var PROMPT_KEY = 'sj-rsvp-prompted';
+
+  function alreadyReplied(){
+    var done = false;
+    try { done = localStorage.getItem('sj-rsvp-done') === '1'; } catch(e){}
+    if (done) return Promise.resolve(true);
+    if (!window.SJUpload || !window.SJUpload.rpc) return Promise.resolve(false);
+    return window.SJUpload.rpc('guest_rsvped', window.SJUpload.guestKey())
+      .then(function(yes){
+        // Cache a true so later pages skip the round trip.
+        if (yes) { try { localStorage.setItem('sj-rsvp-done','1'); } catch(e){} }
+        return !!yes;
+      })
+      .catch(function(){ return true; });   // never prompt on an error
+  }
+
+  function maybePrompt(){
+    if (!who) return;                       // signed out — the gate has them
+    if (inline) return;                     // already looking at the form
+    var seen = true;
+    try { seen = localStorage.getItem(PROMPT_KEY) === '1'; } catch(e){ return; }
+    if (seen) return;
+    alreadyReplied().then(function(replied){
+      if (replied) return;
+      try { localStorage.setItem(PROMPT_KEY, '1'); } catch(e){}
+      openSheet();
+    });
+  }
+
+  // expose for the nav / console: SJRsvp.sheet() opens it on demand
+  window.SJRsvp = { sheet: openSheet, red: function(v){ SHEET_RED = v !== false; } };
+
+  // NOT an else-if any more only because the sheet code sits between the two
+  // branches — the `!inline` guard preserves the same either/or. Dropping it
+  // would mount the drawer on top of rsvp.html's own form again.
+  if (!inline && triggers.length && window.SJDrawer) {
     var d = window.SJDrawer.create({
       label: 'RSVP',
       html: '<div class="note-card note-card--drawer">' + formHTML('q') + '</div>',
@@ -570,4 +661,7 @@
       d.open();
     });
   }
+
+  // Last, so nothing else is half-built when the sheet goes up.
+  maybePrompt();
 })();
