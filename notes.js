@@ -9,6 +9,28 @@
 
   var GFORM = null; // { action, mem, word, song, name }
 
+  /* Who's writing. The "your name (optional)" box is gone — a guest has already
+     told us who they are at the gate, so asking again is a redundant field on a
+     form we want short.
+
+     One caveat, recorded here because it isn't obvious from the data: sj_guest
+     is whatever they signed in WITH. Full name or email pins the household
+     exactly. A bare surname does not for the five shared ones — `lee` spans
+     three households and `tang` two — so for those, from_name will read "Lee"
+     and the household is genuinely ambiguous. guest_key is stored alongside it
+     either way, so nothing is lost that we had before; the old field was
+     optional and usually blank. */
+  function cookie(name){
+    var m = document.cookie.split('; ').find(function(r){ return r.indexOf(name + '=') === 0; });
+    return m ? decodeURIComponent(m.split('=').slice(1).join('=')) : '';
+  }
+  function signedInName(){
+    var who = cookie('sj_guest').trim();
+    if (!who) return '';
+    if (who.indexOf('@') > -1) return who;          // email: leave as typed
+    return who.toLowerCase().replace(/\b[a-z]/g, function(c){ return c.toUpperCase(); });
+  }
+
   function formHTML(p, intro){
     return ('' +
       '<p class="note-top">Share some wild, weird memories, feels, etc. with us \u2661</p>' +
@@ -28,6 +50,7 @@
         '<label class="note-l" for="{p}Song">a song you want to hear</label>' +
         '<input id="{p}Song" class="note-f" type="text" placeholder="artist – title">' +
       '</div>' +
+      // Photo above, upload beneath it — the two side by side never sat right.
       '<div class="note-field photo-field">' +
         '<label class="note-l" for="{p}Photo">a photo of you &amp; Sam, you &amp; Jenni, us, etc!</label>' +
         '<div class="photo-stack">' +
@@ -44,14 +67,14 @@
         '<input id="{p}Photo" class="photo-input" type="file" accept="image/*">' +
         '<div class="photo-preview" data-preview hidden></div>' +
       '</div>' +
+      // No name field: signedInName() supplies it. Send stands alone.
       '<div class="note-row3">' +
-        '<div class="note-field"><label class="note-l" for="{p}Name">your name (optional)</label>' +
-          '<input id="{p}Name" class="note-f" type="text"></div>' +
         '<button class="note-btn" type="button" data-send>Send</button>' +
       '</div>').replace(/\{p\}/g, p);
   }
 
-  var cache = { Mem:'', WordS:'', WordJ:'', Song:'', Name:'' };
+  // Name dropped from the cache along with its field.
+  var cache = { Mem:'', WordS:'', WordJ:'', Song:'' };
 
   function wire(root, p, onSent){
     function g(k){ return root.querySelector('#' + p + k); }
@@ -72,7 +95,7 @@
             word_sam: val('WordS'),
             word_jenni: val('WordJ'),
             song: val('Song'),
-            from_name: val('Name'),
+            from_name: signedInName(),
             photo_path: up ? up.getPath() : ''
           })
         : Promise.reject(new Error('no uploader'));
