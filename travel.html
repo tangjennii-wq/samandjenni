@@ -498,6 +498,16 @@
   var top   = bar.querySelector('.fgroup--top');
   var f = 'block';
 
+  // The "other hotels by neighborhood" badge used to be a hardcoded 29. Three
+  // hotels were deleted and it silently kept saying 29 — the kind of number
+  // that goes stale the moment anyone edits the list. Count the cards instead.
+  var badge = bar.querySelector('.fchip--more .fnum');
+  if (badge) {
+    badge.textContent = cards.filter(function(c){
+      return c.getAttribute('data-kind') === 'other';
+    }).length;
+  }
+
   function apply(){
     var n = 0;
     cards.forEach(function(c){
