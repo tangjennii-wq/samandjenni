@@ -645,20 +645,24 @@
   // expose for the nav / console: SJRsvp.sheet() opens it on demand
   window.SJRsvp = { sheet: openSheet, red: function(v){ SHEET_RED = v !== false; } };
 
-  // NOT an else-if any more only because the sheet code sits between the two
-  // branches — the `!inline` guard preserves the same either/or. Dropping it
-  // would mount the drawer on top of rsvp.html's own form again.
-  if (!inline && triggers.length && window.SJDrawer) {
-    var d = window.SJDrawer.create({
-      label: 'RSVP',
-      html: '<div class="note-card note-card--drawer">' + formHTML('q') + '</div>',
-      onMount: function (api) { wire(api.body, 'q', api.close); }
-    });
+  // Every RSVP now opens the sheet — the nav button, the phone menu, the pill
+  // on the note thank-you, and the one-time prompt. One presentation at one
+  // width, rather than a side drawer on the button and a sheet on the prompt.
+  //
+  // The side drawer is no longer created for the RSVP at all. That also retires
+  // the duplicate-form problem by construction: there is only ever one RSVP in
+  // the document, because openSheet() refuses to build a second.
+  //
+  // SJDrawer is still used by the note form — untouched.
+  //
+  // The `!inline` guard stays: on rsvp.html the form is already on the page, so
+  // the button scrolls to it instead of opening anything.
+  if (!inline && triggers.length) {
     document.addEventListener('click', function (e) {
       var t = e.target.closest && e.target.closest('[data-rsvp-open]');
       if (!t) return;
       e.preventDefault();
-      d.open();
+      openSheet();
     });
   }
 

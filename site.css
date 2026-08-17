@@ -2487,6 +2487,15 @@ body.sjsheet-open{ overflow:hidden; }
 .sjsheet .guest-row,
 .sjsheet .guest-fields .note-f{ background:none !important; }
 
+/* `.guest-row, .rsvp-list, .photo-preview { box-shadow:var(--lift-sm) }` lifts
+   those off the page elsewhere. In the sheet it drew a faint rectangle round
+   the event list that read as a leftover border — the exact chrome this
+   presentation is meant to shed. Nothing here floats. */
+.sjsheet .rsvp-list,
+.sjsheet .guest-row,
+.sjsheet .photo-preview,
+.sjsheet .note-card{ box-shadow:none !important; }
+
 .sjsheet .guest-fields{ gap:0; grid-template-columns:1fr; }
 /* !important is unavoidable here: an earlier rule sets
    `.note-f, .rsvp-fields .note-f, .guest-fields .note-f { border:1px solid !important }`,
@@ -2562,3 +2571,42 @@ body.sjsheet-open{ overflow:hidden; }
   .sjsheet .guest-fields{ grid-template-columns:1fr 1fr; column-gap:18px; }
   .sjsheet .guest-fields .span2{ grid-column:1 / -1; }
 }
+
+
+/* ---- the thank-you, restated in sheet language -----------------------------
+   Every reply now lands here rather than in the drawer, so it needs the same
+   flat treatment: left-aligned, no card, underlines instead of boxes. */
+.sjsheet .note-thanks{ text-align:left; padding:0; }
+.sjsheet .note-thanks .note-h{ font-size:26px; font-weight:600; letter-spacing:.02em;
+  text-align:left; text-transform:none; }
+.sjsheet .note-thanks .note-sub{ text-align:left; font-size:14px; margin:6px 0 0; }
+.sjsheet .thanks-ask{ text-align:left; font-size:13.5px; margin:22px 0 0; font-style:italic;
+  color:#8a7967; }
+.sjsheet .thanks-cal{ border:0; background:none; padding:18px 0 0; margin:0; }
+.sjsheet .thanks-cal-h{ text-align:left; font-size:10px; letter-spacing:.16em; color:#b9aa96;
+  margin:0 0 8px; }
+.sjsheet .thanks-cal{ display:flex; flex-wrap:wrap; gap:8px; }
+.sjsheet .thanks-cal-h{ flex:1 0 100%; }
+.sjsheet .cal-chip{ border:1px solid var(--line-2); background:none; box-shadow:none;
+  font-size:12px; font-weight:500; }
+.sjsheet .rsvp-notes-inline{ border-top:1px solid var(--line); margin-top:22px; padding-top:20px; }
+.sjsheet .rsvp-notes-inline .note-l{ font-size:10px; letter-spacing:.16em; color:#b9aa96; }
+.sjsheet .rsvp-notes-inline .note-f{ border:0 !important;
+  border-bottom:1px solid var(--line) !important; border-radius:0 !important;
+  background:none !important; box-shadow:none !important; padding:10px 2px; font-size:16px; }
+.sjsheet .rsvp-notes-inline .note-f:focus{ border-color:transparent !important;
+  border-bottom-color:var(--red) !important; }
+.sjsheet .rsvp-notes-inline .note-ta{ min-height:64px; }
+.sjsheet .rsvp-notes-inline .note-btn{ background:var(--red); color:#fff; border:0;
+  border-radius:var(--r-pill); box-shadow:none; font-size:12px; letter-spacing:.14em; padding:14px; }
+.sjsheet .rsvp-notes-inline .note-btn:hover{ background:var(--dark); }
+.sjsheet .photo-stack{ flex-direction:row; align-items:center; justify-content:flex-start;
+  gap:14px; padding:0; }
+.sjsheet .photo-stack .photo-eg{ width:76px; }
+.sjsheet .photo-stack .photo-eg figcaption{ font-size:9px; }
+.sjsheet .photo-drop{ width:auto; border:1px dashed var(--line-2); background:none;
+  padding:11px 18px; }
+.sjsheet .thanks-skip{ display:block; margin:18px 0 0; text-align:left; background:none;
+  border:0; padding:0; color:#a2907a; font-size:12.5px; text-decoration:underline;
+  text-underline-offset:3px; cursor:pointer; }
+.sjsheet .rsvp-edit-hint{ text-align:left; margin-top:14px; }
