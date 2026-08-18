@@ -125,8 +125,13 @@
       return '<div class="rsvp-ev" data-ev="' + e.k + '">' +
         '<div class="rsvp-evname"><b>' + e.name + '</b>' +
           '<span class="ev-meta">(' + e.when + ', ' + loc + ')</span></div>' +
+        // Three answers, not two. "Maybe" is a real reply — it stops guests who
+        // aren't sure yet from either guessing "yes" (and inflating a count we
+        // have to buy food against) or abandoning the form entirely. It is
+        // stored like the others and simply never counts as attending.
         '<div class="rsvp-yn">' +
           '<button type="button" class="yn yes" data-k="' + e.k + '" data-v="yes" aria-label="Accepts">Yes</button>' +
+          '<button type="button" class="yn maybe" data-k="' + e.k + '" data-v="maybe" aria-label="Not sure yet">Maybe</button>' +
           '<button type="button" class="yn no"  data-k="' + e.k + '" data-v="no" aria-label="Declines">No</button>' +
         '</div></div>';
     }).join('');
@@ -187,10 +192,12 @@
         '<div class="note-h">Thank you \u2661</div>' +
         '<p class="note-sub">your reply is in \u2014 we can\u2019t wait.</p>' +
         calHtml +
-        '<p class="thanks-ask">Two quick things while you\u2019re here \u2014 a note for us, ' +
-          'then a look at your details so the invitation reaches the right door.</p>' +
+        // Was two sentences of explanation above a full-width red slab. The
+        // button says what it does, so the paragraph only has to say how long
+        // it takes \u2014 and the pill is the same size as every other pill.
+        '<p class="thanks-ask">Two quick things while you\u2019re here.</p>' +
         '<div class="note-row3">' +
-          '<button class="note-btn" type="button" data-note-open>Leave us a note \u2192</button>' +
+          '<button class="note-btn" type="button" data-note-open>Leave a note \u2192</button>' +
         '</div>' +
         '<button class="thanks-skip" type="button" data-close>skip \u2014 all done</button>' +
         '<p class="rsvp-edit-hint">Changed your mind? <button type="button" class="rsvp-edit-link" data-edit-rsvp>Edit your RSVP</button></p>' +
@@ -368,7 +375,7 @@
         if (missing.length) { showErr('We still need ' + missing.join(' and ') + '.'); return; }
 
         if (EVENTS.some(function(e){ return !answers[e.k]; })){
-          showErr('Please pick yes or no for every event.');
+          showErr('Please pick an answer for every event.');
           flagMissing();
           return;
         }
