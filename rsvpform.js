@@ -33,6 +33,70 @@
     party: 1
   };
 
+  /* ── who is this, really? ─────────────────────────────────────────────
+     The cookie is whatever the guest typed at the gate, so it filled in ONE
+     field: an email login gave us an email and no name, a name login gave us a
+     name and no email. Everyone else retyped what we already had on the list.
+
+     guest_profile(key) closes that gap. It returns at most one row — the person
+     holding that key, and the address we have for them — so an email login now
+     fills the name too, and vice versa.
+
+     Two things it deliberately will not do:
+       · Surname keys ("lee", "tang") have no profile row at all. Several
+         households share those keys, so prefilling would hand one family
+         another family's name and address.
+       · An address we could not confidently attribute inside a shared
+         household returns no name rather than a guess.
+
+     Cached in localStorage because it never changes for a given key, and
+     because the cache means the fields are already filled on the second open
+     instead of arriving a beat late. The network call is best-effort: if it
+     fails, the form behaves exactly as it did before. */
+  var PROFILE_KEY = 'sj-profile';
+  var profileTried = false;
+
+  function cachedProfile(){
+    try {
+      var c = JSON.parse(localStorage.getItem(PROFILE_KEY));
+      return (c && c.key === who) ? c : null;
+    } catch(e){ return null; }
+  }
+
+  function applyProfile(pr){
+    if (!pr) return false;
+    var moved = false;
+    if (pr.person_name && !PRE.name)  { PRE.name  = pr.person_name; moved = true; }
+    if (pr.email       && !PRE.email) { PRE.email = pr.email;       moved = true; }
+    return moved;
+  }
+
+  applyProfile(cachedProfile());
+
+  // Fills any field the guest hasn't already typed into. Never overwrites.
+  function fillBlanks(root){
+    var row = root.querySelector('.guest-row[data-guest="0"]');
+    if (!row) return;
+    var n = row.querySelector('.gname'), e = row.querySelector('.gemail');
+    if (n && !n.value && PRE.name)  n.value = PRE.name;
+    if (e && !e.value && PRE.email) e.value = PRE.email;
+  }
+
+  function loadProfile(root){
+    if (profileTried || !who) return;
+    profileTried = true;
+    if (cachedProfile()) return;                 // already applied above
+    if (!(window.SJUpload && window.SJUpload.rpc)) return;
+    window.SJUpload.rpc('guest_profile', who).then(function(rows){
+      var pr = Array.isArray(rows) ? rows[0] : rows;
+      if (!pr) return;
+      try { localStorage.setItem(PROFILE_KEY, JSON.stringify({
+        key: who, person_name: pr.person_name || '', email: pr.email || ''
+      })); } catch(e){}
+      if (applyProfile(pr)) fillBlanks(root);
+    }).catch(function(){ /* offline, or nothing on file — type it as before */ });
+  }
+
   // Try to restore a previous submission so guests can edit & resubmit.
   var prev = null;
   try { prev = JSON.parse(localStorage.getItem('sj-rsvp-data')); } catch(e){}
@@ -467,6 +531,9 @@
         if (draft.plusOne) plusOneVal = draft.plusOne;
       }
       renderForm();
+      // After the first paint, so an empty name/email field is filled the moment
+      // the lookup lands rather than the form waiting on the network to appear.
+      loadProfile(root);
     }
   }
 
