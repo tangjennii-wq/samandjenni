@@ -3061,3 +3061,87 @@ body.sjsheet-open{ overflow:hidden; }
 .sjsheet .rsvp-list .yn.yes.on::after{ color:#fff; }
 .sjsheet--red .rsvp-list .yn.yes.on{ background:#fff; border-color:#fff; }
 .sjsheet--red .rsvp-list .yn.yes.on::after{ color:var(--red); }
+
+
+/* ==========================================================================
+   Sheet typography — the site's own voice, and a real hierarchy
+   --------------------------------------------------------------------------
+   Diagnosed by comparing against gate.html, which is where this site's type
+   voice is clearest: h1 34px/800 at .02em tracking, eyebrows 10.5px/800 at
+   .22em, buttons 11px/800 at .16em. Heavy weights, tight tracking on large
+   text, wide tracking on small caps.
+
+   The sheet was built the other way round — 600 weights, and .16em tracking on
+   a 30px title — which is why it read as a different typeface despite being
+   Figtree throughout. Nothing was wrong with the font loading; the register was
+   wrong.
+
+   Five levels now, each distinct in size AND weight, so the eye can rank them:
+     1  title        30px / 800   the thing you opened
+     2  eyebrow      10.5px / 800 red, wide caps — the deadline
+     3  section       10px / 800   muted wide caps, over a hairline
+     4  row heading   16px / 700   event names, the +1 question
+     5  content       16px / 400   what the guest types, and quiet meta
+   ========================================================================== */
+.sjsheet .rsvp-title{
+  font-size:30px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  line-height:1.05; color:var(--dark); }
+.sjsheet .rsvp-sub{
+  margin-top:9px; font-size:10.5px; font-weight:800; letter-spacing:.22em;
+  text-transform:uppercase; font-style:normal; color:var(--red); }
+
+/* Section labels sit on a hairline, which is what actually divides the form —
+   at 10px muted they were too quiet to structure anything on their own. */
+.sjsheet .rsvp-sect-h{
+  font-size:10px; font-weight:800; letter-spacing:.24em; text-transform:uppercase;
+  color:#a2907a; padding-bottom:6px; margin-bottom:10px;
+  border-bottom:1px solid var(--line); }
+
+.sjsheet .plusone-q{ font-size:16px; font-weight:700; letter-spacing:0; }
+.sjsheet .rsvp-evname b{ font-size:16px; font-weight:700; letter-spacing:-.005em; }
+.sjsheet .rsvp-evname .ev-meta{ font-size:12px; font-weight:400; color:#8a7967; }
+.sjsheet .guest-fields .note-f,
+.sjsheet .note-f{ font-size:16px; font-weight:400; }
+.sjsheet .yn{ font-size:10px; font-weight:800; letter-spacing:.12em; }
+.sjsheet .rsvp-send,
+.sjsheet .note-btn{ font-size:11px; font-weight:800; letter-spacing:.16em; }
+
+/* the note form and the account panel get the same ladder */
+.sjsheet .note-l{ font-size:10px; font-weight:800; letter-spacing:.24em;
+  text-transform:uppercase; color:#a2907a; }
+.sjsheet .note-top{ font-size:15px; font-weight:400; font-style:italic; color:var(--dark); }
+.sjsheet .acct-eyebrow{ font-size:10.5px; font-weight:800; letter-spacing:.22em; color:var(--red); }
+.sjsheet .acct-who{ font-size:30px; font-weight:800; letter-spacing:.02em;
+  text-transform:uppercase; line-height:1.05; }
+.sjsheet .note-thanks .note-h{ font-size:30px; font-weight:800; letter-spacing:.04em;
+  text-transform:uppercase; }
+
+@media (max-width:560px){
+  .sjsheet .rsvp-title{ font-size:23px; letter-spacing:.05em; }
+  .sjsheet .rsvp-sub{ margin-top:7px; font-size:9.5px; letter-spacing:.18em; }
+  .sjsheet .rsvp-sect-h{ font-size:9px; letter-spacing:.2em; padding-bottom:5px; margin-bottom:8px; }
+  .sjsheet .plusone-q,
+  .sjsheet .rsvp-evname b{ font-size:15px; }
+  .sjsheet .acct-who,
+  .sjsheet .note-thanks .note-h{ font-size:23px; }
+}
+@media (max-width:560px) and (max-height:600px){
+  .sjsheet .rsvp-title{ font-size:19px; }
+  .sjsheet .rsvp-sub{ margin-top:5px; font-size:9px; }
+  .sjsheet .rsvp-sect-h{ padding-bottom:3px; margin-bottom:6px; }
+  .sjsheet .plusone-q,
+  .sjsheet .rsvp-evname b{ font-size:14px; }
+  .sjsheet .acct-who,
+  .sjsheet .note-thanks .note-h{ font-size:19px; }
+}
+
+
+/* The three-step hand-off after an RSVP: reply -> note -> details. The step
+   line is small and red, in the eyebrow register, so it reads as progress
+   rather than as a heading competing with "Thank you". */
+.sjsheet .thanks-step{ font-size:10px; font-weight:800; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--red); margin-bottom:8px; }
+.sjsheet .note-thanks{ text-align:left; }
+.sjsheet .thanks-ask{ max-width:42ch; }
+.sjsheet .thanks-skip{ display:block; margin:14px auto 0; text-align:center; }
+.sjsheet .rsvp-edit-hint{ text-align:center; margin-top:12px; }

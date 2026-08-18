@@ -106,24 +106,20 @@
       saving.then(function () {
       Object.keys(cache).forEach(function(k){ cache[k] = ''; });
       var card = root.querySelector('.note-card') || root;
-      // Feature switch lives in personalize.js. The count in the copy has to
-      // follow it — "two more things" above a single button reads as a bug.
-      var ou = !!(window.SJ_FEATURES && window.SJ_FEATURES.overUnder);
-      card.innerHTML = '<div class="note-thanks"><div class="note-h">Thank you ♡</div>' +
-        '<p class="note-sub">we’ve got it — see you in New York.</p>' +
-        '<p class="thanks-ask">' + (ou ? 'two more things' : 'one more thing') +
-          ', if you have a minute —</p>' +
-        '<div class="thanks-pills">' +
-          '<button class="thanks-pill pill-rsvp" type="button" data-go-rsvp>RSVP</button>' +
-          (ou ? '<button class="thanks-pill pill-ou" type="button" data-ou-open>Over/Under</button>' : '') +
+      card.innerHTML = '<div class="note-thanks">' +
+        '<div class="thanks-step">Step 2 of 3</div>' +
+        '<div class="note-h">Thank you \u2661</div>' +
+        '<p class="note-sub">we\u2019ve got it \u2014 see you in New York.</p>' +
+        // Last step: confirm where the paper invitation should go. That is the
+        // one thing we cannot work out for them, and the reason this chain
+        // exists at all.
+        '<p class="thanks-ask">One last thing \u2014 check your details so the ' +
+          'invitation reaches the right address.</p>' +
+        '<div class="note-row3">' +
+          '<button class="note-btn" type="button" data-acct-open>Check my details \u2192</button>' +
         '</div>' +
         '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
         '</div>';
-      var goR = card.querySelector('[data-go-rsvp]');
-      if (goR) goR.addEventListener('click', function(){
-        var t = document.querySelector('.nav-cta [data-rsvp-open]') || document.querySelector('[data-rsvp-open]');
-        if (t) t.click();
-      });
       var skipN = card.querySelector('[data-close]');
       if (skipN && onSent) skipN.addEventListener('click', onSent);
       }).catch(function () {

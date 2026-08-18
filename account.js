@@ -67,8 +67,9 @@
 
      SJSheet (drawer.js) brings the focus trap, focus restore, scroll lock and
      Escape with it, so all of that machinery goes. */
-  function panelHTML(){
+  function panelHTML(chained){
     return '' +
+      (chained ? '<div class="thanks-step">Step 3 of 3</div>' : '') +
       '<div class="acct-head">' +
         '<div class="acct-eyebrow">Signed in as</div>' +
         '<div class="acct-who">' + (who ? (isEmail ? who : titleCase(who)) : 'a guest') + '</div>' +
@@ -92,13 +93,13 @@
 
   var pop = null;   // the live sheet body, while open
 
-  function setOpen(on){
+  function setOpen(on, chained){
     btn.setAttribute('aria-expanded', on ? 'true' : 'false');
     if (!on) { pop = null; return; }
     if (!window.SJSheet) return;
     var api = window.SJSheet.open({
       label: 'Your details',
-      html: '<div class="acct-card">' + panelHTML() + '</div>',
+      html: '<div class="acct-card">' + panelHTML(!!chained) + '</div>',
       onMount: function(a){ pop = a.body; wirePanel(a); }
     });
     return api;
@@ -106,6 +107,14 @@
   btn.addEventListener('click', function(e){
     e.preventDefault(); e.stopPropagation();
     setOpen(true);
+  });
+  // Delegated so anything can hand off to this panel — the note form's
+  // thank-you ends the RSVP chain by opening it with [data-acct-open].
+  document.addEventListener('click', function(e){
+    var t = e.target.closest && e.target.closest('[data-acct-open]');
+    if (!t) return;
+    e.preventDefault();
+    setOpen(true, true);   // reached through the RSVP chain — number the step
   });
 
   function wirePanel(api){
@@ -126,8 +135,11 @@
         })
       : Promise.reject(new Error('no uploader'));
     saving.then(function(){
-      save.textContent = 'Sent ♡'; msg.hidden = false;
-      msg.className = 'acct-msg'; msg.textContent = 'Got it — thank you.';
+      save.textContent = 'Sent ♡'; save.disabled = true;
+      msg.hidden = false; msg.className = 'acct-msg';
+      msg.textContent = 'Got it — thank you. That\u2019s everything ♡';
+      var done = api.body.querySelector('.acct-out');
+      if (done) done.textContent = 'All done';
     }).catch(function(){
       save.disabled = false; save.textContent = 'Send it over';
       msg.hidden = false; msg.className = 'acct-msg is-err';

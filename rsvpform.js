@@ -173,49 +173,26 @@
   }
 
   // Thank-you + inline notes
+  /* Step 1 of 3. The reply is in; now hand them on to the note, and the note
+     hands them on to their details so the mailing address is confirmed.
+
+     The whole note form used to be inlined here, duplicating notes.js. It isn't
+     any more — this button carries data-note-open, which notes.js already
+     listens for on document, and SJSheet replaces whatever sheet is live. So the
+     hand-off costs one attribute rather than a second copy of the form. */
   function thanksHTML(calHtml){
     return '' +
       '<div class="note-thanks">' +
-        '<div class="note-h">Thank you ♡</div>' +
-        '<p class="note-sub">your reply is in — we can’t wait.</p>' +
+        '<div class="thanks-step">Step 1 of 3</div>' +
+        '<div class="note-h">Thank you \u2661</div>' +
+        '<p class="note-sub">your reply is in \u2014 we can\u2019t wait.</p>' +
         calHtml +
-        '<p class="thanks-ask">while you’re here — leave us a note, a song request, or a photo.</p>' +
-        '<div class="rsvp-notes-inline">' +
-          '<div class="note-field">' +
-            '<label class="note-l" for="rn_Mem">a favorite memory</label>' +
-            '<textarea id="rn_Mem" class="note-f note-ta"></textarea>' +
-          '</div>' +
-          '<div class="note-row2">' +
-            '<div class="note-field"><label class="note-l" for="rn_WordS">one word for Sam</label>' +
-              '<input id="rn_WordS" class="note-f" type="text"></div>' +
-            '<div class="note-field"><label class="note-l" for="rn_WordJ">one word for Jenni</label>' +
-              '<input id="rn_WordJ" class="note-f" type="text"></div>' +
-          '</div>' +
-          '<div class="note-field note-field--song">' +
-            '<label class="note-l" for="rn_Song">a song you want to hear</label>' +
-            '<input id="rn_Song" class="note-f" type="text" placeholder="artist – title">' +
-          '</div>' +
-          // Moved off the form. Asking once the reply is recorded means the
-          // upload can't stand between a guest and their RSVP.
-          '<div class="note-field photo-field">' +
-            '<label class="note-l" for="rn_Photo">a photo of us together</label>' +
-            '<div class="photo-stack">' +
-              '<figure class="photo-eg" aria-hidden="true">' +
-                '<img src="img/photo-example.jpg" alt="" decoding="async" onerror="this.closest(\'.photo-eg\').remove()">' +
-                '<figcaption>like this</figcaption>' +
-              '</figure>' +
-              '<label class="photo-drop" for="rn_Photo">' +
-                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-                  '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
-                '<span class="photo-txt">upload a photo</span>' +
-              '</label>' +
-            '</div>' +
-            '<input id="rn_Photo" class="photo-input" type="file" accept="image/*">' +
-            '<div class="photo-preview" data-note-preview hidden></div>' +
-          '</div>' +
-          '<button class="note-btn" type="button" data-send-note>Send</button>' +
+        '<p class="thanks-ask">Two quick things while you\u2019re here \u2014 a note for us, ' +
+          'then a look at your details so the invitation reaches the right door.</p>' +
+        '<div class="note-row3">' +
+          '<button class="note-btn" type="button" data-note-open>Leave us a note \u2192</button>' +
         '</div>' +
-        '<button class="thanks-skip" type="button" data-close>skip — all done</button>' +
+        '<button class="thanks-skip" type="button" data-close>skip \u2014 all done</button>' +
         '<p class="rsvp-edit-hint">Changed your mind? <button type="button" class="rsvp-edit-link" data-edit-rsvp>Edit your RSVP</button></p>' +
       '</div>';
   }
@@ -458,42 +435,8 @@
     function renderThanks(){
       card.innerHTML = thanksHTML(calBlock());
 
-      // The photo prompt lives here now rather than on the form.
-      uploader = (window.SJUpload
-        ? window.SJUpload.wire(root.querySelector('#rn_Photo'),
-                               root.querySelector('[data-note-preview]'))
-        : null);
-
-      var noteBtn = root.querySelector('[data-send-note]');
-      if (noteBtn) {
-        noteBtn.addEventListener('click', function(){
-          var btn = this;
-          var val = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
-          var mem = val('rn_Mem'), wS = val('rn_WordS'), wJ = val('rn_WordJ'), song = val('rn_Song');
-          var pic = uploader ? uploader.getPath() : '';
-          if (!mem && !wS && !wJ && !song && !pic) return;  // nothing to send
-
-          var label = btn.textContent;
-          btn.disabled = true; btn.textContent = 'Sending…';
-
-          var noteSaving = (window.SJUpload && window.SJUpload.save)
-            ? window.SJUpload.save('wedding_notes', {
-                guest_key: window.SJUpload.guestKey(),
-                memory: mem, word_sam: wS, word_jenni: wJ, song: song,
-                from_name: (guestData[0] && guestData[0].name) || PRE.name,
-                photo_path: pic
-              })
-            : Promise.reject(new Error('no uploader'));
-
-          noteSaving.then(function(){
-            var wrap = root.querySelector('.rsvp-notes-inline');
-            if (wrap) wrap.innerHTML = '<p class="note-sub" style="margin-top:14px">Note sent ♡ thank you!</p>';
-          }).catch(function(){
-            btn.disabled = false; btn.textContent = label;
-          });
-        });
-      }
-
+      // No inline note form to wire any more — the button above opens the
+      // note sheet, which notes.js owns.
       var skip = root.querySelector('[data-close]');
       if (skip && onSent) skip.addEventListener('click', onSent);
 
