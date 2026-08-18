@@ -3145,3 +3145,54 @@ body.sjsheet-open{ overflow:hidden; }
 .sjsheet .thanks-ask{ max-width:42ch; }
 .sjsheet .thanks-skip{ display:block; margin:14px auto 0; text-align:center; }
 .sjsheet .rsvp-edit-hint{ text-align:center; margin-top:12px; }
+
+
+/* ==========================================================================
+   Desktop header: wordmark left, sections right (Thinking Machines layout)
+   --------------------------------------------------------------------------
+   Two stacked centred bands became one row: name and date on the left, the
+   sections on the right. Less vertical furniture before the page starts, and
+   the eye lands on the wordmark rather than sweeping across a centred block.
+
+   `.crest` and `.sitenav` are siblings with no shared parent, so they're now
+   wrapped in .topbar. On phones that wrapper is display:contents — it vanishes
+   from the box tree entirely, so the crest and the sticky nav behave exactly as
+   they did before and the kebab layout is untouched. A plain wrapper would have
+   broken the sticky nav, since sticky is bounded by its parent's box and the
+   wrapper is only as tall as the header itself.
+
+   The date stays inside .crest, so personalize.js keeps rewriting
+   [data-dates-short] per tier — a tier-4 guest still sees 3.20.27 while tier 1
+   sees the full span.
+   ========================================================================== */
+.topbar{ display:contents; }
+
+@media (min-width:761px){
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between; gap:32px;
+    position:sticky; top:0; z-index:100;
+    background:#fff; border-bottom:1px solid var(--line);
+    padding:13px 30px; }
+
+  .topbar .crest{
+    flex:0 0 auto; text-align:left; background:none;
+    border:0; border-radius:0; padding:0; }
+  .topbar .crest-name{ font-size:21px; letter-spacing:.04em; line-height:1; }
+  .topbar .crest-tag{ margin-top:5px; font-size:9px; letter-spacing:.2em; text-align:left; }
+
+  .topbar .sitenav{
+    flex:1 1 auto; position:static; top:auto; z-index:auto;
+    justify-content:flex-end; align-items:center; gap:20px; flex-wrap:nowrap;
+    background:none; border:0; padding:0; min-height:0; }
+  .topbar .sitenav a{ font-size:10px; letter-spacing:.16em; }
+  .topbar .sitenav a::after{ bottom:-6px; }
+}
+
+/* Narrower desktops: let the row breathe rather than crush the links */
+@media (min-width:761px) and (max-width:1080px){
+  .topbar{ padding:11px 20px; gap:20px; }
+  .topbar .crest-name{ font-size:18px; }
+  .topbar .crest-tag{ font-size:8.5px; letter-spacing:.16em; }
+  .topbar .sitenav{ gap:14px; }
+  .topbar .sitenav a{ font-size:9.5px; letter-spacing:.1em; }
+}
