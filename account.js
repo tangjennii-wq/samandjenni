@@ -59,17 +59,22 @@
     btn.appendChild(label);
   }
 
-  var pop = document.createElement('div');
-  pop.className = 'acct-pop';
-  pop.hidden = true;
-  pop.innerHTML =
-    '<div class="acct-head">' +
-      '<span class="acct-eyebrow">Signed in as</span>' +
-      '<b class="acct-who">' + (who ? (isEmail ? who : titleCase(who)) : 'a guest') + '</b>' +
-      (TIERNAME[tier] ? '<span class="acct-tier">You’re invited to ' + TIERNAME[tier] + '</span>' : '') +
-    '</div>' +
-    '<div class="acct-body">' +
-      '<p class="acct-intro">Anything we’ve got wrong? Tell us here.</p>' +
+  /* The account panel now uses the same full-screen sheet as the RSVP and the
+     note form, at every width. It used to be a popover anchored under the nav
+     icon on desktop and a bottom sheet on phones — two presentations, its own
+     veil, its own outside-click and Escape handling, and a red header band that
+     nothing else on the site has any more.
+
+     SJSheet (drawer.js) brings the focus trap, focus restore, scroll lock and
+     Escape with it, so all of that machinery goes. */
+  function panelHTML(){
+    return '' +
+      '<div class="acct-head">' +
+        '<div class="acct-eyebrow">Signed in as</div>' +
+        '<div class="acct-who">' + (who ? (isEmail ? who : titleCase(who)) : 'a guest') + '</div>' +
+        (TIERNAME[tier] ? '<div class="acct-tier">You\u2019re invited to ' + TIERNAME[tier] + '</div>' : '') +
+      '</div>' +
+      '<p class="acct-intro">Anything we\u2019ve got wrong? Tell us here.</p>' +
       '<div class="note-field"><label class="note-l" for="acName">your name</label>' +
         '<input id="acName" class="note-f" type="text" value="' +
           (who && !isEmail ? titleCase(who).replace(/"/g,'&quot;') : '') + '"></div>' +
@@ -79,43 +84,33 @@
       '<div class="note-field"><label class="note-l" for="acAddr">mailing address</label>' +
         '<input id="acAddr" class="note-f" type="text" placeholder="where the invitation should go"></div>' +
       '<div class="note-field"><label class="note-l" for="acNote">anything else</label>' +
-        '<textarea id="acNote" class="note-f note-ta" placeholder="new address, a name we spelled wrong, a question…"></textarea></div>' +
-      '<button class="note-btn acct-save" type="button">Send it over</button>' +
+        '<textarea id="acNote" class="note-f note-ta" placeholder="new address, a name we spelled wrong, a question\u2026"></textarea></div>' +
       '<p class="acct-msg" hidden></p>' +
-      '<button class="acct-out" type="button">Sign out</button>' +
-    '</div>';
-  // Appended to <body>, NOT to the nav: .sitenav is position:sticky with
-  // overflow-x:auto, which can trap a fixed-position child on iOS Safari.
-  document.body.appendChild(pop);
+      '<div class="note-row3"><button class="note-btn acct-save" type="button">Send it over</button></div>' +
+      '<button class="acct-out" type="button">Sign out</button>';
+  }
 
-  // a tap-catcher behind the sheet on phones
-  var veil = document.createElement('div');
-  veil.className = 'acct-veil';
-  veil.hidden = true;
-  document.body.appendChild(veil);
+  var pop = null;   // the live sheet body, while open
 
   function setOpen(on){
-    pop.hidden = !on;
-    veil.hidden = !on;
     btn.setAttribute('aria-expanded', on ? 'true' : 'false');
-    document.body.classList.toggle('acct-open', on);
-    if (on) {
-      // anchor under the icon on desktop; the CSS pins it as a sheet on mobile
-      var r = btn.getBoundingClientRect();
-      pop.style.top = (r.bottom + 10) + 'px';
-      pop.style.right = Math.max(12, window.innerWidth - r.right) + 'px';
-    }
+    if (!on) { pop = null; return; }
+    if (!window.SJSheet) return;
+    var api = window.SJSheet.open({
+      label: 'Your details',
+      html: '<div class="acct-card">' + panelHTML() + '</div>',
+      onMount: function(a){ pop = a.body; wirePanel(a); }
+    });
+    return api;
   }
-  btn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); setOpen(pop.hidden); });
-  veil.addEventListener('click', function(){ setOpen(false); });
-  document.addEventListener('click', function(e){
-    if (!pop.hidden && !pop.contains(e.target) && !wrap.contains(e.target)) setOpen(false);
+  btn.addEventListener('click', function(e){
+    e.preventDefault(); e.stopPropagation();
+    setOpen(true);
   });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !pop.hidden) { setOpen(false); btn.focus(); } });
-  pop.addEventListener('click', function(e){ e.stopPropagation(); });
 
-  var save = pop.querySelector('.acct-save');
-  var msg  = pop.querySelector('.acct-msg');
+  function wirePanel(api){
+  var save = api.body.querySelector('.acct-save');
+  var msg  = api.body.querySelector('.acct-msg');
   save.addEventListener('click', function(){
     var v = function(id){ var el = pop.querySelector('#' + id); return el ? el.value.trim() : ''; };
     if (!v('acName') && !v('acEmail') && !v('acAddr') && !v('acNote')) {
@@ -140,10 +135,11 @@
     });
   });
 
-  pop.querySelector('.acct-out').addEventListener('click', function(){
+  api.body.querySelector('.acct-out').addEventListener('click', function(){
     ['sj_guest','sj_tier'].forEach(function(k){
       document.cookie = k + '=; Path=/; Max-Age=0; SameSite=Lax';
     });
     location.href = '/gate';
   });
+  }
 })();

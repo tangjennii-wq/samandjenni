@@ -2963,3 +2963,66 @@ body.sjsheet-open{ overflow:hidden; }
   .sjsheet .photo-field{ margin-top:9px; }
   .sjsheet .photo-stack{ gap:8px; }
 }
+
+
+/* ==========================================================================
+   The example polaroid: size it at every width, and reserve its box
+   --------------------------------------------------------------------------
+   `.photo-eg img { width:100%; aspect-ratio:1/1; object-fit:cover }` lived only
+   inside @media(min-width:761px), so below that the image had no sizing at all
+   and fell back to its intrinsic 760x760 clamped by whatever happened to apply.
+   That is why it rendered on desktop and vanished on a phone.
+
+   The frame also keeps its shape whether or not the file arrives: with
+   aspect-ratio on the img itself, a photo that is slow, blocked or missing
+   leaves a correctly sized empty frame rather than collapsing the layout and
+   stranding the "like this" caption on its own — which is what Jenni saw.
+
+   loading="lazy" came off the tag as well. The sheet is a freshly attached
+   full-screen overlay that never scrolls, and Safari decides lazy eligibility
+   from intersection at insertion; with no scroll to re-trigger it, the load can
+   be deferred forever. One 760px asset central to the field is not worth
+   deferring.
+   ========================================================================== */
+.photo-eg img{
+  display:block; width:100%; height:auto;
+  aspect-ratio:1/1; object-fit:cover; border-radius:2px;
+  background:#efe9dd; }
+
+
+/* ==========================================================================
+   Account panel in the sheet
+   --------------------------------------------------------------------------
+   Same language as the RSVP and the note: "signed in as" reads as an eyebrow,
+   the name as the heading, the tier as the quiet line under it. No red band —
+   the sheet's ground is white and the wordmark already sits top-left.
+   ========================================================================== */
+.sjsheet .acct-card{ padding:0; }
+.sjsheet .acct-head{ background:none; border:0; padding:0 0 4px; }
+.sjsheet .acct-eyebrow{ display:block; font-size:10px; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:#b0a08c; }
+.sjsheet .acct-who{ display:block; font-size:26px; font-weight:600; letter-spacing:.01em;
+  color:var(--dark); margin-top:4px; }
+.sjsheet .acct-tier{ display:block; font-size:13px; font-style:italic; color:#8a7967; margin-top:5px; }
+.sjsheet .acct-intro{ margin:18px 0 16px; font-size:14px; font-style:italic; color:#8a7967; }
+.sjsheet .acct-card .note-field + .note-field{ margin-top:13px; }
+.sjsheet .acct-msg{ margin:12px 0 0; font-size:13px; color:#5C8A52; }
+.sjsheet .acct-msg.is-err{ color:var(--red); }
+.sjsheet .acct-out{ display:block; margin:16px auto 0; background:none; border:0; padding:6px;
+  font:inherit; font-size:12.5px; color:#a2907a; text-decoration:underline;
+  text-underline-offset:3px; cursor:pointer; }
+.sjsheet .acct-out:hover{ color:var(--red); }
+
+@media (max-width:560px){
+  .sjsheet .acct-who{ font-size:22px; }
+  .sjsheet .acct-intro{ margin:14px 0 13px; font-size:13.5px; }
+  .sjsheet .acct-card .note-field + .note-field{ margin-top:11px; }
+  .sjsheet .acct-out{ margin-top:13px; }
+}
+@media (max-width:560px) and (max-height:600px){
+  .sjsheet .acct-who{ font-size:19px; }
+  .sjsheet .acct-intro{ margin:10px 0 10px; }
+  .sjsheet .acct-card .note-field + .note-field{ margin-top:8px; }
+  .sjsheet .acct-tier{ font-size:12px; }
+  .sjsheet .acct-out{ margin-top:10px; }
+}
