@@ -3286,121 +3286,112 @@ body.sjsheet-open{ overflow:hidden; }
 
 
 /* ==========================================================================
-   The sheets, refined
+   The sheets: one family, lighter
    --------------------------------------------------------------------------
-   APPENDED LAST so it beats the earlier label rules of equal specificity.
+   APPENDED LAST so it beats the earlier weight and tracking rules.
 
-   The three sheets — RSVP, note, details — were set entirely in Figtree 800
-   uppercase with .24em tracking, the same treatment as the nav and the page
-   headings. At 10px that is a lot of shouting for the word "email", and it is
-   what made the forms read as clunky next to a printed invitation: every label
-   competed with the answer next to it.
+   The serif experiment is reverted. Two faces on one form was the wrong
+   answer, and the event rows made it obvious: a Figtree name and a Cormorant
+   date four pixels apart on the same line.
 
-   So the sheets get a second voice. Cormorant Garamond is not a new decision —
-   it is already the face specified for the letterpress suite in the Pierre
-   deck, so using it here ties the screen to the paper. Figtree keeps the nav,
-   the buttons and the wordmark; Cormorant takes the headings and the field
-   labels, in sentence case, italic, at a readable size rather than a shouted
-   one.
+   The face was never the problem — the WEIGHT was. Everything was Figtree 800,
+   the wordmark's weight, applied to the word "email". The Kismet card Jenni
+   liked is not a serif either: it is a light sans in wide-tracked caps. Thin
+   strokes, generous letterspacing, plenty of air.
 
-   Nothing structural moves: same fields, same order, same widths.
+   So: Figtree throughout, and the whole sheet drops a long way in weight.
+       headings   300, tracked wide
+       labels     500, tracked, small, muted
+       answers    400
+       buttons    600, down from 800
    ========================================================================== */
 
-/* ---- headings ------------------------------------------------------------ */
+/* ---- headings: light and airy, the Kismet register ----------------------- */
 .sjsheet .rsvp-title,
 .sjsheet .note-h,
 .sjsheet .acct-who{
-  font-family:'Cormorant Garamond', Georgia, serif;
-  font-weight:500;
-  text-transform:none;
-  letter-spacing:.01em;
+  font-family:'Figtree',system-ui,sans-serif;
+  font-weight:300;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  line-height:1.15;
 }
-.sjsheet .rsvp-title{ font-size:40px; letter-spacing:.14em; font-weight:400; }
+.sjsheet .rsvp-title{ font-size:30px; letter-spacing:.3em; }
 .sjsheet .note-h,
-.sjsheet .acct-who{ font-size:38px; line-height:1.05; }
+.sjsheet .acct-who{ font-size:27px; }
 
-/* the small red kickers above them stay Figtree, but stop shouting */
+/* the red kickers: same family, one step up in weight, never bold */
 .sjsheet .rsvp-sub,
 .sjsheet .acct-eyebrow{
-  font-weight:700; letter-spacing:.16em; font-size:9.5px;
+  font-family:'Figtree',system-ui,sans-serif;
+  font-weight:600; font-size:9.5px; letter-spacing:.2em; text-transform:uppercase;
 }
 
-/* ---- field labels -------------------------------------------------------- */
-/* Sentence case, italic serif, muted — a caption for the field rather than a
-   heading over it. text-transform:none is doing the real work here: the markup
-   already reads "your name", "email", "a favorite memory with Sam and/or
-   Jenni", so the shouting was purely the stylesheet's idea. */
+/* ---- labels: caps, but quiet -------------------------------------------- */
 .sjsheet .note-l,
 .sjsheet .rsvp-sect-h{
-  font-family:'Cormorant Garamond', Georgia, serif;
-  font-style:italic;
+  font-family:'Figtree',system-ui,sans-serif;
   font-weight:500;
-  text-transform:none;
-  letter-spacing:0;
+  font-style:normal;
+  text-transform:uppercase;
+  letter-spacing:.16em;
   color:#8a7967;
 }
-.sjsheet .note-l{ font-size:15px; margin-bottom:1px; }
-.sjsheet .rsvp-sect-h{
-  font-size:17px; color:var(--dark); padding-bottom:6px; margin-bottom:10px;
-}
-/* the count beside "which events" is a number, so it stays lining and small */
-.sjsheet .rsvp-sect-n{ font-family:'Figtree',sans-serif; font-style:normal; }
+.sjsheet .note-l{ font-size:9.5px; margin-bottom:3px; }
+.sjsheet .rsvp-sect-h{ font-size:10px; color:#8a7967; padding-bottom:6px; margin-bottom:10px; }
+.sjsheet .rsvp-sect-n{ font-weight:500; }
 
 /* ---- body copy ----------------------------------------------------------- */
+.sjsheet .note-top,
 .sjsheet .note-sub,
 .sjsheet .acct-intro,
 .sjsheet .acct-tier,
 .sjsheet .thanks-ask{
-  font-family:'Cormorant Garamond', Georgia, serif;
-  font-size:18px; line-height:1.45; letter-spacing:.005em;
+  font-family:'Figtree',system-ui,sans-serif;
+  font-weight:400; font-style:normal; font-size:15px; letter-spacing:0; line-height:1.5;
 }
-.sjsheet .acct-tier{ font-size:16px; }
-.sjsheet .acct-intro{ font-style:normal; }
-.sjsheet .acct-intro b{ font-weight:600; }
+.sjsheet .acct-tier{ font-size:13px; color:#8a7967; }
+.sjsheet .acct-intro b,
+.sjsheet .note-top{ font-weight:600; }
 
-/* ---- what the guest types stays Figtree ---------------------------------- */
-/* Answers should read as answers: same face as the rest of the interface, so
-   the serif labels frame them rather than blending into them. */
+/* ---- the form itself ----------------------------------------------------- */
 .sjsheet .note-f,
 .sjsheet .note-ta,
 .sjsheet input,
-.sjsheet textarea{ font-family:'Figtree',system-ui,sans-serif; font-size:16px; }
+.sjsheet textarea{ font-family:'Figtree',system-ui,sans-serif; font-weight:400; font-size:16px; }
 
-/* the event rows: name in Figtree, the bracketed detail in the serif */
-.sjsheet .rsvp-evname b{ font-weight:700; letter-spacing:0; }
+/* One line, one treatment: the event and its detail no longer disagree. */
+.sjsheet .rsvp-evname b{ font-weight:600; letter-spacing:0; font-size:15px; }
 .sjsheet .ev-meta{
-  font-family:'Cormorant Garamond', Georgia, serif; font-style:italic;
-  font-size:15px; color:#8a7967;
-}
-
-@media (max-width:560px){
-  .sjsheet .rsvp-title{ font-size:30px; letter-spacing:.1em; }
-  .sjsheet .note-h, .sjsheet .acct-who{ font-size:28px; }
-  .sjsheet .note-l{ font-size:14px; }
-  .sjsheet .rsvp-sect-h{ font-size:15.5px; }
-  .sjsheet .note-sub, .sjsheet .acct-intro, .sjsheet .thanks-ask{ font-size:16px; }
-  .sjsheet .ev-meta{ font-size:13.5px; }
-}
-@media (max-width:560px) and (max-height:600px){
-  .sjsheet .rsvp-title{ font-size:25px; }
-  .sjsheet .note-h, .sjsheet .acct-who{ font-size:24px; }
-  .sjsheet .note-l{ font-size:13px; }
-  .sjsheet .rsvp-sect-h{ font-size:14px; }
-}
-
-/* The two that the first pass missed: the note's opening line, and the +1
-   question. Both are the sheet talking to the guest, so both take the serif —
-   the answers beside them stay Figtree. */
-.sjsheet .note-top{
-  font-family:'Cormorant Garamond', Georgia, serif;
-  font-size:19px; font-style:italic; font-weight:500;
-  color:var(--dark); letter-spacing:.005em;
+  font-family:'Figtree',system-ui,sans-serif;
+  font-style:normal; font-weight:400; font-size:13px; color:#8a7967; letter-spacing:0;
 }
 .sjsheet .plusone-q{
-  font-family:'Cormorant Garamond', Georgia, serif;
-  font-size:18px; font-weight:500; font-style:italic; letter-spacing:0;
+  font-family:'Figtree',system-ui,sans-serif;
+  font-weight:500; font-style:normal; font-size:15px; letter-spacing:0;
 }
+
+/* ---- controls: were the loudest thing on the page ------------------------ */
+/* Fifteen of these on a tier-1 form. At 800 they out-shouted every label they
+   sat beside; at 600 they read as choices rather than announcements. */
+.sjsheet .yn{ font-weight:600; letter-spacing:.1em; }
+.sjsheet .rsvp-send,
+.sjsheet .note-btn{ font-weight:600; letter-spacing:.18em; }
+.sjsheet .thanks-step{ font-weight:600; letter-spacing:.2em; }
+
 @media (max-width:560px){
-  .sjsheet .note-top{ font-size:16.5px; }
-  .sjsheet .plusone-q{ font-size:16px; }
+  .sjsheet .rsvp-title{ font-size:23px; letter-spacing:.22em; }
+  .sjsheet .note-h, .sjsheet .acct-who{ font-size:21px; letter-spacing:.16em; }
+  .sjsheet .note-top, .sjsheet .note-sub,
+  .sjsheet .acct-intro, .sjsheet .thanks-ask{ font-size:14px; }
+  .sjsheet .rsvp-evname b{ font-size:14px; }
+  .sjsheet .ev-meta{ font-size:12px; }
 }
+@media (max-width:560px) and (max-height:600px){
+  .sjsheet .rsvp-title{ font-size:20px; }
+  .sjsheet .note-h, .sjsheet .acct-who{ font-size:18px; }
+}
+
+/* Last italic left over from the serif pass. "TBD" sat in italics beside
+   upright dates, which is the same mixed signal one line down. */
+.sjsheet .ev-tbd{ font-style:normal; color:#8a7967; }
