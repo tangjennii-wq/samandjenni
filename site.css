@@ -3268,3 +3268,18 @@ body.sjsheet-open{ overflow:hidden; }
   .sjsheet .thanks-ask{ margin-top:12px; }
   .sjsheet .rsvp-list .yn{ min-width:36px; padding:5px 6px; }
 }
+
+
+/* ==========================================================================
+   The details panel: contrast, and the name field
+   --------------------------------------------------------------------------
+   APPENDED LAST, so it beats the earlier .acct-intro rule of equal specificity.
+
+   The intro line was italic #8a7967 — a warm grey chosen when it was a passing
+   aside ("anything we've got wrong?"). It is now the first sentence a guest
+   reads on their first visit, and it is asking them for their address, so it
+   reads as body copy: upright, near-black, same weight as everything else.
+   The tier line under the name stays grey; that one really is an aside.
+   ========================================================================== */
+.sjsheet .acct-intro{ color:var(--dark); font-style:normal; }
+.sjsheet .acct-intro b{ font-weight:800; }

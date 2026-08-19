@@ -72,7 +72,8 @@
     var esc = function(x){ return (x || '').replace(/"/g,'&quot;'); };
     // Prefer the guest list's own record over the cookie: it has their full
     // name where the cookie may only hold a surname.
-    var vName  = pr.person_name || (who && !isEmail ? titleCase(who) : '');
+    var isSurname = who && !isEmail && who.split(/\s+/).length === 1;
+    var vName  = pr.person_name || (who && !isEmail && !isSurname ? titleCase(who) : '');
     var vEmail = pr.email || (isEmail ? who : '');
     return '' +
       (chained ? '<div class="thanks-step">Step 3 of 3</div>' : '') +
@@ -83,10 +84,11 @@
       '</div>' +
       (firstTime
         ? '<p class="acct-intro"><b>One quick thing before you look around.</b><br>' +
-          'The invitations go out in January &mdash; have we got this right?</p>'
+          'Invitations go out Nov/Dec &mdash; have we got this right?</p>'
         : '<p class="acct-intro">Anything we\u2019ve got wrong? Tell us here.</p>') +
       '<div class="note-field"><label class="note-l" for="acName">your name</label>' +
-        '<input id="acName" class="note-f" type="text" value="' + esc(vName) + '"></div>' +
+        '<input id="acName" class="note-f" type="text" value="' + esc(vName) +
+          '" placeholder="' + (vName ? '' : 'first and last name') + '"></div>' +
       '<div class="note-field"><label class="note-l" for="acEmail">email</label>' +
         '<input id="acEmail" class="note-f" type="email" value="' + esc(vEmail) +
           '" placeholder="so we can reach you"></div>' +
