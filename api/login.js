@@ -30,18 +30,30 @@ async function rpc(fn, key) {
 // Returns tier 3 when the lookup succeeds but the key has no tier (an
 // ambiguous shared surname) — they see Friday + Saturday and nothing private.
 async function lookUp(key) {
+  // `ambiguous` is the important addition: a shared surname such as "lee" or
+  // "tang" is on the list but carries no tier, because several households
+  // answer to it. Collapsing that to 3 (which `Number(null) || 3` does) hides
+  // the distinction, and a tier-1 guest who typed only their surname quietly
+  // lost the Thursday dinner, the rehearsal and the brunch.
+  const settle = (allowed, tier) => ({
+    allowed: allowed === true,
+    tier: Number(tier) || 3,
+    ambiguous: allowed === true && (tier === null || tier === undefined),
+    degraded: false,
+  });
   try {
     const [allowed, tier] = await Promise.all([rpc('guest_allowed', key), rpc('guest_tier', key)]);
-    return { allowed: allowed === true, tier: Number(tier) || 3, degraded: false };
+    return settle(allowed, tier);
   } catch (e) {
     // One retry — a single blip shouldn't lock a guest out.
     try {
       const [allowed, tier] = await Promise.all([rpc('guest_allowed', key), rpc('guest_tier', key)]);
-      return { allowed: allowed === true, tier: Number(tier) || 3, degraded: false };
+      return settle(allowed, tier);
     } catch (e2) {
       // Still down: let them in, but at the most restrictive useful tier, so an
-      // outage never exposes the private events.
-      return { allowed: true, tier: 3, degraded: true };
+      // outage never exposes the private events. Never ask for a first name on
+      // a failure — we cannot tell whether it would help.
+      return { allowed: true, tier: 3, ambiguous: false, degraded: true };
     }
   }
 }
@@ -86,17 +98,42 @@ export default async function handler(req, res) {
 
   // Try the name as typed, then fall back to the last word alone — someone who
   // types a full name we only hold a surname for still gets in.
-  let { allowed, tier, degraded } = await lookUp(key);
+  let { allowed, tier, ambiguous, degraded } = await lookUp(key);
   let matched = key;
   if (!allowed && !email && key.includes(' ')) {
     // apostrophes are stripped from stored surnames ("obrien", not "o'brien"),
     // so strip them here too or O'Brien never matches the fallback
     const surname = key.split(' ').pop().replace(/'/g, '');
     const alt = await lookUp(surname);
-    if (alt.allowed) { allowed = true; tier = alt.tier; degraded = alt.degraded; matched = surname; }
+    if (alt.allowed) {
+      allowed = true; tier = alt.tier; degraded = alt.degraded; matched = surname;
+      // They gave a full name and we only hold the surname. Do NOT ask for a
+      // first name here — they already gave one, and asking again would loop.
+      ambiguous = false;
+    }
   }
   if (!allowed) {
     res.writeHead(302, { Location: '/gate?e=list' });
+    return res.end();
+  }
+
+  /* ── one bare surname, several people ───────────────────────────────────
+     "tang" is six people and "lee" is ten. Signing them in at the fallback
+     tier is a silent downgrade: Jenni typing her own surname was shown two
+     events instead of five, and nothing on screen explained why.
+
+     So ask for the first name instead — once. `retry=1` comes back on the
+     second attempt and lets them through at the fallback tier, so a guest we
+     genuinely only hold a surname for can never be locked in a loop.
+
+     The surname is echoed into the query string so the gate can name it in
+     the prompt. It is matched against /^[a-z' ]{1,40}$/ before being sent and
+     re-checked on arrival: it originates from user input, and reflecting that
+     into a page unchecked is how you get an injection. */
+  const retried = /[?&]retry=1/.test(req.url || '');
+  if (ambiguous && !email && !key.includes(' ') && !retried) {
+    const safe = /^[a-z' ]{1,40}$/.test(key) ? encodeURIComponent(key) : '';
+    res.writeHead(302, { Location: '/gate?e=first' + (safe ? '&s=' + safe : '') });
     return res.end();
   }
 

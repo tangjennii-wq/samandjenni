@@ -138,15 +138,64 @@
     if (f) f.action = '/api/login?next=' + encodeURIComponent(want);
   })();
 
+  // Read once, up here: the first-name block below needs it, and `var` would
+  // otherwise hoist the name but not the value.
+  var e = new URLSearchParams(location.search).get('e');
+
   var MSG = {
     pass: "we can't find that one — try your full name, or the email we sent this to ♡",
     name: "we just need your name or email ♡",
     list: "we can't find that one — try your full name, or the email we sent this to. still stuck? just text us ♡"
   };
+
+  /* ── a surname shared by several guests ─────────────────────────────────
+     login.js bounces back here with ?e=first when the name typed is a bare
+     surname that several households answer to — Lee is ten people, Tang is
+     six. Signing them in on the surname alone was a silent downgrade: they
+     saw the events for the safe fallback tier and nothing said why.
+
+     The surname arrives in ?s= so the message can name it. It came from user
+     input, so it is re-validated here and written with textContent, never
+     innerHTML — echoing a query parameter into markup is how you get an
+     injection. The form also carries retry=1 from here, so if they really do
+     only have a surname on our list, the second attempt lets them straight in
+     rather than asking again forever. */
+  (function () {
+    if (e !== 'first') return;
+    var raw = (new URLSearchParams(location.search).get('s') || '').toLowerCase();
+    var sn  = /^[a-z' ]{1,40}$/.test(raw) ? raw : '';
+    var nice = sn ? sn.replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); }) : '';
+
+    var box = document.getElementById('err');
+    box.textContent = nice
+      ? 'We have a few ' + nice + 's on the list — what\u2019s your first name?'
+      : 'We have a few of you on the list — could we have your first name too?';
+    box.classList.add('show');
+
+    var hint = document.querySelector('.hint');
+    if (hint) {
+      hint.textContent = nice
+        ? 'Try your full name, like Jenni ' + nice + '.'
+        : 'Try your full name.';
+    }
+
+    var f = document.getElementById('lastname');
+    if (f) {
+      // Prefill the surname and put the caret at the front, so adding the
+      // first name is one word of typing rather than retyping the whole thing.
+      f.value = nice;
+      f.placeholder = nice ? 'first name ' + nice : 'your full name';
+      f.focus();
+      try { f.setSelectionRange(0, 0); } catch (err) {}
+    }
+
+    var form = document.getElementById('gateform');
+    if (form) form.action += (form.action.indexOf('?') > -1 ? '&' : '?') + 'retry=1';
+  })();
   // Only real problems speak now. ?e=private is gone along with the link that
   // pointed at it, so an unknown ?e falls back to the normal not-found message.
-  var e = new URLSearchParams(location.search).get('e');
-  if (e) {
+  // 'first' is handled above, with its own message and a prefilled field.
+  if (e && e !== 'first') {
     var box = document.getElementById('err');
     box.textContent = MSG[e] || MSG.pass;
     box.classList.add('show');
