@@ -322,7 +322,11 @@
     // fades neighborhoods) over empty data.
     // Layer names carry their own colour swatch, so the toggle box IS the key.
     function swatch(c){ return '<i class="lgd" style="background:' + c + '"></i>'; }
-    var N_VENUE = swatch(CAT.venue.color) + CAT.venue.label;
+    // A wedding-only guest has no welcome party, so the layer must not be
+    // called "Wedding & welcome". The pin was already gated; the legend was
+    // not, which advertised an event they aren't invited to.
+    var N_VENUE = swatch(CAT.venue.color) +
+      (seesWelcome() ? CAT.venue.label : 'The wedding');
     var N_HOTEL = swatch(CAT.hotel.color) + CAT.hotel.label;
     var N_STAY  = swatch(CAT.stay.color)  + CAT.stay.label;
     var N_PLACE = '<i class="lgd lgd-split"></i>Eat &amp; do';
@@ -333,7 +337,8 @@
     if (mode === 'recs') {
       // One combined pin group here: the Pierre, Chinese Tuxedo (tier-gated) and
       // the room-block hotels. "Other hotels" belongs on the hotels page only.
-      ctl.addOverlay(gVenues, '<i class="lgd" style="background:' + CAT.venue.color + '"></i>Wedding &amp; hotels');
+      ctl.addOverlay(gVenues, '<i class="lgd" style="background:' + CAT.venue.color + '"></i>' +
+        (seesWelcome() ? 'Wedding &amp; hotels' : 'Wedding &amp; hotels'));
       ctl.addOverlay(gPlaces, N_PLACE);
     } else {
       ctl.addOverlay(gVenues, N_VENUE);
@@ -503,19 +508,27 @@
 
   }
 
+  /* ── who is looking ──────────────────────────────────────────────────
+     Tier comes from <html data-tier>, set by personalize.js.
+
+     The parse is deliberately strict. `parseInt(x || '1') || 1` used to do
+     this and it had two holes: tier 0 — a visitor the site hasn't recognised
+     — is falsy, so `|| 1` promoted them to tier 1 and pinned the Friday venue
+     for the public; and a missing attribute defaulted to the MOST permissive
+     tier rather than the least. Anything unrecognised now falls to 3. */
+  function sjTier(){
+    var raw = document.documentElement.getAttribute('data-tier') || '';
+    return /^[0-4]$/.test(raw) ? parseInt(raw, 10) : 3;
+  }
+  // The Friday welcome party is tiers 1–3, matching personalize.js and the
+  // event cards. Tier 4 is Saturday only.
+  function seesWelcome(){ var t = sjTier(); return t >= 1 && t <= 3; }
+
   var markerIndex = {};
 
   function drawPins(groups){
-    // Match the site's tier (set on <html data-tier> by personalize.js).
-    //
-    // `parseInt(x || '1') || 1` used to do this, and it had two holes: tier 0 —
-    // a visitor the site hasn't recognised — is falsy, so `|| 1` promoted them
-    // to tier 1 and pinned the Friday venue for the public. And a missing
-    // attribute defaulted to the MOST permissive tier rather than the least.
-    var raw = document.documentElement.getAttribute('data-tier') || '';
-    var tier = /^[0-4]$/.test(raw) ? parseInt(raw, 10) : 3;
-    // Friday is tiers 1–3, exactly as personalize.js has it for the event cards.
-    var seesFriday = tier >= 1 && tier <= 3;
+    var tier = sjTier();
+    var seesFriday = seesWelcome();
     PLACES.forEach(function(p){
       if (p.ev === 'friday' && !seesFriday) return;
       var color = (CAT[p.cat]||CAT.do).color;
