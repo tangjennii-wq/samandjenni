@@ -27,9 +27,15 @@
   function titleCase(x){ return x.replace(/\b[a-z]/g, function(c){ return c.toUpperCase(); }); }
 
   var who = cookie('sj_guest').trim().toLowerCase();
+
+  // A bare surname is not a name. "tang" is five households and "lee" is more,
+  // so echoing it into the name field reads as already-correct and the guest
+  // sends it back unchanged — same reasoning as the details panel. Only a
+  // multi-word sign-in is treated as a name; the profile lookup fills the rest.
+  var isSurname = who && who.indexOf('@') === -1 && who.split(/\s+/).length === 1;
   var PRE = {
     email: who.indexOf('@') > -1 ? who : '',
-    name:  who && who.indexOf('@') === -1 ? titleCase(who) : '',
+    name:  (who && who.indexOf('@') === -1 && !isSurname) ? titleCase(who) : '',
     party: 1
   };
 
@@ -75,6 +81,7 @@
 
   // Fills any field the guest hasn't already typed into. Never overwrites.
   function fillBlanks(root){
+    if (!root) return;
     var row = root.querySelector('.guest-row[data-guest="0"]');
     if (!row) return;
     var n = row.querySelector('.gname'), e = row.querySelector('.gemail');
@@ -83,9 +90,21 @@
   }
 
   function loadProfile(root){
-    if (profileTried || !who) return;
+    if (!who) return;
+
+    /* Re-apply the cache on every mount, not just at module load.
+       This used to `return` as soon as a cache existed, on the assumption that
+       the copy taken at module load was current. It isn't any more: account.js
+       runs its first-visit lookup and writes sj-profile AFTER this file has
+       already computed PRE, so on the very visit where we finally know the
+       guest's name and email, the RSVP skipped them and opened with an empty
+       email field. Applying first, then deciding whether to fetch, costs
+       nothing and fixes it. */
+    if (applyProfile(cachedProfile())) fillBlanks(root);
+
+    if (profileTried) return;
     profileTried = true;
-    if (cachedProfile()) return;                 // already applied above
+    if (cachedProfile()) return;                 // have it, no need to fetch
     if (!(window.SJUpload && window.SJUpload.rpc)) return;
     window.SJUpload.rpc('guest_profile', who).then(function(rows){
       var pr = Array.isArray(rows) ? rows[0] : rows;
@@ -534,6 +553,7 @@
       // After the first paint, so an empty name/email field is filled the moment
       // the lookup lands rather than the form waiting on the network to appear.
       loadProfile(root);
+      fillBlanks(root);
     }
   }
 
