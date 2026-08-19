@@ -3522,3 +3522,87 @@ body.sjsheet-open{ overflow:hidden; }
 @media (max-width:760px){
   .sect h1, .sect h2{ letter-spacing:.1em; }
 }
+
+
+/* ==========================================================================
+   The wordmark, light
+   --------------------------------------------------------------------------
+   Trial. "SAM + JENNI" at 800 was the heaviest thing left on every page once
+   the titles dropped to 300, so it started to shout.
+
+   Light needs more air to hold together at this size — a thin letterform with
+   tight tracking reads as weak rather than as delicate — so the tracking opens
+   up as the weight comes down. Same move the Kismet card makes.
+
+   Easy to undo: delete this block. It is the last thing in the file, and it is
+   the only place the wordmark's weight is set to 300.
+   ========================================================================== */
+.crest-name,
+.topbar .crest-name{
+  font-weight:300 !important;
+  letter-spacing:.14em !important;
+}
+.crest-name .plus{ font-weight:300; }
+
+/* the date line beneath is a caption; it stays small-caps but loses a step so
+   it doesn't out-weigh the name above it */
+.crest-tag,
+.topbar .crest-tag{ font-weight:600; }
+
+@media (max-width:760px){
+  .crest-name, .topbar .crest-name{ letter-spacing:.1em !important; }
+}
+
+
+/* ==========================================================================
+   Figtree Light across the pages
+   --------------------------------------------------------------------------
+   APPENDED LAST. Same register everywhere: names and titles at 300, running
+   copy at 400, and only the small tracked caps stay heavy.
+
+   The rule I did NOT break: nothing below about 13px goes light. Figtree 300
+   at 10-11px on white is thin enough to disappear on a bright phone screen
+   outdoors, which is exactly where a guest reads "DRESS CODE" or "OUR BLOCK ·
+   25 ROOMS A NIGHT". Those labels are the only heavy type left, and they earn
+   it by being small.
+   ========================================================================== */
+
+/* ---- card and item names ------------------------------------------------- */
+.hname,            /* hotel name        */
+.rname,            /* restaurant name   */
+.dcard h3,         /* weekend card      */
+.rsvpbox h3,
+.faq-q,
+.q,
+summary{
+  font-weight:300 !important;
+  letter-spacing:.01em;
+}
+
+/* ---- running copy and descriptions --------------------------------------- */
+.lede,
+.note,
+.rwhy,             /* why we like this place */
+.hwhere,
+.travelnote,
+.dcard p,
+.faq-a,
+.sect p{
+  font-weight:400;
+}
+
+/* the emphasised phrases inside body copy: down from 800 to a step that still
+   separates them without turning the sentence into a row of lumps */
+.lede b, .note b, .travelnote b, .faq-a b, .sect p b, .dcard p b{ font-weight:600; }
+
+/* ---- prices and links keep a little more weight, they are scannable ------ */
+.hprice{ font-weight:600; }
+.hbook, .ln{ font-weight:600; }
+
+/* ---- small tracked caps stay as they are --------------------------------- */
+/* .rtag, .dress, .when, .fchip, .eyebrow and the nav are all ≤12px and stay
+   at 600-800 on purpose. */
+
+@media (max-width:760px){
+  .hname, .rname, .dcard h3{ letter-spacing:0; }
+}
