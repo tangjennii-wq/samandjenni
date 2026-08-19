@@ -3446,3 +3446,24 @@ body.sjsheet-open{ overflow:hidden; }
   .sjsheet .ev-meta{ font-size:11px; }
   .sjsheet .plusone-q, .sjsheet .note-top{ font-size:14px; }
 }
+
+/* One tracking for every label in the three sheets. .note-l sat at .16em and
+   .rsvp-sect-h at .2em, which is invisible on its own and obvious the moment
+   you open the note straight after the RSVP. */
+.sjsheet .note-l{ letter-spacing:.2em; }
+
+/* The note's new heading, and the space beneath it, matched to the other two. */
+.sjsheet .note-h{ margin-bottom:2px; }
+.sjsheet .note-top{ margin-top:6px; color:#8a7967; }
+
+/* The note sheet still centred its heading and intro while the RSVP and the
+   details panel ranged left, so opening one after the other shifted the whole
+   page. All three now start at the same left edge. */
+.sjsheet .note-h,
+.sjsheet .note-top,
+.sjsheet .note-intro{ text-align:left; }
+
+/* the photo prompt was the last 800 in the sheets */
+.sjsheet .photo-drop,
+.sjsheet .rsvp-photo-btn{ font-weight:600; letter-spacing:.16em; }
+.sjsheet .photo-cap{ font-weight:400; }

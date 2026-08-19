@@ -33,6 +33,11 @@
 
   function formHTML(p, intro){
     return ('' +
+      // The note sheet was the only one of the three with no heading: the RSVP
+      // opens on "R S V P", the details panel on the guest's name, and this one
+      // went straight into a sentence. Same .note-h treatment as the thank-you
+      // screen already uses, so all three sheets now start the same way.
+      '<div class="note-h">A note</div>' +
       '<p class="note-top">Share some wild, weird memories, feels, etc. with us \u2661</p>' +
       '<div class="note-thread" aria-hidden="true"></div>' +
       (intro ? '<p class="note-intro">' + intro + '</p>' : '') +
