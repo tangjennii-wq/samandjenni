@@ -3395,3 +3395,54 @@ body.sjsheet-open{ overflow:hidden; }
 /* Last italic left over from the serif pass. "TBD" sat in italics beside
    upright dates, which is the same mixed signal one line down. */
 .sjsheet .ev-tbd{ font-style:normal; color:#8a7967; }
+
+/* ==========================================================================
+   Everything in the RSVP's register
+   --------------------------------------------------------------------------
+   The heading was right and the rest of the sheet hadn't caught up. The event
+   names were still lowercase bold — the only heavy thing left, and the reason
+   the list read as a form rather than as a card. They now take the same
+   treatment as "R S V P": light, uppercase, tracked. The detail beneath sits
+   quietly under it.
+
+   The rule for the whole sheet is now one thing said three ways:
+     light + tracked + caps   for anything the sheet says
+     regular, no tracking     for anything the guest typed
+   ========================================================================== */
+.sjsheet .rsvp-evname b{
+  font-weight:400;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--dark);
+}
+.sjsheet .ev-meta{
+  display:block;
+  margin-top:3px;
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:.02em;
+  color:#8a7967;
+}
+.sjsheet .ev-loc{ font-weight:500; }
+
+/* the +1 question is a question, not a heading — it stays in sentence case,
+   but drops to the same weight as the body so it stops competing */
+.sjsheet .plusone-q{ font-weight:400; font-size:15px; }
+
+/* the note form's opening line, same weight as everything else it sits with */
+.sjsheet .note-top{ font-weight:400; font-size:15px; }
+
+/* section rules: the label above each group and the kicker under the title now
+   share one size and one tracking, so the two read as a pair */
+.sjsheet .rsvp-sect-h,
+.sjsheet .rsvp-sub,
+.sjsheet .acct-eyebrow{ font-size:9.5px; letter-spacing:.2em; font-weight:500; }
+.sjsheet .rsvp-sub,
+.sjsheet .acct-eyebrow{ font-weight:600; }
+
+@media (max-width:560px){
+  .sjsheet .rsvp-evname b{ font-size:12.5px; letter-spacing:.13em; }
+  .sjsheet .ev-meta{ font-size:11px; }
+  .sjsheet .plusone-q, .sjsheet .note-top{ font-size:14px; }
+}
