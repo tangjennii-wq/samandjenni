@@ -225,7 +225,7 @@
     return '' +
       '<div class="rsvp-head">' +
         '<div class="rsvp-title">R S V P</div>' +
-        '<div class="rsvp-sub">reply by January 2027</div>' +
+        '<div class="rsvp-sub">reply by 12 February 2027</div>' +
       '</div>' +
       '<div class="rsvp-body">' +
 
