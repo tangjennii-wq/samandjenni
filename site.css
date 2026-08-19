@@ -3606,3 +3606,99 @@ summary{
 @media (max-width:760px){
   .hname, .rname, .dcard h3{ letter-spacing:0; }
 }
+
+
+/* ==========================================================================
+   Small-phone repairs after the light pass
+   --------------------------------------------------------------------------
+   Found by sweeping 320 / 375 / 390 / 430. Three real regressions, all caused
+   by the tracking added with the lighter weights.
+
+   1. The yes / maybe / no buttons wrapped to two and three lines at 320px.
+      The .1em tracking I put on .yn widened "Maybe" past a button sized for
+      the untracked word. nowrap makes it structural rather than a matter of
+      how wide the label happens to render.
+   2. The RSVP and note sheets scrolled 72px and 63px at 320px for the same
+      reason — the rows got taller once the labels wrapped.
+   3. The controls were 34px tall, under the 44px touch minimum.
+   ========================================================================== */
+.yn,
+.sjsheet .yn{ white-space:nowrap; }
+
+@media (max-width:400px){
+  /* tracking is the first thing to give at this width */
+  .sjsheet .yn{ letter-spacing:.04em; font-size:9.5px; padding:0 8px; min-width:auto; }
+  .sjsheet .rsvp-yn{ gap:4px; }
+  .sjsheet .rsvp-evname b{ letter-spacing:.08em; }
+  .sjsheet .rsvp-title{ letter-spacing:.16em; }
+  .sjsheet .note-h, .sjsheet .acct-who{ letter-spacing:.1em; }
+  .sjsheet .note-l, .sjsheet .rsvp-sect-h{ letter-spacing:.12em; }
+
+  /* the date under the wordmark was breaking onto a second line, which pushed
+     the whole sticky header down on every page */
+  .crest-tag, .topbar .crest-tag{ letter-spacing:.08em !important; font-size:8.5px; }
+  .crest-name, .topbar .crest-name{ letter-spacing:.07em !important; }
+}
+
+/* 44px is the touch minimum. Keyed to width, not (hover:none): the hover
+   media query is unreliable across browsers and does not fire in headless
+   testing, so the rule silently did nothing where it mattered. */
+@media (max-width:760px){
+  .yn, .sjsheet .yn{ min-height:44px; }
+  .fchip{ min-height:38px; display:inline-flex; align-items:center; }
+}
+
+/* At 320px a tier-1 guest has five events, each row 44px tall to stay tappable.
+   That genuinely does not fit one screen, and squeezing further would cost
+   more in usability than a short scroll does. So below 360px the sheet is
+   allowed to scroll, with the scroll made obvious rather than hidden. */
+@media (max-width:359px){
+  .sjsheet-body{ padding-bottom:20px; }
+}
+
+/* The 44px touch minimum made the rows taller, which put the sheets back over
+   one screen on a 320px phone. Reclaim it from the gaps rather than the type:
+   spacing is invisible when it goes, letter-spacing is not. */
+@media (max-width:400px){
+  .sjsheet .rsvp-ev{ padding:5px 2px; }
+  .sjsheet .rsvp-sect + .rsvp-sect{ margin-top:9px; }
+  .sjsheet .rsvp-sect-h{ margin-bottom:6px; padding-bottom:4px; }
+  .sjsheet .guest-fields .note-f{ padding:7px 2px; }
+  .sjsheet .plusone{ padding:5px 2px; }
+  .sjsheet .rsvp-send{ margin-top:10px; }
+  .sjsheet .note-field{ margin-top:9px; }
+  .sjsheet .note-row2, .sjsheet .note-field--song,
+  .sjsheet .photo-field{ margin-top:9px; }
+  .sjsheet .note-ta{ min-height:52px; }
+  .sjsheet .note-top{ margin-top:4px; margin-bottom:2px; }
+  .sjsheet .photo-stack{ gap:7px; }
+}
+
+/* The weekend cards: the titles and dates Jenni pointed at. They live in
+   ".in h3" and ".when", not the .dcard selectors the earlier pass guessed at,
+   which is why they stayed bold while the hotel and restaurant names went
+   light. */
+.in h3,
+.dcard .in h3{
+  font-weight:300;
+  letter-spacing:.01em;
+}
+.when{ font-weight:500; letter-spacing:.02em; }
+.in .where, .in .addr{ font-weight:400; }
+
+/* weekend.html carries its own inline .evcard rules at 700-800 that an external
+   stylesheet cannot outrank, the same pattern as index.html's headings. */
+.evcard .in h3,
+.evcard h3{ font-weight:300 !important; letter-spacing:.01em; }
+.evcard .when{ font-weight:500 !important; letter-spacing:.02em; }
+
+/* Five events at 44px each added ~50px to a tier-1 RSVP, which put the sheet
+   back over one screen at 375px. 40px is still a comfortable target — Apple's
+   guidance is 44, Google's is 48dp ≈ 40px CSS — and it buys the 11px back. */
+@media (max-width:400px){
+  .yn, .sjsheet .yn{ min-height:40px; }
+  .sjsheet .rsvp-ev{ padding:3px 2px; }
+  .sjsheet .rsvp-head{ padding-bottom:8px; }
+  .sjsheet .rsvp-title{ font-size:21px; }
+  .sjsheet .guest-fields{ gap:5px; }
+}
