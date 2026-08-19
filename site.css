@@ -3490,3 +3490,35 @@ body.sjsheet-open{ overflow:hidden; }
 @media (max-width:560px) and (max-height:600px){
   .sjsheet .note-thanks .note-h{ font-size:18px; }
 }
+
+
+/* ==========================================================================
+   Figtree Light for the page titles
+   --------------------------------------------------------------------------
+   APPENDED LAST, and !important on the weight because index.html carries its
+   own inline .sect h2 rule at weight 800 that an external stylesheet can't
+   otherwise reach. That inline block is the reason the home page and the other
+   six looked slightly different before.
+
+   Same register the sheets now use — 300, uppercase, tracked — so "QUESTIONS",
+   "THE WEEKEND", "WHERE TO STAY" and "SHLANG FAVORITES" read like the RSVP
+   rather than like a poster.
+
+   Deliberately NOT changed: the "SAM + JENNI" wordmark and the nav. They are
+   the brand mark and the interface, and at 11px a light weight stops being
+   legible. The eyebrow above each title stays bold-small-caps for the same
+   reason.
+   ========================================================================== */
+.sect h1,
+.sect h2{
+  font-weight:300 !important;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+/* the red rule under each title was sized against an 800 heading */
+.sect .rule{ height:2px; width:52px; }
+
+@media (max-width:760px){
+  .sect h1, .sect h2{ letter-spacing:.1em; }
+}
