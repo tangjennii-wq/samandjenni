@@ -7,6 +7,45 @@
    Hidden 5 Aug 2026 — bringing it back closer to the weekend.            */
 window.SJ_FEATURES = { overUnder: false };
 
+/* ── ?reset — clear this browser's local state ──────────────────────────────
+   Wiping the database is only half a reset. Whether a guest sees the RSVP
+   form or the thank-you screen, and whether the details panel opens on
+   arrival, is decided by localStorage on their machine — so after clearing
+   the tables Jenni and Sam still saw the "already replied" state on their own
+   laptops and phones.
+
+   samandjenni.com/?reset      clears the local flags and drafts
+   samandjenni.com/?reset=all  also signs out, back to the gate
+
+   This lives in personalize.js because it is first in the script order on
+   every page: the keys are gone before rsvpform.js or account.js read them.
+   The parameter is stripped from the URL afterwards so a refresh doesn't
+   re-run it, and so a copied link doesn't quietly reset someone else.
+
+   It only touches keys under the sj- prefix, and it cannot reach the server:
+   a guest who has genuinely replied still shows as replied, because that
+   answer comes from guest_rsvped(). This is a testing convenience, not a
+   delete button.                                                            */
+(function () {
+  var m = /[?&]reset(?:=([^&]*))?/.exec(location.search);
+  if (!m) return;
+  try {
+    Object.keys(localStorage)
+      .filter(function (k) { return k.indexOf('sj-') === 0; })
+      .forEach(function (k) { localStorage.removeItem(k); });
+  } catch (e) {}
+  if (m[1] === 'all') {
+    ['sj_guest', 'sj_tier'].forEach(function (c) {
+      document.cookie = c + '=; Path=/; Max-Age=0; SameSite=Lax';
+    });
+    location.replace('/gate');
+    return;
+  }
+  var url = location.pathname + location.search.replace(/([?&])reset(=[^&]*)?/, '$1')
+              .replace(/[?&]$/, '').replace(/\?&/, '?') + location.hash;
+  try { history.replaceState(null, '', url); } catch (e) {}
+})();
+
 // personalize.js — shows each guest only the events they're invited to.
 // Reads the email / last name captured at the gate (sj_guest cookie), maps it
 // to a tier, and hides/swaps content accordingly.
