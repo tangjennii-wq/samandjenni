@@ -67,40 +67,105 @@
 
      SJSheet (drawer.js) brings the focus trap, focus restore, scroll lock and
      Escape with it, so all of that machinery goes. */
-  function panelHTML(chained){
+  function panelHTML(chained, firstTime){
+    var pr = cachedProfile() || {};
+    var esc = function(x){ return (x || '').replace(/"/g,'&quot;'); };
+    // Prefer the guest list's own record over the cookie: it has their full
+    // name where the cookie may only hold a surname.
+    var vName  = pr.person_name || (who && !isEmail ? titleCase(who) : '');
+    var vEmail = pr.email || (isEmail ? who : '');
     return '' +
       (chained ? '<div class="thanks-step">Step 3 of 3</div>' : '') +
       '<div class="acct-head">' +
         '<div class="acct-eyebrow">Signed in as</div>' +
-        '<div class="acct-who">' + (who ? (isEmail ? who : titleCase(who)) : 'a guest') + '</div>' +
+        '<div class="acct-who">' + (vName || (who ? (isEmail ? who : titleCase(who)) : 'a guest')) + '</div>' +
         (TIERNAME[tier] ? '<div class="acct-tier">You\u2019re invited to ' + TIERNAME[tier] + '</div>' : '') +
       '</div>' +
-      '<p class="acct-intro">Anything we\u2019ve got wrong? Tell us here.</p>' +
+      (firstTime
+        ? '<p class="acct-intro"><b>One quick thing before you look around.</b><br>' +
+          'The invitations go out in January &mdash; have we got this right?</p>'
+        : '<p class="acct-intro">Anything we\u2019ve got wrong? Tell us here.</p>') +
       '<div class="note-field"><label class="note-l" for="acName">your name</label>' +
-        '<input id="acName" class="note-f" type="text" value="' +
-          (who && !isEmail ? titleCase(who).replace(/"/g,'&quot;') : '') + '"></div>' +
+        '<input id="acName" class="note-f" type="text" value="' + esc(vName) + '"></div>' +
       '<div class="note-field"><label class="note-l" for="acEmail">email</label>' +
-        '<input id="acEmail" class="note-f" type="email" value="' +
-          (isEmail ? who.replace(/"/g,'&quot;') : '') + '" placeholder="so we can reach you"></div>' +
+        '<input id="acEmail" class="note-f" type="email" value="' + esc(vEmail) +
+          '" placeholder="so we can reach you"></div>' +
       '<div class="note-field"><label class="note-l" for="acAddr">mailing address</label>' +
         '<input id="acAddr" class="note-f" type="text" placeholder="where the invitation should go"></div>' +
       '<div class="note-field"><label class="note-l" for="acNote">anything else</label>' +
         '<textarea id="acNote" class="note-f note-ta" placeholder="new address, a name we spelled wrong, a question\u2026"></textarea></div>' +
       '<p class="acct-msg" hidden></p>' +
-      '<div class="note-row3"><button class="note-btn acct-save" type="button">Send it over</button></div>' +
-      '<button class="acct-out" type="button">Sign out</button>';
+      '<div class="note-row3"><button class="note-btn acct-save" type="button">' +
+        (firstTime ? 'Looks right' : 'Send it over') + '</button></div>' +
+      (firstTime
+        ? '<button class="thanks-skip" type="button" data-close>skip for now</button>'
+        : '<button class="acct-out" type="button">Sign out</button>');
   }
 
   var pop = null;   // the live sheet body, while open
 
-  function setOpen(on, chained){
+  /* ── the one-time confirm ─────────────────────────────────────────────
+     First time a guest signs in, this panel opens itself. It is the first
+     thing they see, before the RSVP, because it is the only screen that
+     collects a mailing address — and 51 of 123 households have none on file,
+     which is the single thing blocking the invitations.
+
+     Once. After they send it, never again.
+
+     "Once" is checked twice over. localStorage is the fast path, but it is
+     per-device and dies with a cleared browser, so the real answer comes from
+     guest_detailed(key) — a security-definer RPC that returns one boolean and
+     nothing else, the same shape as guest_rsvped(). Someone who confirms on
+     their phone is not asked again on a laptop. */
+  var PROMPT_KEY = 'sj-details-prompted';
+  var DONE_KEY   = 'sj-details-done';
+
+  function flag(k, v){ try { if (v === undefined) return localStorage.getItem(k) === '1';
+                             localStorage.setItem(k, '1'); } catch(e){ return false; } }
+
+  // Prefill from the profile the RSVP already looked up, so the panel opens
+  // with their name and email in place rather than blank.
+  function cachedProfile(){
+    try {
+      var c = JSON.parse(localStorage.getItem('sj-profile'));
+      return (c && c.key === who.toLowerCase()) ? c : null;
+    } catch(e){ return null; }
+  }
+
+  function maybePrompt(){
+    if (!who) return;                          // signed out — the gate has them
+    if (flag(PROMPT_KEY) || flag(DONE_KEY)) return;
+    if (!(window.SJUpload && window.SJUpload.rpc)) return;
+    window.SJUpload.rpc('guest_detailed', who).then(function(done){
+      if (done === true) { flag(DONE_KEY, 1); return; }   // did it on another device
+      flag(PROMPT_KEY, 1);
+
+      // Fetch the profile ourselves rather than relying on the cache rsvpform.js
+      // writes. On a first visit the RSVP never mounts, so that cache is empty
+      // and the name field would open blank — which defeats the point of asking
+      // them to check it. Best effort: if the lookup fails we open anyway.
+      var key = who.toLowerCase();
+      return window.SJUpload.rpc('guest_profile', key).then(function(rows){
+        var pr = Array.isArray(rows) ? rows[0] : rows;
+        if (pr) {
+          try { localStorage.setItem('sj-profile', JSON.stringify({
+            key: key, person_name: pr.person_name || '', email: pr.email || ''
+          })); } catch(e){}
+        }
+      }).catch(function(){}).then(function(){
+        setOpen(true, false, true);
+      });
+    }).catch(function(){ /* offline — ask again next visit rather than never */ });
+  }
+
+  function setOpen(on, chained, firstTime){
     btn.setAttribute('aria-expanded', on ? 'true' : 'false');
     if (!on) { pop = null; return; }
     if (!window.SJSheet) return;
     var api = window.SJSheet.open({
       label: 'Your details',
-      html: '<div class="acct-card">' + panelHTML(!!chained) + '</div>',
-      onMount: function(a){ pop = a.body; wirePanel(a); }
+      html: '<div class="acct-card">' + panelHTML(!!chained, !!firstTime) + '</div>',
+      onMount: function(a){ pop = a.body; wirePanel(a, !!firstTime); }
     });
     return api;
   }
@@ -117,7 +182,7 @@
     setOpen(true, true);   // reached through the RSVP chain — number the step
   });
 
-  function wirePanel(api){
+  function wirePanel(api, firstTime){
   var save = api.body.querySelector('.acct-save');
   var msg  = api.body.querySelector('.acct-msg');
   save.addEventListener('click', function(){
@@ -140,6 +205,27 @@
       msg.textContent = 'Got it — thank you. That\u2019s everything ♡';
       var done = api.body.querySelector('.acct-out');
       if (done) done.textContent = 'All done';
+
+      // Never ask again — on this device or any other. The local flag is the
+      // fast path; guest_detailed() covers a new browser or a second device,
+      // and they can still edit any time from the nav icon.
+      flag(DONE_KEY, 1);
+
+      // On the first-run confirm, hand them on to the RSVP rather than leaving
+      // them on a dead end. An offer, not a second forced modal.
+      if (firstTime) {
+        var skip = api.body.querySelector('[data-close]');
+        if (skip) skip.remove();
+        var row = api.body.querySelector('.note-row3');
+        if (row && !api.body.querySelector('[data-rsvp-open]')) {
+          var go = document.createElement('button');
+          go.type = 'button';
+          go.className = 'note-btn';
+          go.setAttribute('data-rsvp-open', '');
+          go.textContent = 'RSVP now \u2192';
+          row.appendChild(go);
+        }
+      }
     }).catch(function(){
       save.disabled = false; save.textContent = 'Send it over';
       msg.hidden = false; msg.className = 'acct-msg is-err';
@@ -147,11 +233,26 @@
     });
   });
 
-  api.body.querySelector('.acct-out').addEventListener('click', function(){
+  var out = api.body.querySelector('.acct-out');
+  if (out) out.addEventListener('click', function(){
     ['sj_guest','sj_tier'].forEach(function(k){
       document.cookie = k + '=; Path=/; Max-Age=0; SameSite=Lax';
     });
     location.href = '/gate';
   });
+  }
+
+  /* Deferred to DOMContentLoaded on purpose. account.js is third in the script
+     order and upload.js is fifth, so at the moment this IIFE runs neither
+     SJUpload (the RPC) nor SJSheet (the sheet) exists yet — calling maybePrompt
+     here bailed silently and the panel never opened. All the deferred scripts
+     have executed by DOMContentLoaded, so everything it needs is there.
+     The test is against 'complete', not 'loading': a deferred script runs while
+     readyState is already 'interactive', so a 'loading' check would fall
+     through to the immediate call and hit the same missing-SJUpload problem. */
+  if (document.readyState === 'complete') {
+    maybePrompt();
+  } else {
+    document.addEventListener('DOMContentLoaded', maybePrompt);
   }
 })();

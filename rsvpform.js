@@ -629,6 +629,17 @@
   function maybePrompt(){
     if (!who) return;                       // signed out — the gate has them
     if (inline) return;                     // already looking at the form
+
+    // The details panel now takes the first visit — it is the only screen that
+    // collects a mailing address, and the invitations cannot go out without
+    // one. Two forced sheets back to back would be a wall, so the RSVP waits
+    // its turn: it prompts on a later visit, and the details panel offers an
+    // "RSVP now" button the moment it's submitted.
+    try {
+      if (localStorage.getItem('sj-details-prompted') === '1' &&
+          localStorage.getItem('sj-details-done')     !== '1') return;
+    } catch(e){}
+
     var seen = true;
     try { seen = localStorage.getItem(PROMPT_KEY) === '1'; } catch(e){ return; }
     if (seen) return;
