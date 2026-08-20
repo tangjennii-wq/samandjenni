@@ -3702,3 +3702,80 @@ summary{
   .sjsheet .rsvp-title{ font-size:21px; }
   .sjsheet .guest-fields{ gap:5px; }
 }
+
+/* ==========================================================================
+   UNIFORMITY PASS — 19 Aug 2026
+   Audit found the light pass had stopped at the sheet boundary. Three gaps:
+
+   1. .sjsheet-brand — the "SAM + JENNI" at the top of every overlay sheet was
+      still 800, sitting directly above a 300 heading. That inversion is what
+      Jenni pointed at. It now matches .crest-name exactly.
+   2. rsvp.html renders the same RSVP and note markup INLINE (#sjrsvp / #sjnote)
+      rather than in a sheet, and every typography override was scoped to
+      `.sjsheet ...`, so the page literally named "rsvp" was the only one still
+      in the old register — its title was 800. The scope is widened below.
+   3. A handful of children heavier than the heading they sit under.
+   ========================================================================== */
+
+/* ---- 1. the wordmark, everywhere it appears ------------------------------ */
+.sjsheet-brand{
+  font-weight:300 !important;
+  letter-spacing:.14em !important;
+}
+.sjsheet-brand span{ font-weight:300 !important; }
+
+/* ---- 2. the inline forms on rsvp.html get the sheet's typography --------- */
+#sjrsvp .rsvp-title,
+#sjnote .note-h{
+  font-family:'Figtree',system-ui,sans-serif;
+  font-weight:300 !important;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  line-height:1.15;
+}
+#sjrsvp .rsvp-title{ font-size:30px; }
+#sjnote .note-h{ font-size:27px; }
+#sjrsvp .rsvp-sub{ font-weight:600; font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; }
+#sjrsvp .rsvp-sect-h{ font-weight:500 !important; font-size:9.5px; letter-spacing:.2em; }
+#sjnote .note-l{ font-weight:500 !important; font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; }
+#sjrsvp .rsvp-evname b{ font-weight:400 !important; letter-spacing:.02em; }
+#sjrsvp .plusone-q{ font-weight:400 !important; }
+#sjrsvp .rsvp-send,
+#sjnote .note-btn{ font-weight:600 !important; }
+
+/* 650 is not a Figtree instance — the browser was synthesising it. */
+.rsvp-evname b{ font-weight:400; }
+
+/* Selection is signalled by the ✓ glyph everywhere else; the +1 pair was the
+   only control that also jumped to 700. */
+.plusone .yn.on{ font-weight:600; }
+
+/* .rsvp-title was the one same-rank heading with different tracking (.3em
+   against .2em on the other two sheets). */
+.sjsheet .rsvp-title{ letter-spacing:.2em; }
+
+/* ---- 3. children heavier than their heading ----------------------------- */
+/* the +/- disclosure marker was 800 beside a 300 question */
+.faq summary{ font-weight:300; }
+.faq summary::after{ font-weight:400; font-size:17px; }
+
+/* travel.html's inline .hprice/.hbook at 800 beat site.css's 600 (no
+   !important), leaving the price as the heaviest thing in a card whose name
+   is 300. .hbook and .ln are chips and can stay heavy; the price cannot. */
+.hprice{ font-weight:600 !important; }
+
+/* the hotel name lost its tracking to travel.html's `letter-spacing:0`, so it
+   read differently from .rname on the recommendations page */
+.hname{ letter-spacing:.01em !important; text-transform:none; }
+
+/* .howto-lead's inline 600 was inert — `.sect p` (0-1-1) outranks it (0-1-0) */
+.sect .howto-lead{ font-weight:600; }
+
+/* one filter chip, one size — travel had 9px/.07em, recs had 9.5px/.06em */
+.fchip{ font-size:9px !important; letter-spacing:.07em !important; }
+
+/* over-under: .q is forced to 300 by the item-name group above, but the numeral
+   chip kept its own 900 — a 600-step jump inside a single line, ten rows down. */
+.q .num, .num{ font-weight:700 !important; }
