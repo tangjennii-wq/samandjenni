@@ -3779,3 +3779,9 @@ summary{
 /* over-under: .q is forced to 300 by the item-name group above, but the numeral
    chip kept its own 900 — a 600-step jump inside a single line, ten rows down. */
 .q .num, .num{ font-weight:700 !important; }
+
+
+/* Paired with the preflight veil injected into each page head. The inline rule
+   there sets html.sj-veil body{overflow:hidden}, which loses to site.css's own
+   body rule; repeating it here wins on order. */
+html.sj-veil body{ overflow:hidden !important; }

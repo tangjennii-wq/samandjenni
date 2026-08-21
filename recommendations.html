@@ -22,7 +22,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260819a">
+<link rel="stylesheet" href="site.css?v=20260820a">
+<script>/* Preflight veil. Runs before first paint: if the gate told us this guest
+   still owes us their details, hold the page behind an opaque layer so the
+   home page and the hero film never flash before the panel. account.js lifts
+   it once the sheet is mounted; the timeout below guarantees it lifts even if
+   Supabase is unreachable, so nobody is ever stranded on a blank screen. */
+if(/[?&]details=1\b/.test(location.search)){document.documentElement.className+=' sj-veil';
+setTimeout(function(){document.documentElement.classList.remove('sj-veil')},2500);}</script>
+<style>html.sj-veil::before{content:'';position:fixed;inset:0;background:#FBF8F3;z-index:2790}
+html.sj-veil body{overflow:hidden}
+html.sj-veil .sjsheet{z-index:2800}</style>
 <style>
   /* ---- recs: list scrolls on the left, map is the hero on the right -------- */
   /* Manhattan is tall and narrow — a portrait-ish frame suits it far better
@@ -297,7 +307,7 @@
   <script src="personalize.js?v=20260818c" defer></script>
   <script src="map.js?v=20260818v" defer></script>
   <script src="mobilenav.js?v=20260805a" defer></script>
-  <script src="account.js?v=20260820c" defer></script>
+  <script src="account.js?v=20260820d" defer></script>
   <script src="cal.js?v=20260820b" defer></script>
   <script src="upload.js?v=20260809a" defer></script>
   <script src="drawer.js?v=20260809c" defer></script>

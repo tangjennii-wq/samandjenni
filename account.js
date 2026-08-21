@@ -155,13 +155,22 @@
     return true;
   }
 
+  /* Paired with the inline veil in each page's <head>. Lifted the instant the
+     sheet is mounted, or immediately if we decide not to show one. The head
+     script also lifts it on a 2.5s timeout, so a Supabase outage can never
+     leave a guest looking at a blank page. */
+  function unveil(){
+    try { document.documentElement.classList.remove('sj-veil'); } catch(e){}
+  }
+
   function maybePrompt(){
-    if (!who) return;                          // signed out — the gate has them
+    if (!who) { unveil(); return; }             // signed out — the gate has them
     var asked = gateSaysAsk();
-    if (flag(PROMPT_KEY) || flag(DONE_KEY)) return;
+    if (flag(PROMPT_KEY) || flag(DONE_KEY)) { unveil(); return; }
     if (asked) {                               // no waiting — open now
       flag(PROMPT_KEY, 1);
       setOpen(true, false, true);
+      unveil();                                // sheet is up; show the page
       // fill the name/email in behind the open panel if the lookup lands
       if (window.SJUpload && window.SJUpload.rpc) {
         var k0 = who.toLowerCase();
@@ -178,9 +187,9 @@
       }
       return;
     }
-    if (!(window.SJUpload && window.SJUpload.rpc)) return;
+    if (!(window.SJUpload && window.SJUpload.rpc)) { unveil(); return; }
     window.SJUpload.rpc('guest_detailed', who).then(function(done){
-      if (done === true) { flag(DONE_KEY, 1); return; }   // did it on another device
+      if (done === true) { flag(DONE_KEY, 1); unveil(); return; }   // did it on another device
       flag(PROMPT_KEY, 1);
 
       // Fetch the profile ourselves rather than relying on the cache rsvpform.js
@@ -197,8 +206,9 @@
         }
       }).catch(function(){}).then(function(){
         setOpen(true, false, true);
+        unveil();
       });
-    }).catch(function(){ /* offline — ask again next visit rather than never */ });
+    }).catch(function(){ unveil(); /* offline — ask again next visit rather than never */ });
   }
 
   function setOpen(on, chained, firstTime){
