@@ -83,7 +83,10 @@
       '</div>' +
       (firstTime
         ? '<p class="acct-intro"><b>One quick thing before you look around.</b><br>' +
-          'Invitations go out Nov/Dec &mdash; have we got this right?</p>'
+          'Invitations go out Nov/Dec &mdash; have we got this right?' +
+          '<br><span class="acct-onfile">Once you send it we store it securely and ' +
+          'never show it back on this page. Need to change something later? ' +
+          'Just fill it in again.</span></p>'
         : '<p class="acct-intro">Anything we\u2019ve got wrong? Tell us here.' +
           ((onFile.email || onFile.address)
             ? '<br><span class="acct-onfile">' +

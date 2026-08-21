@@ -3813,3 +3813,9 @@ html.sj-veil body{ overflow:hidden !important; }
   box-shadow:inset 0 0 0 1px #C4A814;
   color:#1a1a1a;
 }
+
+
+/* The quiet reassurance under the details prompt: what happens to what they
+   type, and how to change it later. */
+.sjsheet .acct-onfile{ display:block; margin-top:7px; font-size:12px;
+  line-height:1.45; color:#9c9689; }
