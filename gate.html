@@ -46,7 +46,15 @@
   label{font-size:10px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#a2907a;margin-bottom:-4px}
   input{border:2px solid var(--dark);border-radius:14px;background:#fbf7ef;color:var(--dark);
     font-family:inherit;font-size:16px;padding:15px 16px;text-align:center;letter-spacing:.06em;outline:none}
-  input::placeholder{color:#c9b8a2;letter-spacing:.02em;font-size:14px}
+  /* Near-black, not the old #c9b8a2. At 2.0:1 that placeholder was below
+     every legibility threshold there is -- on the hero film behind it the
+     field read as empty and unlabelled. A hair off pure black so it still
+     reads as a prompt rather than a value already typed. */
+  /* Faded black, not the old warm tan (#c9b8a2, about 2:1 -- below every
+     legibility threshold there is). Black at 62% reads clearly while still
+     sitting visibly lighter than a typed value, so the field never looks
+     as though it is already filled in. */
+  input::placeholder{color:rgba(26,26,26,.62);opacity:1;letter-spacing:.02em;font-size:15px}
   input:focus{border-color:var(--red);background:#fff}
   button{margin-top:6px;border:2px solid var(--dark);border-radius:14px;background:var(--gold);color:var(--dark);
     font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
