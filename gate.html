@@ -6,16 +6,11 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://samandjenni.com/">
 <meta property="og:site_name" content="shlang wedding">
-<meta property="og:title" content="shlang wedding &middot; RSVP &amp; info">
-<meta property="og:description" content="shlang's wedding weekend &middot; new york city">
-<meta property="og:image" content="https://samandjenni.com/og-image.jpg?v=4">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="sam + jenni on the 5th avenue subway platform">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="shlang wedding &middot; RSVP &amp; info">
-<meta name="twitter:description" content="shlang's wedding weekend &middot; new york city">
-<meta name="twitter:image" content="https://samandjenni.com/og-image.jpg?v=4">
+<meta property="og:title" content="sam + jenni">
+<meta property="og:description" content="a private page for our guests">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sam + jenni">
+<meta name="twitter:description" content="a private page for our guests">
 <meta name="robots" content="noindex, nofollow">
 <title>shlang wedding</title>
 <meta name="description" content="sam + jenni · march 19–20, 2027 · new york city">
@@ -107,15 +102,16 @@
         <!-- The visible label said the same words as the button directly below
              it. Kept for screen readers only, since the field still needs a
              name — the placeholder alone isn't an accessible label. -->
-        <label class="sr-only" for="lastname">Your full name or email</label>
-        <input id="lastname" name="lastname" type="text" autocomplete="name" autofocus
-               placeholder="your full name or email" spellcheck="false" autocapitalize="words" />
+        <label class="sr-only" for="lastname">The email we sent this to</label>
+        <input id="lastname" name="lastname" type="email" autocomplete="email" autofocus
+               inputmode="email" placeholder="the email we sent this to"
+               spellcheck="false" autocapitalize="off" />
         <button type="submit">Find my invitation &rarr;</button>
       </form>
 
       <div class="err" id="err"></div>
-      <p class="hint">Enter your full name or the email we sent this to.<br>
-        Can&rsquo;t find your invite? Text us.</p>
+      <p class="hint">Enter the email address we sent this to.<br>
+        Different email, or can&rsquo;t get in? Text us and we&rsquo;ll sort it.</p>
       <!-- No "have a look around first" link: with the whole site private there
            is nowhere for it to go. The .skip / .gate-foot styles below are left
            in place deliberately — this has been on and off twice now, so
@@ -145,9 +141,10 @@
   var e = new URLSearchParams(location.search).get('e');
 
   var MSG = {
-    pass: "we can't find that one — try your full name, or the email we sent this to ♡",
-    name: "we just need your name or email ♡",
-    list: "we can't find that one — try your full name, or the email we sent this to. still stuck? just text us ♡"
+    pass: "we can't find that one — try the email we sent this to ♡",
+    name: "we just need your email ♡",
+    email: "the site opens with your email now — the address we sent this to ♡",
+    list: "we can't find that email — it may be a different one to the address we have. text us and we'll add it ♡"
   };
 
   /* ── a surname shared by several guests ─────────────────────────────────

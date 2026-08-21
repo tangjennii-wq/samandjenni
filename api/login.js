@@ -90,6 +90,23 @@ export default async function handler(req, res) {
 
   // An email may be typed as "First Last <a@b.com>" or with stray punctuation.
   const email = (ln.match(/[^\s<>,;]+@[^\s<>,;]+/) || [])[0];
+
+  /* Email only.
+     Surname keys were the weak point: "lee" and "tang" are guessable by
+     anyone, and a correct guess handed over the weekend's addresses and times.
+     Full names are little better if you know who was invited. Everyone we
+     have written to has an email, so that is now the key.
+
+     EMAIL_ONLY = false restores name and surname sign-in. Nothing was deleted
+     from the database; those keys still exist and still carry their tiers, so
+     this is a one-word revert. Eight households have no email on file and
+     cannot sign in while this is true -- they text us and we add one. */
+  const EMAIL_ONLY = true;
+  if (EMAIL_ONLY && !email) {
+    res.writeHead(302, { Location: '/gate?e=email' });
+    return res.end();
+  }
+
   const key = email ? email.replace(/[.,;]+$/, '') : asName(ln);
   if (!key) {
     res.writeHead(302, { Location: '/gate?e=name' });
