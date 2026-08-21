@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260821b">
+<link rel="stylesheet" href="site.css?v=20260821c">
 <script>/* Preflight veil. Runs before first paint: if the gate told us this guest
    still owes us their details, hold the page behind an opaque layer so the
    home page and the hero film never flash before the panel. account.js lifts
@@ -225,6 +225,40 @@ html.sj-veil .sjsheet{z-index:2800}</style>
     pointer-events: none;  /* don't block video interactions beneath */
   }
   .film-mark a { pointer-events: auto; } /* re-enable clicks on the Blennon credit link */
+
+  /* Same voice as the edge markings -- rust, uppercase, wide tracking -- but
+     centred under the frame and allowed to wrap, because it carries two venues
+     and a nowrap line would run off a narrow window. */
+  .film-caption {
+    margin: 9px auto 0;
+    max-width: 92%;
+    text-align: center;
+    color: var(--film-rust);
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    line-height: 1.55;
+    text-transform: uppercase;
+    opacity: 0.92;
+  }
+  .film-caption[hidden] { display: none; }
+  /* One line on a wide window, stacked on a narrow one. Without this the
+     84-character version wrapped to five ragged lines on a phone. */
+  .fc-line { display: inline; }
+  .fc-line + .fc-line::before { content: '\2003\2003'; }
+  @media (max-width: 900px) {
+    .fc-line { display: block; }
+    .fc-line + .fc-line { margin-top: 3px; }
+    .fc-line + .fc-line::before { content: none; }
+  }
+  @media (max-width: 720px) {
+    .film-caption { font-size: 8.5px; letter-spacing: 0.14em; margin-top: 10px;
+                    max-width: 30ch; }
+  }
+  @media (max-height: 700px) {
+    .film-caption { font-size: 8.5px; letter-spacing: 0.15em; margin-top: 6px; }
+  }
   @media (max-width: 720px) {
     .film-mark { font-size: 8px; letter-spacing: 0.16em; }
   }
@@ -1156,6 +1190,12 @@ html.sj-veil .sjsheet{z-index:2800}</style>
     </div>
 
 
+    <!-- Where and when, under the film. Filled in by JS from the guest's tier,
+         NOT written into the static HTML: a tier-4 guest is invited to the
+         wedding only, and "chinese tuxedo" sitting in the page source they can
+         View-Source on would tell them about a party they aren't asked to. -->
+    <p class="film-caption" id="filmCaption" hidden></p>
+
     <button class="reel-link-mobile" type="button" id="openReelMobile">
       watch full screen<span class="arrow">→</span>
     </button>
@@ -1372,6 +1412,42 @@ html.sj-veil .sjsheet{z-index:2800}</style>
   </script>
 
   <script src="personalize.js?v=20260818c" defer></script>
+  <script>
+  /* The line under the film: which events this guest is actually asked to.
+
+     DOMContentLoaded, not `defer` -- `defer` is ignored on inline scripts, so
+     an inline version runs during parsing, BEFORE the deferred personalize.js
+     has set data-tier. Every tier then fell through the fallback and tier 4
+     was shown the welcome party. DOMContentLoaded fires after all deferred
+     scripts have run, which is exactly the ordering this needs.
+
+     Fail closed: anything that isn't a clean 1-3 gets the wedding line alone.
+     That covers tier 4, tier 0 (nobody signed in) and a mangled cookie -- a
+     guest is never told about a party they aren't invited to because a cookie
+     was malformed. Mirrors sees.friday in personalize.js.
+
+     No secret is being kept from the page source here, to be clear: any signed-
+     in guest can fetch map.js and read both venues. This is about the page
+     telling each guest the right thing, not about hiding it from them. */
+  document.addEventListener('DOMContentLoaded', function () {
+    var el = document.getElementById('filmCaption');
+    if (!el) return;
+
+    var raw = (document.documentElement.getAttribute('data-tier') || '').trim();
+    var tier = /^[0-4]$/.test(raw) ? parseInt(raw, 10) : 4;
+    var seesFriday = tier >= 1 && tier <= 3;
+
+    function line(text) {
+      var span = document.createElement('span');
+      span.className = 'fc-line';
+      span.textContent = text;
+      return span;
+    }
+    if (seesFriday) el.appendChild(line('friday 3.19.27 \u00b7 welcome party at chinese tuxedo'));
+    el.appendChild(line('saturday 3.20.27 \u00b7 wedding at the pierre'));
+    el.hidden = false;
+  });
+  </script>
   <script src="mobilenav.js?v=20260805a" defer></script>
   <script src="account.js?v=20260821b" defer></script>
   <script src="cal.js?v=20260820b" defer></script>
