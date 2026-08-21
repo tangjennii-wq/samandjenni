@@ -278,19 +278,29 @@
 
       msg.hidden = false; msg.className = 'acct-msg acct-msg--done';
       msg.innerHTML = '<span class="acct-tick" aria-hidden="true">\u2713</span>' +
-                      'Got it \u2014 thank you. That\u2019s everything';
+                      'Got it \u2014 thank you. That\u2019s everything \u2661';
 
       var row = api.body.querySelector('.note-row3');
       if (row) {
         var go = document.createElement('button');
         go.type = 'button';
         go.className = 'note-btn';
-        go.textContent = 'Go to the website \u2192';
-        go.addEventListener('click', function(){ api.close(); });
+        go.textContent = 'Explore the website \u2192';
+        go.addEventListener('click', function(){
+          api.close();
+          /* One place to change when the onboarding gains an RSVP step: point
+             ONWARD at it instead. Today it lands on the home page, and stays
+             put if that is already where they are, so nobody gets a pointless
+             reload of the film. */
+          var ONWARD = '/';
+          var here = location.pathname.replace(/index\.html$/, '');
+          if (here !== ONWARD) location.href = ONWARD;
+        });
         row.appendChild(go);
         var sub = document.createElement('p');
         sub.className = 'acct-onward';
-        sub.textContent = 'hotel links, nyc recs, rsvp early, leave us a note';
+        sub.textContent = 'Take a look around for hotel links, our NYC favorites, ' +
+                          'early RSVP access, or to leave us a note.';
         row.parentNode.insertBefore(sub, row.nextSibling);
       }
 
