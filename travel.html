@@ -120,6 +120,20 @@
     border-bottom:1.5px solid var(--line-2); padding-bottom:2px; }
   .hotelgrid .hotel:hover .hbook{ color:var(--red); border-bottom-color:var(--red); }
 
+  /* ---- the "other hotels" cards: one size, every time -------------------
+     Descriptions are gone, but the cards still varied because some carry a
+     price tier and some a loyalty badge and some neither. Stretching the grid
+     rows and fixing the inner height makes every card identical regardless of
+     what's inside it. Room-block cards are excluded - they have photos. */
+  .hotelgrid{ align-items:stretch; }
+  .hotelgrid .hotel[data-kind="other"]{ height:100%; min-height:92px; }
+  .hotelgrid .hotel[data-kind="other"] .hin{
+    display:flex; flex-direction:column; justify-content:flex-start;
+    min-height:84px; padding:11px 13px 12px; }
+  .hotelgrid .hotel[data-kind="other"] .hname{ margin-top:4px; }
+  .hotelgrid .hotel[data-kind="other"] .hprice,
+  .hotelgrid .hotel[data-kind="other"] .hpts{ margin-top:auto; align-self:flex-start; }
+
   .hotelmap{ position:sticky; top:64px; }
   .hotelmap .sjmap{ height:min(560px, calc(100vh - 230px)); margin-top:0; }
   .hotelmap .map-caption{ margin-top:12px; }
@@ -270,72 +284,54 @@
               <span class="hkind hkind--alt">NoMad</span>
               <span class="hname">The New York EDITION</span>
               <span class="hprice">$$$$</span>
-              <span class="hwhere">inside the 1909 clock tower on Madison Square Park &mdash; go for the bar even if you stay elsewhere</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="SoHo" data-n="The Mercer Hotel" data-ll="40.72469,-74.00113" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Mercer%20Hotel%20SoHo%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">SoHo</span>
               <span class="hname">The Mercer Hotel</span>
               <span class="hprice">$$$$</span>
-              <span class="hwhere">discreet loft-style rooms above The Mercer Kitchen</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Bowery" data-n="citizenM Bowery" data-ll="40.72180,-73.99330" href="https://www.google.com/maps/search/?api=1&amp;query=citizenM%20Bowery%20Bowery%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Bowery</span>
               <span class="hname">citizenM Bowery</span>
               <span class="hprice">$</span>
-              <span class="hwhere">sleek and compact, walkable to the Friday party</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="Walker Hotel Tribeca" data-ll="40.71770,-74.00230" href="https://www.google.com/maps/search/?api=1&amp;query=Walker%20Hotel%20Tribeca%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Tribeca</span>
               <span class="hname">Walker Hotel Tribeca</span>
               <span class="hprice">$$</span>
-              <span class="hwhere">cozy boutique on cobblestoned blocks</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="Warren Street Hotel" data-ll="40.71550,-74.00970" href="https://www.google.com/maps/search/?api=1&amp;query=Warren%20Street%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Tribeca</span>
               <span class="hname">Warren Street Hotel</span>
               <span class="hprice">$$$</span>
-              <span class="hwhere">Firmdale&#x27;s Tribeca one, two Michelin Keys</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Lower East Side" data-n="Nine Orchard" data-ll="40.71469,-73.99208" href="https://www.google.com/maps/search/?api=1&amp;query=Nine%20Orchard%20Lower%20East%20Side%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Lower East Side</span>
               <span class="hname">Nine Orchard</span>
               <span class="hprice">$$$</span>
-              <span class="hwhere">a 1912 bank turned arty-luxe. The design pick</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="NoMad" data-n="Ace Hotel New York" data-ll="40.74540,-73.98790" href="https://www.google.com/maps/search/?api=1&amp;query=Ace%20Hotel%20New%20York%20NoMad%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">NoMad</span>
               <span class="hname">Ace Hotel New York</span>
               <span class="hprice">$$</span>
-              <span class="hwhere">the original design-hotel lobby scene</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="The Greenwich Hotel" data-ll="40.71920,-74.01030" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Greenwich%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Tribeca</span>
               <span class="hname">The Greenwich Hotel</span>
               <span class="hprice">$$$$</span>
-              <span class="hwhere">De Niro&#x27;s. The Shibui Spa is unreal</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Tribeca" data-n="The Roxy Hotel" data-ll="40.71800,-74.00440" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Roxy%20Hotel%20Tribeca%20New%20York" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Tribeca</span>
               <span class="hname">The Roxy Hotel</span>
               <span class="hprice">$$$</span>
-              <span class="hwhere">jazz club, cinema and a great lobby bar</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Central Park South" data-n="JW Marriott Essex House" data-ll="40.76618,-73.97852" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Essex%20House%20Central%20Park%20South%20New%20York" target="_blank" rel="noopener"><span class="hin">
@@ -343,110 +339,87 @@
               <span class="hname">JW Marriott Essex House</span>
             <span class="hpts hpts--marriott">Marriott Bonvoy</span>
               <span class="hprice">$$$</span>
-              <span class="hwhere">grand, and steps from the wedding</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="Wythe Hotel" data-ll="40.72110,-73.95750" href="https://www.google.com/maps/search/?api=1&amp;query=Wythe%20Hotel%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Williamsburg</span>
               <span class="hname">Wythe Hotel</span>
               <span class="hprice">$$$</span>
-              <span class="hwhere">factory conversion, best skyline views in the city</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="The William Vale" data-ll="40.72170,-73.95720" href="https://www.google.com/maps/search/?api=1&amp;query=The%20William%20Vale%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Williamsburg</span>
               <span class="hname">The William Vale</span>
               <span class="hprice">$$$</span>
-              <span class="hwhere">rooftop pool and huge views</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Williamsburg" data-n="The Hoxton, Williamsburg" data-ll="40.72050,-73.95790" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Hoxton%2C%20Williamsburg%20Williamsburg%20Brooklyn" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Williamsburg</span>
               <span class="hname">The Hoxton, Williamsburg</span>
               <span class="hprice">$$</span>
-              <span class="hwhere">hip lobby, good restaurants, easy Brooklyn cool</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Downtown Brooklyn" data-n="Ace Hotel Brooklyn" data-ll="40.68850,-73.98270" href="https://www.google.com/maps/search/?api=1&amp;query=Ace%20Hotel%20Brooklyn%20Downtown%20Brooklyn%20Brooklyn" target="_blank" rel="noopener"><span class="hin">
               <span class="hkind hkind--alt">Downtown Brooklyn</span>
               <span class="hname">Ace Hotel Brooklyn</span>
               <span class="hprice">$$</span>
-              <span class="hwhere">sleek, and a quick ride back over the bridge</span>
-              <span class="hbook">Look it up &rarr;</span>
             </span>
           </a>
           <a class="hotel" data-kind="other" data-hood="Midtown" data-n="The Peninsula New York" data-ll="40.76148,-73.97479" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Peninsula%20New%20York%20Midtown%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Midtown</span>
             <span class="hname">The Peninsula New York</span>
-            <span class="hwhere">grand old-school luxury four blocks from the Pierre. expensive!</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Midtown" data-n="1 Hotel Central Park" data-ll="40.76432,-73.97650" href="https://www.google.com/maps/search/?api=1&amp;query=1%20Hotel%20Central%20Park%20Midtown%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Midtown</span>
             <span class="hname">1 Hotel Central Park</span>
-            <span class="hwhere">reclaimed wood and greenery, steps off the park</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Lower East Side" data-n="PUBLIC Hotel" data-ll="40.72281,-73.99174" href="https://www.google.com/maps/search/?api=1&amp;query=PUBLIC%20Hotel%20Lower%20East%20Side%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Lower East Side</span>
             <span class="hname">PUBLIC Hotel</span>
-            <span class="hwhere">Ian Schrager&#x27;s downtown one — great bar, sharp price</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Gramercy" data-n="Hyatt Union Square" data-ll="40.73340,-73.98950" href="https://www.google.com/maps/search/?api=1&amp;query=Hyatt%20Union%20Square%20Gramercy%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Gramercy</span>
             <span class="hname">Hyatt Union Square</span>
             <span class="hpts hpts--hyatt">World of Hyatt</span>
-            <span class="hwhere">straightforward and well placed for downtown dinners</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="NoMad" data-n="Made Hotel" data-ll="40.74606,-73.98800" href="https://www.google.com/maps/search/?api=1&amp;query=Made%20Hotel%20NoMad%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">NoMad</span>
             <span class="hname">Made Hotel</span>
-            <span class="hwhere">warm, low-lit, one of the better rooftops</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Greenwich Village" data-n="The Marlton" data-ll="40.73273,-73.99674" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Marlton%20Greenwich%20Village%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Greenwich Village</span>
             <span class="hname">The Marlton</span>
-            <span class="hwhere">tiny Parisian-feeling rooms off Washington Square</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="SoHo" data-n="The Manner" data-ll="40.72520,-74.00390" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Manner%20SoHo%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">SoHo</span>
             <span class="hname">The Manner</span>
             <span class="hpts hpts--hyatt">World of Hyatt</span>
-            <span class="hwhere">new SoHo townhouse-y one, on a quiet block</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Midtown" data-n="W New York" data-ll="40.73659,-73.98899" href="https://www.google.com/maps/search/?api=1&amp;query=W%20Hotels%20Manhattan%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Midtown</span>
             <span class="hname">W New York</span>
             <span class="hpts hpts--marriott">Marriott Bonvoy</span>
-            <span class="hwhere">three of them &mdash; Union Square, Times Square or Downtown</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Chelsea" data-n="Hotel Chelsea" data-ll="40.74423,-73.99671" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Chelsea%20222%20W%2023rd%20St%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Chelsea</span>
             <span class="hname">Hotel Chelsea</span>
-            <span class="hwhere">the legendary one, restored — Dylan, Patti Smith, all of it</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="NoMad" data-n="Arlo Hotels" data-ll="40.74627,-73.98455" href="https://www.google.com/maps/search/?api=1&amp;query=Arlo%20Hotels%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">NoMad</span>
             <span class="hname">Arlo Hotels</span>
-            <span class="hwhere">three of them &mdash; SoHo, NoMad or Midtown. small rooms, good prices</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Central Park South" data-n="Park Lane New York" data-ll="40.76566,-73.97636" href="https://www.google.com/maps/search/?api=1&amp;query=Park%20Lane%20New%20York%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Central Park South</span>
             <span class="hname">Park Lane New York</span>
-            <span class="hwhere">big park views from the upper floors</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Midtown" data-n="citizenM Times Square" data-ll="40.76175,-73.98488" href="https://www.google.com/maps/search/?api=1&amp;query=citizenM%20Times%20Square%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Midtown</span>
             <span class="hname">citizenM Times Square</span>
-            <span class="hwhere">compact and modern, reliable mid-price</span>
           </span></a>
           <a class="hotel" data-kind="other" data-hood="Chelsea" data-n="Moxy Chelsea" data-ll="40.74620,-73.99094" href="https://www.google.com/maps/search/?api=1&amp;query=Moxy%20Chelsea%20New%20York" target="_blank" rel="noopener"><span class="hin">
             <span class="hkind hkind--alt">Chelsea</span>
             <span class="hname">Moxy Chelsea</span>
             <span class="hpts hpts--marriott">Marriott Bonvoy</span>
-            <span class="hwhere">small rooms, good rooftop, sensible rate</span>
           </span></a>
             </div>
             <p class="recempty" hidden>Nothing here — try another neighborhood.</p>
