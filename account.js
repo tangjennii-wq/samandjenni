@@ -140,9 +140,44 @@
     } catch(e){ return null; }
   }
 
+  /* The gate already asked. api/login.js calls guest_detailed() before it
+     redirects and appends ?details=1 when the answer is no, so we can open on
+     the first frame instead of after two round-trips. Strip the parameter so a
+     refresh or a shared link doesn't re-trigger it. */
+  function gateSaysAsk(){
+    if (!/[?&]details=1\b/.test(location.search)) return false;
+    try {
+      var url = location.pathname +
+        location.search.replace(/([?&])details=1/, '$1').replace(/[?&]$/, '').replace(/\?&/, '?') +
+        location.hash;
+      history.replaceState(null, '', url);
+    } catch (e) {}
+    return true;
+  }
+
   function maybePrompt(){
     if (!who) return;                          // signed out — the gate has them
+    var asked = gateSaysAsk();
     if (flag(PROMPT_KEY) || flag(DONE_KEY)) return;
+    if (asked) {                               // no waiting — open now
+      flag(PROMPT_KEY, 1);
+      setOpen(true, false, true);
+      // fill the name/email in behind the open panel if the lookup lands
+      if (window.SJUpload && window.SJUpload.rpc) {
+        var k0 = who.toLowerCase();
+        window.SJUpload.rpc('guest_profile', k0).then(function(rows){
+          var pr = Array.isArray(rows) ? rows[0] : rows;
+          if (!pr || !pop) return;
+          try { localStorage.setItem('sj-profile', JSON.stringify({
+            key: k0, person_name: pr.person_name || '', email: pr.email || ''
+          })); } catch(e){}
+          var n = pop.querySelector('#acName'), em = pop.querySelector('#acEmail');
+          if (n  && !n.value)  n.value  = pr.person_name || '';
+          if (em && !em.value) em.value = pr.email || '';
+        }).catch(function(){});
+      }
+      return;
+    }
     if (!(window.SJUpload && window.SJUpload.rpc)) return;
     window.SJUpload.rpc('guest_detailed', who).then(function(done){
       if (done === true) { flag(DONE_KEY, 1); return; }   // did it on another device

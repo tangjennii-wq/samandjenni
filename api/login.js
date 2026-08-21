@@ -153,7 +153,21 @@ export default async function handler(req, res) {
                                 'rsvp','over-under','stay']);
   const m = (req.url || '').match(/[?&]next=([^&]*)/);
   const want = m ? decodeURIComponent(m[1]).replace(/\.html$/, '') : '';
-  const next = (want && want !== 'index' && NEXT_ALLOWED.has(want)) ? '/' + want + '.html' : '/';
+  let next = (want && want !== 'index' && NEXT_ALLOWED.has(want)) ? '/' + want + '.html' : '/';
+
+  /* Ask here, not in the browser.
+     account.js used to decide whether to show the details panel by making two
+     Supabase calls after the page had already painted — so a first-time guest
+     watched the home page and the hero film load, and the panel appeared a
+     beat later, on top. It read as a glitch.
+     We are already talking to Supabase on this request, so one more call costs
+     nothing and lets the client open the panel on the very first frame.
+     Failure is silent: no flag, and account.js falls back to its own lookup. */
+  try {
+    const detailed = await rpc('guest_detailed', matched);
+    if (detailed !== true) next += (next.includes('?') ? '&' : '?') + 'details=1';
+  } catch (e) { /* leave it to the client */ }
+
   res.writeHead(302, { Location: next });
   return res.end();
 }
