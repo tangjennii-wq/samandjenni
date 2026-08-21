@@ -3791,12 +3791,14 @@ html.sj-veil body{ overflow:hidden !important; }
 .sjsheet .acct-msg--done{ display:flex; align-items:baseline; gap:8px;
   color:#3F7A4B; font-weight:500; }
 .sjsheet .acct-tick{ flex:0 0 auto; font-size:15px; line-height:1.2; color:#3F7A4B; }
-.sjsheet .acct-onward{ margin-top:10px; margin-left:auto; margin-right:auto;
-  max-width:34ch; text-align:center; font-size:12.5px; line-height:1.45;
-  letter-spacing:.01em; color:#8a7967; }
+/* Left, not centred, and in the body colour. Centred grey read as a caption
+   -- something the eye skips -- when it is actually the instruction for what
+   to do next. */
+.sjsheet .acct-onward{ margin-top:12px; margin-left:0; margin-right:0;
+  max-width:44ch; text-align:left; font-size:13px; line-height:1.5;
+  letter-spacing:.01em; color:var(--dark); }
 @media(max-width:420px){
-  /* keep it to three lines on a phone */
-  .sjsheet .acct-onward{ max-width:31ch; font-size:12px; }
+  .sjsheet .acct-onward{ max-width:none; font-size:12.5px; }
 }
 
 
