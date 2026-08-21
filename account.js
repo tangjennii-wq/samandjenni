@@ -131,6 +131,17 @@
   function flag(k, v){ try { if (v === undefined) return localStorage.getItem(k) === '1';
                              localStorage.setItem(k, '1'); } catch(e){ return false; } }
 
+  /* "Skip for now" means not right now, not never. It used to write a
+     permanent localStorage flag, so one tap and we never asked again — and we
+     still need a mailing address from most of the list. It now lives in
+     sessionStorage: they aren't nagged again while they browse, and they are
+     asked once more next time they come back. Saving is what makes it stop,
+     and that is recorded server-side so it holds on every device. */
+  function skipped(v){
+    try { if (v === undefined) return sessionStorage.getItem(PROMPT_KEY) === '1';
+          sessionStorage.setItem(PROMPT_KEY, '1'); } catch(e){ return false; }
+  }
+
   // Prefill from the profile the RSVP already looked up, so the panel opens
   // with their name and email in place rather than blank.
   function cachedProfile(){
@@ -138,6 +149,27 @@
       var c = JSON.parse(localStorage.getItem('sj-profile'));
       return (c && c.key === who.toLowerCase()) ? c : null;
     } catch(e){ return null; }
+  }
+
+  /* Read back their own saved details so reopening the panel shows what they
+     typed rather than an empty address field. guest_details_get is security
+     definer and keyed on the signed-in guest, so it can only ever return the
+     one row that belongs to them. */
+  function fillSaved(root){
+    if (!root || !who || !(window.SJUpload && window.SJUpload.rpc)) return;
+    window.SJUpload.rpc('guest_details_get', who.toLowerCase()).then(function(rows){
+      var d = Array.isArray(rows) ? rows[0] : rows;
+      if (!d) return;
+      /* Their correction beats our guest-list record. The panel asks "have we
+         got this right?" — if they answered, showing our version again would
+         be ignoring them. */
+      var set = function(id, val){
+        var el = root.querySelector('#' + id);
+        if (el && val) el.value = val;
+      };
+      set('acName', d.name); set('acEmail', d.email);
+      set('acAddr', d.address); set('acNote', d.note);
+    }).catch(function(){});
   }
 
   /* The gate already asked. api/login.js calls guest_detailed() before it
@@ -166,9 +198,8 @@
   function maybePrompt(){
     if (!who) { unveil(); return; }             // signed out — the gate has them
     var asked = gateSaysAsk();
-    if (flag(PROMPT_KEY) || flag(DONE_KEY)) { unveil(); return; }
+    if (skipped() || flag(DONE_KEY)) { unveil(); return; }
     if (asked) {                               // no waiting — open now
-      flag(PROMPT_KEY, 1);
       setOpen(true, false, true);
       unveil();                                // sheet is up; show the page
       // fill the name/email in behind the open panel if the lookup lands
@@ -190,7 +221,6 @@
     if (!(window.SJUpload && window.SJUpload.rpc)) { unveil(); return; }
     window.SJUpload.rpc('guest_detailed', who).then(function(done){
       if (done === true) { flag(DONE_KEY, 1); unveil(); return; }   // did it on another device
-      flag(PROMPT_KEY, 1);
 
       // Fetch the profile ourselves rather than relying on the cache rsvpform.js
       // writes. On a first visit the RSVP never mounts, so that cache is empty
@@ -221,6 +251,7 @@
       onMount: function(a){
         pop = a.body;
         wirePanel(a, !!firstTime);
+        fillSaved(a.body);
         /* "skip for now" was inert. notes.js and rsvpform.js each wire their
            own [data-close]; drawer.js only listens for the X, the backdrop and
            Escape. This panel rendered the button and never bound anything, so
@@ -228,7 +259,7 @@
         var skip = a.body.querySelector('[data-close]');
         if (skip) skip.addEventListener('click', function(e){
           e.preventDefault();
-          flag(PROMPT_KEY, 1);   // asked once; don't reopen on the next page
+          skipped(1);            // this session only — we'll ask again next visit
           a.close();
         });
       }
