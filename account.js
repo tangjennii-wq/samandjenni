@@ -164,7 +164,20 @@
     var api = window.SJSheet.open({
       label: 'Your details',
       html: '<div class="acct-card">' + panelHTML(!!chained, !!firstTime) + '</div>',
-      onMount: function(a){ pop = a.body; wirePanel(a, !!firstTime); }
+      onMount: function(a){
+        pop = a.body;
+        wirePanel(a, !!firstTime);
+        /* "skip for now" was inert. notes.js and rsvpform.js each wire their
+           own [data-close]; drawer.js only listens for the X, the backdrop and
+           Escape. This panel rendered the button and never bound anything, so
+           the one screen a guest is forced into had no way out but the X. */
+        var skip = a.body.querySelector('[data-close]');
+        if (skip) skip.addEventListener('click', function(e){
+          e.preventDefault();
+          flag(PROMPT_KEY, 1);   // asked once; don't reopen on the next page
+          a.close();
+        });
+      }
     });
     return api;
   }
