@@ -65,14 +65,16 @@
 
      SJSheet (drawer.js) brings the focus trap, focus restore, scroll lock and
      Escape with it, so all of that machinery goes. */
+  var onFile = { email:false, address:false, note:false, name:'' };
+
   function panelHTML(chained, firstTime){
     var pr = cachedProfile() || {};
+    var hasEmail = onFile.email, hasAddr = onFile.address;
     var esc = function(x){ return (x || '').replace(/"/g,'&quot;'); };
     // Prefer the guest list's own record over the cookie: it has their full
     // name where the cookie may only hold a surname.
     var isSurname = who && !isEmail && who.split(/\s+/).length === 1;
-    var vName  = pr.person_name || (who && !isEmail && !isSurname ? titleCase(who) : '');
-    var vEmail = pr.email || (isEmail ? who : '');
+    var vName  = onFile.name || pr.person_name || (who && !isEmail && !isSurname ? titleCase(who) : '');
     return '' +
       (chained ? '<div class="thanks-step">Step 3 of 3</div>' : '') +
       '<div class="acct-head">' +
@@ -82,15 +84,28 @@
       (firstTime
         ? '<p class="acct-intro"><b>One quick thing before you look around.</b><br>' +
           'Invitations go out Nov/Dec &mdash; have we got this right?</p>'
-        : '<p class="acct-intro">Anything we\u2019ve got wrong? Tell us here.</p>') +
+        : '<p class="acct-intro">Anything we\u2019ve got wrong? Tell us here.' +
+          ((onFile.email || onFile.address)
+            ? '<br><span class="acct-onfile">' +
+              (onFile.email   ? 'Email on file. ' : '') +
+              (onFile.address ? 'Mailing address on file. ' : '') +
+              'Only fill these in if something has changed.</span>'
+            : '') +
+          '</p>') +
       '<div class="note-field"><label class="note-l" for="acName">your name</label>' +
         '<input id="acName" class="note-f" type="text" value="' + esc(vName) +
           '" placeholder="' + (vName ? '' : 'first and last name') + '"></div>' +
+      /* Neither the email nor the address is ever written back into the page.
+         The panel says what we hold, not what it is, and offers blank fields
+         to replace it. Leaving them empty keeps whatever is on file. */
       '<div class="note-field"><label class="note-l" for="acEmail">email</label>' +
-        '<input id="acEmail" class="note-f" type="email" value="' + esc(vEmail) +
-          '" placeholder="so we can reach you"></div>' +
+        '<input id="acEmail" class="note-f" type="email" placeholder="' +
+          (hasEmail ? 'email on file \u2014 leave blank to keep it' : 'so we can reach you') +
+          '"></div>' +
       '<div class="note-field"><label class="note-l" for="acAddr">mailing address</label>' +
-        '<input id="acAddr" class="note-f" type="text" placeholder="where the invitation should go"></div>' +
+        '<input id="acAddr" class="note-f" type="text" placeholder="' +
+          (hasAddr ? 'address on file \u2014 leave blank to keep it' : 'where the invitation should go') +
+          '"></div>' +
       '<div class="note-field"><label class="note-l" for="acNote">anything else</label>' +
         '<textarea id="acNote" class="note-f note-ta" placeholder="new address, a name we spelled wrong, a question\u2026"></textarea></div>' +
       '<p class="acct-msg" hidden></p>' +
@@ -131,15 +146,23 @@
   function flag(k, v){ try { if (v === undefined) return localStorage.getItem(k) === '1';
                              localStorage.setItem(k, '1'); } catch(e){ return false; } }
 
-  /* "Skip for now" means not right now, not never. It used to write a
-     permanent localStorage flag, so one tap and we never asked again — and we
-     still need a mailing address from most of the list. It now lives in
-     sessionStorage: they aren't nagged again while they browse, and they are
-     asked once more next time they come back. Saving is what makes it stop,
-     and that is recorded server-side so it holds on every device. */
+  /* "Skip for now" means not right now, not never. It first wrote a permanent
+     localStorage flag (one tap and we never asked again, while we still need
+     an address from most of the list), then sessionStorage — but that is
+     per-tab, so opening the site in a second tab asked them straight away.
+     It is now a dated snooze in localStorage: quiet for a week, shared across
+     tabs, then we ask once more. Saving is what stops it for good, and that
+     is recorded server-side so it holds on every device. */
+  var SNOOZE_DAYS = 7;
+  var SNOOZE_KEY  = nskey('sj-details-snoozed-until');
   function skipped(v){
-    try { if (v === undefined) return sessionStorage.getItem(PROMPT_KEY) === '1';
-          sessionStorage.setItem(PROMPT_KEY, '1'); } catch(e){ return false; }
+    try {
+      if (v === undefined) {
+        var until = parseInt(localStorage.getItem(SNOOZE_KEY) || '0', 10);
+        return until > Date.now();
+      }
+      localStorage.setItem(SNOOZE_KEY, String(Date.now() + SNOOZE_DAYS * 864e5));
+    } catch(e){ return false; }
   }
 
   // Prefill from the profile the RSVP already looked up, so the panel opens
@@ -151,30 +174,33 @@
     } catch(e){ return null; }
   }
 
-  /* Read back their own saved details so reopening the panel shows what they
-     typed rather than an empty address field. guest_details_get is security
-     definer and keyed on the signed-in guest, so it can only ever return the
-     one row that belongs to them. */
+  /* Status only. The RPC returns four booleans and a display name — never the
+     email, the address or the note — and it is revoked from the browser role
+     besides, so this is belt and braces. Off until the gate can sign who is
+     asking; the call is kept so it can be switched on in one line. */
+  var READ_BACK_STATUS = false;
   function fillSaved(root){
+    if (!READ_BACK_STATUS) return;
     if (!root || !who || !(window.SJUpload && window.SJUpload.rpc)) return;
     window.SJUpload.rpc('guest_details_get', who.toLowerCase()).then(function(rows){
       var d = Array.isArray(rows) ? rows[0] : rows;
       if (!d) return;
-      /* Their correction beats our guest-list record. The panel asks "have we
-         got this right?" — if they answered, showing our version again would
-         be ignoring them. */
-      var set = function(id, val){
-        var el = root.querySelector('#' + id);
-        if (el && val) el.value = val;
-      };
-      set('acName', d.name); set('acEmail', d.email);
-      set('acAddr', d.address); set('acNote', d.note);
+      onFile = { email: !!d.has_email, address: !!d.has_address,
+                 note: !!d.has_note, name: d.preferred_name || '' };
     }).catch(function(){});
+  }
+
+  /* Paired with the inline veil in each page's <head>. Lifted the instant the
+     sheet is mounted, or immediately if we decide not to show one. The head
+     script also lifts it on a 2.5s timeout, so a Supabase outage can never
+     leave a guest looking at a blank page. */
+  function unveil(){
+    try { document.documentElement.classList.remove('sj-veil'); } catch(e){}
   }
 
   /* The gate already asked. api/login.js calls guest_detailed() before it
      redirects and appends ?details=1 when the answer is no, so we can open on
-     the first frame instead of after two round-trips. Strip the parameter so a
+     the first frame instead of after a round trip. Strip the parameter so a
      refresh or a shared link doesn't re-trigger it. */
   function gateSaysAsk(){
     if (!/[?&]details=1\b/.test(location.search)) return false;
@@ -185,14 +211,6 @@
       history.replaceState(null, '', url);
     } catch (e) {}
     return true;
-  }
-
-  /* Paired with the inline veil in each page's <head>. Lifted the instant the
-     sheet is mounted, or immediately if we decide not to show one. The head
-     script also lifts it on a 2.5s timeout, so a Supabase outage can never
-     leave a guest looking at a blank page. */
-  function unveil(){
-    try { document.documentElement.classList.remove('sj-veil'); } catch(e){}
   }
 
   function maybePrompt(){
@@ -209,11 +227,13 @@
           var pr = Array.isArray(rows) ? rows[0] : rows;
           if (!pr || !pop) return;
           try { localStorage.setItem('sj-profile', JSON.stringify({
-            key: k0, person_name: pr.person_name || '', email: pr.email || ''
+            key: k0, person_name: pr.person_name || ''
           })); } catch(e){}
-          var n = pop.querySelector('#acName'), em = pop.querySelector('#acEmail');
-          if (n  && !n.value)  n.value  = pr.person_name || '';
-          if (em && !em.value) em.value = pr.email || '';
+          /* Name only. The email is never written into the panel — the guest
+             types a new one if it has changed, and a blank field keeps what
+             we already hold. */
+          var n = pop.querySelector('#acName');
+          if (n && !n.value) n.value = pr.person_name || '';
         }).catch(function(){});
       }
       return;
@@ -231,7 +251,7 @@
         var pr = Array.isArray(rows) ? rows[0] : rows;
         if (pr) {
           try { localStorage.setItem('sj-profile', JSON.stringify({
-            key: key, person_name: pr.person_name || '', email: pr.email || ''
+            key: key, person_name: pr.person_name || ''
           })); } catch(e){}
         }
       }).catch(function(){}).then(function(){
@@ -292,8 +312,13 @@
     var saving = (window.SJUpload && window.SJUpload.save)
       ? window.SJUpload.save('wedding_guest_details', {
           guest_key: window.SJUpload.guestKey(),
-          name: v('acName'), email: v('acEmail'),
-          address: v('acAddr'), note: v('acNote')
+          /* Only send what they actually typed. An empty field means "keep
+             what you have", not "erase it" — the panel deliberately never
+             shows the stored value, so a blank box is the normal state. */
+          name: v('acName') || undefined,
+          email: v('acEmail') || undefined,
+          address: v('acAddr') || undefined,
+          note: v('acNote') || undefined
         })
       : Promise.reject(new Error('no uploader'));
     saving.then(function(){
