@@ -337,10 +337,20 @@
 
       msg.hidden = false; msg.className = 'acct-msg acct-msg--done';
       msg.innerHTML = '<span class="acct-tick" aria-hidden="true">\u2713</span>' +
-                      'Got it \u2014 thank you. That\u2019s everything \u2661';
+                      'You\u2019re all set.';
 
       var row = api.body.querySelector('.note-row3');
       if (row) {
+        /* The "what's in here" line goes ABOVE the button, not under it.
+           Below, it read as fine print appended to an action already taken --
+           by which point the guest has clicked and never learns the site holds
+           hotel links or a note form. Above, it is the reason to click. */
+        var sub = document.createElement('p');
+        sub.className = 'acct-onward';
+        sub.textContent = 'Find hotel links, our NYC favorites, early RSVP ' +
+                          'access, and leave us a note.';
+        row.parentNode.insertBefore(sub, row);
+
         var go = document.createElement('button');
         go.type = 'button';
         go.className = 'note-btn';
@@ -356,11 +366,6 @@
           if (here !== ONWARD) location.href = ONWARD;
         });
         row.appendChild(go);
-        var sub = document.createElement('p');
-        sub.className = 'acct-onward';
-        sub.textContent = 'Take a look around for hotel links, our NYC favorites, ' +
-                          'early RSVP access, or to leave us a note.';
-        row.parentNode.insertBefore(sub, row.nextSibling);
       }
 
       // Never ask again — on this device or any other. The local flag is the

@@ -3795,8 +3795,8 @@ html.sj-veil body{ overflow:hidden !important; }
    -- something the eye skips -- when it is actually the instruction for what
    to do next. */
 .sjsheet .acct-onward{ margin-top:12px; margin-left:0; margin-right:0;
-  max-width:44ch; text-align:left; font-size:13px; line-height:1.5;
-  letter-spacing:.01em; color:var(--dark); }
+  margin-bottom:14px; max-width:46ch; text-align:left; font-size:13.5px;
+  line-height:1.5; letter-spacing:.01em; color:var(--dark); }
 @media(max-width:420px){
   .sjsheet .acct-onward{ max-width:none; font-size:12.5px; }
 }
