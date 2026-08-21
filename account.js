@@ -116,8 +116,17 @@
      guest_detailed(key) — a security-definer RPC that returns one boolean and
      nothing else, the same shape as guest_rsvped(). Someone who confirms on
      their phone is not asked again on a laptop. */
-  var PROMPT_KEY = 'sj-details-prompted';
-  var DONE_KEY   = 'sj-details-done';
+  /* Namespaced per guest. These were global — 'sj-details-prompted' with no
+     owner — so the first person to use a browser spent the prompt for everyone
+     after them. Christina Gainey signed in on a laptop that had already asked
+     Jenni, and was never asked. A shared laptop, a partner's phone, or one of
+     us testing is enough to trigger it. */
+  function nskey(base){
+    var k = (who || '').trim().toLowerCase().replace(/\s+/g, ' ');
+    return base + (k ? ':' + k : '');
+  }
+  var PROMPT_KEY = nskey('sj-details-prompted');
+  var DONE_KEY   = nskey('sj-details-done');
 
   function flag(k, v){ try { if (v === undefined) return localStorage.getItem(k) === '1';
                              localStorage.setItem(k, '1'); } catch(e){ return false; } }
@@ -215,8 +224,19 @@
       save.textContent = 'Sent ♡'; save.disabled = true;
       msg.hidden = false; msg.className = 'acct-msg';
       msg.textContent = 'Got it — thank you. That\u2019s everything ♡';
+      /* Relabelling the sign-out button to "All done" left the sign-out
+         handler bound, and Save was now disabled — so the only live control on
+         a completed panel logged the guest out and dropped them at the gate.
+         Replace the node so the old listener goes with it. */
       var done = api.body.querySelector('.acct-out');
-      if (done) done.textContent = 'All done';
+      if (done) {
+        var fin = document.createElement('button');
+        fin.type = 'button';
+        fin.className = 'acct-out';
+        fin.textContent = 'All done';
+        fin.addEventListener('click', function(){ api.close(); });
+        done.replaceWith(fin);
+      }
 
       // Never ask again — on this device or any other. The local flag is the
       // fast path; guest_detailed() covers a new browser or a second device,
@@ -239,7 +259,7 @@
         }
       }
     }).catch(function(){
-      save.disabled = false; save.textContent = 'Send it over';
+      save.disabled = false; save.textContent = firstTime ? 'Looks right' : 'Send it over';
       msg.hidden = false; msg.className = 'acct-msg is-err';
       msg.textContent = 'That didn’t send — try again in a moment.';
     });
@@ -247,6 +267,14 @@
 
   var out = api.body.querySelector('.acct-out');
   if (out) out.addEventListener('click', function(){
+    /* Drop this guest's cached profile and drafts so the next person on the
+       same browser starts clean. Namespaced prompt flags are left alone — they
+       belong to their owner, not to the device. */
+    try {
+      ['sj-profile','sj-rsvp-draft','sj-note-draft'].forEach(function(k){
+        localStorage.removeItem(k);
+      });
+    } catch(e){}
     ['sj_guest','sj_tier'].forEach(function(k){
       document.cookie = k + '=; Path=/; Max-Age=0; SameSite=Lax';
     });

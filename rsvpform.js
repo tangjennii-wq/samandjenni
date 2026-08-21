@@ -528,7 +528,15 @@
       // No inline note form to wire any more — the button above opens the
       // note sheet, which notes.js owns.
       var skip = root.querySelector('[data-close]');
-      if (skip && onSent) skip.addEventListener('click', onSent);
+      /* onSent is only passed by the sheet mount. The inline mount on rsvp.html
+         passed nothing, so this button was rendered and never bound — the same
+         dead-control bug as the details panel's "skip for now". Fall back to
+         simply hiding the thank-you block. */
+      if (skip) skip.addEventListener('click', onSent || function(){
+        var card = skip.closest('.rsvp-thanks') || skip.parentNode;
+        if (card) card.hidden = true;
+        skip.hidden = true;
+      });
 
       var editBtn = root.querySelector('[data-edit-rsvp]');
       if (editBtn) editBtn.addEventListener('click', renderForm);
@@ -630,23 +638,36 @@
 
      To make this a hard block nearer the date, gate the ✕ and skip the
      dismissed check — the plumbing is already here.                       */
-  var PROMPT_KEY = 'sj-rsvp-prompted';
+  /* One switch. RSVP is voluntary until this is turned on: nothing opens the
+     form by itself, guests reach it from the nav, the phone menu or the link in
+     the email. The prompt plumbing below is intact so a later date can flip it
+     without hunting through the file. */
+  var AUTO_PROMPT_RSVP = false;
+
+  /* Namespaced per guest, like the details flags. Global keys meant one guest's
+     state silenced the prompt for the next person on the same browser. */
+  function nskey(base){
+    var k = (who || '').trim().toLowerCase().replace(/\s+/g, ' ');
+    return base + (k ? ':' + k : '');
+  }
+  var PROMPT_KEY = nskey('sj-rsvp-prompted');
 
   function alreadyReplied(){
     var done = false;
-    try { done = localStorage.getItem('sj-rsvp-done') === '1'; } catch(e){}
+    try { done = localStorage.getItem(nskey('sj-rsvp-done')) === '1'; } catch(e){}
     if (done) return Promise.resolve(true);
     if (!window.SJUpload || !window.SJUpload.rpc) return Promise.resolve(false);
     return window.SJUpload.rpc('guest_rsvped', window.SJUpload.guestKey())
       .then(function(yes){
         // Cache a true so later pages skip the round trip.
-        if (yes) { try { localStorage.setItem('sj-rsvp-done','1'); } catch(e){} }
+        if (yes) { try { localStorage.setItem(nskey('sj-rsvp-done'),'1'); } catch(e){} }
         return !!yes;
       })
       .catch(function(){ return true; });   // never prompt on an error
   }
 
   function maybePrompt(){
+    if (!AUTO_PROMPT_RSVP) return;          // voluntary for now — see the flag above
     if (!who) return;                       // signed out — the gate has them
     if (inline) return;                     // already looking at the form
 
@@ -656,8 +677,8 @@
     // its turn: it prompts on a later visit, and the details panel offers an
     // "RSVP now" button the moment it's submitted.
     try {
-      if (localStorage.getItem('sj-details-prompted') === '1' &&
-          localStorage.getItem('sj-details-done')     !== '1') return;
+      if (localStorage.getItem(nskey('sj-details-prompted')) === '1' &&
+          localStorage.getItem(nskey('sj-details-done'))     !== '1') return;
     } catch(e){}
 
     var seen = true;

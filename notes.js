@@ -126,7 +126,11 @@
         '<button class="thanks-skip" type="button" data-close>no thanks, all done</button>' +
         '</div>';
       var skipN = card.querySelector('[data-close]');
-      if (skipN && onSent) skipN.addEventListener('click', onSent);
+      /* Same dead-control bug: the inline mount on rsvp.html calls wire()
+         without onSent, so this was rendered and never bound. */
+      if (skipN) skipN.addEventListener('click', onSent || function(){
+        card.hidden = true;
+      });
       }).catch(function () {
         btn.disabled = false; btn.textContent = label;
         var box = root.querySelector('.form-err');

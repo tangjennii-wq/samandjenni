@@ -6,10 +6,22 @@
   var btns = document.querySelectorAll('.nav-cal');
   if (!btns.length) return;
 
+  /* Tier-aware. This was one static link and one static .ics for everyone, so a
+     Saturday-only guest who clicked "add to calendar" got a three-day span and
+     a description naming the Friday welcome party at Chinese Tuxedo. The rest
+     of the site hides that event from them; this quietly handed it over. */
+  function tier(){
+    var raw = document.documentElement.getAttribute('data-tier') || '';
+    return /^[0-4]$/.test(raw) ? parseInt(raw, 10) : 0;
+  }
+  var seesFriday = tier() >= 1 && tier() <= 3;
+
   var GCAL = 'https://www.google.com/calendar/render?action=TEMPLATE' +
     '&text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding%20Weekend' +
-    '&dates=20270319/20270321' +
-    '&details=Friday%203.19%20%E2%80%94%20Welcome%20party%20at%20Chinese%20Tuxedo%0ASaturday%203.20%20%E2%80%94%20Wedding%20at%20The%20Pierre%0A%0Ahttps%3A%2F%2Fsamandjenni.com' +
+    (seesFriday ? '&dates=20270319/20270321' : '&dates=20270320/20270321') +
+    '&details=' + encodeURIComponent(
+      (seesFriday ? 'Friday 3.19 \u2014 Welcome party at Chinese Tuxedo\n' : '') +
+      'Saturday 3.20 \u2014 Wedding at The Pierre\n\nhttps://samandjenni.com') +
     '&location=New%20York%2C%20NY';
 
   var pop = document.createElement('div');
@@ -19,8 +31,12 @@
   pop.hidden = true;
   pop.innerHTML =
     '<a role="menuitem" href="' + GCAL + '" target="_blank" rel="noopener noreferrer">Google Calendar</a>' +
-    '<a role="menuitem" href="save-the-date.ics" type="text/calendar">Apple Calendar</a>' +
-    '<a role="menuitem" href="save-the-date.ics" download="sam-and-jenni.ics">Outlook / download .ics</a>';
+    (seesFriday
+      ? '<a role="menuitem" href="save-the-date.ics" type="text/calendar">Apple Calendar</a>' +
+        '<a role="menuitem" href="save-the-date.ics" download="sam-and-jenni.ics">Outlook / download .ics</a>'
+      /* save-the-date.ics is static and names Chinese Tuxedo at 5 Doyers St.
+         Saturday-only guests get the Google link, which is built per tier. */
+      : '');
   document.body.appendChild(pop);
 
   function place(btn){
