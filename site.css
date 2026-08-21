@@ -3785,3 +3785,11 @@ summary{
    there sets html.sj-veil body{overflow:hidden}, which loses to site.css's own
    body rule; repeating it here wins on order. */
 html.sj-veil body{ overflow:hidden !important; }
+
+
+/* The details panel's finished state: a tick, the thank you, one way onward. */
+.sjsheet .acct-msg--done{ display:flex; align-items:baseline; gap:8px;
+  color:#3F7A4B; font-weight:500; }
+.sjsheet .acct-tick{ flex:0 0 auto; font-size:15px; line-height:1.2; color:#3F7A4B; }
+.sjsheet .acct-onward{ margin-top:9px; text-align:center; font-size:11.5px;
+  letter-spacing:.02em; color:#9c9689; }

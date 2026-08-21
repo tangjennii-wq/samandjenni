@@ -266,43 +266,38 @@
         })
       : Promise.reject(new Error('no uploader'));
     saving.then(function(){
-      save.textContent = 'Sent ♡'; save.disabled = true;
-      msg.hidden = false; msg.className = 'acct-msg';
-      msg.textContent = 'Got it — thank you. That\u2019s everything ♡';
-      /* Relabelling the sign-out button to "All done" left the sign-out
-         handler bound, and Save was now disabled — so the only live control on
-         a completed panel logged the guest out and dropped them at the gate.
-         Replace the node so the old listener goes with it. */
-      var done = api.body.querySelector('.acct-out');
-      if (done) {
-        var fin = document.createElement('button');
-        fin.type = 'button';
-        fin.className = 'acct-out';
-        fin.textContent = 'All done';
-        fin.addEventListener('click', function(){ api.close(); });
-        done.replaceWith(fin);
+      /* One outcome, one action. This used to end on two red pills — a dead
+         "Sent ♡" and an "RSVP now →" — which asked the guest to reply seven
+         months out, and left the confirmation competing with a call to action.
+         Now: a tick, a thank you, and one button back to the site. */
+      save.remove();
+      var skip = api.body.querySelector('[data-close]');
+      if (skip) skip.remove();
+      var out = api.body.querySelector('.acct-out');
+      if (out) out.remove();
+
+      msg.hidden = false; msg.className = 'acct-msg acct-msg--done';
+      msg.innerHTML = '<span class="acct-tick" aria-hidden="true">\u2713</span>' +
+                      'Got it \u2014 thank you. That\u2019s everything';
+
+      var row = api.body.querySelector('.note-row3');
+      if (row) {
+        var go = document.createElement('button');
+        go.type = 'button';
+        go.className = 'note-btn';
+        go.textContent = 'Go to the website \u2192';
+        go.addEventListener('click', function(){ api.close(); });
+        row.appendChild(go);
+        var sub = document.createElement('p');
+        sub.className = 'acct-onward';
+        sub.textContent = 'hotel links, nyc recs, rsvp early, leave us a note';
+        row.parentNode.insertBefore(sub, row.nextSibling);
       }
 
       // Never ask again — on this device or any other. The local flag is the
       // fast path; guest_detailed() covers a new browser or a second device,
       // and they can still edit any time from the nav icon.
       flag(DONE_KEY, 1);
-
-      // On the first-run confirm, hand them on to the RSVP rather than leaving
-      // them on a dead end. An offer, not a second forced modal.
-      if (firstTime) {
-        var skip = api.body.querySelector('[data-close]');
-        if (skip) skip.remove();
-        var row = api.body.querySelector('.note-row3');
-        if (row && !api.body.querySelector('[data-rsvp-open]')) {
-          var go = document.createElement('button');
-          go.type = 'button';
-          go.className = 'note-btn';
-          go.setAttribute('data-rsvp-open', '');
-          go.textContent = 'RSVP now \u2192';
-          row.appendChild(go);
-        }
-      }
     }).catch(function(){
       save.disabled = false; save.textContent = firstTime ? 'Looks right' : 'Send it over';
       msg.hidden = false; msg.className = 'acct-msg is-err';
