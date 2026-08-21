@@ -246,15 +246,19 @@ html.sj-veil .sjsheet{z-index:2800}</style>
   /* One line on a wide window, stacked on a narrow one. Without this the
      84-character version wrapped to five ragged lines on a phone. */
   .fc-line { display: inline; }
-  .fc-line + .fc-line::before { content: '\2003\2003'; }
+  /* Horizontal margin, not an em-space in ::before -- whitespace at the join of
+     two inline boxes collapses, and the two events ran together as
+     "...TUXEDOSATURDAY 3.20.27...". */
+  .fc-line + .fc-line { margin-left: 2.4em; }
   @media (max-width: 900px) {
     .fc-line { display: block; }
-    .fc-line + .fc-line { margin-top: 3px; }
-    .fc-line + .fc-line::before { content: none; }
+    .fc-line + .fc-line { margin-left: 0; margin-top: 4px; }
   }
   @media (max-width: 720px) {
+    /* 92%, not 30ch: at 8.5px, 30ch is about 177px, which forced each event
+       onto three lines. */
     .film-caption { font-size: 8.5px; letter-spacing: 0.14em; margin-top: 10px;
-                    max-width: 30ch; }
+                    max-width: 92%; }
   }
   @media (max-height: 700px) {
     .film-caption { font-size: 8.5px; letter-spacing: 0.15em; margin-top: 6px; }
