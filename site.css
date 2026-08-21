@@ -3793,3 +3793,18 @@ html.sj-veil body{ overflow:hidden !important; }
 .sjsheet .acct-tick{ flex:0 0 auto; font-size:15px; line-height:1.2; color:#3F7A4B; }
 .sjsheet .acct-onward{ margin-top:9px; text-align:center; font-size:11.5px;
   letter-spacing:.02em; color:#9c9689; }
+
+
+/* +1 "yes" fills gold. Every other selected control on the RSVP signals with
+   a ring and keeps a white ground; the +1 pair has no face glyph to fall back
+   on, so a wash reads faster here. Ring alone was easy to miss on a phone. */
+.plusone .yn.yes.on,
+.sjsheet .plusone .yn.yes.on{
+  /* Literal, not var(--gold). Every other working rule in this block uses a
+     literal too, and the custom property did not resolve here — the whole
+     declaration then became invalid and the button stayed white. */
+  background:#E5C822;
+  border-color:#C4A814;
+  box-shadow:inset 0 0 0 1px #C4A814;
+  color:#1a1a1a;
+}
