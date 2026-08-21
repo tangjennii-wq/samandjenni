@@ -45,8 +45,6 @@
   var who   = cookie('sj_guest').trim();
   var isEmail = who.indexOf('@') > -1;
   var tier  = (cookie('sj_tier') || '').trim();
-  var TIERNAME = { '1':'every event', '2':'rehearsal, Friday & Saturday',
-                   '3':'Friday & Saturday', '4':'the wedding' };
 
   // The icon alone was ambiguous — it doesn't say whose account it is, or that
   // there is one. On desktop it now carries the guest's first name; phones keep
@@ -80,7 +78,6 @@
       '<div class="acct-head">' +
         '<div class="acct-eyebrow">Signed in as</div>' +
         '<div class="acct-who">' + (vName || (who ? (isEmail ? who : titleCase(who)) : 'a guest')) + '</div>' +
-        (TIERNAME[tier] ? '<div class="acct-tier">You\u2019re invited to ' + TIERNAME[tier] + '</div>' : '') +
       '</div>' +
       (firstTime
         ? '<p class="acct-intro"><b>One quick thing before you look around.</b><br>' +
