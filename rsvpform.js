@@ -18,7 +18,10 @@
 
   /* ── tier + prefill ──────────────────────────────────────────────── */
   var rawTier = (document.documentElement.getAttribute('data-tier') || '').trim();
-  var tier = /^[1-4]$/.test(rawTier) ? parseInt(rawTier, 10) : 3;
+  var tier = /^[1-5]$/.test(rawTier) ? parseInt(rawTier, 10) : 3;
+  // Tier 5 sits outside the 1>2>3>4 nesting -- everything except the
+  // rehearsal dinner -- so these are membership tests, not `<=`.
+  function seesEv(list){ return list.indexOf(tier) > -1; }
 
   function cookie(name){
     var m = document.cookie.split('; ').find(function(r){ return r.indexOf(name + '=') === 0; });
@@ -148,15 +151,15 @@
   var CT_ADDR  = 'Chinese Tuxedo, 5 Doyers St, New York, NY 10013';
   var PIE_ADDR = 'The Pierre, 2 E 61st St, New York, NY 10065';
   var EVENTS = [
-    { k:'thursday',  name:'welcome dinner',   when:'Thu Mar 18', where:'TBD',            show: tier === 1,
+    { k:'thursday',  name:'welcome dinner',   when:'Thu Mar 18', where:'TBD',            show: seesEv([1, 5]),
       cal:'20270318/20270319', at:'New York, NY' },
-    { k:'rehearsal', name:'rehearsal dinner', when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 2,
+    { k:'rehearsal', name:'rehearsal dinner', when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: seesEv([1, 2]),
       cal:'20270319T220000Z/20270320T000000Z', at:CT_ADDR },
-    { k:'friday',    name:'welcome party',    when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: tier <= 3,
+    { k:'friday',    name:'welcome party',    when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: seesEv([1, 2, 3, 5]),
       cal:'20270320T000000Z/20270320T040000Z', at:CT_ADDR },
     { k:'saturday',  name:'the wedding',      when:'Sat Mar 20', where:'The Pierre',     url:PIE, show: true,
       cal:'20270320T210000Z/20270321T034500Z', at:PIE_ADDR },
-    { k:'sunday',    name:'farewell brunch',  when:'Sun Mar 21', where:'TBD',            show: tier === 1,
+    { k:'sunday',    name:'farewell brunch',  when:'Sun Mar 21', where:'TBD',            show: seesEv([1, 5]),
       cal:'20270321/20270322', at:'New York, NY' }
   ].filter(function(e){ return e.show; });
 

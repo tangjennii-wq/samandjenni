@@ -1415,7 +1415,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
     })();
   </script>
 
-  <script src="personalize.js?v=20260818c" defer></script>
+  <script src="personalize.js?v=20260822a" defer></script>
   <script>
   /* The line under the film: which events this guest is actually asked to.
 
@@ -1438,8 +1438,8 @@ html.sj-veil .sjsheet{z-index:2800}</style>
     if (!el) return;
 
     var raw = (document.documentElement.getAttribute('data-tier') || '').trim();
-    var tier = /^[0-4]$/.test(raw) ? parseInt(raw, 10) : 4;
-    var seesFriday = tier >= 1 && tier <= 3;
+    var tier = /^[0-5]$/.test(raw) ? parseInt(raw, 10) : 4;
+    var seesFriday = [1, 2, 3, 5].indexOf(tier) > -1;
 
     function line(text) {
       var span = document.createElement('span');
@@ -1454,11 +1454,11 @@ html.sj-veil .sjsheet{z-index:2800}</style>
   </script>
   <script src="mobilenav.js?v=20260805a" defer></script>
   <script src="account.js?v=20260821b" defer></script>
-  <script src="cal.js?v=20260820b" defer></script>
+  <script src="cal.js?v=20260822a" defer></script>
   <script src="upload.js?v=20260809a" defer></script>
   <script src="drawer.js?v=20260809c" defer></script>
   <script src="outab.js?v=20260805a" defer></script>
-  <script src="rsvpform.js?v=20260820b" defer></script>
+  <script src="rsvpform.js?v=20260822a" defer></script>
   <script src="notes.js?v=20260820b" defer></script>
 </body>
 </html>

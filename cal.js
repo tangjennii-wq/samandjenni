@@ -12,9 +12,10 @@
      of the site hides that event from them; this quietly handed it over. */
   function tier(){
     var raw = document.documentElement.getAttribute('data-tier') || '';
-    return /^[0-4]$/.test(raw) ? parseInt(raw, 10) : 0;
+    return /^[0-5]$/.test(raw) ? parseInt(raw, 10) : 0;
   }
-  var seesFriday = tier() >= 1 && tier() <= 3;
+  // Tier 5 is at the Friday welcome party too, but is not in the 1-3 range.
+  var seesFriday = [1, 2, 3, 5].indexOf(tier()) > -1;
 
   var GCAL = 'https://www.google.com/calendar/render?action=TEMPLATE' +
     '&text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding%20Weekend' +

@@ -518,11 +518,11 @@
      tier rather than the least. Anything unrecognised now falls to 3. */
   function sjTier(){
     var raw = document.documentElement.getAttribute('data-tier') || '';
-    return /^[0-4]$/.test(raw) ? parseInt(raw, 10) : 3;
+    return /^[0-5]$/.test(raw) ? parseInt(raw, 10) : 3;
   }
   // The Friday welcome party is tiers 1–3, matching personalize.js and the
   // event cards. Tier 4 is Saturday only.
-  function seesWelcome(){ var t = sjTier(); return t >= 1 && t <= 3; }
+  function seesWelcome(){ return [1, 2, 3, 5].indexOf(sjTier()) > -1; }
 
   var markerIndex = {};
 

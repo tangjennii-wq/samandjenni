@@ -82,21 +82,30 @@ window.SJ_FEATURES = { overUnder: false };
   // Friday party and the Pierre's street address.
   var signedIn = !!guest;
   var tier = !signedIn ? 0
-           : (/^[1-4]$/.test(rawTier) ? parseInt(rawTier, 10) : 3);
+           : (/^[1-5]$/.test(rawTier) ? parseInt(rawTier, 10) : 3);
 
+  // Tiers 1-4 nest: 1 contains 2 contains 3 contains 4. TIER 5 DOES NOT.
+  // It is the residency crowd -- Thursday, the welcome party, the wedding and
+  // brunch, but NOT the rehearsal dinner, which stays the small wedding-party
+  // group. Because 5 sits outside the ordering, every test below is an
+  // explicit membership check rather than `tier <= n`. Any new code that
+  // reaches for a `<=` comparison on tier will silently invite tier 5 to the
+  // rehearsal, or drop them from Friday.
+  function sees_(list){ return list.indexOf(tier) > -1; }
   var sees = {
-    thursday:  tier === 1,
-    rehearsal: tier >= 1 && tier <= 2,
-    friday:    tier >= 1 && tier <= 3,   // Friday welcome party
-    saturday:  true,        // the wedding itself is public, minus the details
-    sunday:    tier === 1   // brunch = same close group as Thursday
+    thursday:  sees_([1, 5]),
+    rehearsal: sees_([1, 2]),
+    friday:    sees_([1, 2, 3, 5]),   // Friday welcome party
+    saturday:  true,                  // the wedding itself is public, minus the details
+    sunday:    sees_([1, 5])          // brunch = same group as Thursday
   };
 
   document.documentElement.setAttribute('data-tier', String(tier));
 
   // The date line matches what you're actually invited to.
   var DATES = { 0:'March 2027', 1:'March 18–21, 2027', 2:'March 19–20, 2027',
-                3:'March 19–20, 2027', 4:'March 20, 2027' };
+                3:'March 19–20, 2027', 4:'March 20, 2027',
+                5:'March 18–21, 2027' };
   var dateEl = document.querySelector('[data-dates]');
   if (dateEl && DATES[tier]) dateEl.textContent = DATES[tier];
 
@@ -141,7 +150,9 @@ window.SJ_FEATURES = { overUnder: false };
 
   // Saturday-only guests (tier 4): simplify the ribbon + the date line so the
   // site doesn't tease them with events they aren't part of.
-  if (tier >= 4) {
+  // `=== 4`, not `>= 4`: tier 5 is a full-weekend guest and must not be given
+  // the Saturday-only ribbon.
+  if (tier === 4) {
     var ribbon = document.querySelector('.ribbon');
     if (ribbon) {
       ribbon.innerHTML = '<span>3.20.27 &middot; wedding at ' +
