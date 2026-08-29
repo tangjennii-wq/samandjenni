@@ -103,9 +103,14 @@ window.SJ_FEATURES = { overUnder: false };
   document.documentElement.setAttribute('data-tier', String(tier));
 
   // The date line matches what you're actually invited to.
-  var DATES = { 0:'March 2027', 1:'March 18–21, 2027', 2:'March 19–20, 2027',
+  /* Global headings carry the WEEKEND, not the full invitation schedule.
+     Tiers 1 and 5 are invited Thursday through Sunday brunch, but spelling
+     "March 18-21" into the crest on every page made the header try to be the
+     itinerary. Thursday and Sunday still appear in full on Events, in the RSVP
+     form and in the per-event calendar links — that is where the detail belongs. */
+  var DATES = { 0:'March 2027', 1:'March 19–20, 2027', 2:'March 19–20, 2027',
                 3:'March 19–20, 2027', 4:'March 20, 2027',
-                5:'March 18–21, 2027' };
+                5:'March 19–20, 2027' };
   var dateEl = document.querySelector('[data-dates]');
   if (dateEl && DATES[tier]) dateEl.textContent = DATES[tier];
 
@@ -117,8 +122,8 @@ window.SJ_FEATURES = { overUnder: false };
   // fails, and the element keeps its hard-coded markup -- so a tier-5 guest saw
   // "3.19.27 - 3.20.27" in the crest while the eyebrow three inches below said
   // MARCH 18-21. Two different answers on one screen.
-  var SHORT = { 0:'3.20.27', 1:'3.18.27 – 3.21.27', 2:'3.19.27 – 3.20.27',
-                3:'3.19.27 – 3.20.27', 4:'3.20.27', 5:'3.18.27 – 3.21.27' };
+  var SHORT = { 0:'3.20.27', 1:'3.19.27 – 3.20.27', 2:'3.19.27 – 3.20.27',
+                3:'3.19.27 – 3.20.27', 4:'3.20.27', 5:'3.19.27 – 3.20.27' };
   document.querySelectorAll('[data-dates-short]').forEach(function (el) {
     if (SHORT[tier]) el.textContent = SHORT[tier];
   });
