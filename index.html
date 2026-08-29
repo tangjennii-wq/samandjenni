@@ -1361,18 +1361,32 @@ html.sj-veil .sjsheet{z-index:2800}</style>
       // Detect slow/blocked video — if readyState hasn't passed loadeddata in 8s,
       // show the HTML date overlay as belt-and-suspenders. If video does eventually
       // load, hide the overlay so it doesn't double-up with the burned-in date.
-      let videoLoaded = false;
-      hero.addEventListener('loadeddata', () => {
-        videoLoaded = true;
-        if (dateFallback && !videoErrored) dateFallback.classList.remove('show');
-      });
-      setTimeout(() => {
-        if (!videoLoaded && hero.readyState < 2) showFallback();
-      }, 8000);
-
       function showFallback() {
         if (dateFallback) dateFallback.classList.add('show');
       }
+      function hideFallback() {
+        if (dateFallback && !videoErrored) dateFallback.classList.remove('show');
+      }
+
+      // Listen for every event that means "there is picture", not just loadeddata.
+      // Two things went wrong with the old single-event version:
+      //
+      //  1. The src is assigned in an inline script near the top of the page, so on
+      //     a cached load `loadeddata` can fire BEFORE this script has run and
+      //     nothing is listening. Hence the readyState check straight afterwards.
+      //  2. The 8s timer tested `readyState < 2`. When autoplay is blocked the
+      //     browser often stops after metadata (readyState 1) and buffers no frame
+      //     data until you press play -- the poster is on screen and looks
+      //     completely fine, and then this overlay dropped a second date on top of
+      //     it eight seconds later. That is the bug Jenni saw. Only readyState 0,
+      //     HAVE_NOTHING, means there is genuinely nothing to show.
+      ['loadedmetadata', 'loadeddata', 'canplay', 'playing', 'timeupdate']
+        .forEach(function (ev) { hero.addEventListener(ev, hideFallback); });
+      if (hero.readyState >= 1) hideFallback();
+
+      setTimeout(function () {
+        if (!videoErrored && hero.readyState === 0) showFallback();
+      }, 8000);
     })();
   </script>
 

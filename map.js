@@ -285,9 +285,34 @@
     }
     L.control.zoom({ position:'topleft' }).addTo(map);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution:'&copy; OpenStreetMap &copy; CARTO', subdomains:'abcd', maxZoom:19
-    }).addTo(map);
+    /* Basemap. This was CARTO Voyager until 22 Aug 2026, when CARTO began
+       requiring an API key on basemaps.cartocdn.com and started stamping
+       unauthenticated tiles with a repeating "API KEY REQUIRED" watermark --
+       which is what guests were seeing across the whole map. A free key exists,
+       but CARTO are retiring the raster service outright, so a key would only
+       have bought time.
+
+       Esri's World Light Gray Canvas is the closest thing to Voyager's muted
+       palette that needs no key. If it ever fails, we fall back to plain
+       OpenStreetMap rather than leaving guests with an empty grid -- OSM is
+       busier and greener than the site's palette, but it always works. */
+    var OSM_FALLBACK = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var base = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+      { attribution: '&copy; OpenStreetMap contributors &copy; Esri', maxZoom: 16 }
+    ).addTo(map);
+
+    var swapped = false, tileErrors = 0;
+    base.on('tileerror', function () {
+      // A single missing tile at the edge of coverage is normal; a broken
+      // provider is not. Three failures is the line.
+      if (swapped || ++tileErrors < 3) return;
+      swapped = true;
+      map.removeLayer(base);
+      L.tileLayer(OSM_FALLBACK, {
+        attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
+      }).addTo(map);
+    });
 
     // Stacking order via panes: neighborhoods < subway casing < subway lines < markers.
     map.createPane('hoodPane').style.zIndex = 350;
