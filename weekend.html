@@ -213,7 +213,11 @@ html.sj-veil .sjsheet{z-index:2800}</style>
         <button type="button" class="ts-done" data-rsvp-open hidden>RSVP <span>&#10003;</span></button>
       </div>
       <div class="ev-intro">
-        <div class="eyebrow" data-dates>March 18–21, 2027</div>
+        <!-- Static fallback, rewritten per tier by personalize.js. It must be the
+           SAFE value, not the most generous one: this is what a guest sees during
+           load, and permanently if the script fails. March 18-21 here meant a
+           Saturday-only guest could catch a glimpse of a four-day weekend. -->
+        <div class="eyebrow" data-dates>March 19–20, 2027</div>
         <h2>The Weekend</h2>
         <div class="rule"></div>
       </div>
