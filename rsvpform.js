@@ -18,7 +18,14 @@
 
   /* ── tier + prefill ──────────────────────────────────────────────── */
   var rawTier = (document.documentElement.getAttribute('data-tier') || '').trim();
-  var tier = /^[1-5]$/.test(rawTier) ? parseInt(rawTier, 10) : 3;
+  /* 0-5, and unknown falls to 4, not 3.
+     Tier 0 -- signed out -- used to fail this test and land on the old default of
+     3, which rendered the Friday row complete with a visible "Chinese Tuxedo"
+     link and a map href to 5 Doyers St. personalize.js fixed exactly this bug for
+     the rest of the site and this file never got the same treatment.
+     Unknown now falls to 4 (wedding only) because 4 is the least permissive tier
+     that exists; 3 was never a safe default once 4 was introduced. */
+  var tier = /^[0-5]$/.test(rawTier) ? parseInt(rawTier, 10) : 4;
   // Tier 5 sits outside the 1>2>3>4 nesting -- everything except the
   // rehearsal dinner -- so these are membership tests, not `<=`.
   function seesEv(list){ return list.indexOf(tier) > -1; }

@@ -82,7 +82,7 @@ window.SJ_FEATURES = { overUnder: false };
   // Friday party and the Pierre's street address.
   var signedIn = !!guest;
   var tier = !signedIn ? 0
-           : (/^[1-5]$/.test(rawTier) ? parseInt(rawTier, 10) : 3);
+           : (/^[1-5]$/.test(rawTier) ? parseInt(rawTier, 10) : 4);
 
   // Tiers 1-4 nest: 1 contains 2 contains 3 contains 4. TIER 5 DOES NOT.
   // It is the residency crowd -- Thursday, the welcome party, the wedding and
@@ -113,17 +113,26 @@ window.SJ_FEATURES = { overUnder: false };
   // every page, so a Saturday-only guest was told the weekend runs the 19th to
   // the 20th — teasing the Friday party they aren't invited to. Same problem the
   // event cards had, in the one place that appears on every single page.
+  // Tier 5 must be here. Without the key, SHORT[5] is undefined, the guard below
+  // fails, and the element keeps its hard-coded markup -- so a tier-5 guest saw
+  // "3.19.27 - 3.20.27" in the crest while the eyebrow three inches below said
+  // MARCH 18-21. Two different answers on one screen.
   var SHORT = { 0:'3.20.27', 1:'3.18.27 – 3.21.27', 2:'3.19.27 – 3.20.27',
-                3:'3.19.27 – 3.20.27', 4:'3.20.27' };
+                3:'3.19.27 – 3.20.27', 4:'3.20.27', 5:'3.18.27 – 3.21.27' };
   document.querySelectorAll('[data-dates-short]').forEach(function (el) {
     if (SHORT[tier]) el.textContent = SHORT[tier];
   });
 
   // Hide any event the guest isn't invited to.
   // Event elements are tagged data-event="thursday|rehearsal|friday|saturday|sunday".
+  // remove(), not display:none. Hiding left the whole card in the source --
+  // "Chinese Tuxedo", "5 Doyers St", the Google Maps href and the calendar
+  // location string were all readable via View Source by a tier-4 guest who is
+  // not invited to that party. Taking the node out is the only version that
+  // actually withholds it.
   document.querySelectorAll('[data-event]').forEach(function (el) {
     var ev = el.getAttribute('data-event');
-    if (sees[ev] === false) el.style.display = 'none';
+    if (sees[ev] === false) el.remove();
   });
 
   // Not signed in: the Saturday card stays, but the exact time, the street

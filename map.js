@@ -543,7 +543,9 @@
      tier rather than the least. Anything unrecognised now falls to 3. */
   function sjTier(){
     var raw = document.documentElement.getAttribute('data-tier') || '';
-    return /^[0-5]$/.test(raw) ? parseInt(raw, 10) : 3;
+    // 4, not 3. Once tier 4 existed, 3 stopped being the least permissive tier,
+    // and an unrecognised value was quietly being shown the Friday venue.
+    return /^[0-5]$/.test(raw) ? parseInt(raw, 10) : 4;
   }
   // The Friday welcome party is tiers 1–3, matching personalize.js and the
   // event cards. Tier 4 is Saturday only.

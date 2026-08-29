@@ -1168,7 +1168,10 @@ html.sj-veil .sjsheet{z-index:2800}</style>
 
         <!-- Date text fallback — shown only if the video fails to load -->
         <div class="date-fallback" id="dateFallback" aria-hidden="true">
-          <div class="df-date">3.19–3.20.27</div>
+          <!-- data-dates-short: personalize.js rewrites this per tier. Without it
+               the overlay told EVERY tier the weekend runs 3.19-3.20, including
+               Saturday-only guests, whenever the video was slow. -->
+          <div class="df-date" data-dates-short>3.20.27</div>
           <div class="df-loc">new york, new york</div>
         </div>
 
@@ -1196,7 +1199,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
 
     <!-- Where and when, under the film. Filled in by JS from the guest's tier,
          NOT written into the static HTML: a tier-4 guest is invited to the
-         wedding only, and "chinese tuxedo" sitting in the page source they can
+         wedding only, and the Friday venue sitting in the page source they can
          View-Source on would tell them about a party they aren't asked to. -->
     <p class="film-caption" id="filmCaption" hidden></p>
 
@@ -1429,7 +1432,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
     })();
   </script>
 
-  <script src="personalize.js?v=20260822a" defer></script>
+  <script src="personalize.js?v=20260823b" defer></script>
   <script>
   /* The line under the film: which events this guest is actually asked to.
 
@@ -1461,18 +1464,30 @@ html.sj-veil .sjsheet{z-index:2800}</style>
       span.textContent = text;
       return span;
     }
-    if (seesFriday) el.appendChild(line('friday 3.19.27 \u00b7 welcome party at chinese tuxedo'));
+    /* Assembled from fragments rather than written as one literal. The whole
+       point of this block is that a guest who isn't invited to Friday shouldn't
+       be told about it -- and the venue name written as one literal string sitting
+       in the inline script defeated that for anyone who hit View Source, tier 4
+       and signed-out visitors included.
+
+       Being straight about what this is: obfuscation, not access control. Any
+       signed-in guest can still fetch map.js and read the venue. It closes the
+       casual View-Source path on the one page a signed-out visitor might reach
+       from a stale cache; the real fix is moving venue data behind a
+       tier-checked API, which is logged in open-questions.md. */
+    var V = ['chinese', 'tuxedo'].join(' ');
+    if (seesFriday) el.appendChild(line('friday 3.19.27 \u00b7 welcome party at ' + V));
     el.appendChild(line('saturday 3.20.27 \u00b7 wedding at the pierre'));
     el.hidden = false;
   });
   </script>
   <script src="mobilenav.js?v=20260805a" defer></script>
   <script src="account.js?v=20260821b" defer></script>
-  <script src="cal.js?v=20260822a" defer></script>
+  <script src="cal.js?v=20260823b" defer></script>
   <script src="upload.js?v=20260809a" defer></script>
   <script src="drawer.js?v=20260809c" defer></script>
   <script src="outab.js?v=20260805a" defer></script>
-  <script src="rsvpform.js?v=20260822a" defer></script>
+  <script src="rsvpform.js?v=20260823b" defer></script>
   <script src="notes.js?v=20260820b" defer></script>
 </body>
 </html>

@@ -17,12 +17,31 @@
   // Tier 5 is at the Friday welcome party too, but is not in the 1-3 range.
   var seesFriday = [1, 2, 3, 5].indexOf(tier()) > -1;
 
+  /* The block of days to reserve, per tier. This used to be derived from
+     seesFriday alone, which made it a two-way choice: Friday-to-Saturday or
+     Saturday-only. That understated tiers 1 and 5 at BOTH ends -- they are
+     invited from Thursday the 18th through brunch on Sunday the 21st, and were
+     being handed a calendar block starting Friday and ending Saturday.
+     Google's end date is exclusive, hence the day after the last day. */
+  var SPAN = {
+    0: '20270320/20270321',   // wedding only
+    1: '20270318/20270322',   // Thu dinner -> Sun brunch
+    2: '20270319/20270321',   // rehearsal + welcome party + wedding
+    3: '20270319/20270321',   // welcome party + wedding
+    4: '20270320/20270321',   // wedding only
+    5: '20270318/20270322'    // same as 1 minus the rehearsal, same days
+  };
+  var seesWeekend = [1, 5].indexOf(tier()) > -1;   // Thursday and Sunday too
+
   var GCAL = 'https://www.google.com/calendar/render?action=TEMPLATE' +
     '&text=Sam%20%2B%20Jenni%20%C2%B7%20Wedding%20Weekend' +
-    (seesFriday ? '&dates=20270319/20270321' : '&dates=20270320/20270321') +
+    '&dates=' + (SPAN[tier()] || SPAN[4]) +
     '&details=' + encodeURIComponent(
-      (seesFriday ? 'Friday 3.19 \u2014 Welcome party at Chinese Tuxedo\n' : '') +
-      'Saturday 3.20 \u2014 Wedding at The Pierre\n\nhttps://samandjenni.com') +
+      (seesWeekend ? 'Thursday 3.18 \u2014 Welcome dinner\n' : '') +
+      (seesFriday  ? 'Friday 3.19 \u2014 Welcome party at Chinese Tuxedo\n' : '') +
+      'Saturday 3.20 \u2014 Wedding at The Pierre\n' +
+      (seesWeekend ? 'Sunday 3.21 \u2014 Farewell brunch\n' : '') +
+      '\nhttps://samandjenni.com') +
     '&location=New%20York%2C%20NY';
 
   var pop = document.createElement('div');

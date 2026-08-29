@@ -27,8 +27,8 @@ async function rpc(fn, key) {
 }
 
 // Is this a guest, and which tier are they?
-// Returns tier 3 when the lookup succeeds but the key has no tier (an
-// ambiguous shared surname) — they see Friday + Saturday and nothing private.
+// Returns tier 4 when the lookup succeeds but the key has no tier (an
+// ambiguous shared surname) — they see the wedding and nothing else.
 async function lookUp(key) {
   // `ambiguous` is the important addition: a shared surname such as "lee" or
   // "tang" is on the list but carries no tier, because several households
@@ -37,7 +37,7 @@ async function lookUp(key) {
   // lost the Thursday dinner, the rehearsal and the brunch.
   const settle = (allowed, tier) => ({
     allowed: allowed === true,
-    tier: Number(tier) || 3,
+    tier: Number(tier) || 4,   // 4, not 3: least permissive, see below
     ambiguous: allowed === true && (tier === null || tier === undefined),
     degraded: false,
   });
@@ -50,10 +50,13 @@ async function lookUp(key) {
       const [allowed, tier] = await Promise.all([rpc('guest_allowed', key), rpc('guest_tier', key)]);
       return settle(allowed, tier);
     } catch (e2) {
-      // Still down: let them in, but at the most restrictive useful tier, so an
-      // outage never exposes the private events. Never ask for a first name on
-      // a failure — we cannot tell whether it would help.
-      return { allowed: true, tier: 3, ambiguous: false, degraded: true };
+      // Still down: let them in, but at the LEAST PERMISSIVE tier, so an outage
+      // never exposes a private event. This said 3 until 22 Aug 2026, which meant
+      // a Supabase outage handed every guest -- including Saturday-only ones --
+      // the Friday welcome party and Chinese Tuxedo's address. 4 is wedding-only,
+      // which is the correct thing to fail to. Never ask for a first name on a
+      // failure — we cannot tell whether it would help.
+      return { allowed: true, tier: 4, ambiguous: false, degraded: true };
     }
   }
 }
