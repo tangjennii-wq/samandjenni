@@ -3903,3 +3903,47 @@ html.sj-veil body{ overflow:hidden !important; }
   .sjsheet .photo-field{ margin-top:11px; }
   .sjsheet .note-btn{ margin-top:13px; }
 }
+
+
+/* ==========================================================================
+   Page-to-page alignment
+   --------------------------------------------------------------------------
+   Two separate causes of "the whole site shifts when I change page".
+
+   1. .wrap lost its width cap. Line 41 sets max-width:960px, but the safe-area
+      block further down re-declares `.wrap, .sect, .board, .actions{
+      max-width:100% }`. Same specificity, later in the file, so 100% won and
+      every page using .wrap — events, hotels, FAQ, recs, RSVP, over/under —
+      rendered edge to edge while the home page, which does not use .wrap, kept
+      its own narrower column. On a wide monitor the five event cards stretched
+      the full viewport and the nav's last button ran off the edge.
+
+      The intent of that rule was "never exceed the viewport", not "discard the
+      cap", so it becomes a min() of the two. .sect/.board/.actions keep 100%.
+
+   2. Scrollbar presence. A page that fits the window has no vertical scrollbar
+      and is ~15px wider than one that scrolls, so centred content jumps left
+      and right as you navigate. scrollbar-gutter reserves the space always.
+
+   Appended last, deliberately: per the note further up, a late global rule
+   beats earlier ones of equal specificity, which is exactly how (1) happened.
+   ========================================================================== */
+html{ scrollbar-gutter:stable; }
+
+.wrap{
+  max-width:min(1180px, 100%);
+  margin-left:auto; margin-right:auto;
+  padding-left:24px; padding-right:24px;
+  box-sizing:border-box;
+}
+.wrap--narrow{ max-width:min(760px, 100%); }
+
+/* The top bar is full-bleed, but its contents line up with the column below it
+   so the crest and the first card share a left edge on every page. */
+.crest, .sitenav{ box-sizing:border-box; }
+.crest > *, .sitenav{
+  max-width:1180px; margin-left:auto; margin-right:auto; }
+
+@media (max-width:700px){
+  .wrap{ padding-left:16px; padding-right:16px; }
+}
