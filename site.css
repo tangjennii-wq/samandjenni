@@ -2347,8 +2347,8 @@ html.ou-embed .note-f{ background:#fff !important; }
 }
 
 /* Event rows were ragged: .rsvp-evname is a wrapping flex row, so a short name
-   like "the wedding" sat on one line with its date while "welcome party (Fri
-   Mar 19, Chinese Tuxedo)" wrapped to two. Row heights therefore depended on
+   sat on one line with its date while a longer one (name, date and a venue)
+   wrapped to two. Row heights therefore depended on
    how long the event happened to be called. Stacking always makes every row
    the same shape regardless of the string. */
 .rsvp-evname{ flex-direction:column; align-items:flex-start; gap:1px; }

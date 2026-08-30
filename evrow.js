@@ -15,8 +15,9 @@
 
   function visibleCards() {
     return [].slice.call(grid.querySelectorAll('.evcard')).filter(function (c) {
-      // personalize.js sets an inline display:none; the hidden attribute is
-      // used elsewhere on the site, so honour both
+      // personalize.js REMOVES cards the guest shouldn't see, so most of the
+      // counting is done for us by the time we re-run. Keep the display/hidden
+      // checks anyway: the hidden attribute is used elsewhere on the site.
       return c.style.display !== 'none' && !c.hidden;
     }).length;
   }
@@ -28,11 +29,17 @@
 
   sync();
 
-  // personalize.js runs after this file and hides cards by tier — re-count when
-  // it does, rather than guessing at a timeout.
+  // personalize.js runs after this file and removes cards by tier — re-count
+  // when it does, rather than guessing at a timeout.
+  //
+  // childList is the one that matters: personalize.js calls el.remove(), which
+  // fires a childList mutation, NOT an attribute mutation. Watching only
+  // attributes meant the observer never fired and the grid kept the count it
+  // was born with — a tier-4 guest saw one card in a five-column grid.
   if (window.MutationObserver) {
     var mo = new MutationObserver(sync);
-    mo.observe(grid, { attributes: true, attributeFilter: ['style', 'hidden'], subtree: true });
+    mo.observe(grid, { childList: true, attributes: true,
+                       attributeFilter: ['style', 'hidden'], subtree: true });
     // stop watching once the page has settled; nothing hides events later
     window.addEventListener('load', function () { setTimeout(function () { mo.disconnect(); sync(); }, 400); });
   } else {

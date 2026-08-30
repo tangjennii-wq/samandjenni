@@ -36,10 +36,10 @@ html.sj-veil .sjsheet{z-index:2800}</style>
 
   /* --- Event cards: photo on top, red eyebrow, title, body ------------------ */
   .evgrid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:20px; }
-  /* One row, whatever the tier shows. personalize.js hides events with
-     display:none, so the count can't be derived in CSS — evrow.js counts the
-     visible cards and sets data-count, and these rules follow it. */
-  /* One row, whatever the tier shows. Two things matter here:
+  /* One row, whatever the tier shows. personalize.js REMOVES the cards a guest
+     shouldn't see, so the count can't be derived in CSS — evrow.js counts what
+     survives and sets data-count, and these rules follow it.
+     Two things matter here:
      - minmax(0,1fr), not 1fr. A bare 1fr is minmax(auto,1fr), which refuses to
        shrink below the card's min-content width, so five cards overflowed the
        page instead of getting narrower.
@@ -173,7 +173,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
 <div class="topbar">
   <header class="crest">
     <div class="crest-name"><a href="index.html">Sam + Jenni</a></div>
-    <div class="crest-tag"><span data-dates-short>3.19.27 – 3.20.27</span> · new york, new york</div>
+    <div class="crest-tag"><span data-dates-short>3.20.27</span> · new york, new york</div>
   </header>
   <nav class="sitenav">
     <a href="index.html"><svg class="nav-home-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.6V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.6"/><path d="M9.5 21v-6h5v6"/></svg><span class="nav-word">home</span></a>
@@ -214,10 +214,10 @@ html.sj-veil .sjsheet{z-index:2800}</style>
       </div>
       <div class="ev-intro">
         <!-- Static fallback, rewritten per tier by personalize.js. It must be the
-           SAFE value, not the most generous one: this is what a guest sees during
-           load, and permanently if the script fails. March 18-21 here meant a
-           Saturday-only guest could catch a glimpse of a four-day weekend. -->
-        <div class="eyebrow" data-dates>March 19–20, 2027</div>
+           NARROWEST value, never the most generous one: this is what renders
+           during load and permanently if the script fails, so it has to be the
+           text that is safe for every reader. personalize.js widens it. -->
+        <div class="eyebrow" data-dates>March 20, 2027</div>
         <h2>The Weekend</h2>
         <div class="rule"></div>
       </div>
@@ -328,15 +328,15 @@ html.sj-veil .sjsheet{z-index:2800}</style>
     <button type="button" class="nav-cal" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to calendar</span></button>
   </div>
   <div class="sfoot">New York or nowhere · S <span class="heart">♥</span> J · 3.20.27</div>
-  <script src="evrow.js?v=20260729f" defer></script>
-  <script src="personalize.js?v=20260823c" defer></script>
+  <script src="evrow.js?v=20260830b" defer></script>
+  <script src="personalize.js?v=20260830b" defer></script>
   <script src="mobilenav.js?v=20260805a" defer></script>
   <script src="account.js?v=20260821b" defer></script>
-  <script src="cal.js?v=20260823d" defer></script>
+  <script src="cal.js?v=20260830b" defer></script>
   <script src="upload.js?v=20260809a" defer></script>
   <script src="drawer.js?v=20260809c" defer></script>
   <script src="outab.js?v=20260805a" defer></script>
-  <script src="rsvpform.js?v=20260823b" defer></script>
+  <script src="rsvpform.js?v=20260830b" defer></script>
   <script src="notes.js?v=20260820b" defer></script>
 <script>
 (function(){

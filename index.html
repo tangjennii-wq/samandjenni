@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sam + jenni">
 <meta name="twitter:description" content="a private page for our guests">
-<title>sam + jenni · 3.19–3.20.27</title>
+<title>sam + jenni</title>
 <meta name="description" content="shlang's wedding weekend · new york city">
 <meta name="robots" content="noindex, nofollow">
 
@@ -247,8 +247,8 @@ html.sj-veil .sjsheet{z-index:2800}</style>
      84-character version wrapped to five ragged lines on a phone. */
   .fc-line { display: inline; }
   /* Horizontal margin, not an em-space in ::before -- whitespace at the join of
-     two inline boxes collapses, and the two events ran together as
-     "...TUXEDOSATURDAY 3.20.27...". */
+     two inline boxes collapses, and the two caption lines ran together with no
+     gap between the end of one and the start of the next. */
   .fc-line + .fc-line { margin-left: 2.4em; }
   @media (max-width: 900px) {
     .fc-line { display: block; }
@@ -1106,7 +1106,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
       <span class="crest-name"><a href="index.html">Sam + Jenni</a></span>
       <span class="crest-rule"></span>
     </div>
-    <div class="crest-tag"><span data-dates-short>3.19.27 – 3.20.27</span> · new york, new york</div>
+    <div class="crest-tag"><span data-dates-short>3.20.27</span> · new york, new york</div>
   </header>
 
       <nav class="sitenav">
@@ -1168,9 +1168,9 @@ html.sj-veil .sjsheet{z-index:2800}</style>
 
         <!-- Date text fallback — shown only if the video fails to load -->
         <div class="date-fallback" id="dateFallback" aria-hidden="true">
-          <!-- data-dates-short: personalize.js rewrites this per tier. Without it
-               the overlay told EVERY tier the weekend runs 3.19-3.20, including
-               Saturday-only guests, whenever the video was slow. -->
+          <!-- data-dates-short: personalize.js rewrites this per tier. The static
+               text must stay the narrowest value, or a slow video shows every
+               reader the same span before the script can narrow it. -->
           <div class="df-date" data-dates-short>3.20.27</div>
           <div class="df-loc">new york, new york</div>
         </div>
@@ -1197,10 +1197,9 @@ html.sj-veil .sjsheet{z-index:2800}</style>
     </div>
 
 
-    <!-- Where and when, under the film. Filled in by JS from the guest's tier,
-         NOT written into the static HTML: a tier-4 guest is invited to the
-         wedding only, and the Friday venue sitting in the page source they can
-         View-Source on would tell them about a party they aren't asked to. -->
+    <!-- Where and when, under the film. Assembled by JS per tier and NOT written
+         into the static HTML: anything in the source is readable by every
+         reader regardless of what they should see. Keep it empty here. -->
     <p class="film-caption" id="filmCaption" hidden></p>
 
     <button class="reel-link-mobile" type="button" id="openReelMobile">
@@ -1320,9 +1319,14 @@ html.sj-veil .sjsheet{z-index:2800}</style>
       const shareBtn = document.getElementById('shareBtn');
       if (shareBtn) {
         shareBtn.addEventListener('click', async () => {
+          // Read the date span personalize.js already narrowed for this guest
+          // rather than hardcoding one. A literal here shared the full span
+          // with every tier, including guests invited to one day.
+          const dEl = document.querySelector('[data-dates-short]');
+          const dTxt = dEl ? dEl.textContent.trim() : '';
           const shareData = {
-            title: 'sam + jenni · 3.19–3.20.27',
-            text: "shlang's wedding weekend · new york city",
+            title: 'sam + jenni' + (dTxt ? ' · ' + dTxt : ''),
+            text: "shlang's wedding · new york city",
             url: 'https://samandjenni.com'
           };
           if (navigator.share) {
@@ -1432,7 +1436,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
     })();
   </script>
 
-  <script src="personalize.js?v=20260823c" defer></script>
+  <script src="personalize.js?v=20260830b" defer></script>
   <script>
   /* The line under the film: which events this guest is actually asked to.
 
@@ -1483,11 +1487,11 @@ html.sj-veil .sjsheet{z-index:2800}</style>
   </script>
   <script src="mobilenav.js?v=20260805a" defer></script>
   <script src="account.js?v=20260821b" defer></script>
-  <script src="cal.js?v=20260823d" defer></script>
+  <script src="cal.js?v=20260830b" defer></script>
   <script src="upload.js?v=20260809a" defer></script>
   <script src="drawer.js?v=20260809c" defer></script>
   <script src="outab.js?v=20260805a" defer></script>
-  <script src="rsvpform.js?v=20260823b" defer></script>
+  <script src="rsvpform.js?v=20260830b" defer></script>
   <script src="notes.js?v=20260820b" defer></script>
 </body>
 </html>
