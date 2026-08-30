@@ -57,8 +57,19 @@
   panel.setAttribute('aria-label', 'More wedding actions');
   panel.hidden = true;
 
+  /* The date line under the wordmark, copied from the crest that is already on
+     the page rather than hard-coded. personalize.js has run by now and has
+     rewritten [data-dates-short] for this guest's tier, so taking its text
+     keeps the menu honest — a Saturday-only guest must not see a two-day span
+     here after we removed it everywhere else. If the crest is missing for any
+     reason we render no date rather than guessing one. */
+  var crestTag = document.querySelector('.crest-tag');
+  var dateLine = crestTag ? crestTag.textContent.trim() : '';
+
   var html = '<div class="mnav-top">' +
       '<a class="mnav-brand" href="index.html">Sam <span>+</span> Jenni</a>' +
+      (dateLine ? '<div class="mnav-tag">' +
+        dateLine.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</div>' : '') +
       '<button type="button" class="mnav-close" aria-label="Close menu">' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
       'stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +

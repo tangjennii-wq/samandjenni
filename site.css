@@ -4071,3 +4071,19 @@ html{ scrollbar-gutter:stable; }
   .sjsheet-in{ margin-block:0; }
   .sjsheet-body{ flex:1 1 auto; min-height:0; overflow-y:auto; }
 }
+
+
+/* ==========================================================================
+   Mobile menu wordmark == the page crest
+   --------------------------------------------------------------------------
+   The menu's "SAM + JENNI" was weight 800 at .03em with no date line, while
+   the crest on every page is weight 300 at .07em with the date beneath it.
+   Same size and colour, so it read as a different site the moment you opened
+   the menu. mobilenav.js now renders the date line too, copied from the
+   already-personalised crest so the tier gating holds.
+   ========================================================================== */
+.mnav-brand{ font-weight:300; letter-spacing:.07em; }
+.mnav-brand span{ font-weight:300; }
+.mnav-tag{
+  margin-top:5px; font-size:8.5px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--red); }
