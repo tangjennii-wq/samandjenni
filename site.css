@@ -3973,3 +3973,34 @@ html{ scrollbar-gutter:stable; }
 @media (max-width:700px){
   .wrap{ padding-left:16px; padding-right:16px; }
 }
+
+
+/* ==========================================================================
+   The +1 row joins the field rows
+   --------------------------------------------------------------------------
+   "Bringing a +1?" was a bordered box with its own type, sitting directly under
+   three label-left / value-right rows. Same shape, same label styling, no box —
+   so "who's coming" reads as one uniform list of questions and answers.
+   ========================================================================== */
+.plusone{
+  border:0 !important; background:none !important; border-radius:0 !important;
+  padding:2px 0 !important; margin-top:0;
+  display:flex; align-items:center; gap:14px; justify-content:flex-start; }
+.plusone-q{
+  flex:0 0 84px; font-size:13px; font-weight:600; letter-spacing:0;
+  text-transform:none; color:var(--dark); line-height:1.3; }
+.plusone-yn{ margin-left:auto; }
+.sjsheet--red .plusone-q{ color:#fff; }
+@media (max-width:560px){
+  .plusone{ gap:10px; padding:2px 0 !important; }
+  .plusone-q{ flex-basis:76px; font-size:12.5px; }
+}
+@media (max-width:380px){
+  .plusone{ gap:8px; }
+  .plusone-q{ flex-basis:66px; font-size:12px; }
+}
+
+/* The lead paragraph on the hotels page is body copy, not a heading. 600 made
+   the whole block read as bold next to the plain text under it. */
+.sect .howto-lead, .howto-lead{ font-weight:400; }
+

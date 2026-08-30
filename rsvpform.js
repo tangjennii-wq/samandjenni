@@ -208,7 +208,7 @@
       cal:'20270319T220000Z/20270320T000000Z', at:CT_ADDR },
     { k:'friday',    name:'welcome party',    when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: seesEv([1, 2, 3, 5]),
       cal:'20270320T000000Z/20270320T040000Z', at:CT_ADDR },
-    { k:'saturday',  name:'the wedding',      when:'Sat Mar 20', where:'The Pierre',     url:PIE, show: true,
+    { k:'saturday',  name:'The Wedding',      when:'Sat Mar 20', where:'The Pierre',     url:PIE, show: true,
       cal:'20270320T210000Z/20270321T034500Z', at:PIE_ADDR },
     { k:'sunday',    name:'farewell brunch',  when:'Sun Mar 21', where:'TBD',            show: seesEv([1, 5]),
       cal:'20270321/20270322', at:'New York, NY' }
@@ -296,7 +296,7 @@
           // upwards, behind your thumb on a phone.
           '<div class="rsvp-guests" data-guests></div>' +
           '<div class="plusone">' +
-            '<span class="plusone-q">Bringing a +1?</span>' +
+            '<span class="plusone-q">Plus one</span>' +
             '<div class="plusone-yn">' +
               '<button type="button" class="yn yes p1" data-p1="yes">Yes</button>' +
               '<button type="button" class="yn no p1" data-p1="no">No</button>' +
