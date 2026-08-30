@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260821c">
+<link rel="stylesheet" href="site.css?v=20260830a">
 <script>/* Preflight veil. Runs before first paint: if the gate told us this guest
    still owes us their details, hold the page behind an opaque layer so the
    home page and the hero film never flash before the panel. account.js lifts
@@ -73,6 +73,11 @@ html.sj-veil .sjsheet{z-index:2800}</style>
         <button type="button" class="ts-done" data-rsvp-open hidden>RSVP <span>&#10003;</span></button>
       </div>
       <div class="eyebrow">Kindly reply</div>
+      <!-- The date the printed invitation carries. Keep the two in step: if the
+           card changes, this changes. The later internal cut-off deliberately
+           does NOT appear here, or anywhere else a guest could read it --
+           including this comment, since comments ship in the page source. -->
+      <p class="rsvp-by">by <b>20 January 2027</b></p>
       <div id="sjrsvp"></div>
       <div id="sjnote" style="margin-top:28px"></div>
     </div>

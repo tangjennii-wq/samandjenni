@@ -3821,3 +3821,11 @@ html.sj-veil body{ overflow:hidden !important; }
    type, and how to change it later. */
 .sjsheet .acct-onfile{ display:block; margin-top:7px; font-size:12px;
   line-height:1.45; color:#9c9689; }
+
+
+/* The reply-by date on the RSVP page. Sits under the "Kindly reply" eyebrow and
+   matches what the printed invitation says -- 20 January 2027. The later internal
+   cut-off lives only in the planning notes, never in anything served. */
+.rsvp-by{ margin:6px 0 0; font-size:13.5px; line-height:1.5; color:#8a7967;
+  letter-spacing:.01em; }
+.rsvp-by b{ color:var(--dark); font-weight:600; }
