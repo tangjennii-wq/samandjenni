@@ -3829,3 +3829,64 @@ html.sj-veil body{ overflow:hidden !important; }
 .rsvp-by{ margin:6px 0 0; font-size:13.5px; line-height:1.5; color:#8a7967;
   letter-spacing:.01em; }
 .rsvp-by b{ color:var(--dark); font-weight:600; }
+
+
+/* ==========================================================================
+   Mobile form pass — floating labels, one-line word prompts, bigger example
+   --------------------------------------------------------------------------
+   Appended last on purpose. Per the note further up this file, a new global
+   rule beats the earlier media queries of equal specificity, so every
+   responsive counterpart is repeated here rather than edited in place.
+   ========================================================================== */
+
+/* --- Floating labels on the RSVP guest fields ---------------------------- */
+/* Hidden while the field still shows its placeholder, so an empty form is the
+   same height it has always been. As soon as there is content — including a
+   prefilled email on load — the caption appears above the input and says what
+   the value is. :has() is already relied on elsewhere in this file. */
+.note-l--float{ display:none; margin:0 0 3px; font-size:9px; letter-spacing:.13em;
+  line-height:1.2; color:#a2907a; }
+.guest-fields .note-field:has(.note-f:not(:placeholder-shown)) .note-l--float{ display:block; }
+.guest-fields .note-field:focus-within .note-l--float{ display:block; color:var(--red); }
+.sjsheet .note-l--float{ color:#8a7863; font-weight:600; }
+.sjsheet--red .note-l--float{ color:rgba(255,255,255,.85); }
+/* No :has() (older Safari): fall back to always showing it. A visible label is
+   the point; only the height saving is lost. */
+@supports not selector(:has(*)){
+  .note-l--float{ display:block; }
+}
+
+/* --- The two one-word prompts now fit one line --------------------------- */
+.note-row2 .note-l{ min-height:0; display:block; }
+@media(max-width:760px){ .note-row2 .note-l{ min-height:0; } }
+.sjsheet .note-row2 .note-l{ font-size:9.5px; letter-spacing:.10em; white-space:nowrap; }
+@media (max-width:560px){
+  .sjsheet .note-row2{ gap:12px; }
+  .sjsheet .note-row2 .note-l{ font-size:9px; letter-spacing:.06em; }
+}
+@media (max-width:380px){
+  .sjsheet .note-row2 .note-l{ font-size:8.5px; letter-spacing:.03em; }
+}
+
+/* --- Bigger example photo, and more air above upload + send -------------- */
+.sjsheet .photo-stack{ gap:16px; padding:6px 0 0; }
+.sjsheet .photo-stack .photo-eg{ width:196px; }
+.sjsheet .photo-stack .photo-eg figcaption{ font-size:11px; margin-top:6px; }
+.sjsheet .photo-field{ margin-top:18px; }
+.sjsheet .note-btn{ margin-top:22px; }
+@media (max-width:560px){
+  .sjsheet .photo-stack{ gap:15px; padding:5px 0 0; }
+  .sjsheet .photo-stack .photo-eg{ width:168px; }
+  .sjsheet .photo-stack .photo-eg figcaption{ font-size:10.5px; margin-top:5px; }
+  .sjsheet .photo-stack .photo-drop{ width:100%; }
+  .sjsheet .photo-field{ margin-top:16px; }
+  .sjsheet .note-btn{ margin-top:20px; }
+}
+/* Short phones still have to fit; shrink rather than scroll. */
+@media (max-width:560px) and (max-height:600px){
+  .sjsheet .photo-stack{ gap:10px; }
+  .sjsheet .photo-stack .photo-eg{ width:112px; }
+  .sjsheet .photo-stack .photo-eg figcaption{ display:none; }
+  .sjsheet .photo-field{ margin-top:11px; }
+  .sjsheet .note-btn{ margin-top:13px; }
+}

@@ -37,7 +37,7 @@
       // opens on "R S V P", the details panel on the guest's name, and this one
       // went straight into a sentence. Same .note-h treatment as the thank-you
       // screen already uses, so all three sheets now start the same way.
-      '<div class="note-h">A note</div>' +
+      '<div class="note-h">Leave us a note</div>' +
       '<p class="note-top">Share some wild, weird memories, feels, etc. with us \u2661</p>' +
       '<div class="note-thread" aria-hidden="true"></div>' +
       (intro ? '<p class="note-intro">' + intro + '</p>' : '') +
@@ -46,9 +46,12 @@
         '<textarea id="{p}Mem" class="note-f note-ta"></textarea>' +
       '</div>' +
       '<div class="note-row2">' +
-        '<div class="note-field"><label class="note-l" for="{p}WordS">one word that defines Sam</label>' +
+        // Short enough to sit on ONE line in the two-column row. "one word that
+        // defines Sam" wrapped, so the two labels were two lines tall and the
+        // row reserved 2.6em for them.
+        '<div class="note-field"><label class="note-l" for="{p}WordS">one word defining sam</label>' +
           '<input id="{p}WordS" class="note-f" type="text"></div>' +
-        '<div class="note-field"><label class="note-l" for="{p}WordJ">one word that defines Jenni</label>' +
+        '<div class="note-field"><label class="note-l" for="{p}WordJ">one word defining jenni</label>' +
           '<input id="{p}WordJ" class="note-f" type="text"></div>' +
       '</div>' +
       '<div class="note-field note-field--song">' +

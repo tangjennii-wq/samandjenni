@@ -186,26 +186,30 @@
     var vName  = prevGuest ? prevGuest.name  : (i === 0 ? PRE.name  : '');
     var vEmail = prevGuest ? prevGuest.email : (i === 0 ? PRE.email : '');
     var vDiet  = prevGuest ? prevGuest.dietary : '';
-    // Placeholders rather than labels above every field. Three 8.5px uppercase
-    // captions per guest was ~39px of vertical space each and was most of what
-    // made the block read as heavy — the labels restate what the fields
-    // obviously are. Real <label>s stay for screen readers.
+    // Floating labels. A placeholder disappears the moment a field has content,
+    // so a PREFILLED email rendered as a bare address with nothing saying what
+    // it was. Labels above every field cost ~39px per guest and were rejected
+    // for that; this gets both — empty fields show only the placeholder and take
+    // the same height as before, and a filled field grows a small caption above
+    // it. The visible caption is aria-hidden and the input carries an aria-label,
+    // so screen readers get the name whether the caption is drawn or not.
     var lab = function(id, text){
-      return '<label class="sr-only" for="' + id + '">' + text + '</label>';
+      return '<span class="note-l note-l--float" aria-hidden="true">' + text + '</span>';
     };
+    var A = function(text){ return 'aria-label="' + text + '" '; };
     var nId = p + 'GN' + i, eId = p + 'GE' + i, dId = p + 'GD' + i;
     return '<div class="guest-row" data-guest="' + i + '">' +
       '<div class="guest-fields">' +
         '<div class="note-field">' + lab(nId, whose + ' name') +
-          '<input id="' + nId + '" class="note-f gname" type="text" ' +
+          '<input id="' + nId + '" class="note-f gname" type="text" ' + A(whose + ' name') +
             'placeholder="' + whose + ' name" value="' + vName.replace(/"/g,'&quot;') + '"></div>' +
         '<div class="note-field">' + lab(eId, whose + ' email') +
-          '<input id="' + eId + '" class="note-f gemail" type="email" ' +
+          '<input id="' + eId + '" class="note-f gemail" type="email" ' + A(whose + ' email') +
             // No "(optional)" here — at 390px it clipped mid-word.
             'placeholder="' + whose + ' email" value="' +
             vEmail.replace(/"/g,'&quot;') + '"></div>' +
         '<div class="note-field span2">' + lab(dId, 'dietary or allergies') +
-          '<input id="' + dId + '" class="note-f gdiet" type="text" ' +
+          '<input id="' + dId + '" class="note-f gdiet" type="text" ' + A('dietary or allergies') +
             'placeholder="dietary / allergies" value="' + vDiet.replace(/"/g,'&quot;') + '"></div>' +
       '</div></div>';
   }
