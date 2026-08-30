@@ -399,7 +399,13 @@
        Namespaced *prompt* flags are left alone — they belong to their owner,
        not to the device, and re-asking is worse than not asking. */
     try {
-      var ns = guestNs();
+      /* Derived here, not via guestNs(). guestNs() is declared inside the FIRST
+         IIFE in this file (lines 6-41); this handler is in the second, so the
+         call threw a ReferenceError on the first line of this try and the catch
+         swallowed it — sign-out cleared nothing at all while still dropping the
+         cookies and redirecting, so it looked like it had worked. `who` is in
+         scope here and normalises the same way nskey() does in rsvpform.js. */
+      var ns = who ? ':' + who.trim().toLowerCase() : '';
       ['sj-profile', 'sj-note-draft',
        'sj-rsvp-data',      'sj-rsvp-draft',      'sj-rsvp-done',
        'sj-rsvp-data' + ns, 'sj-rsvp-draft' + ns, 'sj-rsvp-done' + ns

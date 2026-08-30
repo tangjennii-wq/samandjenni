@@ -3956,7 +3956,6 @@ html{ scrollbar-gutter:stable; }
    deliberate -- 100vw includes the scrollbar gutter, which would push the
    header ~8px right of the content it is supposed to line up with. */
 .crest, .sitenav{ box-sizing:border-box; }
-.crest{ padding-left:0; padding-right:0; }
 
 @media (min-width:761px){
   .topbar{
@@ -4004,3 +4003,48 @@ html{ scrollbar-gutter:stable; }
    the whole block read as bold next to the plain text under it. */
 .sect .howto-lead, .howto-lead{ font-weight:400; }
 
+
+
+/* ==========================================================================
+   RSVP labels: one treatment, and it has to WIN
+   --------------------------------------------------------------------------
+   The label-left restyle set 13px/600/sentence-case on .note-l--side and
+   .plusone-q, and none of it landed: both are single-class selectors (0,1,0)
+   and they lose to .guest-fields .note-l, .rsvp-body .note-l and the whole
+   .sjsheet .note-l chain, which are (0,2,0) and earlier in the file.
+   Result was "Plus one" rendering 15px near-black sentence-case under three
+   tiny tan tracked labels.
+
+   So: match DIETARY exactly rather than inventing a third style, and use
+   selectors specific enough to actually apply on both surfaces (the page and
+   the drawer). #sjrsvp .plusone-q carries !important further up, so the +1
+   label needs it too.
+   ========================================================================== */
+.guest-fields .note-l.note-l--side,
+.rsvp-body .note-l.note-l--side,
+.sjsheet .guest-fields .note-l.note-l--side{
+  font-size:9px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:#b0a08c; line-height:1.3; }
+
+#sjrsvp .plusone .plusone-q,
+.rsvp-body .plusone .plusone-q,
+.sjsheet .plusone .plusone-q{
+  font-size:9px !important; font-weight:600 !important; letter-spacing:.12em;
+  text-transform:uppercase; color:#b0a08c; line-height:1.3; }
+
+.sjsheet .guest-fields .note-l.note-l--side,
+.sjsheet .plusone .plusone-q{ font-size:9.5px !important; color:#8a7967; }
+
+@media (max-width:760px){
+  .guest-fields .note-l.note-l--side,
+  .rsvp-body .note-l.note-l--side,
+  #sjrsvp .plusone .plusone-q,
+  .rsvp-body .plusone .plusone-q{ font-size:8.5px !important; }
+}
+
+/* The crest's side padding is zeroed for the DESKTOP bar only. Unmediated it
+   also beat the 760px rule, so on a phone the "S" of SAM and the date line sat
+   hard against the screen edge while the hamburger stayed inset. */
+@media (min-width:761px){
+  .crest{ padding-left:0; padding-right:0; }
+}

@@ -65,17 +65,27 @@
   (function migrateLegacyKeys(){
     try {
       var raw = localStorage.getItem('sj-rsvp-data');
-      if (raw && who && !localStorage.getItem(DATA_KEY)) {
-        var mine = false;
+      var mine = false;
+      if (raw && who) {
         try {
           mine = (JSON.parse(raw).guest_key || '').trim().toLowerCase() === who;
         } catch (e) {}
-        if (mine) {
+        if (mine && !localStorage.getItem(DATA_KEY)) {
           localStorage.setItem(DATA_KEY, raw);
           if (localStorage.getItem('sj-rsvp-done') === '1') {
             localStorage.setItem(DONE_KEY, '1');
           }
         }
+      }
+      /* The half-typed draft moves too. It was being deleted outright, and the
+         "it's safe in Supabase either way" reasoning does NOT hold for a draft
+         — by definition it was never sent anywhere. Carried across only when
+         the submitted payload proved this browser's data belongs to the guest
+         signing in, or when there is no submitted payload to judge by and the
+         draft is all there is. */
+      var d = localStorage.getItem('sj-rsvp-draft');
+      if (d && who && !localStorage.getItem(DRAFT_KEY) && (mine || !raw)) {
+        localStorage.setItem(DRAFT_KEY, d);
       }
       ['sj-rsvp-data', 'sj-rsvp-draft', 'sj-rsvp-done'].forEach(function (k) {
         localStorage.removeItem(k);
@@ -289,7 +299,6 @@
       '<div class="rsvp-body">' +
 
         '<div class="rsvp-sect">' +
-          '<div class="rsvp-sect-h">who’s coming</div>' +
           // Two containers with the toggle between them, deliberately. With one
           // container the +1's fields appeared ABOVE the "Bringing a +1?"
           // control that summons them, so answering yes made a block open
