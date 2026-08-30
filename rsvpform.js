@@ -158,7 +158,7 @@
   var CT_ADDR  = 'Chinese Tuxedo, 5 Doyers St, New York, NY 10013';
   var PIE_ADDR = 'The Pierre, 2 E 61st St, New York, NY 10065';
   var EVENTS = [
-    { k:'thursday',  name:'welcome dinner',   when:'Thu Mar 18', where:'TBD',            show: seesEv([1, 5]),
+    { k:'thursday',  name:'welcome hang',     when:'Thu Mar 18', where:'TBD',            show: seesEv([1, 5]),
       cal:'20270318/20270319', at:'New York, NY' },
     { k:'rehearsal', name:'rehearsal dinner', when:'Fri Mar 19', where:'Chinese Tuxedo', url:CT,  show: seesEv([1, 2]),
       cal:'20270319T220000Z/20270320T000000Z', at:CT_ADDR },
@@ -235,7 +235,7 @@
     return '' +
       '<div class="rsvp-head">' +
         '<div class="rsvp-title">R S V P</div>' +
-        '<div class="rsvp-sub">reply by 12 February 2027</div>' +
+        '<div class="rsvp-sub">reply by 20 January 2027</div>' +
       '</div>' +
       '<div class="rsvp-body">' +
 
