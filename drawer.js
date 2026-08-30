@@ -122,14 +122,67 @@
     document.body.appendChild(el);
     document.body.classList.add('sjsheet-open');
 
+    /* ── iOS: size to the VISUAL viewport, and lock the page properly ──────
+       Two separate iOS failures, both visible in the Gmail in-app browser:
+
+       1. `position:fixed; inset:0` resolves against the LAYOUT viewport, which
+          on iOS is taller than what you can actually see and does not move when
+          the URL bar shows or the keyboard opens. The sheet was therefore
+          shifted up — its top (wordmark, close button, the guest's name) was
+          clipped above the fold — and ended early at the bottom, exposing the
+          dark home page beneath it. visualViewport is the only thing that
+          reports what the guest can really see.
+
+       2. `overflow:hidden` on <body> does not stop scrolling in an iOS webview.
+          The page behind kept its scroll offset, which is the other half of the
+          displacement. The fix is to fix the body at its current offset and put
+          it back on close, so nothing jumps.                                */
+    var vv = window.visualViewport;
+    function sizeToViewport(){
+      if (!vv || window.innerWidth > 760) return;
+      el.style.top    = vv.offsetTop + 'px';
+      el.style.left   = vv.offsetLeft + 'px';
+      el.style.width  = vv.width + 'px';
+      el.style.height = vv.height + 'px';
+    }
+    if (vv) {
+      sizeToViewport();
+      vv.addEventListener('resize', sizeToViewport);
+      vv.addEventListener('scroll', sizeToViewport);
+    }
+
+    var scrollY = window.scrollY || window.pageYOffset || 0;
+    var prevBody = { position: document.body.style.position, top: document.body.style.top,
+                     left: document.body.style.left, right: document.body.style.right,
+                     width: document.body.style.width };
+    document.body.style.position = 'fixed';
+    document.body.style.top   = (-scrollY) + 'px';
+    document.body.style.left  = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+
+    // Whatever the page behind was scrolled to, the sheet starts at its own top.
+    var sbody = el.querySelector('.sjsheet-body');
+    if (sbody) sbody.scrollTop = 0;
+
     var lastFocus = document.activeElement;
     function focusables(){ return el.querySelectorAll('button, input, textarea, select, a[href]'); }
 
     function close(){
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       document.removeEventListener('keydown', onKey);
+      if (vv) {
+        vv.removeEventListener('resize', sizeToViewport);
+        vv.removeEventListener('scroll', sizeToViewport);
+      }
       el.remove();
       document.body.classList.remove('sjsheet-open');
+      document.body.style.position = prevBody.position;
+      document.body.style.top      = prevBody.top;
+      document.body.style.left     = prevBody.left;
+      document.body.style.right    = prevBody.right;
+      document.body.style.width    = prevBody.width;
+      window.scrollTo(0, scrollY);
       if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch(e){} }
     }
     function onKey(e){

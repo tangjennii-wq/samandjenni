@@ -226,52 +226,37 @@
     return true;
   }
 
+  /* Opens ONLY on the explicit post-login `?details=1` redirect.
+     It used to also open on any ordinary return visit, via a guest_detailed
+     lookup — so a guest who came back to read the hotels page was interrupted
+     by a form they had already seen. The account icon is always there for
+     anyone who wants to correct something; being asked once, right after
+     signing in, is the whole of the intended behaviour.
+
+     And the profile is fetched BEFORE the panel mounts, never after. Opening
+     first and filling in behind meant the sheet appeared showing a bare
+     surname over empty fields, with a "Looks right" button above them — asking
+     someone to confirm nothing. Now it renders with the name we actually hold,
+     or it does not claim to have one. */
   function maybePrompt(){
     if (!who) { unveil(); return; }             // signed out — the gate has them
     var asked = gateSaysAsk();
-    if (skipped() || flag(DONE_KEY)) { unveil(); return; }
-    if (asked) {                               // no waiting — open now
-      setOpen(true, false, true);
-      unveil();                                // sheet is up; show the page
-      // fill the name/email in behind the open panel if the lookup lands
-      if (window.SJUpload && window.SJUpload.rpc) {
-        var k0 = who.toLowerCase();
-        window.SJUpload.rpc('guest_profile', k0).then(function(rows){
-          var pr = Array.isArray(rows) ? rows[0] : rows;
-          if (!pr || !pop) return;
-          try { localStorage.setItem('sj-profile', JSON.stringify({
-            key: k0, person_name: pr.person_name || ''
-          })); } catch(e){}
-          /* Name only. The email is never written into the panel — the guest
-             types a new one if it has changed, and a blank field keeps what
-             we already hold. */
-          var n = pop.querySelector('#acName');
-          if (n && !n.value) n.value = pr.person_name || '';
-        }).catch(function(){});
-      }
-      return;
-    }
-    if (!(window.SJUpload && window.SJUpload.rpc)) { unveil(); return; }
-    window.SJUpload.rpc('guest_detailed', who).then(function(done){
-      if (done === true) { flag(DONE_KEY, 1); unveil(); return; }   // did it on another device
+    if (!asked || skipped() || flag(DONE_KEY)) { unveil(); return; }
 
-      // Fetch the profile ourselves rather than relying on the cache rsvpform.js
-      // writes. On a first visit the RSVP never mounts, so that cache is empty
-      // and the name field would open blank — which defeats the point of asking
-      // them to check it. Best effort: if the lookup fails we open anyway.
-      var key = who.toLowerCase();
-      return window.SJUpload.rpc('guest_profile', key).then(function(rows){
-        var pr = Array.isArray(rows) ? rows[0] : rows;
-        if (pr) {
-          try { localStorage.setItem('sj-profile', JSON.stringify({
-            key: key, person_name: pr.person_name || ''
-          })); } catch(e){}
-        }
-      }).catch(function(){}).then(function(){
-        setOpen(true, false, true);
-        unveil();
-      });
-    }).catch(function(){ unveil(); /* offline — ask again next visit rather than never */ });
+    if (!(window.SJUpload && window.SJUpload.rpc)) { setOpen(true, false, true); unveil(); return; }
+
+    var key = who.toLowerCase();
+    window.SJUpload.rpc('guest_profile', key).then(function(rows){
+      var pr = Array.isArray(rows) ? rows[0] : rows;
+      if (pr) {
+        try { localStorage.setItem('sj-profile', JSON.stringify({
+          key: key, person_name: pr.person_name || ''
+        })); } catch(e){}
+      }
+    }).catch(function(){}).then(function(){
+      setOpen(true, false, true);   // cachedProfile() is warm now, so it renders filled
+      unveil();
+    });
   }
 
   function setOpen(on, chained, firstTime){

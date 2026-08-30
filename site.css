@@ -4048,3 +4048,26 @@ html{ scrollbar-gutter:stable; }
 @media (min-width:761px){
   .crest{ padding-left:0; padding-right:0; }
 }
+
+
+/* ==========================================================================
+   Sheet on iOS: fill what the guest can actually see
+   --------------------------------------------------------------------------
+   `position:fixed; inset:0` is measured against the LAYOUT viewport, which on
+   iOS is taller than the visible area and does not move with the URL bar. The
+   sheet was displaced upward — wordmark, close button and the guest's name
+   clipped off the top — and stopped short at the bottom, showing the dark home
+   page underneath. drawer.js now sets top/height from window.visualViewport;
+   these rules are the no-JS floor and stop the panel being centred.
+   ========================================================================== */
+@media (max-width:760px){
+  .sjsheet{
+    top:0; left:0; width:100%;
+    height:100dvh; min-height:100dvh;
+    max-height:100dvh;
+  }
+  /* Content starts at the top and .sjsheet-body scrolls. Centring a panel
+     taller than the viewport pushes its head off the top of the screen. */
+  .sjsheet-in{ margin-block:0; }
+  .sjsheet-body{ flex:1 1 auto; min-height:0; overflow-y:auto; }
+}
