@@ -3839,21 +3839,34 @@ html.sj-veil body{ overflow:hidden !important; }
    responsive counterpart is repeated here rather than edited in place.
    ========================================================================== */
 
-/* --- Floating labels on the RSVP guest fields ---------------------------- */
-/* Hidden while the field still shows its placeholder, so an empty form is the
-   same height it has always been. As soon as there is content — including a
-   prefilled email on load — the caption appears above the input and says what
-   the value is. :has() is already relied on elsewhere in this file. */
-.note-l--float{ display:none; margin:0 0 3px; font-size:9px; letter-spacing:.13em;
-  line-height:1.2; color:#a2907a; }
-.guest-fields .note-field:has(.note-f:not(:placeholder-shown)) .note-l--float{ display:block; }
-.guest-fields .note-field:focus-within .note-l--float{ display:block; color:var(--red); }
-.sjsheet .note-l--float{ color:#8a7863; font-weight:600; }
-.sjsheet--red .note-l--float{ color:rgba(255,255,255,.85); }
-/* No :has() (older Safari): fall back to always showing it. A visible label is
-   the point; only the height saving is lost. */
-@supports not selector(:has(*)){
-  .note-l--float{ display:block; }
+/* --- RSVP guest fields: label left, value right -------------------------- */
+/* Matches the "Bringing a +1?" row immediately below, so "who's coming" reads
+   as one column of questions and one column of answers. A label stacked above
+   its input still read as two separate things and cost a whole extra line;
+   sharing the row costs nothing and is always visible, filled or empty.
+   One field per row, so the value column starts at the same x every time. */
+.guest-fields{ grid-template-columns:1fr; gap:0; }
+.guest-fields .span2{ grid-column:auto; }
+.guest-fields .note-field{
+  display:flex; flex-direction:row; align-items:center; gap:14px;
+  padding:2px 0; }
+.note-l--side{
+  flex:0 0 84px; margin:0; text-align:left;
+  font-size:13px; font-weight:600; letter-spacing:0; text-transform:none;
+  color:var(--dark); line-height:1.3; }
+.guest-fields .note-f{
+  flex:1 1 auto; min-width:0; text-align:left; }
+.sjsheet--red .note-l--side{ color:#fff; }
+
+@media (max-width:560px){
+  .guest-fields{ grid-template-columns:1fr; gap:0; }
+  .guest-fields .span2{ grid-column:auto; }
+  .note-l--side{ flex-basis:76px; font-size:12.5px; }
+  .guest-fields .note-field{ gap:10px; }
+}
+@media (max-width:380px){
+  .note-l--side{ flex-basis:66px; font-size:12px; }
+  .guest-fields .note-field{ gap:8px; }
 }
 
 /* --- The two one-word prompts now fit one line --------------------------- */

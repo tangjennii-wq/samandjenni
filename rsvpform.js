@@ -186,31 +186,32 @@
     var vName  = prevGuest ? prevGuest.name  : (i === 0 ? PRE.name  : '');
     var vEmail = prevGuest ? prevGuest.email : (i === 0 ? PRE.email : '');
     var vDiet  = prevGuest ? prevGuest.dietary : '';
-    // Floating labels. A placeholder disappears the moment a field has content,
-    // so a PREFILLED email rendered as a bare address with nothing saying what
-    // it was. Labels above every field cost ~39px per guest and were rejected
-    // for that; this gets both — empty fields show only the placeholder and take
-    // the same height as before, and a filled field grows a small caption above
-    // it. The visible caption is aria-hidden and the input carries an aria-label,
-    // so screen readers get the name whether the caption is drawn or not.
-    var lab = function(id, text){
-      return '<span class="note-l note-l--float" aria-hidden="true">' + text + '</span>';
+    // Label left, value right — the same shape as the "Bringing a +1?" row
+    // directly beneath, so the whole section reads as one column of questions
+    // with one column of answers. Stacking the label above cost vertical space
+    // AND still read as two separate things; side by side costs no extra height
+    // at all, because the label shares the input's row.
+    //
+    // Visible label is aria-hidden and the input carries the fuller aria-label,
+    // so a screen reader hears "your email" / "+1's email" rather than a bare
+    // "email" repeated twice down the form.
+    var lab = function(text){
+      return '<span class="note-l note-l--side" aria-hidden="true">' + text + '</span>';
     };
     var A = function(text){ return 'aria-label="' + text + '" '; };
     var nId = p + 'GN' + i, eId = p + 'GE' + i, dId = p + 'GD' + i;
     return '<div class="guest-row" data-guest="' + i + '">' +
       '<div class="guest-fields">' +
-        '<div class="note-field">' + lab(nId, whose + ' name') +
+        '<div class="note-field">' + lab('Name') +
           '<input id="' + nId + '" class="note-f gname" type="text" ' + A(whose + ' name') +
-            'placeholder="' + whose + ' name" value="' + vName.replace(/"/g,'&quot;') + '"></div>' +
-        '<div class="note-field">' + lab(eId, whose + ' email') +
+            'placeholder="" value="' + vName.replace(/"/g,'&quot;') + '"></div>' +
+        '<div class="note-field">' + lab('Email') +
           '<input id="' + eId + '" class="note-f gemail" type="email" ' + A(whose + ' email') +
-            // No "(optional)" here — at 390px it clipped mid-word.
-            'placeholder="' + whose + ' email" value="' +
+            'placeholder="" value="' +
             vEmail.replace(/"/g,'&quot;') + '"></div>' +
-        '<div class="note-field span2">' + lab(dId, 'dietary or allergies') +
+        '<div class="note-field span2">' + lab('Dietary') +
           '<input id="' + dId + '" class="note-f gdiet" type="text" ' + A('dietary or allergies') +
-            'placeholder="dietary / allergies" value="' + vDiet.replace(/"/g,'&quot;') + '"></div>' +
+            'placeholder="none" value="' + vDiet.replace(/"/g,'&quot;') + '"></div>' +
       '</div></div>';
   }
 
