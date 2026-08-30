@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="site.css?v=20260830f">
+<link rel="stylesheet" href="site.css?v=20260830g">
 <script>/* Preflight veil. Runs before first paint: if the gate told us this guest
    still owes us their details, hold the page behind an opaque layer so the
    home page and the hero film never flash before the panel. account.js lifts
@@ -972,8 +972,12 @@ html.sj-veil .sjsheet{z-index:2800}</style>
      the ivory page shows below it. --sj-links is the RSVP row's share. */
   :root{ --sj-header: 140px; --sj-links: 42px; }
 
-  /* Crest ~92px tall */
-  .crest{ padding:13px 16px 15px !important; }
+  /* Crest ~92px tall.
+     Horizontal padding is 0, not 16px: every other page renders the crest with
+     no side padding, and page styles load after site.css, so a 16px here (with
+     !important, no less) put the wordmark at x=46 on this page and x=30 on all
+     the others — the sideways jump when you move between pages. */
+  .crest{ padding:13px 0 15px !important; }
   .crest-name{ font-size:38px; line-height:1; white-space:nowrap; }
   .crest-tag{ margin-top:8px; }
 
@@ -1015,7 +1019,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
 
   /* Short screens: trim chrome, never the title */
   @media (max-height: 800px){
-    .crest{ padding:10px 16px 12px !important; }
+    .crest{ padding:10px 0 12px !important; }
     .crest-tag{ font-size:9px; letter-spacing:.28em; margin-top:6px; }
     .crest-rule{ width:48px; }
     .hero{ padding:6px 12px !important; }

@@ -3938,11 +3938,14 @@ html{ scrollbar-gutter:stable; }
 }
 .wrap--narrow{ max-width:min(760px, 100%); }
 
-/* The top bar is full-bleed, but its contents line up with the column below it
-   so the crest and the first card share a left edge on every page. */
+/* The top bar is full-bleed by design, but its own horizontal padding has to
+   match on every page or the wordmark jumps sideways as you navigate.
+   Measured: .crest had padding-left:16px on the home page and 0 on every other
+   page, so "SAM + JENNI" sat at x=46 on the home page and x=30 everywhere else.
+   That 16px step is the shift you see when moving between pages. */
 .crest, .sitenav{ box-sizing:border-box; }
-.crest > *, .sitenav{
-  max-width:1180px; margin-left:auto; margin-right:auto; }
+.crest{ padding-left:0; padding-right:0; }
+.crest > *, .sitenav{ max-width:1180px; }
 
 @media (max-width:700px){
   .wrap{ padding-left:16px; padding-right:16px; }
