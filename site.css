@@ -3931,21 +3931,44 @@ html.sj-veil body{ overflow:hidden !important; }
 html{ scrollbar-gutter:stable; }
 
 .wrap{
-  max-width:min(1180px, 100%);
+  max-width:min(1280px, 100%);
   margin-left:auto; margin-right:auto;
   padding-left:24px; padding-right:24px;
   box-sizing:border-box;
 }
 .wrap--narrow{ max-width:min(760px, 100%); }
 
-/* The top bar is full-bleed by design, but its own horizontal padding has to
-   match on every page or the wordmark jumps sideways as you navigate.
-   Measured: .crest had padding-left:16px on the home page and 0 on every other
-   page, so "SAM + JENNI" sat at x=46 on the home page and x=30 everywhere else.
-   That 16px step is the shift you see when moving between pages. */
+/* Two separate things had to be fixed here.
+
+   (a) .crest carried padding-left:16px on the home page and 0 everywhere else,
+       so "SAM + JENNI" sat at x=46 on the home page and x=30 on every other
+       page. The 16px came from an inline `!important` in index.html, which
+       loads after this file; it is now 0 there too.
+
+   (b) Capping .crest and .sitenav individually does NOT align the header with
+       the content column. Above 761px .topbar is display:flex and those two are
+       separate flex children, so a max-width on each just shrinks them inside a
+       bar that is still full-bleed. The bar itself has to be padded.
+
+   The padding matches the inner edge of the content column: .wrap is
+   max-width:1280px with 24px of its own padding, so the first character of the
+   page starts at (available - 1180)/2 + 24. Using 100% rather than 100vw is
+   deliberate -- 100vw includes the scrollbar gutter, which would push the
+   header ~8px right of the content it is supposed to line up with. */
 .crest, .sitenav{ box-sizing:border-box; }
 .crest{ padding-left:0; padding-right:0; }
-.crest > *, .sitenav{ max-width:1180px; }
+
+@media (min-width:761px){
+  .topbar{
+    /* Floor is 44px, not 30px: below the column's full width the content sits
+       at .sect's 20px + .wrap's 24px = 44px, so a 30px floor left the wordmark
+       14px to the left of the first word on the page. Above ~1330px the calc
+       wins and both track the centred column. */
+    padding-left:  max(44px, calc((100% - 1280px) / 2 + 24px));
+    padding-right: max(44px, calc((100% - 1280px) / 2 + 24px));
+  }
+  .topbar .sitenav{ max-width:none; margin-left:0; margin-right:0; }
+}
 
 @media (max-width:700px){
   .wrap{ padding-left:16px; padding-right:16px; }
