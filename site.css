@@ -4087,3 +4087,11 @@ html{ scrollbar-gutter:stable; }
 .mnav-tag{
   margin-top:5px; font-size:8.5px; font-weight:600; letter-spacing:.08em;
   text-transform:uppercase; color:var(--red); }
+
+
+/* Stop the page rubber-banding past its own end on iOS. Without this the
+   footer scrolls up off the screen and you are left dragging against blank
+   page background with nothing under it — it reads as the page being longer
+   than it is. Chromium never shows this (the document ends exactly at .sfoot,
+   measured), so it is the iOS overscroll behaviour rather than stray height. */
+html, body{ overscroll-behavior-y:none; }
