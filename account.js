@@ -4,9 +4,19 @@
 // Once the RSVP is in, the title-side action becomes "Leave a note" and a
 // small "RSVP ✓" appears so they can go back and change their answers.
 (function () {
+  /* Reads the cookie itself rather than the module-level `who`. syncStack() is
+     called on line 29 but `who` is not assigned until line 45 — var hoisting
+     means it would be undefined here, so the key would silently lose its
+     namespace and this would read the wrong guest's flag. */
+  function guestNs(){
+    var m = document.cookie.split('; ').find(function(r){ return r.indexOf('sj_guest=') === 0; });
+    var g = m ? decodeURIComponent(m.split('=').slice(1).join('=')).trim().toLowerCase() : '';
+    return g ? ':' + g : '';
+  }
+
   function syncStack(){
     var done = false;
-    try { done = localStorage.getItem('sj-rsvp-done') === '1'; } catch (e) {}
+    try { done = localStorage.getItem('sj-rsvp-done' + guestNs()) === '1'; } catch (e) {}
     document.querySelectorAll('.titlestack').forEach(function (st) {
       var rsvp = st.querySelector('.ts-rsvp'),
           note = st.querySelector('.ts-note'),
@@ -381,13 +391,19 @@
 
   var out = api.body.querySelector('.acct-out');
   if (out) out.addEventListener('click', function(){
-    /* Drop this guest's cached profile and drafts so the next person on the
-       same browser starts clean. Namespaced prompt flags are left alone — they
-       belong to their owner, not to the device. */
+    /* Drop this guest's cached profile, drafts and RSVP so the next person on
+       the same browser starts clean.
+       The RSVP keys are namespaced now, so remove BOTH forms: the namespaced
+       ones this guest actually wrote, and the bare ones in case anything on an
+       older cached script wrote a global key before the page reloaded.
+       Namespaced *prompt* flags are left alone — they belong to their owner,
+       not to the device, and re-asking is worse than not asking. */
     try {
-      ['sj-profile','sj-rsvp-draft','sj-note-draft'].forEach(function(k){
-        localStorage.removeItem(k);
-      });
+      var ns = guestNs();
+      ['sj-profile', 'sj-note-draft',
+       'sj-rsvp-data',      'sj-rsvp-draft',      'sj-rsvp-done',
+       'sj-rsvp-data' + ns, 'sj-rsvp-draft' + ns, 'sj-rsvp-done' + ns
+      ].forEach(function(k){ localStorage.removeItem(k); });
     } catch(e){}
     ['sj_guest','sj_tier'].forEach(function(k){
       document.cookie = k + '=; Path=/; Max-Age=0; SameSite=Lax';

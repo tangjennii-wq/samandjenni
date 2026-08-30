@@ -38,6 +38,51 @@
 
   var who = cookie('sj_guest').trim().toLowerCase();
 
+  /* ── per-guest browser keys ───────────────────────────────────────────
+     Everything this file writes to localStorage is namespaced by the signed-in
+     guest. Global keys meant the NEXT person to use the same browser inherited
+     the previous guest's RSVP: their answers, their party size, and the
+     thank-you screen instead of a blank form. A shared laptop or a couple on
+     one phone is enough.
+
+     Defined once, here, above every use. There used to be a second identical
+     definition ~600 lines down, which is why 'sj-rsvp-done' was WRITTEN bare on
+     submit and READ namespaced by the prompt — two different keys for one flag,
+     so the prompt kept firing at guests who had already replied. */
+  function nskey(base){
+    return base + (who ? ':' + who : '');
+  }
+  var DATA_KEY  = nskey('sj-rsvp-data');
+  var DRAFT_KEY = nskey('sj-rsvp-draft');
+  var DONE_KEY  = nskey('sj-rsvp-done');
+
+  /* One-time migration off the old global keys.
+     Legacy data records no owner in the key, so it is kept only when the stored
+     payload's guest_key matches whoever is signed in now. If it belonged to
+     someone else it is discarded rather than handed over — the reply is safe in
+     Supabase either way, so the worst case is a blank form, never a stranger's
+     answers. The bare keys are removed unconditionally so this runs once. */
+  (function migrateLegacyKeys(){
+    try {
+      var raw = localStorage.getItem('sj-rsvp-data');
+      if (raw && who && !localStorage.getItem(DATA_KEY)) {
+        var mine = false;
+        try {
+          mine = (JSON.parse(raw).guest_key || '').trim().toLowerCase() === who;
+        } catch (e) {}
+        if (mine) {
+          localStorage.setItem(DATA_KEY, raw);
+          if (localStorage.getItem('sj-rsvp-done') === '1') {
+            localStorage.setItem(DONE_KEY, '1');
+          }
+        }
+      }
+      ['sj-rsvp-data', 'sj-rsvp-draft', 'sj-rsvp-done'].forEach(function (k) {
+        localStorage.removeItem(k);
+      });
+    } catch (e) {}
+  })();
+
   // A bare surname is not a name. "tang" is five households and "lee" is more,
   // so echoing it into the name field reads as already-correct and the guest
   // sends it back unchanged — same reasoning as the details panel. Only a
@@ -128,16 +173,15 @@
 
   // Try to restore a previous submission so guests can edit & resubmit.
   var prev = null;
-  try { prev = JSON.parse(localStorage.getItem('sj-rsvp-data')); } catch(e){}
+  try { prev = JSON.parse(localStorage.getItem(DATA_KEY)); } catch(e){}
 
   /* ── in-progress draft ───────────────────────────────────────────────
      Nothing was saved until Send, so closing the drawer by accident — a tap
      on the backdrop, a swipe, the back button — threw away everything typed.
      The drawer makes that easy to do, which is exactly why it needs this.
      Written on every keystroke and every yes/no, cleared once a reply is
-     actually recorded. Separate from 'sj-rsvp-data', which is the submitted
-     answer and drives edit mode. */
-  var DRAFT_KEY = 'sj-rsvp-draft';
+     actually recorded. Separate from DATA_KEY, which is the submitted
+     answer and drives edit mode. Both are namespaced per guest above. */
   function loadDraft(){
     try { return JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch(e){ return null; }
   }
@@ -517,8 +561,8 @@
           // lose the draft on a failed send, which is when it matters most.
           clearDraft();
           try {
-            localStorage.setItem('sj-rsvp-done', '1');
-            localStorage.setItem('sj-rsvp-data', JSON.stringify(payload));
+            localStorage.setItem(DONE_KEY, '1');
+            localStorage.setItem(DATA_KEY, JSON.stringify(payload));
           } catch(e){}
           document.dispatchEvent(new CustomEvent('sj:rsvped'));
           prev = payload;
@@ -559,7 +603,7 @@
 
     /* ── initial render ──────────────────────────────────────────── */
     var alreadyDone = false;
-    try { alreadyDone = localStorage.getItem('sj-rsvp-done') === '1'; } catch(e){}
+    try { alreadyDone = localStorage.getItem(DONE_KEY) === '1'; } catch(e){}
 
     if (alreadyDone && prev) {
       renderThanks();
@@ -659,17 +703,14 @@
      without hunting through the file. */
   var AUTO_PROMPT_RSVP = false;
 
-  /* Namespaced per guest, like the details flags. Global keys meant one guest's
-     state silenced the prompt for the next person on the same browser. */
-  function nskey(base){
-    var k = (who || '').trim().toLowerCase().replace(/\s+/g, ' ');
-    return base + (k ? ':' + k : '');
-  }
+  /* nskey() is defined once at the top of this file, alongside DATA_KEY /
+     DRAFT_KEY / DONE_KEY. A second copy used to live here, which is how the
+     done flag ended up written under one key and read under another. */
   var PROMPT_KEY = nskey('sj-rsvp-prompted');
 
   function alreadyReplied(){
     var done = false;
-    try { done = localStorage.getItem(nskey('sj-rsvp-done')) === '1'; } catch(e){}
+    try { done = localStorage.getItem(DONE_KEY) === '1'; } catch(e){}
     if (done) return Promise.resolve(true);
     if (!window.SJUpload || !window.SJUpload.rpc) return Promise.resolve(false);
     return window.SJUpload.rpc('guest_rsvped', window.SJUpload.guestKey())
