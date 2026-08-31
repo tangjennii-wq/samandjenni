@@ -529,60 +529,49 @@
         btn.disabled = true; btn.textContent = 'Sending…';
 
         var guests = activeGuests();
-        var payload = {
-          guest_key: window.SJUpload ? window.SJUpload.guestKey() : '',
-          tier: tier,
-          party_size: guests.length,
-          events: evAnswers,
-          guests: guests,
-          photo_path: uploader ? uploader.getPath() : ''
-        };
-
-        /* Two ways in, and the first is the one that can be trusted.
-
-           WITH A TOKEN — the guest arrived by their household's invitation
-           link. submit_rsvp() takes the token and looks the household up
-           server-side; guest_key and tier are NOT parameters, so there is
-           nothing for the browser to lie about. Presenting a token you do not
-           hold is the only way to file a reply as someone else, and tokens are
-           72 random bits.
-
-           WITHOUT ONE — the guest signed in by email, which is everyone until
-           the invitations go out. Falls back to the direct insert. It is the
-           weaker path: guest_key is whatever the browser sends, so a guest
-           could type another guest's email. Kept only so nobody is locked out
-           mid-season; it goes away once every household has a link.
-
-           Either way this is an INSERT, never an upsert. An upsert would run
-           ON CONFLICT DO UPDATE, RLS would check the UPDATE arm, and this table
-           has only an INSERT policy — that combination returned 401 on every
-           reply for weeks. Appending also means a later answer never destroys
-           the evidence of an earlier one. */
-        var tok = (window.SJUpload && window.SJUpload.token) ? window.SJUpload.token() : '';
-        var saving;
-        if (tok && window.SJUpload && window.SJUpload.rpcArgs) {
-          saving = window.SJUpload.rpcArgs('submit_rsvp', {
-            p_token:  tok,
-            p_events: evAnswers,
-            p_guests: guests,
-            p_photo:  uploader ? uploader.getPath() : null
+        /* Answers only. Who this is gets decided by the server.
+           This used to POST straight into wedding_rsvps with a guest_key the
+           page chose — so the publishable key that ships in every page was
+           enough for anyone to file a reply as anybody on the list. Now the
+           only thing crossing the wire is what was answered; /api/rsvp reads
+           the sign-in cookie, resolves the household in Postgres, and writes
+           guest_key and tier from that. There is nothing here to falsify. */
+        var saving = fetch('/api/rsvp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',        // the sign-in cookies ride along
+          body: JSON.stringify({
+            events: evAnswers,
+            guests: guests,
+            photo_path: uploader ? uploader.getPath() : null
+          })
+        }).then(function(r){
+          if (!r.ok) return r.json().catch(function(){ return {}; }).then(function(j){
+            throw new Error((j && j.error) || ('rsvp ' + r.status));
           });
-        } else if (window.SJUpload && window.SJUpload.save) {
-          saving = window.SJUpload.save('wedding_rsvps', payload);
-        } else {
-          saving = Promise.reject(new Error('no uploader'));
-        }
+          return r.json();
+        });
 
         saving.then(function(){
           // Only once the row is actually recorded. Clearing on click would
           // lose the draft on a failed send, which is when it matters most.
           clearDraft();
+          /* A local copy purely so "edit your reply" reopens filled in. It is
+             not what was stored — the server decided guest_key and tier — so
+             it deliberately holds only what the guest themselves answered. */
+          var localCopy = {
+            tier: tier,
+            party_size: guests.length,
+            events: evAnswers,
+            guests: guests,
+            photo_path: uploader ? uploader.getPath() : ''
+          };
           try {
             localStorage.setItem(DONE_KEY, '1');
-            localStorage.setItem(DATA_KEY, JSON.stringify(payload));
+            localStorage.setItem(DATA_KEY, JSON.stringify(localCopy));
           } catch(e){}
           document.dispatchEvent(new CustomEvent('sj:rsvped'));
-          prev = payload;
+          prev = localCopy;
           renderThanks();
         }).catch(function(){
           btn.disabled = false; btn.textContent = label;

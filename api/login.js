@@ -212,6 +212,15 @@ export default async function handler(req, res) {
   }
 
   const maxAge = 60 * 60 * 24 * 400;
+  /* No token cookie is issued on the email path, deliberately.
+     Handing the browser a token here would require a function that turns an
+     email into that household's token — and this server authenticates to
+     Supabase with the same publishable key the browser holds, so any function
+     it can call, an attacker can call too. That would turn "knows an invited
+     email" into "can harvest that household's permanent link", which is worse
+     than the gap it was meant to close.
+     Instead /api/rsvp resolves the household from this cookie server-side on
+     every submission. The browser never supplies guest_key or tier. */
   res.setHeader('Set-Cookie', [
     `sj_guest=${encodeURIComponent(matched)}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
     `sj_tier=${tier}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
