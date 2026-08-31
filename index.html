@@ -1146,8 +1146,13 @@ html.sj-veil .sjsheet{z-index:2800}</style>
 
       <!-- Video stage -->
       <div class="stage">
+        <!-- No `controls` here. The player bar is added deliberately in two
+             places below: immediately on phones, and on desktop only once the
+             guest taps the sound overlay. Having it in the markup meant the
+             scrubber and timecode sat across the film's burned-in title card
+             from the moment the page loaded. -->
         <video id="heroVideo"
-               muted autoplay loop playsinline controls preload="auto"
+               muted autoplay loop playsinline preload="auto"
                poster="poster.jpg"
                data-mobile-src="hero-home.mp4"
                data-desktop-src="hero-home.mp4"></video>
@@ -1193,11 +1198,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
         </button>
 
       </div>
-
-      
     </div>
-    </div>
-
 
     <!-- Where and when, under the film. Assembled by JS per tier and NOT written
          into the static HTML: anything in the source is readable by every
@@ -1360,6 +1361,13 @@ html.sj-veil .sjsheet{z-index:2800}</style>
         videoErrored = true;
         showFallback();
       });
+      // A recovered error must not be permanent. Media errors here are usually
+      // transient — a stalled segment, a flaky connection, a tab waking up —
+      // and the browser retries by itself. The flag used to latch on forever,
+      // so once it had been set even once, hideFallback() refused to run and
+      // the date overlay stayed printed across the film for the rest of the
+      // visit even though the video was plainly playing. Any event that means
+      // "there is picture" clears it.
 
       // Autoplay is set on the <video> element — browser starts playing as soon as
       // possible. We don't hide the video while loading because that left users on
@@ -1374,7 +1382,10 @@ html.sj-veil .sjsheet{z-index:2800}</style>
         if (dateFallback) dateFallback.classList.add('show');
       }
       function hideFallback() {
-        if (dateFallback && !videoErrored) dateFallback.classList.remove('show');
+        // Unconditional. Whatever happened earlier, we are being told there is
+        // picture NOW, so the overlay comes off and the error flag is cleared.
+        videoErrored = false;
+        if (dateFallback) dateFallback.classList.remove('show');
       }
 
       // Listen for every event that means "there is picture", not just loadeddata.
