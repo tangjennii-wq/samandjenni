@@ -4099,3 +4099,28 @@ html{ scrollbar-gutter:stable; }
    than it is. Chromium never shows this (the document ends exactly at .sfoot,
    measured), so it is the iOS overscroll behaviour rather than stray height. */
 html, body{ overscroll-behavior-y:none; }
+
+
+/* ==========================================================================
+   Keyboard: give the sheet somewhere to scroll TO
+   --------------------------------------------------------------------------
+   The focus handler in drawer.js scrolls the focused field up inside
+   .sjsheet-body, but the last field could not move: with no space beneath it
+   the body was already at maximum scroll, so scrollTo() was a no-op and the
+   field stayed pinned to the bottom edge — under the keyboard. That is the
+   "I can't scroll, the screen is in the way" case, and it hits the LAST input
+   hardest, which here is the free-text box people most need to see.
+
+   Two separate obstructions, only one of which the browser tells us about:
+     * the keyboard      — reported, visualViewport.height shrinks for it
+     * iOS's autofill / QuickType accessory bar (the key, card and pin chips)
+       — NOT reported. It is drawn over the visual viewport, so a field sitting
+       flush at the bottom of vv.height is still covered by roughly 44-56px.
+
+   A tall pad below the content solves both: every field can now be scrolled
+   well clear of anything overlaying the bottom of the screen. It only applies
+   while an input is focused, so the resting layout is untouched.           */
+.sjsheet--kb .sjsheet-body{ padding-bottom:55vh; }
+
+/* The sheet itself must not clip its scrolling child. */
+.sjsheet--kb .sjsheet-body{ overflow-y:auto; -webkit-overflow-scrolling:touch; }
