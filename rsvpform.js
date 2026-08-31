@@ -139,6 +139,14 @@
     var moved = false;
     if (pr.person_name && !PRE.name)  { PRE.name  = pr.person_name; moved = true; }
     if (pr.email       && !PRE.email) { PRE.email = pr.email;       moved = true; }
+    /* How many seats this household actually has, straight from the guest list.
+       It decides how many name rows to draw, which is why there is no "Plus
+       one?" question any more: asking was always redundant. A household of one
+       -- Jenni's dad, Ann, thirteen others -- was being offered a plus one that
+       does not exist, and a couple was being asked to confirm something the
+       invitation already stated. Whoever is coming gets typed into the second
+       row regardless, so the answer arrives without the question. */
+    if (pr.party_size) { PRE.party = pr.party_size; moved = true; }
     return moved;
   }
 
@@ -299,18 +307,14 @@
       '<div class="rsvp-body">' +
 
         '<div class="rsvp-sect">' +
-          // Two containers with the toggle between them, deliberately. With one
-          // container the +1's fields appeared ABOVE the "Bringing a +1?"
-          // control that summons them, so answering yes made a block open
-          // upwards, behind your thumb on a phone.
+          /* One row per seat the household actually has. The "Plus one? Yes/No"
+             toggle that used to sit between these two containers is gone: the
+             guest list already knows whether this invitation is for one person
+             or two, so asking was either offering a plus one that does not
+             exist (16 households) or asking someone to confirm what their own
+             invitation says (108). Whoever is coming gets named in the second
+             row either way. */
           '<div class="rsvp-guests" data-guests></div>' +
-          '<div class="plusone">' +
-            '<span class="plusone-q">Plus one</span>' +
-            '<div class="plusone-yn">' +
-              '<button type="button" class="yn yes p1" data-p1="yes">Yes</button>' +
-              '<button type="button" class="yn no p1" data-p1="no">No</button>' +
-            '</div>' +
-          '</div>' +
           '<div class="rsvp-guests rsvp-guests--plus" data-guests-plus></div>' +
           '<input id="' + p + 'Count" type="hidden" value="' + PRE.party + '">' +
         '</div>' +
@@ -360,6 +364,7 @@
   function wire(root, p, onSent){
     var answers = {};
     var guestData = [];
+    // Kept only so an old saved draft still parses; nothing sets it any more.
     var plusOneVal = PRE.party > 1 ? 'yes' : 'no';
     var uploader = null;
     var card = root.querySelector('.note-card') || root;
@@ -430,18 +435,6 @@
       });
     }
 
-    function setPlusOne(v){
-      plusOneVal = v;
-      var countEl = g('Count');
-      if (countEl) countEl.value = (v === 'yes') ? '2' : '1';
-      root.querySelectorAll('.yn.p1').forEach(function(x){
-        x.classList.toggle('on', x.dataset.p1 === v);
-      });
-      saveGuestFields();
-      renderGuests();
-      saveDraft();
-    }
-
     function showErr(msg){
       var box = root.querySelector('.form-err');
       if (!box) {
@@ -491,15 +484,11 @@
       card.innerHTML = formHTML(p);
       clearErr();
 
+      // The hidden count drives how many rows render; it comes from the guest
+      // list via the profile lookup, so there is nothing for the guest to set.
+      var countEl = g('Count');
+      if (countEl) countEl.value = String(Math.max(1, Math.min(2, PRE.party || 1)));
       renderGuests();
-
-      var p1wrap = root.querySelector('.plusone');
-      if (p1wrap) {
-        p1wrap.querySelectorAll('.yn.p1').forEach(function(b){
-          b.addEventListener('click', function(){ setPlusOne(b.dataset.p1); });
-        });
-        setPlusOne(plusOneVal);
-      }
 
       root.querySelectorAll('.yn:not(.p1)').forEach(function(b){
         if (answers[b.dataset.k] === b.dataset.v) b.classList.add('on');
@@ -623,7 +612,9 @@
       if (draft) {
         if (draft.guests && draft.guests.length) guestData = draft.guests;
         if (draft.events) answers = Object.assign(answers, draft.events);
-        if (draft.plusOne) plusOneVal = draft.plusOne;
+        // Old drafts carry a plusOne flag. Ignore it: the seat count now comes
+        // from the guest list, so a stale draft must not resurrect a second row
+        // for a household that only has one seat.
       }
       renderForm();
       // After the first paint, so an empty name/email field is filled the moment
