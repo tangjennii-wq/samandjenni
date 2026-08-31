@@ -216,5 +216,30 @@
     });
   }
 
-  window.SJUpload = { wire: wire, save: save, upsert: upsert, guestKey: guestKey, rpc: rpc };
+  /* Call a Postgres function with arbitrary named arguments.
+     rpc() above only ever sends {p_key}, which was fine while every function
+     took a single guest key. submit_rsvp takes four. */
+  function rpcArgs(fn, args){
+    if (typeof fetch !== 'function') return Promise.reject(new Error('offline'));
+    return fetch(URL_BASE + '/rest/v1/rpc/' + fn, {
+      method:'POST',
+      headers:{ 'apikey':KEY, 'Authorization':'Bearer '+KEY, 'Content-Type':'application/json' },
+      body: JSON.stringify(args || {})
+    }).then(function(r){
+      if (!r.ok) return r.text().then(function(t){ throw new Error(fn + ' ' + r.status + ' ' + t); });
+      return r.json();
+    });
+  }
+
+  /* The household's invitation token, if this browser was signed in by link.
+     It is the credential the server uses to decide WHO a reply belongs to, so
+     a guest holding one cannot file a reply as anybody else. Guests who signed
+     in by email simply have no token yet, and fall back to the older path. */
+  function token(){
+    var m = document.cookie.split('; ').find(function(r){ return r.indexOf('sj_tok=') === 0; });
+    return m ? decodeURIComponent(m.split('=').slice(1).join('=')) : '';
+  }
+
+  window.SJUpload = { wire: wire, save: save, upsert: upsert, guestKey: guestKey,
+                      rpc: rpc, rpcArgs: rpcArgs, token: token };
 })();

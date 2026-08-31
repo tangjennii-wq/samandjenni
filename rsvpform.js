@@ -538,21 +538,40 @@
           photo_path: uploader ? uploader.getPath() : ''
         };
 
-        // Plain INSERT, deliberately — every submission is a new row.
-        //
-        // This used to upsert on guest_key and it failed for EVERY guest:
-        // `resolution=merge-duplicates` makes Postgres run INSERT ON CONFLICT
-        // DO UPDATE, RLS checks the UPDATE arm too, and this table only has an
-        // INSERT policy. Result: a 401 and "that didn't send" on every reply.
-        //
-        // Appending rather than updating is also the safer shape here. guest_key
-        // is the sj_guest cookie, and shared surnames ("lee", "tang") are one key
-        // across several households — an upsert would let one family silently
-        // overwrite another's answers. Reading the newest row per guest_key gives
-        // the current reply and keeps every earlier version.
-        var saving = (window.SJUpload && window.SJUpload.save)
-          ? window.SJUpload.save('wedding_rsvps', payload)
-          : Promise.reject(new Error('no uploader'));
+        /* Two ways in, and the first is the one that can be trusted.
+
+           WITH A TOKEN — the guest arrived by their household's invitation
+           link. submit_rsvp() takes the token and looks the household up
+           server-side; guest_key and tier are NOT parameters, so there is
+           nothing for the browser to lie about. Presenting a token you do not
+           hold is the only way to file a reply as someone else, and tokens are
+           72 random bits.
+
+           WITHOUT ONE — the guest signed in by email, which is everyone until
+           the invitations go out. Falls back to the direct insert. It is the
+           weaker path: guest_key is whatever the browser sends, so a guest
+           could type another guest's email. Kept only so nobody is locked out
+           mid-season; it goes away once every household has a link.
+
+           Either way this is an INSERT, never an upsert. An upsert would run
+           ON CONFLICT DO UPDATE, RLS would check the UPDATE arm, and this table
+           has only an INSERT policy — that combination returned 401 on every
+           reply for weeks. Appending also means a later answer never destroys
+           the evidence of an earlier one. */
+        var tok = (window.SJUpload && window.SJUpload.token) ? window.SJUpload.token() : '';
+        var saving;
+        if (tok && window.SJUpload && window.SJUpload.rpcArgs) {
+          saving = window.SJUpload.rpcArgs('submit_rsvp', {
+            p_token:  tok,
+            p_events: evAnswers,
+            p_guests: guests,
+            p_photo:  uploader ? uploader.getPath() : null
+          });
+        } else if (window.SJUpload && window.SJUpload.save) {
+          saving = window.SJUpload.save('wedding_rsvps', payload);
+        } else {
+          saving = Promise.reject(new Error('no uploader'));
+        }
 
         saving.then(function(){
           // Only once the row is actually recorded. Clearing on click would

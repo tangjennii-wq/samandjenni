@@ -61,7 +61,61 @@ async function lookUp(key) {
   }
 }
 
+/* Call a Postgres function with named arguments. rpc() above only ever sends
+   {p_key}; household_for takes two. */
+async function rpcArgs(fn, args) {
+  const r = await fetch(SB_URL + '/rest/v1/rpc/' + fn, {
+    method: 'POST',
+    headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY,
+               'Content-Type': 'application/json' },
+    body: JSON.stringify(args),
+  });
+  if (!r.ok) throw new Error(fn + ' ' + r.status);
+  return r.json();
+}
+
 export default async function handler(req, res) {
+  /* ── Signing in by invitation link: /api/login?k=TOKEN ──────────────────
+     The token identifies the household on its own, so there is nothing to
+     type and nothing to get wrong — and, unlike an email, knowing somebody
+     else's does not help you, because we never publish them.
+
+     It sets a third cookie, sj_tok. That is what the RSVP form presents when
+     it files a reply, and what lets the database work out whose reply it is
+     rather than believing the browser. Email sign-in stays exactly as it was,
+     so the five households with no email, and anyone who mislays their link,
+     are never stranded. */
+  const tokMatch = (req.url || '').match(/[?&]k=([^&]+)/);
+  if (tokMatch) {
+    const tok = decodeURIComponent(tokMatch[1]).trim();
+    // A token is 12 url-safe characters. Anything else is not worth a lookup.
+    if (/^[A-Za-z0-9_-]{8,64}$/.test(tok)) {
+      try {
+        const rows = await rpcArgs('household_for', { p_token: tok, p_email: null });
+        const hh = Array.isArray(rows) ? rows[0] : rows;
+        if (hh && hh.hid) {
+          const maxAgeTok = 60 * 60 * 24 * 400;
+          res.setHeader('Set-Cookie', [
+            `sj_guest=${encodeURIComponent(hh.hid)}; Path=/; Max-Age=${maxAgeTok}; SameSite=Lax; Secure`,
+            `sj_tier=${hh.tier}; Path=/; Max-Age=${maxAgeTok}; SameSite=Lax; Secure`,
+            /* Deliberately NOT HttpOnly: the RSVP form reads this from
+               document.cookie and sends it to submit_rsvp(). Making it
+               HttpOnly would mean routing every reply through a server
+               endpoint holding a service-role key — which is the stronger
+               design, and the one to move to if this ever guards anything
+               beyond a wedding. Here the token is a capability for one
+               household and grants nothing else. */
+            `sj_tok=${encodeURIComponent(tok)}; Path=/; Max-Age=${maxAgeTok}; SameSite=Lax; Secure`,
+          ]);
+          res.writeHead(302, { Location: '/' });
+          return res.end();
+        }
+      } catch (e) { /* fall through to the ordinary gate */ }
+    }
+    res.writeHead(302, { Location: '/gate?e=link' });
+    return res.end();
+  }
+
   let lastname = '';
   if (req.method === 'POST') {
     const body = req.body || {};
