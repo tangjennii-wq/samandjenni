@@ -2477,6 +2477,10 @@ body.sjsheet-open{ overflow:hidden; }
   display:flex; flex-direction:column; justify-content:flex-start;
   padding:8px 20px calc(26px + env(safe-area-inset-bottom)); }
 .sjsheet-in{ width:100%; max-width:520px; margin-inline:auto; margin-block:auto; }
+/* When the iOS keyboard is open, pin content to the top of the scroll
+   container instead of centring it — re-centring during the keyboard
+   animation is what makes the form jump. */
+.sjsheet--kb .sjsheet-in{ margin-top:0; }
 
 /* the form, restated in sheet language — flat rows, no boxes */
 .sjsheet .rsvp-head{ background:none; border:0; padding:0 0 22px; text-align:left; }

@@ -138,11 +138,17 @@
           displacement. The fix is to fix the body at its current offset and put
           it back on close, so nothing jumps.                                */
     var vv = window.visualViewport;
+    var _inputFocused = false;
     function sizeToViewport(){
       if (!vv || window.innerWidth > 760) return;
-      el.style.top    = vv.offsetTop + 'px';
-      el.style.left   = vv.offsetLeft + 'px';
-      el.style.width  = vv.width + 'px';
+      /* While the keyboard is open, only resize height — iOS changes
+         vv.offsetTop during the keyboard animation, which jolts the
+         sheet up/down and makes the focused field jump under your thumb. */
+      if (!_inputFocused) {
+        el.style.top    = vv.offsetTop + 'px';
+        el.style.left   = vv.offsetLeft + 'px';
+        el.style.width  = vv.width + 'px';
+      }
       el.style.height = vv.height + 'px';
     }
     if (vv) {
@@ -150,6 +156,41 @@
       vv.addEventListener('resize', sizeToViewport);
       vv.addEventListener('scroll', sizeToViewport);
     }
+
+    /* ── iOS: scroll focused input into view inside the sheet ───────────
+       When the keyboard opens, iOS tries to scroll the page so the input
+       is visible — but the page is position:fixed, so the scroll
+       displaces the sheet itself, making the address field jump under the
+       user's thumb. We wait for the keyboard animation to finish, then
+       scroll the input into view inside the sheet's own scroll container
+       instead of letting the browser fight the fixed positioning. */
+    var _focusTimer = 0;
+    el.addEventListener('focusin', function(e){
+      var t = e.target;
+      if (t.tagName !== 'INPUT' && t.tagName !== 'TEXTAREA' && t.tagName !== 'SELECT') return;
+      _inputFocused = true;
+      el.classList.add('sjsheet--kb');
+      clearTimeout(_focusTimer);
+      _focusTimer = setTimeout(function(){
+        sizeToViewport();
+        /* Scroll inside the sheet body only — never the window. On iOS
+           scrollIntoView scrolls every ancestor including the layout
+           viewport, which is what causes the sheet to jump. */
+        var sb = el.querySelector('.sjsheet-body');
+        if (sb) {
+          var r  = t.getBoundingClientRect();
+          var br = sb.getBoundingClientRect();
+          var dest = sb.scrollTop + (r.top - br.top) - sb.clientHeight / 3;
+          sb.scrollTo({ top: Math.max(0, dest), behavior: 'smooth' });
+        }
+      }, 300);
+    });
+    el.addEventListener('focusout', function(){
+      _inputFocused = false;
+      el.classList.remove('sjsheet--kb');
+      clearTimeout(_focusTimer);
+      setTimeout(sizeToViewport, 300);
+    });
 
     var scrollY = window.scrollY || window.pageYOffset || 0;
     var prevBody = { position: document.body.style.position, top: document.body.style.top,
@@ -170,6 +211,8 @@
 
     function close(){
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      clearTimeout(_focusTimer);
+      _inputFocused = false;
       document.removeEventListener('keydown', onKey);
       if (vv) {
         vv.removeEventListener('resize', sizeToViewport);
