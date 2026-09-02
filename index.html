@@ -1152,7 +1152,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
              scrubber and timecode sat across the film's burned-in title card
              from the moment the page loaded. -->
         <video id="heroVideo"
-               muted autoplay loop playsinline preload="auto"
+               muted autoplay loop playsinline webkit-playsinline preload="auto"
                poster="poster.jpg"
                data-mobile-src="hero-home.mp4"
                data-desktop-src="hero-home.mp4"></video>
@@ -1221,7 +1221,7 @@ html.sj-veil .sjsheet{z-index:2800}</style>
   <!-- Full-screen reel overlay — the whole film, easy to exit -->
   <div class="reel-modal" id="reelModal" aria-hidden="true">
     <button class="reel-close" id="reelClose" type="button" aria-label="Close">×</button>
-    <video id="reelVideo" playsinline controls preload="none" poster="poster.jpg">
+    <video id="reelVideo" playsinline webkit-playsinline controls preload="none" poster="poster.jpg">
       <source src="full-reel.mp4" type="video/mp4">
     </video>
   </div>
@@ -1235,20 +1235,37 @@ html.sj-veil .sjsheet{z-index:2800}</style>
             soundOverlay = document.getElementById('soundOverlay');
       // hero-home.mp4 already begins at 0:20 and loops on its own (loop attribute).
 
-      // Phones: show the native controls immediately and drop the custom
-      // overlay. Two play affordances stacked on one video is worse than one,
-      // and the native arrow is the one people already know.
+      // Phones: keep the hero inline and control-free.
+      //
+      // We used to switch on native `controls` here and delete the custom
+      // overlay. In an in-app WKWebView (Gmail, Instagram, etc.) that combination
+      // can hand the film to iOS's native fullscreen player, which covers the
+      // whole page — so the guest gets a black screen with no "Sam + Jenni" and
+      // no menu. The custom overlay is the only play affordance on mobile now.
       var isPhone = window.matchMedia && window.matchMedia('(max-width:760px)').matches;
-      if (isPhone && hero) {
-        // setAttribute, not the property: iOS suppresses the control bar for an
-        // autoplaying muted inline video unless `controls` is a real attribute
-        // on the element, so `hero.controls = true` left the film with no
-        // scrubber, no volume and no visible way in.
-        hero.setAttribute('controls', '');
-        hero.controls = true;
-        if (soundOverlay) soundOverlay.remove();
-        // iOS's own player has a fullscreen button in the same corner as ours
-        if (openReel) openReel.remove();
+
+      // Can this browser play video inline at all? Old iPhones and some embedded
+      // webviews report false, and there `play()` always goes fullscreen.
+      var inlineOK = true;
+      try {
+        if (window.matchMedia) {
+          var mq = window.matchMedia('(-webkit-video-playable-inline)');
+          // A browser that doesn't know the feature returns matches:false with
+          // media 'not all' — treat only a real negative match as unsupported.
+          if (mq && mq.media !== 'not all' && mq.media !== 'invalid') inlineOK = mq.matches;
+        }
+      } catch (e) { /* leave inlineOK true */ }
+
+      if (hero && !inlineOK) {
+        // Don't autoplay into a fullscreen takeover. Freeze on the poster and
+        // make the guest ask for the film deliberately.
+        hero.removeAttribute('autoplay');
+        hero.autoplay = false;
+        try { hero.pause(); } catch (e) {}
+        if (soundOverlay) {
+          var lbl = soundOverlay.querySelector('.label');
+          if (lbl) lbl.textContent = 'watch the film';
+        }
       }
 
       // ---- sound on first deliberate play --------------------------------
@@ -1262,40 +1279,48 @@ html.sj-veil .sjsheet{z-index:2800}</style>
       // allowed by Safari's autoplay policy; doing it on load would be blocked.
       //
       // Once only: if someone deliberately mutes it again, we leave them alone.
-      var gestured = false, didUnmute = false;
-      ['pointerdown', 'touchstart', 'keydown'].forEach(function (t) {
-        document.addEventListener(t, function () { gestured = true; },
-          { once: true, capture: true, passive: true });
-      });
+      //
+      // The gesture must land ON the film or the play overlay. A document-wide
+      // listener meant any stray tap — a nav link, a scroll — could unmute, and
+      // an unmute Safari considers untrusted can restart playback fullscreen.
+      var didUnmute = false;
+      function unmute() {
+        if (didUnmute || !hero || !hero.muted) return;
+        didUnmute = true;
+        hero.muted = false;
+        hero.removeAttribute('muted');
+        if (hero.volume === 0) hero.volume = 1;
+      }
       if (hero) {
-        hero.addEventListener('play', function () {
-          if (gestured && !didUnmute && hero.muted) {
-            didUnmute = true;
-            hero.muted = false;
-            hero.removeAttribute('muted');
-            if (hero.volume === 0) hero.volume = 1;
-          }
-        });
-        // Tapping the frame itself (not the controls) also turns the sound on,
-        // since on a phone the whole film is the obvious thing to press.
+        // Tapping the frame itself is the obvious thing to press on a phone.
         hero.addEventListener('click', function () {
           if (!didUnmute && hero.muted) {
-            didUnmute = true;
-            hero.muted = false;
-            hero.removeAttribute('muted');
+            unmute();
             hero.play().catch(function () {});
           }
         });
       }
 
-      // Tap the overlay → unmute + reveal the native player controls (hidden until then)
+      // Tap the overlay → play with sound. On phones we deliberately do NOT turn
+      // on native controls: in an in-app webview that can promote the film to
+      // the native fullscreen player and swallow the rest of the page.
       function revealPlayer() {
-        hero.muted = false;
-        hero.controls = true;
+        unmute();
+        if (!isPhone) hero.controls = true;
         hero.play().catch(()=>{});
         if (soundOverlay) soundOverlay.style.display = 'none';
       }
       if (soundOverlay) soundOverlay.addEventListener('click', revealPlayer);
+
+      // Diagnostics: if iOS promotes the hero to its fullscreen player anyway,
+      // we want to know rather than guess from "it went black".
+      if (hero) {
+        hero.addEventListener('webkitbeginfullscreen', function () {
+          console.warn('[hero] unexpected native fullscreen', {
+            inlineOK: inlineOK, controls: hero.controls, ua: navigator.userAgent
+          });
+        });
+      }
 
       // "Watch full screen" — open a full-viewport overlay with the WHOLE reel; easy to exit
       const reelModal = document.getElementById('reelModal'),
@@ -1317,6 +1342,20 @@ html.sj-veil .sjsheet{z-index:2800}</style>
       if (reelClose) reelClose.addEventListener('click', closeReelOverlay);
       reelModal.addEventListener('click', e => { if (e.target === reelModal) closeReelOverlay(); });
       document.addEventListener('keydown', e => { if (e.key === 'Escape' && reelModal.classList.contains('open')) closeReelOverlay(); });
+
+      // Coming back via the back button (or out of iOS's fullscreen player) can
+      // restore the page from bfcache with the reel overlay still open and the
+      // body still locked — which reads as "the site is a black screen".
+      window.addEventListener('pageshow', function () {
+        if (reelModal && reelModal.classList.contains('open')) {
+          reelModal.classList.remove('open');
+          try { reelVid.pause(); } catch (e) {}
+        }
+        document.body.style.overflow = '';
+        // Only resume where inline playback is safe — otherwise play() means
+        // fullscreen, and this isn't a user gesture.
+        if (inlineOK && hero && hero.paused && !hero.ended) hero.play().catch(function () {});
+      });
 
       // Share button — uses Web Share API on mobile/supported browsers, falls back to clipboard copy
       const shareBtn = document.getElementById('shareBtn');
