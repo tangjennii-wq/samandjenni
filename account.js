@@ -396,7 +396,12 @@
        'sj-rsvp-data' + ns, 'sj-rsvp-draft' + ns, 'sj-rsvp-done' + ns
       ].forEach(function(k){ localStorage.removeItem(k); });
     } catch(e){}
-    ['sj_guest','sj_tier'].forEach(function(k){
+    /* sj_tok too. It is set with a 400-day Max-Age on the invitation-link path,
+       so leaving it behind meant the next person to sign in on this device by
+       email would still be resolved to the FIRST household — /api/rsvp checks
+       the token before the email. Their reply would be filed under someone
+       else's name and tier, with a cheerful thank-you screen. */
+    ['sj_guest','sj_tier','sj_tok'].forEach(function(k){
       document.cookie = k + '=; Path=/; Max-Age=0; SameSite=Lax';
     });
     location.href = '/gate';

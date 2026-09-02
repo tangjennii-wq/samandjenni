@@ -224,6 +224,12 @@ export default async function handler(req, res) {
   res.setHeader('Set-Cookie', [
     `sj_guest=${encodeURIComponent(matched)}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
     `sj_tier=${tier}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`,
+    /* Expire any token left by a previous occupant of this browser. /api/rsvp
+       prefers sj_tok over sj_guest, so without this an email sign-in on a
+       device that once opened someone else's invitation link would file the
+       reply under that household. Signing in is the right moment to say who
+       this browser is now. */
+    `sj_tok=; Path=/; Max-Age=0; SameSite=Lax; Secure`,
   ]);
   // Send them back where they were headed. This only understood next=rsvp
   // before, which was fine when /rsvp was the only gated page — now that every

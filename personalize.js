@@ -35,7 +35,7 @@ window.SJ_FEATURES = { overUnder: false };
       .forEach(function (k) { localStorage.removeItem(k); });
   } catch (e) {}
   if (m[1] === 'all') {
-    ['sj_guest', 'sj_tier'].forEach(function (c) {
+    ['sj_guest', 'sj_tier', 'sj_tok'].forEach(function (c) {
       document.cookie = c + '=; Path=/; Max-Age=0; SameSite=Lax';
     });
     location.replace('/gate');

@@ -123,7 +123,15 @@ export default async function handler(req, res) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify({ ok: true, id }));
   } catch (e) {
-    const known = /not on the guest list|invalid token/i.test(String(e && e.message));
+    /* Log it. The submit_rsvp_by_email outage produced no evidence anywhere:
+       the guest saw "check your connection" and the Vercel logs were empty,
+       so a 40-hour total failure looked like nothing at all. */
+    console.error('[rsvp] failed:', String((e && e.message) || e));
+    // A guest who isn't on the list fails the RLS WITH CHECK on the email path,
+    // which reads "new row violates row-level security policy" — nothing like
+    // the token path's "invalid token". Both mean the same thing to the guest.
+    const known = /not on the guest list|invalid token|row-level security|42501/i
+      .test(String(e && e.message));
     res.writeHead(known ? 403 : 502, { 'Content-Type': 'application/json' });
     // Never echo the internal error to the page.
     return res.end(JSON.stringify({ error: known ? 'we could not match you to the guest list' : 'could not save' }));

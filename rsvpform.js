@@ -573,10 +573,21 @@
           document.dispatchEvent(new CustomEvent('sj:rsvped'));
           prev = localCopy;
           renderThanks();
-        }).catch(function(){
+        }).catch(function(err){
           btn.disabled = false; btn.textContent = label;
-          showErr('That didn’t send — check your connection and try again. ' +
-                  'Still stuck? Text us and we’ll add you by hand.');
+          /* Use the message the server actually sent. The old handler took no
+             argument and always blamed the connection, so when /api/rsvp was
+             calling a Postgres function that did not exist, every guest was
+             told to check their wifi — and retried, on a perfectly good one. */
+          var msg = (err && err.message) || '';
+          showErr(
+            /not signed in/i.test(msg)
+              ? 'Your sign-in expired — please sign in again. We’ve kept what you typed.'
+            : /guest list/i.test(msg)
+              ? 'We couldn’t match you to the guest list. Text us and we’ll add you by hand.'
+              : 'That didn’t send — check your connection and try again. ' +
+                'Still stuck? Text us and we’ll add you by hand.'
+          );
         });
       });
 
