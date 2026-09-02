@@ -81,16 +81,44 @@ export default async function handler(req, res) {
      resolved inside Postgres and guest_key and tier are written from that
      lookup — never from anything sent here.
 
-     There is deliberately NO function that turns an email into a token. This
-     server holds the same publishable key the browser does, so any function it
-     can call an attacker can call too; a token-lookup would let anyone who
-     knows an invited address harvest that household's permanent link. Keeping
-     the two paths separate means a token is only ever known by the household
-     it belongs to. */
+     Token path: submit_rsvp() is a security-definer that looks the household
+     up from the token, writes guest_key and tier, and inserts the row. The
+     browser cannot lie about who it is.
+
+     Email path: submit_rsvp_by_email() was planned but never created in
+     Postgres. Until it exists, we look the tier up via guest_tier() — the
+     same call login.js already makes — and INSERT directly. guest_key is the
+     email from the sign-in cookie (set by login.js after it verified the
+     address against the allowlist), so identity still comes from the server,
+     not the page. A plain INSERT, never upsert, matching the old client-side
+     path and the comment at the top of this file. */
   try {
-    const id = tok
-      ? await rpc('submit_rsvp',          { p_token: tok, p_events: events, p_guests: clean, p_photo: photo })
-      : await rpc('submit_rsvp_by_email', { p_email: email, p_events: events, p_guests: clean, p_photo: photo });
+    let id;
+    if (tok) {
+      id = await rpc('submit_rsvp', { p_token: tok, p_events: events, p_guests: clean, p_photo: photo });
+    } else {
+      // Look up the tier the same way login.js does.
+      let tier = 4;
+      try { tier = Number(await rpc('guest_tier', { p_key: email })) || 4; } catch (_) {}
+
+      const row = {
+        guest_key:  email,
+        tier:       tier,
+        party_size: clean.length,
+        events:     events,
+        guests:     clean,
+        photo_path: photo || '',
+      };
+
+      const ins = await fetch(SB_URL + '/rest/v1/wedding_rsvps', {
+        method: 'POST',
+        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY,
+                   'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(row),
+      });
+      if (!ins.ok) throw new Error('insert ' + ins.status + ' ' + (await ins.text()));
+      id = null;
+    }
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify({ ok: true, id }));
