@@ -249,8 +249,22 @@
     window.SJUpload.rpc('guest_profile', key).then(function(rows){
       var pr = Array.isArray(rows) ? rows[0] : rows;
       if (pr) {
+        /* Write the WHOLE profile, not just the name.
+           This used to store key + person_name only. rsvpform.js reads the same
+           cache, and skips its own lookup whenever a cache exists -- so on every
+           visit after the first, party_size was missing, PRE.party fell back to
+           1, and a couple was drawn a single name row. Five households replied
+           as a party of one against a recorded party size of two before anyone
+           noticed. v:2 so the older, thinner shape is refetched rather than
+           trusted. */
         try { localStorage.setItem('sj-profile', JSON.stringify({
-          key: key, person_name: pr.person_name || ''
+          v: 2,
+          key: key,
+          person_name:   pr.person_name   || '',
+          email:         pr.email         || '',
+          party_size:    pr.party_size    || 1,
+          partner_name:  pr.partner_name  || '',
+          partner_email: pr.partner_email || ''
         })); } catch(e){}
       }
     }).catch(function(){}).then(function(){

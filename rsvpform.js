@@ -101,7 +101,9 @@
   var PRE = {
     email: who.indexOf('@') > -1 ? who : '',
     name:  (who && who.indexOf('@') === -1 && !isSurname) ? titleCase(who) : '',
-    party: 1
+    party: 1,
+    partnerName:  '',
+    partnerEmail: ''
   };
 
   /* ── who is this, really? ─────────────────────────────────────────────
@@ -127,10 +129,18 @@
   var PROFILE_KEY = 'sj-profile';
   var profileTried = false;
 
+  /* v:2 or nothing. The first version of this cache -- written here AND by
+     account.js, which runs earlier -- held only key + person_name. Since
+     loadProfile() skips the network whenever a cache exists, party_size never
+     arrived on any visit after the first, PRE.party fell back to 1, and every
+     couple was shown a single name row. Treating a pre-v2 cache as a miss
+     forces one refetch and then the shape is right forever. */
   function cachedProfile(){
     try {
       var c = JSON.parse(localStorage.getItem(PROFILE_KEY));
-      return (c && c.key === who) ? c : null;
+      if (!c || c.key !== who) return null;
+      if (c.v !== 2) return null;                 // thin legacy cache — refetch
+      return c;
     } catch(e){ return null; }
   }
 
@@ -147,6 +157,13 @@
        invitation already stated. Whoever is coming gets typed into the second
        row regardless, so the answer arrives without the question. */
     if (pr.party_size) { PRE.party = pr.party_size; moved = true; }
+    /* The partner's real name, resolved server-side through the household --
+       never parsed out of the household label, so it is "Hana Bendy" or it is
+       nothing. Ten households have both people on file; the rest get an empty
+       second row exactly as before. Prefilled, not required: whoever is coming
+       gets named, and anyone coming alone clears it. */
+    if (pr.partner_name  && !PRE.partnerName)  { PRE.partnerName  = pr.partner_name;  moved = true; }
+    if (pr.partner_email && !PRE.partnerEmail) { PRE.partnerEmail = pr.partner_email; moved = true; }
     return moved;
   }
 
@@ -156,10 +173,31 @@
   function fillBlanks(root){
     if (!root) return;
     var row = root.querySelector('.guest-row[data-guest="0"]');
-    if (!row) return;
-    var n = row.querySelector('.gname'), e = row.querySelector('.gemail');
-    if (n && !n.value && PRE.name)  n.value = PRE.name;
-    if (e && !e.value && PRE.email) e.value = PRE.email;
+    if (row) {
+      var n = row.querySelector('.gname'), e = row.querySelector('.gemail');
+      if (n && !n.value && PRE.name)  n.value = PRE.name;
+      if (e && !e.value && PRE.email) e.value = PRE.email;
+    }
+    var row2 = root.querySelector('.guest-row[data-guest="1"]');
+    if (row2) {
+      var n2 = row2.querySelector('.gname'), e2 = row2.querySelector('.gemail');
+      if (n2 && !n2.value && PRE.partnerName)  n2.value = PRE.partnerName;
+      if (e2 && !e2.value && PRE.partnerEmail) e2.value = PRE.partnerEmail;
+    }
+  }
+
+  /* The profile can land AFTER the form has rendered -- account.js writes the
+     cache late on a first visit, and the network call is slower still. Filling
+     blanks isn't enough in that case: if party_size arrives as 2 the second row
+     does not exist yet and has to be drawn. wire() hands us its renderGuests so
+     we can redraw from out here; if it hasn't mounted yet, fall back to filling
+     what's on screen. */
+  function syncGuestRows(root){
+    if (!root) return;
+    var countEl = root.querySelector('input[id$="Count"]');
+    if (countEl) countEl.value = String(Math.max(1, Math.min(2, PRE.party || 1)));
+    if (typeof root.__sjRenderGuests === 'function') root.__sjRenderGuests();
+    else fillBlanks(root);
   }
 
   function loadProfile(root){
@@ -173,7 +211,7 @@
        guest's name and email, the RSVP skipped them and opened with an empty
        email field. Applying first, then deciding whether to fetch, costs
        nothing and fixes it. */
-    if (applyProfile(cachedProfile())) fillBlanks(root);
+    if (applyProfile(cachedProfile())) syncGuestRows(root);
 
     if (profileTried) return;
     profileTried = true;
@@ -183,9 +221,15 @@
       var pr = Array.isArray(rows) ? rows[0] : rows;
       if (!pr) return;
       try { localStorage.setItem(PROFILE_KEY, JSON.stringify({
-        key: who, person_name: pr.person_name || '', email: pr.email || ''
+        v: 2,
+        key: who,
+        person_name:   pr.person_name   || '',
+        email:         pr.email         || '',
+        party_size:    pr.party_size    || 1,
+        partner_name:  pr.partner_name  || '',
+        partner_email: pr.partner_email || ''
       })); } catch(e){}
-      if (applyProfile(pr)) fillBlanks(root);
+      if (applyProfile(pr)) syncGuestRows(root);
     }).catch(function(){ /* offline, or nothing on file — type it as before */ });
   }
 
@@ -433,6 +477,12 @@
         // rather than once in renderForm.
         r.addEventListener('input', saveDraft);
       });
+
+      /* After the rows exist, not before. renderGuests() replaces the markup,
+         so anything prefilled earlier is gone -- and the second row does not
+         exist at all until n > 1. A saved draft still wins: fillBlanks only
+         touches empty fields, and guestData was already applied above. */
+      fillBlanks(root);
     }
 
     function showErr(msg){
@@ -488,6 +538,8 @@
       // list via the profile lookup, so there is nothing for the guest to set.
       var countEl = g('Count');
       if (countEl) countEl.value = String(Math.max(1, Math.min(2, PRE.party || 1)));
+      // Let loadProfile() redraw the rows if the profile lands after this point.
+      root.__sjRenderGuests = renderGuests;
       renderGuests();
 
       root.querySelectorAll('.yn:not(.p1)').forEach(function(b){
