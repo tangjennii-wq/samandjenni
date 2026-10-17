@@ -308,7 +308,7 @@
     var nId = p + 'GN' + i, eId = p + 'GE' + i, dId = p + 'GD' + i;
     return '<div class="guest-row" data-guest="' + i + '">' +
       '<div class="guest-fields">' +
-        '<div class="note-field">' + lab('Name') +
+        '<div class="note-field">' + lab(i === 0 ? 'Name' : 'Guest') +
           '<input id="' + nId + '" class="note-f gname" type="text" ' + A(whose + ' name') +
             'placeholder="" value="' + vName.replace(/"/g,'&quot;') + '"></div>' +
         '<div class="note-field">' + lab('Email') +
@@ -346,7 +346,7 @@
     return '' +
       '<div class="rsvp-head">' +
         '<div class="rsvp-title">R S V P</div>' +
-        '<div class="rsvp-sub">reply by 20 January 2027</div>' +
+        '<div class="rsvp-sub">reply by 10 January 2027</div>' +
       '</div>' +
       '<div class="rsvp-body">' +
 
